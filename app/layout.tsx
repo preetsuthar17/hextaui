@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
+import Script from "next/script"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -53,6 +54,11 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        <Script
+          src="https://assets.onedollarstats.com/stonks.js"
+          strategy="afterInteractive"
+          data-debug="hextaui.com"
+        />
       </body>
     </html>
   )
