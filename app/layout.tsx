@@ -1,14 +1,42 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Inter } from "next/font/google"
+import type { Metadata } from "next"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
+const siteName = "HextaUI"
+const siteDescription = "Beautiful components built on top of shadcn/ui."
 
-const fontMono = Geist_Mono({
+export const metadata: Metadata = {
+  title: siteName,
+  description: siteDescription,
+  applicationName: siteName,
+  keywords: [
+    "HextaUI",
+    "shadcn/ui",
+    "React components",
+    "Tailwind CSS",
+    "UI components",
+  ],
+  creator: siteName,
+  openGraph: {
+    title: siteName,
+    description: siteDescription,
+    siteName,
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: siteName,
+    description: siteDescription,
+  },
+}
+
+const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-sans",
 })
 
 export default function RootLayout({
@@ -19,8 +47,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      dir="ltr"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
+      className={cn("antialiased", "font-sans", fontSans.variable)}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>

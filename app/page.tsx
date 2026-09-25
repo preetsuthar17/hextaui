@@ -1,19 +1,25 @@
-import { Button } from "@/components/ui/button"
+import { IconArrowUpRight } from "@tabler/icons-react"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+    <main className="flex min-h-svh flex-col items-center justify-center p-6 text-center lowercase">
+      <h1 className="text-xl font-[520] text-pretty sm:text-2xl">
+        We’ve retired the old HextaUI and are creating something better.
+      </h1>
+      <a
+        href="https://twitter.com/preetsuthar17"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 min-h-10 text-sm underline decoration-1 underline-offset-4 transition-opacity hover:opacity-70 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current sm:text-base"
+      >
+        Follow on Twitter to stay tuned for updates
+        <IconArrowUpRight
+          aria-hidden="true"
+          className="ms-1 inline-block align-[-0.15em]"
+          size={14}
+          stroke={1.75}
+        />
+      </a>
+    </main>
   )
 }
