@@ -1,0 +1,36 @@
+import { cn } from "cn"
+
+import { siteRepository } from "@/lib/site"
+
+const linkClassName =
+  "rounded-sm text-foreground/80 underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:text-foreground hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+
+function SiteFooter({ className }: { className?: string }) {
+  return (
+    <footer className={cn("px-4 py-8", className)}>
+      <p className="mx-auto max-w-screen-2xl text-center text-sm text-pretty text-muted-foreground">
+        Built by{" "}
+        <a
+          href="https://twitter.com/preetsuthar17"
+          target="_blank"
+          rel="noreferrer"
+          className={linkClassName}
+        >
+          Preet Suthar
+        </a>
+        . Open source under the MIT license, with the code on{" "}
+        <a
+          href={siteRepository}
+          target="_blank"
+          rel="noreferrer"
+          className={linkClassName}
+        >
+          GitHub
+        </a>
+        .
+      </p>
+    </footer>
+  )
+}
+
+export { SiteFooter }

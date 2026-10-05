@@ -3,13 +3,23 @@ import type { Metadata } from "next"
 import Script from "next/script"
 
 import "./globals.css"
+import { DocsSearchProvider } from "@/components/docs/docs-search"
+import { SiteFooter } from "@/components/site/site-footer"
+import { SiteHeader } from "@/components/site/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
+import {
+  absoluteUrl,
+  siteDescription,
+  siteName,
+  siteRepository,
+  siteUrl,
+} from "@/lib/site"
+import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
-
-const siteName = "HextaUI"
-const siteDescription = "Beautiful components built on top of shadcn/ui."
+import { Toaster } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: siteName,
   description: siteDescription,
   applicationName: siteName,
@@ -19,6 +29,11 @@ export const metadata: Metadata = {
     "React components",
     "Tailwind CSS",
     "UI components",
+    "Base UI",
+    "React component library",
+    "accessible components",
+    "Next.js components",
+    "copy and paste components",
   ],
   creator: siteName,
   openGraph: {
@@ -35,16 +50,33 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: siteName,
+  description: siteDescription,
+  url: siteUrl,
+  codeRepository: siteRepository,
+  programmingLanguage: ["TypeScript", "React"],
+  runtimePlatform: "React",
+  license: "https://opensource.org/licenses/MIT",
+  isAccessibleForFree: true,
+  documentation: absoluteUrl("/docs"),
+  sameAs: [siteRepository],
+}
+
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const stars = await getGithubStars()
+
   return (
     <html
       lang="en"
@@ -53,10 +85,25 @@ export default function RootLayout({
       className={cn("antialiased", "font-sans", fontSans.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+        <ThemeProvider>
+          <DocsSearchProvider>
+            <div className="flex min-h-svh flex-col">
+              <SiteHeader stars={stars} />
+              <div className="flex flex-1 flex-col">{children}</div>
+              <SiteFooter />
+            </div>
+          </DocsSearchProvider>
+          <Toaster />
+        </ThemeProvider>
         <Script
           src="https://assets.onedollarstats.com/stonks.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           data-debug="hextaui.com"
         />
       </body>
