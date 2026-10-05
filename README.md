@@ -1,6 +1,6 @@
 # HextaUI
 
-Beautiful components built on top of shadcn/ui.
+Ready-to-use foundation components/blocks built on top of shadcn/ui.
 
 ## Local development
 

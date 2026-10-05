@@ -34,3 +34,9 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# shadcn registry output
+/public/r/
+
+# wrangler
+/.wrangler/
