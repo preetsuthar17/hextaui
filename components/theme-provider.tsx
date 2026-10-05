@@ -13,6 +13,7 @@ function ThemeProvider({
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
+      scriptProps={{ type: "application/javascript" }}
       {...props}
     >
       <ThemeHotkey />
