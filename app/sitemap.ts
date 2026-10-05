@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: absoluteUrl("/"), priority: 1 },
     { url: absoluteUrl("/components"), priority: 0.8 },
+    { url: absoluteUrl("/blocks"), priority: 0.6 },
     ...docs.map((item) => ({ url: absoluteUrl(item.href), priority: 0.7 })),
   ]
 }

@@ -1,25 +1,40 @@
-import { IconArrowUpRight } from "@tabler/icons-react"
+import Image from "next/image"
 
-export default function Page() {
+import { HeroActions } from "@/components/site/hero-actions"
+import { Showcase } from "@/components/site/showcase/showcase"
+import { getGithubStars } from "@/lib/github"
+
+export default async function Page() {
+  const stars = await getGithubStars()
+
   return (
-    <main className="flex flex-1 flex-col items-center justify-center p-6 text-center lowercase">
-      <h1 className="text-xl font-book tracking-tight text-pretty">
-        We’ve retired the old HextaUI and are creating something better.
-      </h1>
-      <a
-        href="https://twitter.com/preetsuthar17"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-5 min-h-10 text-sm underline decoration-1 underline-offset-4 transition-opacity hover:opacity-70 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+    <main className="flex flex-1 flex-col">
+      <section className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-10 px-3 pt-20 pb-16 text-center sm:items-start sm:pt-28 sm:pb-24 sm:text-left">
+        <h1 className="text-hero font-medium tracking-tighter">
+          <span className="block whitespace-nowrap">
+            Ready to use blocks &amp; components
+          </span>{" "}
+          <span className="block whitespace-nowrap">
+            built on top of{" "}
+            <Image
+              src="https://github.com/shadcn.png"
+              alt=""
+              width={64}
+              height={64}
+              unoptimized
+              className="inline-block size-[1em] rounded-full"
+            />{" "}
+            shadcn/ui
+          </span>
+        </h1>
+        <HeroActions stars={stars} />
+      </section>
+      <section
+        aria-label="Live examples"
+        className="mx-auto w-full max-w-screen-2xl px-3 pb-24"
       >
-        stay tuned for updates
-        <IconArrowUpRight
-          aria-hidden="true"
-          className="ms-1 inline-block align-[-0.15em]"
-          size={14}
-          stroke={1.75}
-        />
-      </a>
+        <Showcase />
+      </section>
     </main>
   )
 }

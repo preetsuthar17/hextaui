@@ -85,6 +85,213 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --default-border-width: var(--hairline);
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.1875rem;
+  --text-2xl: 1.4375rem;
+  --text-3xl: 1.8125rem;
+  --text-4xl: 2.1875rem;
+  --text-5xl: 2.9375rem;
+  --text-6xl: 3.6875rem;
+  --text-7xl: 4.4375rem;
+  --text-8xl: 5.9375rem;
+  --text-9xl: 7.9375rem;
+  --text-touch: max(16px, 1rem);
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+  --animate-skeleton-pulse: skeleton-pulse 2s ease-in-out infinite;
+  --animate-button-state-in: button-state-in 220ms cubic-bezier(0.2, 0, 0, 1) both;
+  --animate-button-state-out: button-state-out 220ms cubic-bezier(0.2, 0, 0, 1) both;
+  --animate-button-draw-circle: button-draw 240ms cubic-bezier(0.2, 0, 0, 1) both;
+  --animate-button-draw-check: button-draw 180ms cubic-bezier(0.2, 0, 0, 1) 180ms both;
+  --animate-spinner-rotate: spinner-rotate 0.9s linear infinite;
+  --animate-spinner-dash: spinner-dash 1.5s ease-in-out infinite;
+  --animate-spinner-ticks: spinner-rotate 0.8s steps(8, end) infinite;
+  --animate-spinner-pulse: spinner-pulse 1.6s ease-in-out infinite;
+  --animate-progress-slide: progress-slide 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  --animate-checkbox-draw: button-draw 200ms cubic-bezier(0.2, 0, 0, 1) 40ms both;
+  --animate-button-shake: button-shake 320ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  --animate-avatar-badge-pulse: avatar-badge-pulse 700ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  --animate-menu-blink: menu-blink 120ms steps(1, end) both;
+  --animate-input-otp-wave: input-otp-wave 1.2s ease-in-out infinite;
+  --animate-input-otp-pulse: input-otp-pulse 1.2s ease-in-out infinite;
+  --animate-input-otp-pop: input-otp-pop 360ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  --animate-empty-in: empty-in 480ms cubic-bezier(0.23, 1, 0.32, 1) var(--empty-delay, 0ms) both;
+  --animate-message-in: message-in 420ms linear(0, 0.015 2%, 0.0532 4%, 0.1065 6%, 0.1686 8%, 0.2351 10%, 0.3363 13%, 0.4332 16%, 0.5495 20%, 0.648 24%, 0.7287 28%, 0.807 33%, 0.8646 38%, 0.9128 44%, 0.9447 50%, 0.968 57%, 0.9834 65%, 0.9924 74%, 0.9975 85%, 1) both;
+  --animate-video-player-flash: video-player-flash 650ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  @keyframes message-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+    scale: 0.96;
+    }
+  }
+  @keyframes video-player-flash {
+  from {
+    opacity: 0;
+    scale: var(--video-player-flash-from, 0.9);
+    }
+  20%, 55% {
+    opacity: 1;
+    scale: 1;
+    }
+  to {
+    opacity: 0;
+    scale: var(--video-player-flash-to, 1.08);
+    }
+  }
+  @keyframes empty-in {
+  from {
+    opacity: 0;
+    translate: 0 0.375rem;
+    filter: blur(2px);
+    }
+  }
+  @keyframes shimmer {
+  from {
+    translate: calc(-100% * var(--skeleton-dir, 1)) 0;
+    }
+  to {
+    translate: calc(100% * var(--skeleton-dir, 1)) 0;
+    }
+  }
+  @keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 0;
+    }
+  50% {
+    opacity: 0.5;
+    }
+  }
+  @keyframes button-state-in {
+  from {
+    opacity: 0;
+    transform: perspective(220px) rotateX(90deg) translateY(0.75rem);
+    }
+  to {
+    opacity: 1;
+    transform: perspective(220px) rotateX(0) translateY(0);
+    }
+  }
+  @keyframes button-state-out {
+  from {
+    opacity: 1;
+    transform: perspective(220px) rotateX(0) translateY(0);
+    }
+  50% {
+    opacity: 0;
+    }
+  to {
+    opacity: 0;
+    transform: perspective(220px) rotateX(-90deg) translateY(-0.75rem);
+    }
+  }
+  @keyframes spinner-rotate {
+  to {
+    rotate: 360deg;
+    }
+  }
+  @keyframes spinner-dash {
+  0% {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: 0;
+    }
+  50% {
+    stroke-dasharray: 34 60;
+    stroke-dashoffset: -12;
+    }
+  100% {
+    stroke-dasharray: 34 60;
+    stroke-dashoffset: -56;
+    }
+  }
+  @keyframes progress-slide {
+  from {
+    translate: calc(-100% * var(--progress-dir, 1)) 0;
+    }
+  to {
+    translate: calc(250% * var(--progress-dir, 1)) 0;
+    }
+  }
+  @keyframes spinner-pulse {
+  0%, 100% {
+    opacity: 1;
+    }
+  50% {
+    opacity: 0.4;
+    }
+  }
+  @keyframes button-draw {
+  to {
+    stroke-dashoffset: 0;
+    }
+  }
+  @keyframes avatar-badge-pulse {
+  from {
+    scale: 1;
+    opacity: 0.6;
+    }
+  to {
+    scale: 2.6;
+    opacity: 0;
+    }
+  }
+  @keyframes menu-blink {
+  0% {
+    background-color: transparent;
+    }
+  50%, 100% {
+    background-color: var(--menu-blink, var(--color-accent));
+    }
+  }
+  @keyframes input-otp-wave {
+  0%, 60%, 100% {
+    translate: 0 0;
+    opacity: 1;
+    }
+  30% {
+    translate: 0 -0.18em;
+    opacity: 0.45;
+    }
+  }
+  @keyframes input-otp-pulse {
+  0%, 100% {
+    opacity: 1;
+    }
+  50% {
+    opacity: 0.45;
+    }
+  }
+  @keyframes input-otp-pop {
+  0% {
+    scale: 1;
+    }
+  40% {
+    scale: 1.16;
+    }
+  100% {
+    scale: 1;
+    }
+  }
+  @keyframes button-shake {
+  0%, 100% {
+    translate: 0;
+    }
+  20% {
+    translate: -3px;
+    }
+  40% {
+    translate: 3px;
+    }
+  60% {
+    translate: -2px;
+    }
+  80% {
+    translate: 2px;
+    }
+  }
 }
 
 @theme {
@@ -291,7 +498,7 @@
   @keyframes avatar-badge-pulse {
     from {
       scale: 1;
-      opacity: 0.6;
+      opacity: 0.5;
     }
     to {
       scale: 2.6;
@@ -376,12 +583,17 @@
   initial-value: 0px;
 }
 
+@utility text-hero {
+  font-size: min(calc((100vw - 1.5rem) / 15.75), 2.6875rem);
+  line-height: 1.3;
+}
+
 @utility border-hairline {
-  border-width: var(--hairline);
+    border-width: var(--hairline);
 }
 
 :root {
-  --hairline: 1px;
+    --hairline: 1px;
 
   @media (min-resolution: 1.5dppx) {
     --hairline: calc(1px / 1.5);
@@ -398,6 +610,20 @@
   @media (min-resolution: 4dppx) {
     --hairline: 0.25px;
   }
+
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --success: oklch(0.527 0.154 150);
+
+  --success-foreground: oklch(0.985 0 0);
+
+  --info: oklch(0.546 0.215 262);
+
+  --info-foreground: oklch(0.985 0 0);
+
+  --warning: oklch(0.555 0.163 49);
+
+  --warning-foreground: oklch(0.985 0 0)
 }
 
 :root {
@@ -578,4 +804,28 @@
 .dark .shiki,
 .dark .shiki span {
   color: var(--shiki-dark);
+}
+
+@media (min-resolution: 1.5dppx) {
+  :root {
+    --hairline: calc(1px / 1.5);
+  }
+}
+
+@media (min-resolution: 2dppx) {
+  :root {
+    --hairline: 0.5px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  :root {
+    --hairline: calc(1px / 3);
+  }
+}
+
+@media (min-resolution: 4dppx) {
+  :root {
+    --hairline: 0.25px;
+  }
 }
