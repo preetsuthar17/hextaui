@@ -60,7 +60,7 @@ function BlockFrame({ name, title }: { name: string; title: string }) {
           title={`${title} preview`}
           loading="lazy"
           className={cn(
-            "mx-auto block h-200 w-full bg-background transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+            "mx-auto block h-150 w-full bg-background transition-all duration-300 ease-out-quint motion-reduce:transition-none sm:h-200",
             viewport === "tablet" && "max-w-3xl border-x",
             viewport === "mobile" && "max-w-sm border-x"
           )}

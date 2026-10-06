@@ -765,6 +765,11 @@
     scrollbar-gutter: stable;
     -webkit-tap-highlight-color: transparent;
   }
+  :root:has([data-block-preview]),
+  :root:has([data-block-preview]) body {
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
+  }
 }
 
 .shiki {

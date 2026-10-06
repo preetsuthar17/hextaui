@@ -19,5 +19,9 @@ export default async function Page({
 }: PageProps<"/preview/blocks/[name]">) {
   const { name } = await params
   if (!getProBlock(name)) notFound()
-  return <BlockPreview name={name} />
+  return (
+    <div data-block-preview="">
+      <BlockPreview name={name} />
+    </div>
+  )
 }
