@@ -8,6 +8,25 @@ type ProBlock = {
   category: string
   files: string[]
   usage: { title: string; description: string; code: string }[]
+  docs: ProBlockDocs
+}
+
+type ProBlockDocs = {
+  overview?: string[]
+  features?: { title: string; description: string }[]
+  anatomy?: { name: string; description: string }[]
+  api?: {
+    component: string
+    description?: string
+    props: {
+      name: string
+      type: string
+      default?: string
+      description?: string
+    }[]
+  }[]
+  keyboard?: { keys: string[]; description: string }[]
+  accessibility?: string[]
 }
 
 const categoryTitles: Record<string, string> = {

@@ -8,11 +8,17 @@ import { DocsCodeBlock } from "@/components/docs/docs-code-block"
 import { DocsCommand } from "@/components/docs/docs-command"
 import {
   DocsCode,
+  DocsList,
   DocsParagraph,
   DocsSection,
 } from "@/components/docs/docs-content"
 import { DocsStep } from "@/components/docs/docs-install"
 import { DocsPage } from "@/components/docs/docs-page"
+import {
+  DocsAttributesTable,
+  DocsKeyboardTable,
+  DocsPropsTable,
+} from "@/components/docs/docs-props-table"
 import { pageMetadata } from "@/lib/metadata"
 import { blocksNavItems, getProBlock, proBlockParams } from "@/lib/pro/catalog"
 
@@ -51,6 +57,8 @@ export async function generateMetadata({
 export default async function Page({ params }: PageProps<"/blocks/[name]">) {
   const block = getProBlock((await params).name)
   if (!block) notFound()
+  const { overview, features, anatomy, api, keyboard, accessibility } =
+    block.docs
 
   return (
     <DocsPage
@@ -63,6 +71,26 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       <div className="mt-8">
         <BlockFrame name={block.name} title={block.title} />
       </div>
+
+      {overview?.length || features?.length ? (
+        <DocsSection title="Overview">
+          {overview?.map((paragraph) => (
+            <DocsParagraph key={paragraph}>{paragraph}</DocsParagraph>
+          ))}
+          {features?.length ? (
+            <DocsList>
+              {features.map((feature) => (
+                <li key={feature.title}>
+                  <span className="font-medium text-foreground">
+                    {feature.title}.
+                  </span>{" "}
+                  {feature.description}
+                </li>
+              ))}
+            </DocsList>
+          ) : null}
+        </DocsSection>
+      ) : null}
 
       <DocsSection title="Installation">
         <ol className="flex flex-col">
@@ -104,6 +132,46 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
               <DocsCodeBlock code={example.code} />
             </DocsSection>
           ))}
+        </DocsSection>
+      ) : null}
+
+      {anatomy?.length ? (
+        <DocsSection
+          title="Anatomy"
+          description="The parts you compose, from the outside in."
+        >
+          <DocsAttributesTable label="Part" attributes={anatomy} />
+        </DocsSection>
+      ) : null}
+
+      {api?.length ? (
+        <DocsSection title="API reference">
+          {api.map((entry) => (
+            <DocsSection
+              key={entry.component}
+              title={entry.component}
+              description={entry.description}
+              level={3}
+            >
+              <DocsPropsTable props={entry.props} />
+            </DocsSection>
+          ))}
+        </DocsSection>
+      ) : null}
+
+      {keyboard?.length ? (
+        <DocsSection title="Keyboard">
+          <DocsKeyboardTable keys={keyboard} />
+        </DocsSection>
+      ) : null}
+
+      {accessibility?.length ? (
+        <DocsSection title="Accessibility">
+          <DocsList>
+            {accessibility.map((note) => (
+              <li key={note}>{note}</li>
+            ))}
+          </DocsList>
         </DocsSection>
       ) : null}
 

@@ -19,6 +19,25 @@ type BlockMeta = {
   entry?: string
   dependencies?: string[]
   usage?: { file: string; title: string; description: string }[]
+  docs?: BlockDocs
+}
+
+type BlockDocs = {
+  overview?: string[]
+  features?: { title: string; description: string }[]
+  anatomy?: { name: string; description: string }[]
+  api?: {
+    component: string
+    description?: string
+    props: {
+      name: string
+      type: string
+      default?: string
+      description?: string
+    }[]
+  }[]
+  keyboard?: { keys: string[]; description: string }[]
+  accessibility?: string[]
 }
 
 function ensureCheckout() {
@@ -155,6 +174,7 @@ async function main() {
       category: meta.category,
       files: files.map((file) => `components/blocks/${name}/${file}`),
       usage,
+      docs: meta.docs ?? {},
     })
 
     items[name] = {

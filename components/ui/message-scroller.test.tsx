@@ -55,6 +55,13 @@ describe("MessageScroller", () => {
     )
   })
 
+  it("leaves a pixel around each item so borders are not clipped", () => {
+    render(<Thread />)
+    const classes = slot("message-scroller-item")!.className.split(" ")
+    expect(classes).toContain("-m-px")
+    expect(classes).toContain("p-px")
+  })
+
   it("keeps the jump button out of the way while there is nothing to jump to", () => {
     render(<Thread />)
     const button = slot("message-scroller-button")

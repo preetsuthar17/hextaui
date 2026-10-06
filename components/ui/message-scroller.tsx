@@ -234,7 +234,7 @@ function MessageScrollerItem({
       data-entering={entering ? "" : undefined}
       scrollAnchor={scrollAnchor}
       className={cn(
-        "min-w-0 shrink-0 [contain-intrinsic-size:auto_6rem] [content-visibility:auto] data-entering:motion-safe:animate-message-in motion-reduce:data-entering:animate-in motion-reduce:data-entering:fade-in-0",
+        "-m-px min-w-0 shrink-0 p-px [contain-intrinsic-size:auto_6rem] [content-visibility:auto] data-entering:motion-safe:animate-message-in motion-reduce:data-entering:animate-in motion-reduce:data-entering:fade-in-0",
         className
       )}
       {...props}
