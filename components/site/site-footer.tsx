@@ -2,6 +2,7 @@ import Link from "next/link"
 import { cn } from "cn"
 
 import { legalPages } from "@/components/legal/legal-page"
+import { CookieSettingsButton } from "@/components/site/cookie-consent"
 
 import { siteRepository } from "@/lib/site"
 
@@ -41,6 +42,12 @@ function SiteFooter({ className }: { className?: string }) {
             {page.title}
           </Link>
         ))}
+        <CookieSettingsButton
+          className={cn(
+            linkClassName,
+            "cursor-pointer disabled:cursor-default"
+          )}
+        />
       </nav>
     </footer>
   )

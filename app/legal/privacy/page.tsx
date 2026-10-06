@@ -37,7 +37,7 @@ export default function Page() {
         <DocsList>
           <li>
             You can read the docs and use every free component without an
-            account or tracking cookies.
+            account. Analytics cookies are only set if you allow them.
           </li>
           <li>
             If you sign in, I keep your name, email and profile picture from
@@ -53,8 +53,8 @@ export default function Page() {
 
       <LegalSection title="When you browse">
         <DocsParagraph>
-          Reading the site needs no account. Two things still happen on every
-          visit:
+          Reading the site needs no account. Two things happen on every visit,
+          and a third only if you agree to it:
         </DocsParagraph>
         <DocsList>
           <li>
@@ -62,7 +62,17 @@ export default function Page() {
             OneDollarStats records aggregate statistics: the page you came from,
             the pages you view, how long you stay, and your device type,
             operating system, browser and country. It doesn’t collect personally
-            identifiable data from browsing.
+            identifiable data from browsing and sets no cookies.
+          </li>
+          <li>
+            <strong className="font-medium text-foreground">
+              Google Analytics, if you allow it.
+            </strong>{" "}
+            The first time you visit, a banner asks whether HextaUI can use
+            Google Analytics. Only if you choose Allow does it load and set
+            cookies to count visits and see which pages are used: the pages you
+            view, how you got there, roughly where you are, and your device and
+            browser. If you choose Decline, it never loads.
           </li>
           <li>
             <strong className="font-medium text-foreground">Hosting.</strong>{" "}
@@ -130,8 +140,8 @@ export default function Page() {
 
       <LegalSection title="Cookies and browser storage">
         <DocsParagraph>
-          The only cookies are the ones that make sign-in work, set by the
-          authentication system (their names start with{" "}
+          Without your consent, the only cookies are the ones that make sign-in
+          work, set by the authentication system (their names start with{" "}
           <DocsCode>better-auth</DocsCode>):
         </DocsParagraph>
         <DocsList>
@@ -145,10 +155,17 @@ export default function Page() {
           </li>
         </DocsList>
         <DocsParagraph>
+          If you allow analytics, Google Analytics also sets cookies whose names
+          start with <DocsCode>_ga</DocsCode>, which last up to two years. You
+          can change your choice any time with Cookie settings in the footer.
+          Choosing Decline there removes these cookies and stops Google
+          Analytics.
+        </DocsParagraph>
+        <DocsParagraph>
           The site also saves a few preferences in your browser’s storage: your
-          theme, your package manager, recent searches, the layout of resizable
-          examples, whether you’ve signed in before, and a cached GitHub star
-          count. These never leave your device.
+          analytics choice, your theme, your package manager, recent searches,
+          the layout of resizable examples, whether you’ve signed in before, and
+          a cached GitHub star count. These never leave your device.
         </DocsParagraph>
       </LegalSection>
 
@@ -175,6 +192,11 @@ export default function Page() {
               OneDollarStats
             </strong>{" "}
             provides analytics, hosted in Finland.
+          </li>
+          <li>
+            <strong className="font-medium text-foreground">Google</strong>{" "}
+            provides Google Analytics, only if you allow it, under its own
+            privacy policy.
           </li>
         </DocsList>
         <DocsParagraph>

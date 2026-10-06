@@ -5,6 +5,7 @@ import Script from "next/script"
 import "./globals.css"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
 import { SiteFooter } from "@/components/site/site-footer"
+import { CookieConsent } from "@/components/site/cookie-consent"
 import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -144,6 +145,9 @@ export default async function RootLayout({
             </div>
           </DocsSearchProvider>
           <Toaster />
+          <SiteChrome>
+            <CookieConsent />
+          </SiteChrome>
         </ThemeProvider>
         <Script
           src="https://assets.onedollarstats.com/stonks.js"

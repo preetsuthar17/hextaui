@@ -25,6 +25,7 @@
     "@base-ui/react": "^1.8.0",
     "@better-auth/drizzle-adapter": "1.7.7",
     "@modelcontextprotocol/server": "^2.3.1",
+    "@next/third-parties": "16.3.8",
     "@shadcn/react": "0.3.1",
     "@tabler/icons-react": "^3.49.0",
     "@tanstack/react-table": "^9.2.6",
