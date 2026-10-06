@@ -7,6 +7,8 @@ import { cn } from "cn"
 import { useTheme } from "next-themes"
 
 import { GithubLogo } from "@/components/site/github-logo"
+import { useGithubStars } from "@/components/site/use-github-stars"
+import { UserMenu } from "@/components/site/user-menu"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { KbdGroup } from "@/components/ui/kbd"
 import { Separator } from "@/components/ui/separator"
@@ -40,7 +42,7 @@ const links: { section: SiteSection; label: string; href: string }[] = [
 function sectionFor(pathname: string): SiteSection | null {
   const path = pathname.replace(/\/$/, "") || "/"
   if (path === "/") return "home"
-  if (path === "/blocks") return "blocks"
+  if (path === "/blocks" || path.startsWith("/blocks/")) return "blocks"
   if (componentPaths.has(path)) return "components"
   if (hookPaths.has(path)) return "hooks"
   if (path === "/docs" || path.startsWith("/docs/")) return "docs"
@@ -75,7 +77,7 @@ function ThemeToggle() {
 }
 
 function SiteHeader({
-  stars = null,
+  stars: initialStars = null,
   className,
 }: {
   stars?: number | null
@@ -83,12 +85,14 @@ function SiteHeader({
 }) {
   const pathname = usePathname()
   const active = sectionFor(pathname)
+  const stars = useGithubStars(initialStars)
 
   return (
     <header
       className={cn(
         "sticky top-0 z-40 bg-background/90 backdrop-blur-md",
-        pathname.startsWith("/docs") && "max-lg:hidden",
+        (pathname.startsWith("/docs") || pathname.startsWith("/blocks/")) &&
+          "max-lg:hidden",
         className
       )}
     >
@@ -136,6 +140,7 @@ function SiteHeader({
           </a>
           <Separator orientation="vertical" className="mx-1 h-4 self-center" />
           <ThemeToggle />
+          <UserMenu />
           <Link
             href="/docs/installation"
             className={cn(buttonVariants({ size: "sm" }), "ms-1 max-sm:hidden")}

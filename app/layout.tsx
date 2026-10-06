@@ -5,6 +5,7 @@ import Script from "next/script"
 import "./globals.css"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
 import { SiteFooter } from "@/components/site/site-footer"
+import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 import {
@@ -94,9 +95,13 @@ export default async function RootLayout({
         <ThemeProvider>
           <DocsSearchProvider>
             <div className="flex min-h-svh flex-col">
-              <SiteHeader stars={stars} />
+              <SiteChrome>
+                <SiteHeader stars={stars} />
+              </SiteChrome>
               <div className="flex flex-1 flex-col">{children}</div>
-              <SiteFooter />
+              <SiteChrome>
+                <SiteFooter />
+              </SiteChrome>
             </div>
           </DocsSearchProvider>
           <Toaster />
@@ -104,7 +109,6 @@ export default async function RootLayout({
         <Script
           src="https://assets.onedollarstats.com/stonks.js"
           strategy="lazyOnload"
-          data-debug="hextaui.com"
         />
       </body>
     </html>

@@ -1,0 +1,15 @@
+name = "hextaui"
+pages_build_output_dir = "out"
+compatibility_date = "2026-09-25"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hextaui"
+database_id = "565a1eac-d4e8-47f3-b4d0-eb8f9687d034"
+migrations_dir = "drizzle"
+
+[vars]
+BETTER_AUTH_URL = "https://hextaui.com"
+DODO_PAYMENTS_ENVIRONMENT = "live_mode"
+DODO_PRO_PRODUCT_ID = "pdt_0Np7uK8yvPVAMHVYjsOIb"

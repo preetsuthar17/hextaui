@@ -739,8 +739,10 @@ const docsNav: DocsNavSection[] = [
   },
 ]
 
-function getDocsPager(href: string) {
-  const items = docsNav.flatMap((section) => section.items)
+function getDocsPager(
+  href: string,
+  items: DocsNavItem[] = docsNav.flatMap((section) => section.items)
+) {
   const index = items.findIndex((item) => item.href === href)
 
   if (index === -1) {

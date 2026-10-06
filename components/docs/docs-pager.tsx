@@ -44,8 +44,16 @@ function DocsPagerLink({
   )
 }
 
-function DocsPager({ href, className }: { href: string; className?: string }) {
-  const { previous, next } = getDocsPager(href)
+function DocsPager({
+  href,
+  items,
+  className,
+}: {
+  href: string
+  items?: DocsNavItem[]
+  className?: string
+}) {
+  const { previous, next } = getDocsPager(href, items)
 
   if (!previous && !next) {
     return null

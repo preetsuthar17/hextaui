@@ -5,27 +5,36 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "pnpm registry:build && next build",
+    "dev": "pnpm pro:build && next dev",
+    "dev:api": "wrangler pages dev",
+    "build": "pnpm pro:build && pnpm registry:build && next build && node scripts/check-pro-leak.ts",
     "start": "next start",
     "registry:sync": "node scripts/sync-registry.mjs",
     "registry:build": "pnpm registry:sync && shadcn build",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm pro:build && tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply hextaui --local",
+    "db:migrate:remote": "wrangler d1 migrations apply hextaui --remote",
+    "pro:build": "node scripts/build-pro.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "@better-auth/drizzle-adapter": "1.7.7",
     "@modelcontextprotocol/server": "^2.3.1",
     "@shadcn/react": "0.3.1",
     "@tabler/icons-react": "^3.49.0",
     "@tanstack/react-table": "^9.2.6",
+    "better-auth": "1.7.7",
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.1.1",
     "cn": "^0.4.0",
     "date-fns": "^4.4.0",
+    "dodopayments": "2.53.0",
+    "drizzle-orm": "0.45.3",
     "next": "16.3.8",
     "next-themes": "^0.4.6",
     "react": "19.3.0",
@@ -39,6 +48,8 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@ai-sdk/react": "4.0.131",
+    "@cloudflare/workers-types": "^5.20261005.1",
     "@modelcontextprotocol/client": "^2.3.1",
     "@shadcn/lint": "0.2.0",
     "@tailwindcss/postcss": "^4",
@@ -49,12 +60,16 @@
     "@types/react-dom": "^19",
     "@typescript-eslint/parser": "^8.71.1",
     "@typescript/native": "npm:typescript@^7.0.2",
+    "ai": "7.0.128",
+    "drizzle-kit": "0.31.11",
     "eslint": "^10.12.0",
     "jsdom": "^30.1.2",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "streamdown": "2.7.0",
     "tailwindcss": "^4",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "4.147.0"
   }
 }

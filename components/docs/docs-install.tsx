@@ -134,4 +134,4 @@ async function DocsInstall({
   )
 }
 
-export { DocsInstall }
+export { DocsInstall, DocsStep }

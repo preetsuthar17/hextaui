@@ -5,7 +5,7 @@ import { DocsPageActions } from "@/components/docs/docs-page-actions"
 import { DocsPageNav } from "@/components/docs/docs-page-nav"
 import { DocsPager } from "@/components/docs/docs-pager"
 import { DocsToc } from "@/components/docs/docs-toc"
-import type { DocsTocItem } from "@/lib/docs"
+import type { DocsNavItem, DocsTocItem } from "@/lib/docs"
 
 function DocsPage({
   href,
@@ -14,6 +14,7 @@ function DocsPage({
   markdownHref,
   registryHref,
   toc,
+  navItems,
   className,
   children,
 }: {
@@ -23,6 +24,7 @@ function DocsPage({
   markdownHref?: string
   registryHref?: string
   toc?: DocsTocItem[]
+  navItems?: DocsNavItem[]
   className?: string
   children?: React.ReactNode
 }) {
@@ -49,7 +51,11 @@ function DocsPage({
                   registryHref={registryHref}
                 />
               ) : null}
-              <DocsPageNav href={href} className="max-sm:hidden" />
+              <DocsPageNav
+                href={href}
+                items={navItems}
+                className="max-sm:hidden"
+              />
             </div>
           </div>
           {description ? (
@@ -61,7 +67,7 @@ function DocsPage({
         <div data-docs-content="" className="flex flex-col">
           {children}
         </div>
-        <DocsPager href={href} className="mt-16" />
+        <DocsPager href={href} items={navItems} className="mt-16" />
       </article>
       <div className="hidden xl:block">
         <DocsToc items={toc} className="sticky top-14 pe-4 pt-10 pb-14" />

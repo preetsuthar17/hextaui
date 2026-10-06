@@ -41,12 +41,14 @@ function DocsPageNavButton({
 
 function DocsPageNav({
   href,
+  items,
   className,
 }: {
   href: string
+  items?: DocsNavItem[]
   className?: string
 }) {
-  const { previous, next } = getDocsPager(href)
+  const { previous, next } = getDocsPager(href, items)
 
   if (!previous && !next) {
     return null

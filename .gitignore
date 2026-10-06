@@ -40,3 +40,10 @@ next-env.d.ts
 
 # wrangler
 /.wrangler/
+
+# cloudflare local secrets
+.dev.vars
+
+# private pro blocks checkout and generated pro data
+/pro/
+/lib/pro/generated/

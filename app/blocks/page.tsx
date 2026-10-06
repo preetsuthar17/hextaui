@@ -1,83 +1,52 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { IconArrowRight, IconArrowUpRight } from "@tabler/icons-react"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { blocksNav, proBlocks } from "@/lib/pro/catalog"
 
 export const metadata: Metadata = {
   title: "Blocks",
   description:
-    "Complete flows built from HextaUI components, from sign in to dashboards. Coming soon.",
+    "Complete flows built from HextaUI components, ready to drop into your app. Part of HextaUI Pro.",
 }
-
-const upcoming = [
-  { name: "Sign in", description: "Email, passkeys and a one-time code." },
-  { name: "Onboarding", description: "A short questionnaire that adapts." },
-  { name: "Pricing", description: "Plans, seats and a live total." },
-  { name: "Settings", description: "Profile, billing and preferences." },
-  { name: "Dashboard", description: "Charts, tables and filters." },
-  { name: "Inbox", description: "Threads, replies and attachments." },
-]
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-16 px-3 pt-20 pb-24 sm:pt-28">
-      <section className="flex flex-col items-start gap-6">
-        <Badge variant="info">Coming soon</Badge>
-        <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-medium tracking-tighter sm:text-5xl">
-            Blocks
-          </h1>
-          <p className="max-w-xl text-base text-pretty text-muted-foreground">
-            Complete flows built from HextaUI components. Drop one into your
-            app, then own and change every line.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/components" />}
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-10 px-4 py-16">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-xl font-semibold tracking-tight">Blocks</h1>
+        <p className="text-sm text-muted-foreground">
+          {proBlocks.length > 0
+            ? `${proBlocks.length} ${proBlocks.length === 1 ? "block" : "blocks"}, with more on the way. `
+            : "The first blocks are on the way. "}
+          Every block is part of{" "}
+          <Link
+            href="/account"
+            className="text-foreground underline underline-offset-4"
           >
-            Browse components
-            <IconArrowRight data-icon="inline-end" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            nativeButton={false}
-            render={
-              <a
-                href="https://twitter.com/preetsuthar17"
-                target="_blank"
-                rel="noreferrer"
-              />
-            }
-          >
-            Get updates
-            <IconArrowUpRight data-icon="inline-end" />
-          </Button>
-        </div>
-      </section>
-      <ul className="grid gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-        {upcoming.map((block) => (
-          <li key={block.name} className="flex flex-col gap-3">
-            <div
-              aria-hidden="true"
-              className="flex aspect-video flex-col gap-2 rounded-2xl bg-muted/60 p-6 dark:bg-muted/40"
-            >
-              <span className="h-3 w-1/3 rounded-full bg-foreground/10" />
-              <span className="h-3 w-2/3 rounded-full bg-foreground/5" />
-              <span className="mt-auto h-8 w-1/4 rounded-md bg-foreground/10" />
-            </div>
-            <div className="flex flex-col gap-0.5 px-0.5 text-sm">
-              <span className="font-medium">{block.name}</span>
-              <span className="text-muted-foreground">{block.description}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+            HextaUI Pro
+          </Link>
+          .
+        </p>
+      </header>
+      {blocksNav.map((section) => (
+        <section key={section.title} className="flex flex-col gap-3">
+          <h2 className="text-sm font-medium text-muted-foreground">
+            {section.title}
+          </h2>
+          <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {section.items.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="flex rounded-lg border px-4 py-3 text-sm font-medium transition-colors duration-150 outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </main>
   )
 }
