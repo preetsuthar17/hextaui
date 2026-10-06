@@ -15,7 +15,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { Skeleton } from "@/components/ui/skeleton"
-import { signInWithGithub, startCheckout, useSession } from "@/lib/auth-client"
+import { SignInOptions } from "@/components/account/sign-in-options"
+import { startCheckout, useSession } from "@/lib/auth-client"
 
 type ProFile = { path: string; code: string; html: string }
 
@@ -73,7 +74,7 @@ function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
       </EmptyHeader>
       <EmptyContent>
         {reason === "signed-out" ? (
-          <Button onClick={() => signInWithGithub()}>Sign in to unlock</Button>
+          <SignInOptions />
         ) : (
           <Button
             feedback

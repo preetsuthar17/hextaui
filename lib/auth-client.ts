@@ -57,10 +57,12 @@ function useSession() {
   return state
 }
 
-function signInWithGithub() {
+type SignInProvider = "github" | "google"
+
+function signIn(provider: SignInProvider) {
   writeSignedIn(true)
   return authClient.signIn.social({
-    provider: "github",
+    provider,
     callbackURL: window.location.pathname,
     errorCallbackURL: "/account",
   })
@@ -68,7 +70,10 @@ function signInWithGithub() {
 
 async function startCheckout() {
   const response = await fetch("/api/checkout", { method: "POST" })
-  if (response.status === 401) return signInWithGithub()
+  if (response.status === 401) {
+    window.location.assign("/account")
+    return
+  }
   const { url } = (await response.json()) as { url?: string }
   if (!response.ok || !url) throw new Error("Checkout failed")
   window.location.assign(url)
@@ -83,9 +88,10 @@ async function signOut() {
 
 export {
   authClient,
-  signInWithGithub,
+  signIn,
   signOut,
   startCheckout,
   useSession,
   type Session,
+  type SignInProvider,
 }

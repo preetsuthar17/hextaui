@@ -14,7 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { signInWithGithub, signOut, useSession } from "@/lib/auth-client"
+import { signInProviders } from "@/components/account/sign-in-options"
+import { signIn, signOut, useSession } from "@/lib/auth-client"
 
 function initials(name: string) {
   return name
@@ -30,14 +31,27 @@ function UserMenu() {
 
   if (!session) {
     return (
-      <Button
-        variant="ghost"
-        size="sm"
-        className={pending ? "invisible" : undefined}
-        onClick={() => signInWithGithub()}
-      >
-        Sign in
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="sm"
+              className={pending ? "invisible" : undefined}
+            />
+          }
+        >
+          Sign in
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          {signInProviders.map(({ id, label, icon: Icon }) => (
+            <DropdownMenuItem key={id} onClick={() => signIn(id)}>
+              <Icon />
+              {label}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
   }
 

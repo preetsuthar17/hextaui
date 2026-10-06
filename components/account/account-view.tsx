@@ -1,14 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  IconBrandGithub,
-  IconCheck,
-  IconCircleX,
-  IconLock,
-} from "@tabler/icons-react"
+import { IconCheck, IconCircleX, IconLock } from "@tabler/icons-react"
 
 import { ProTokens } from "@/components/account/pro-tokens"
+import { SignInOptions } from "@/components/account/sign-in-options"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -23,14 +19,18 @@ import {
 } from "@/components/ui/empty"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
-import {
-  signInWithGithub,
-  signOut,
-  startCheckout,
-  useSession,
-} from "@/lib/auth-client"
+import { signOut, startCheckout, useSession } from "@/lib/auth-client"
 
-type Plan = { pro: boolean; purchasedAt: string | null }
+type Plan = {
+  pro: boolean
+  purchasedAt: string | null
+  providers: string[]
+}
+
+const providerNames: Record<string, string> = {
+  github: "GitHub",
+  google: "Google",
+}
 
 const dateFormat = new Intl.DateTimeFormat("en", { dateStyle: "long" })
 
@@ -212,10 +212,7 @@ function AccountContent() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button onClick={() => signInWithGithub()}>
-            <IconBrandGithub data-icon="inline-start" />
-            Continue with GitHub
-          </Button>
+          <SignInOptions />
         </EmptyContent>
       </Empty>
     )
@@ -246,8 +243,16 @@ function AccountContent() {
             <dd>{dateFormat.format(new Date(plan.purchasedAt))}</dd>
           </>
         ) : null}
-        <dt className="text-muted-foreground">Signed in with</dt>
-        <dd>GitHub</dd>
+        {plan && plan.providers.length > 0 ? (
+          <>
+            <dt className="text-muted-foreground">Signed in with</dt>
+            <dd>
+              {plan.providers
+                .map((provider) => providerNames[provider] ?? provider)
+                .join(", ")}
+            </dd>
+          </>
+        ) : null}
         <dt className="text-muted-foreground">Member since</dt>
         <dd>{dateFormat.format(new Date(user.createdAt))}</dd>
       </dl>

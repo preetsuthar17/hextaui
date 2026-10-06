@@ -1,5 +1,7 @@
 import { getAuth } from "@/lib/auth"
-import { getDb } from "@/lib/db"
+import { eq } from "drizzle-orm"
+
+import { getDb, schema } from "@/lib/db"
 import {
   confirmPayment,
   findProPurchase,
@@ -29,10 +31,16 @@ export async function onRequestGet({ request, env }: Context) {
     purchase = await findProPurchase(db, userId)
   }
 
+  const accounts = await db
+    .select({ providerId: schema.account.providerId })
+    .from(schema.account)
+    .where(eq(schema.account.userId, userId))
+
   return Response.json(
     {
       pro: Boolean(purchase),
       purchasedAt: purchase?.createdAt ?? null,
+      providers: [...new Set(accounts.map((account) => account.providerId))],
     },
     { headers: { "cache-control": "no-store" } }
   )
