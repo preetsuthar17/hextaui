@@ -1,4 +1,7 @@
+import Link from "next/link"
 import { cn } from "cn"
+
+import { legalPages } from "@/components/legal/legal-page"
 
 import { siteRepository } from "@/lib/site"
 
@@ -29,6 +32,16 @@ function SiteFooter({ className }: { className?: string }) {
         </a>
         .
       </p>
+      <nav
+        aria-label="Legal"
+        className="mx-auto mt-3 flex max-w-screen-2xl flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-muted-foreground"
+      >
+        {legalPages.map((page) => (
+          <Link key={page.href} href={page.href} className={linkClassName}>
+            {page.title}
+          </Link>
+        ))}
+      </nav>
     </footer>
   )
 }

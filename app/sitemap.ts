@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 
+import { legalPages } from "@/components/legal/legal-page"
 import { docsNav } from "@/lib/docs"
 import { proBlocks } from "@/lib/pro/catalog"
 import { absoluteUrl } from "@/lib/site"
@@ -18,5 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     })),
     ...docs.map((item) => ({ url: absoluteUrl(item.href), priority: 0.7 })),
+    ...legalPages.map((page) => ({
+      url: absoluteUrl(page.href),
+      priority: 0.2,
+    })),
   ]
 }

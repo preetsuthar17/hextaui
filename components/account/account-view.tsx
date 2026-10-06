@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { IconCheck, IconCircleX, IconLock } from "@tabler/icons-react"
 
 import { ProTokens } from "@/components/account/pro-tokens"
@@ -142,6 +143,21 @@ function ProUpgrade() {
       >
         Get Pro
       </Button>
+      <p className="text-xs text-muted-foreground">
+        By buying you agree to the{" "}
+        <Link href="/legal/terms" className="underline underline-offset-4">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/legal/license" className="underline underline-offset-4">
+          Pro License
+        </Link>
+        . Refundable within 14 days, see the{" "}
+        <Link href="/legal/refunds" className="underline underline-offset-4">
+          Refund Policy
+        </Link>
+        .
+      </p>
     </section>
   )
 }

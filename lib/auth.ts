@@ -37,6 +37,9 @@ function createAuth(env: AuthEnv) {
           }
         : {}),
     },
+    account: {
+      encryptOAuthTokens: true,
+    },
     session: {
       expiresIn: 60 * 60 * 24 * 30,
       updateAge: 60 * 60 * 24,
