@@ -35,4 +35,4 @@ function SignInOptions({ className }: { className?: string }) {
   )
 }
 
-export { providers as signInProviders, SignInOptions }
+export { SignInOptions }

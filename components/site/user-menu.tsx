@@ -14,8 +14,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { signInProviders } from "@/components/account/sign-in-options"
-import { signIn, signOut, useSession } from "@/lib/auth-client"
+import { SignInOptions } from "@/components/account/sign-in-options"
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { signOut, useSession } from "@/lib/auth-client"
 
 function initials(name: string) {
   return name
@@ -31,8 +40,8 @@ function UserMenu() {
 
   if (!session) {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger
+      <Dialog>
+        <DialogTrigger
           render={
             <Button
               variant="ghost"
@@ -42,16 +51,20 @@ function UserMenu() {
           }
         >
           Sign in
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          {signInProviders.map(({ id, label, icon: Icon }) => (
-            <DropdownMenuItem key={id} onClick={() => signIn(id)}>
-              <Icon />
-              {label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Sign in to HextaUI</DialogTitle>
+            <DialogDescription>
+              Your account holds your Pro access and the tokens you use to
+              install Pro blocks.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <SignInOptions className="max-w-none" />
+          </DialogBody>
+        </DialogContent>
+      </Dialog>
     )
   }
 
