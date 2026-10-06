@@ -46,10 +46,15 @@ const buttonVariants = cva(
           "size-8 shrink-0 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md pointer-coarse:after:absolute pointer-coarse:after:-inset-1.5 pointer-coarse:in-data-[slot=button-group]:after:hidden",
         "icon-lg": "size-10 shrink-0",
       },
+      shape: {
+        default: "",
+        pill: "rounded-full in-data-[slot=button-group]:rounded-full",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      shape: "default",
     },
   }
 )
@@ -191,6 +196,7 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  shape = "default",
   children,
   onClick,
   disabled,
@@ -288,12 +294,13 @@ function Button({
   const button = (
     <ButtonPrimitive
       data-slot="button"
+      data-shape={shape ?? "default"}
       data-status={enabled ? status : undefined}
       aria-busy={isLoading || undefined}
       disabled={disabled || isLoading}
       focusableWhenDisabled={focusableWhenDisabled ?? (isLoading || undefined)}
       className={cn(
-        buttonVariants({ variant: resolvedVariant, size }),
+        buttonVariants({ variant: resolvedVariant, size, shape }),
         quiet && quietStatusClasses[status],
         className
       )}

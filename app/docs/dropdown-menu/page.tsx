@@ -18,6 +18,7 @@ import { DropdownMenuControlled } from "@/components/examples/dropdown-menu/cont
 import { DropdownMenuDemo } from "@/components/examples/dropdown-menu/demo"
 import { DropdownMenuDisabled } from "@/components/examples/dropdown-menu/disabled"
 import { DropdownMenuHover } from "@/components/examples/dropdown-menu/hover"
+import { DropdownMenuIndicatorEnd } from "@/components/examples/dropdown-menu/indicator-end"
 import { DropdownMenuInSheet } from "@/components/examples/dropdown-menu/in-sheet"
 import { DropdownMenuLongContent } from "@/components/examples/dropdown-menu/long-content"
 import { DropdownMenuRadioGroupDemo } from "@/components/examples/dropdown-menu/radio-group"
@@ -210,6 +211,19 @@ export default function Page() {
           }
         >
           <DropdownMenuRadioGroupDemo />
+        </DocsExample>
+        <DocsExample
+          file="dropdown-menu/indicator-end"
+          title="Check on the right"
+          description={
+            <>
+              Set <DocsCode>{'indicator="end"'}</DocsCode> on checkbox and radio
+              items to show the check after the label instead of indenting it,
+              which suits pickers with a description under each option.
+            </>
+          }
+        >
+          <DropdownMenuIndicatorEnd />
         </DocsExample>
         <DocsExample
           file="dropdown-menu/select"
@@ -552,6 +566,11 @@ export default function Page() {
               },
               { name: "closeOnClick", type: "boolean", default: "false" },
               { name: "inset", type: "boolean", default: "false" },
+              {
+                name: "indicator",
+                type: '"start" | "end"',
+                default: '"start"',
+              },
               { name: "disabled", type: "boolean", default: "false" },
             ]}
           />
@@ -589,6 +608,11 @@ export default function Page() {
               { name: "value", type: "Value" },
               { name: "closeOnClick", type: "boolean", default: "false" },
               { name: "inset", type: "boolean", default: "false" },
+              {
+                name: "indicator",
+                type: '"start" | "end"',
+                default: '"start"',
+              },
               { name: "disabled", type: "boolean", default: "false" },
             ]}
           />

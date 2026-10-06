@@ -203,6 +203,19 @@ describe("Toggle", () => {
     expect(html).toContain("data-pressed")
   })
 
+  it("rounds fully with the pill shape", () => {
+    render(
+      <Toggle shape="pill" size="sm" aria-label="Think">
+        T
+      </Toggle>
+    )
+    const toggle = screen.getByRole("button", { name: "Think" })
+    expect(toggle.getAttribute("data-shape")).toBe("pill")
+    const classes = toggle.className.split(" ")
+    expect(classes).toContain("rounded-full")
+    expect(classes.some((name) => name.startsWith("rounded-[min"))).toBe(false)
+  })
+
   it("exports toggleVariants for composition", () => {
     expect(toggleVariants()).toContain("h-9")
     expect(toggleVariants({ variant: "outline", size: "lg" })).toContain("h-10")

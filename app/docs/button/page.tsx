@@ -25,6 +25,7 @@ import { ButtonForm } from "@/components/examples/button/form"
 import { ButtonIconFeedback } from "@/components/examples/button/icon-feedback"
 import { ButtonLink } from "@/components/examples/button/link"
 import { ButtonRtl } from "@/components/examples/button/rtl"
+import { ButtonPill } from "@/components/examples/button/pill"
 import { ButtonSizes } from "@/components/examples/button/sizes"
 import { ButtonSmoothWidth } from "@/components/examples/button/smooth-width"
 import { ButtonVariants } from "@/components/examples/button/variants"
@@ -92,6 +93,19 @@ export default function Page() {
           }
         >
           <ButtonSizes />
+        </DocsExample>
+        <DocsExample
+          file="button/pill"
+          title="Pill"
+          description={
+            <>
+              <DocsCode>{'shape="pill"'}</DocsCode> rounds the ends fully, and
+              icon sizes become circles. It suits buttons that sit inside
+              rounded surfaces, like a chat composer.
+            </>
+          }
+        >
+          <ButtonPill />
         </DocsExample>
         <DocsExample
           file="button/with-icon"
@@ -290,6 +304,11 @@ export default function Page() {
               {
                 name: "size",
                 type: '"xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg"',
+                default: '"default"',
+              },
+              {
+                name: "shape",
+                type: '"default" | "pill"',
                 default: '"default"',
               },
               {

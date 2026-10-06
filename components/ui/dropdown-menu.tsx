@@ -356,17 +356,27 @@ function DropdownMenuItem({
   )
 }
 
+const indicatorStartClassName =
+  "pointer-events-none absolute start-2 flex size-4 items-center justify-center"
+
+const indicatorEndClassName =
+  "pointer-events-none ms-auto flex size-4 shrink-0 items-center justify-center [[data-slot=dropdown-menu-shortcut]~&]:ms-0"
+
 const dropdownMenuIndicatorClassName =
   "flex items-center justify-center opacity-0 transition-[opacity,scale] duration-150 ease-out-quint data-checked:opacity-100 motion-safe:scale-50 motion-safe:data-checked:scale-100 motion-reduce:transition-none"
 
+type DropdownMenuIndicatorPosition = "start" | "end"
+
 type DropdownMenuCheckboxItemProps = MenuPrimitive.CheckboxItem.Props & {
   inset?: boolean
+  indicator?: DropdownMenuIndicatorPosition
 }
 
 function DropdownMenuCheckboxItem({
   className,
   children,
   inset,
+  indicator = "start",
   closeOnClick = false,
   onClick,
   ...props
@@ -377,28 +387,39 @@ function DropdownMenuCheckboxItem({
     <MenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset ? "" : undefined}
+      data-indicator={indicator}
       data-chosen={choice.chosen}
       closeOnClick={closeOnClick}
       onClick={choice.onClick}
       className={mergeClassName(
-        cn(dropdownMenuItemVariants(), "ps-8"),
+        cn(dropdownMenuItemVariants(), indicator === "start" && "ps-8"),
         className
       )}
       {...props}
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute start-2 flex size-4 items-center justify-center"
-      >
-        <MenuPrimitive.CheckboxItemIndicator
-          keepMounted
-          data-slot="dropdown-menu-checkbox-item-indicator"
-          className={dropdownMenuIndicatorClassName}
-        >
-          <IconCheck className="text-current" />
-        </MenuPrimitive.CheckboxItemIndicator>
-      </span>
+      {indicator === "start" ? (
+        <span aria-hidden className={indicatorStartClassName}>
+          <MenuPrimitive.CheckboxItemIndicator
+            keepMounted
+            data-slot="dropdown-menu-checkbox-item-indicator"
+            className={dropdownMenuIndicatorClassName}
+          >
+            <IconCheck className="text-current" />
+          </MenuPrimitive.CheckboxItemIndicator>
+        </span>
+      ) : null}
       {children}
+      {indicator === "end" ? (
+        <span aria-hidden className={indicatorEndClassName}>
+          <MenuPrimitive.CheckboxItemIndicator
+            keepMounted
+            data-slot="dropdown-menu-checkbox-item-indicator"
+            className={dropdownMenuIndicatorClassName}
+          >
+            <IconCheck className="text-current" />
+          </MenuPrimitive.CheckboxItemIndicator>
+        </span>
+      ) : null}
     </MenuPrimitive.CheckboxItem>
   )
 }
@@ -416,12 +437,14 @@ function DropdownMenuRadioGroup(props: MenuPrimitive.RadioGroup.Props) {
 
 type DropdownMenuRadioItemProps = MenuPrimitive.RadioItem.Props & {
   inset?: boolean
+  indicator?: DropdownMenuIndicatorPosition
 }
 
 function DropdownMenuRadioItem({
   className,
   children,
   inset,
+  indicator = "start",
   closeOnClick = false,
   onClick,
   ...props
@@ -432,28 +455,39 @@ function DropdownMenuRadioItem({
     <MenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
       data-inset={inset ? "" : undefined}
+      data-indicator={indicator}
       data-chosen={choice.chosen}
       closeOnClick={closeOnClick}
       onClick={choice.onClick}
       className={mergeClassName(
-        cn(dropdownMenuItemVariants(), "ps-8"),
+        cn(dropdownMenuItemVariants(), indicator === "start" && "ps-8"),
         className
       )}
       {...props}
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute start-2 flex size-4 items-center justify-center"
-      >
-        <MenuPrimitive.RadioItemIndicator
-          keepMounted
-          data-slot="dropdown-menu-radio-item-indicator"
-          className={dropdownMenuIndicatorClassName}
-        >
-          <IconCircleFilled className="size-2 text-current" />
-        </MenuPrimitive.RadioItemIndicator>
-      </span>
+      {indicator === "start" ? (
+        <span aria-hidden className={indicatorStartClassName}>
+          <MenuPrimitive.RadioItemIndicator
+            keepMounted
+            data-slot="dropdown-menu-radio-item-indicator"
+            className={dropdownMenuIndicatorClassName}
+          >
+            <IconCircleFilled className="size-2 text-current" />
+          </MenuPrimitive.RadioItemIndicator>
+        </span>
+      ) : null}
       {children}
+      {indicator === "end" ? (
+        <span aria-hidden className={indicatorEndClassName}>
+          <MenuPrimitive.RadioItemIndicator
+            keepMounted
+            data-slot="dropdown-menu-radio-item-indicator"
+            className={dropdownMenuIndicatorClassName}
+          >
+            <IconCheck className="text-current" />
+          </MenuPrimitive.RadioItemIndicator>
+        </span>
+      ) : null}
     </MenuPrimitive.RadioItem>
   )
 }

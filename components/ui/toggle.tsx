@@ -28,10 +28,15 @@ const toggleVariants = cva(
         sm: "h-8 min-w-8 rounded-[min(var(--radius-md),10px)] px-1.5 pointer-coarse:after:-inset-1.5",
         lg: "h-10 min-w-10 px-2.5 pointer-coarse:after:-inset-0.5",
       },
+      shape: {
+        default: "",
+        pill: "rounded-full",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      shape: "default",
     },
   }
 )
@@ -43,13 +48,18 @@ function Toggle<Value extends string = string>({
   className,
   variant = "default",
   size = "default",
+  shape = "default",
   ...props
 }: ToggleProps<Value>) {
   return (
     <TogglePrimitive
       data-variant={variant}
       data-size={size}
-      className={mergeClassName(toggleVariants({ variant, size }), className)}
+      data-shape={shape ?? "default"}
+      className={mergeClassName(
+        toggleVariants({ variant, size, shape }),
+        className
+      )}
       {...props}
       data-slot="toggle"
     />

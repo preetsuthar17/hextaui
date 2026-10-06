@@ -3966,6 +3966,24 @@
       ]
     },
     {
+      "name": "button-pill",
+      "type": "registry:example",
+      "title": "Button: Pill",
+      "description": "The Pill example from the Button docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/button/pill.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "button-rtl",
       "type": "registry:example",
       "title": "Button: Right to left",
@@ -6758,6 +6776,25 @@
       "files": [
         {
           "path": "components/examples/dropdown-menu/in-sheet.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu-indicator-end",
+      "type": "registry:example",
+      "title": "Dropdown menu: Check on the right",
+      "description": "The Check on the right example from the Dropdown menu docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/dropdown-menu/indicator-end.tsx",
           "type": "registry:example"
         }
       ]
@@ -12422,6 +12459,24 @@
       "files": [
         {
           "path": "components/examples/toggle/outline.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toggle-pill",
+      "type": "registry:example",
+      "title": "Toggle: Pill",
+      "description": "The Pill example from the Toggle docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/toggle.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/toggle/pill.tsx",
           "type": "registry:example"
         }
       ]

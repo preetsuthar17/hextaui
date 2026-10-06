@@ -158,6 +158,26 @@ describe("useButtonFeedback", () => {
 })
 
 describe("Button", () => {
+  it("rounds fully with the pill shape at every size", () => {
+    render(
+      <>
+        <Button shape="pill" size="sm">
+          Small
+        </Button>
+        <Button shape="pill" size="icon-sm" aria-label="Add">
+          +
+        </Button>
+      </>
+    )
+    for (const name of ["Small", "Add"]) {
+      const button = screen.getByRole("button", { name })
+      expect(button.getAttribute("data-shape")).toBe("pill")
+      const classes = button.className.split(" ")
+      expect(classes).toContain("rounded-full")
+      expect(classes.some((item) => item.startsWith("rounded-[min"))).toBe(false)
+    }
+  })
+
   it("leaves plain buttons untouched", () => {
     render(<Button onClick={async () => {}}>Save</Button>)
     const button = screen.getByRole("button", { name: "Save" })

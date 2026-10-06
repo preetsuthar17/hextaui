@@ -19,6 +19,7 @@ import { ToggleDisabled } from "@/components/examples/toggle/disabled"
 import { ToggleFilledIcon } from "@/components/examples/toggle/filled-icon"
 import { ToggleOutline } from "@/components/examples/toggle/outline"
 import { ToggleRtl } from "@/components/examples/toggle/rtl"
+import { TogglePill } from "@/components/examples/toggle/pill"
 import { ToggleSizes } from "@/components/examples/toggle/sizes"
 import { ToggleText } from "@/components/examples/toggle/text"
 import { getDocsComponentMetadata } from "@/lib/docs"
@@ -100,6 +101,18 @@ export default function Page() {
           <ToggleSizes />
         </DocsExample>
         <DocsExample
+          file="toggle/pill"
+          title="Pill"
+          description={
+            <>
+              <DocsCode>{'shape="pill"'}</DocsCode> rounds the ends fully, for
+              toggles inside rounded surfaces like a chat composer.
+            </>
+          }
+        >
+          <TogglePill />
+        </DocsExample>
+        <DocsExample
           file="toggle/disabled"
           title="Disabled"
           description="A disabled toggle keeps showing whether it's on, but can't be pressed or focused."
@@ -176,6 +189,11 @@ export default function Page() {
               {
                 name: "size",
                 type: '"default" | "sm" | "lg"',
+                default: '"default"',
+              },
+              {
+                name: "shape",
+                type: '"default" | "pill"',
                 default: '"default"',
               },
               { name: "pressed", type: "boolean" },

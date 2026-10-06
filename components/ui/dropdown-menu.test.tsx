@@ -192,6 +192,37 @@ describe("DropdownMenu", () => {
     expect(slot("dropdown-menu-content")).not.toBeNull()
   })
 
+  it("puts the check after the label with indicator end", async () => {
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Account</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuCheckboxItem indicator="end" defaultChecked>
+            Web search
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuRadioGroup defaultValue="fast">
+            <DropdownMenuRadioItem value="fast" indicator="end">
+              Fast
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="pro">Pro</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+    await open()
+    const search = screen.getByRole("menuitemcheckbox", { name: "Web search" })
+    const fast = screen.getByRole("menuitemradio", { name: "Fast" })
+    const pro = screen.getByRole("menuitemradio", { name: "Pro" })
+    for (const item of [search, fast]) {
+      expect(item.getAttribute("data-indicator")).toBe("end")
+      expect(item.className.split(" ")).not.toContain("ps-8")
+      expect(item.lastElementChild?.getAttribute("aria-hidden")).toBe("true")
+      expect(item.firstChild?.textContent).not.toBe("")
+    }
+    expect(pro.getAttribute("data-indicator")).toBe("start")
+    expect(pro.className.split(" ")).toContain("ps-8")
+  })
+
   it("opens a submenu from the keyboard", async () => {
     render(
       <DropdownMenu defaultOpen>
