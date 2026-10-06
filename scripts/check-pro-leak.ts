@@ -40,6 +40,11 @@ const publicSource = ["app", "components", "hooks", "lib"]
   .filter((dir) => fs.existsSync(dir))
   .flatMap(walk)
   .filter(isSource)
+  .concat(
+    walk(blocksDir).filter(
+      (file) => isSource(file) && path.basename(file).startsWith("usage")
+    )
+  )
   .map((file) => fs.readFileSync(file, "utf8"))
   .join("\n")
 
