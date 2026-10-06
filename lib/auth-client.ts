@@ -8,6 +8,25 @@ const authClient = createAuthClient()
 type Session = typeof authClient.$Infer.Session
 
 const signedInKey = "hextaui-signed-in"
+const userKey = "hextaui-user"
+
+type CachedUser = { name: string; email: string; image?: string | null }
+
+function readCachedUser(): CachedUser | null {
+  try {
+    const value = JSON.parse(localStorage.getItem(userKey) ?? "null")
+    return value && typeof value.email === "string" ? value : null
+  } catch {
+    return null
+  }
+}
+
+function writeCachedUser(user: CachedUser | null) {
+  try {
+    if (user) localStorage.setItem(userKey, JSON.stringify(user))
+    else localStorage.removeItem(userKey)
+  } catch {}
+}
 
 function readSignedIn() {
   try {
@@ -30,6 +49,15 @@ function loadSession() {
   sessionRequest ??= authClient.getSession().then(
     ({ data }) => {
       writeSignedIn(Boolean(data))
+      writeCachedUser(
+        data
+          ? {
+              name: data.user.name,
+              email: data.user.email,
+              image: data.user.image,
+            }
+          : null
+      )
       return data ?? null
     },
     () => null
@@ -41,13 +69,17 @@ function useSession() {
   const [state, setState] = useState<{
     session: Session | null
     pending: boolean
-  }>({ session: null, pending: true })
+    cachedUser: CachedUser | null
+  }>({ session: null, pending: true, cachedUser: null })
 
   useEffect(() => {
     let active = true
-    const request = readSignedIn() ? loadSession() : Promise.resolve(null)
+    const signedIn = readSignedIn()
+    const cachedUser = signedIn ? readCachedUser() : null
+    if (cachedUser) setState((current) => ({ ...current, cachedUser }))
+    const request = signedIn ? loadSession() : Promise.resolve(null)
     request.then((session) => {
-      if (active) setState({ session, pending: false })
+      if (active) setState({ session, pending: false, cachedUser: null })
     })
     return () => {
       active = false
@@ -82,6 +114,7 @@ async function startCheckout() {
 async function signOut() {
   await authClient.signOut()
   writeSignedIn(false)
+  writeCachedUser(null)
   sessionRequest = undefined
   window.location.reload()
 }
@@ -92,6 +125,7 @@ export {
   signOut,
   startCheckout,
   useSession,
+  type CachedUser,
   type Session,
   type SignInProvider,
 }

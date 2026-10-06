@@ -36,9 +36,10 @@ function initials(name: string) {
 }
 
 function UserMenu() {
-  const { session, pending } = useSession()
+  const { session, pending, cachedUser } = useSession()
+  const user = session?.user ?? cachedUser
 
-  if (!session) {
+  if (!user) {
     return (
       <Dialog>
         <DialogTrigger
@@ -67,8 +68,6 @@ function UserMenu() {
       </Dialog>
     )
   }
-
-  const { user } = session
 
   return (
     <DropdownMenu>
