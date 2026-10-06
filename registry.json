@@ -68,7 +68,8 @@
           "animate-input-otp-pop": "input-otp-pop 360ms cubic-bezier(0.23, 1, 0.32, 1) both",
           "animate-empty-in": "empty-in 480ms cubic-bezier(0.23, 1, 0.32, 1) var(--empty-delay, 0ms) both",
           "animate-message-in": "message-in 420ms linear(0, 0.015 2%, 0.0532 4%, 0.1065 6%, 0.1686 8%, 0.2351 10%, 0.3363 13%, 0.4332 16%, 0.5495 20%, 0.648 24%, 0.7287 28%, 0.807 33%, 0.8646 38%, 0.9128 44%, 0.9447 50%, 0.968 57%, 0.9834 65%, 0.9924 74%, 0.9975 85%, 1) both",
-          "animate-video-player-flash": "video-player-flash 650ms cubic-bezier(0.23, 1, 0.32, 1) both"
+          "animate-video-player-flash": "video-player-flash 650ms cubic-bezier(0.23, 1, 0.32, 1) both",
+          "animate-text-shimmer": "text-shimmer 2s linear infinite"
         },
         "light": {
           "destructive-foreground": "oklch(0.985 0 0)",
@@ -202,7 +203,7 @@
         "@keyframes avatar-badge-pulse": {
           "from": {
             "scale": "1",
-            "opacity": "0.6"
+            "opacity": "0.5"
           },
           "to": {
             "scale": "2.6",
@@ -263,8 +264,27 @@
             "translate": "2px"
           }
         },
+        "@keyframes text-shimmer": {
+          "from": {
+            "background-position": "100% 0"
+          },
+          "to": {
+            "background-position": "-100% 0"
+          }
+        },
+        "@utility text-hero": {
+          "font-size": "min(calc((100vw - 1.5rem) / 15.75), 2.6875rem)",
+          "line-height": "1.3"
+        },
         "@utility border-hairline": {
           "border-width": "var(--hairline)"
+        },
+        "@utility text-shimmer": {
+          "background-image": "linear-gradient(90deg, var(--muted-foreground) 25%, var(--info) 40%, color-mix(in oklab, var(--info) 45%, white) 50%, var(--info) 60%, var(--muted-foreground) 75%)",
+          "background-size": "250% 100%",
+          "background-clip": "text",
+          "color": "transparent",
+          "animation": "var(--animate-text-shimmer)"
         },
         ":root": {
           "--hairline": "1px"

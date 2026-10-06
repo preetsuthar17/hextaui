@@ -12,7 +12,7 @@ import { easeOut, easeSpring } from "@/lib/motion"
 import { NumberFlow } from "@/components/ui/number-flow"
 
 const badgeVariants = cva(
-  "group/badge relative inline-flex h-(--badge-height) w-fit max-w-full min-w-0 shrink-0 items-center justify-center gap-1 overflow-hidden rounded-(--badge-radius) align-middle leading-none font-medium whitespace-nowrap inset-ring-(length:--hairline) inset-ring-transparent transition-[background-color,border-color,color,box-shadow,scale] duration-150 ease-out-quint outline-none select-none [--badge-inset:3px] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-current after:opacity-0 after:transition-opacity after:duration-150 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:inset-ring-ring focus-visible:outline-hidden has-data-[slot=badge-close]:overflow-visible has-[>[data-slot=badge-close]]:pe-(--badge-inset) aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:inset-ring-destructive dark:aria-invalid:ring-destructive/40 forced-colors:border [&:is(a,button)]:cursor-pointer [&:is(a,button)]:hover:after:opacity-8 motion-safe:[&:is(a,button)]:active:scale-[0.97] [&>svg]:pointer-events-none [&>svg]:shrink-0 [&>svg]:text-(--badge-accent) [&>svg:not([class*='size-'])]:size-3",
+  "group/badge relative inline-flex h-(--badge-height) w-fit max-w-full min-w-0 shrink-0 items-center justify-center gap-1 overflow-hidden rounded-(--badge-radius) align-middle leading-none font-medium whitespace-nowrap inset-ring-(length:--hairline) inset-ring-transparent transition-[background-color,border-color,color,box-shadow,scale] duration-150 ease-out-quint outline-none select-none [--badge-inset:3px] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-current after:opacity-0 after:transition-opacity after:duration-150 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:inset-ring-ring focus-visible:outline-hidden has-data-[slot=badge-close]:overflow-visible has-[>[data-slot=badge-close]]:pe-(--badge-inset) aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:inset-ring-destructive dark:aria-invalid:ring-destructive/40 forced-colors:border [&:is(a,button)]:cursor-pointer [&:is(a,button)]:hover:after:opacity-8 motion-safe:[&:is(a,button)]:active:scale-[0.97] [&>svg]:pointer-events-none [&>svg]:shrink-0 [&>svg]:text-(--badge-accent) [&>svg:not([class*='size-'])]:size-3 has-[>[data-slot=avatar]:first-child]:ps-(--badge-inset) [&>[data-slot=avatar]]:size-[calc(var(--badge-height)-var(--badge-inset)*2)]",
   {
     variants: {
       variant: {
@@ -25,6 +25,11 @@ const badgeVariants = cva(
       appearance: {
         solid: "[--badge-accent:currentColor]",
         outline: "bg-background text-foreground inset-ring-border",
+        muted: "bg-muted text-muted-foreground",
+      },
+      shape: {
+        default: "",
+        pill: "rounded-full",
       },
       size: {
         sm: "px-1.5 text-[0.6875rem] [--badge-height:1.125rem] [--badge-radius:min(var(--radius-sm),5px)] has-data-[icon=inline-end]:pe-1 has-data-[icon=inline-start]:ps-1 [&>svg:not([class*='size-'])]:size-2.5",
@@ -64,6 +69,7 @@ const badgeVariants = cva(
       variant: "default",
       appearance: "outline",
       size: "default",
+      shape: "default",
     },
   }
 )
@@ -73,6 +79,7 @@ type BadgeAppearance = NonNullable<
   VariantProps<typeof badgeVariants>["appearance"]
 >
 type BadgeSize = NonNullable<VariantProps<typeof badgeVariants>["size"]>
+type BadgeShape = NonNullable<VariantProps<typeof badgeVariants>["shape"]>
 
 const BadgeContext = React.createContext<{
   close: () => void
@@ -208,6 +215,7 @@ type BadgeProps = useRender.ComponentProps<"span"> & {
   variant?: BadgeVariant
   appearance?: BadgeAppearance
   size?: BadgeSize
+  shape?: BadgeShape
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
@@ -219,6 +227,7 @@ function Badge({
   variant = "default",
   appearance = "outline",
   size = "default",
+  shape = "default",
   open: openProp,
   defaultOpen = true,
   onOpenChange,
@@ -358,7 +367,7 @@ function Badge({
     props: mergeProps<"span">(
       {
         className: cn(
-          badgeVariants({ variant, appearance, size }),
+          badgeVariants({ variant, appearance, size, shape }),
           animateIn &&
             "motion-safe:animate-in motion-safe:ease-out-quint motion-safe:animation-duration-200 motion-safe:fade-in-0 motion-safe:zoom-in-90",
           className
@@ -369,6 +378,7 @@ function Badge({
       dataAttributes("badge", {
         "data-variant": variant,
         "data-appearance": appearance,
+        "data-shape": shape,
         "data-size": size,
       })
     ),
@@ -492,5 +502,6 @@ export {
   type BadgeCountProps,
   type BadgeVariant,
   type BadgeAppearance,
+  type BadgeShape,
   type BadgeSize,
 }

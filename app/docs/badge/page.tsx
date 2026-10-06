@@ -84,7 +84,9 @@ export default function Page() {
               The default <DocsCode>outline</DocsCode> appearance keeps a
               neutral surface and puts the status color on the dot or icon. Use{" "}
               <DocsCode>{'appearance="solid"'}</DocsCode> when the badge needs
-              to stand out.
+              to stand out, or <DocsCode>{'appearance="muted"'}</DocsCode> for a
+              quiet filled chip. <DocsCode>{'shape="pill"'}</DocsCode> rounds it
+              fully.
             </>
           }
         >
@@ -233,8 +235,13 @@ export default function Page() {
               },
               {
                 name: "appearance",
-                type: '"outline" | "solid"',
+                type: '"outline" | "solid" | "muted"',
                 default: '"outline"',
+              },
+              {
+                name: "shape",
+                type: '"default" | "pill"',
+                default: '"default"',
               },
               {
                 name: "size",
@@ -271,6 +278,10 @@ export default function Page() {
               {
                 name: "data-appearance",
                 description: "The current appearance.",
+              },
+              {
+                name: "data-shape",
+                description: "The current shape.",
               },
               { name: "data-size", description: "The current size." },
               {

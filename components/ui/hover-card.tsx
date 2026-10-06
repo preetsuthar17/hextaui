@@ -87,6 +87,31 @@ type HoverCardContentProps = PreviewCardPrimitive.Popup.Props &
     arrow?: boolean
   }
 
+type HoverCardSide = NonNullable<HoverCardContentProps["side"]>
+
+function SideLock({
+  onSide,
+}: {
+  onSide: (side: HoverCardSide | null) => void
+}) {
+  const ref = React.useRef<HTMLSpanElement>(null)
+
+  React.useLayoutEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const side = ref.current
+        ?.closest("[data-slot=hover-card-positioner]")
+        ?.getAttribute("data-side")
+      if (side) onSide(side as HoverCardSide)
+    })
+    return () => {
+      cancelAnimationFrame(frame)
+      onSide(null)
+    }
+  }, [onSide])
+
+  return <span ref={ref} hidden />
+}
+
 function HoverCardContent({
   className,
   children,
@@ -106,19 +131,24 @@ function HoverCardContent({
   ...props
 }: HoverCardContentProps) {
   const direction = useDirection()
+  const [lockedSide, setLockedSide] = React.useState<HoverCardSide | null>(null)
 
   return (
     <PreviewCardPrimitive.Portal {...portalProps}>
       <PreviewCardPrimitive.Positioner
         data-slot="hover-card-positioner"
         dir={direction === "rtl" ? "rtl" : undefined}
-        side={side}
+        side={lockedSide ?? side}
         align={align}
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         anchor={anchor}
         collisionPadding={collisionPadding}
-        collisionAvoidance={collisionAvoidance}
+        collisionAvoidance={
+          lockedSide
+            ? { ...collisionAvoidance, side: "none" }
+            : collisionAvoidance
+        }
         collisionBoundary={collisionBoundary}
         sticky={sticky}
         positionMethod={positionMethod}
@@ -136,6 +166,7 @@ function HoverCardContent({
           <HoverCardViewport>{children}</HoverCardViewport>
         </PreviewCardPrimitive.Popup>
         {arrow && <HoverCardArrow />}
+        <SideLock onSide={setLockedSide} />
       </PreviewCardPrimitive.Positioner>
     </PreviewCardPrimitive.Portal>
   )

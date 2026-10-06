@@ -40,6 +40,16 @@ export function BadgeVariants() {
           Failed
         </Badge>
       </div>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <Badge appearance="muted">Draft</Badge>
+        <Badge appearance="muted" shape="pill">
+          nngroup.com
+        </Badge>
+        <Badge appearance="muted" shape="pill" variant="info">
+          <BadgeDot />
+          Syncing
+        </Badge>
+      </div>
     </div>
   )
 }

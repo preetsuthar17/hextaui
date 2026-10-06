@@ -38,6 +38,38 @@ describe("Badge", () => {
     expect(slot(container, "badge")!.className).toContain(expected)
   })
 
+  it("renders a muted pill", () => {
+    const { container } = render(
+      <Badge appearance="muted" shape="pill">
+        nngroup.com
+      </Badge>
+    )
+    const badge = slot(container, "badge")!
+
+    expect(badge.getAttribute("data-appearance")).toBe("muted")
+    expect(badge.getAttribute("data-shape")).toBe("pill")
+    expect(badge.className).toContain("bg-muted")
+    expect(badge.className).toContain("rounded-full")
+    expect(badge.className).not.toContain("rounded-(--badge-radius)")
+  })
+
+  it("insets a leading avatar evenly", () => {
+    const { container } = render(
+      <Badge size="lg">
+        <span data-slot="avatar" />
+        nngroup.com
+      </Badge>
+    )
+    const badge = slot(container, "badge")!
+
+    expect(badge.className).toContain(
+      "has-[>[data-slot=avatar]:first-child]:ps-(--badge-inset)"
+    )
+    expect(badge.className).toContain(
+      "[&>[data-slot=avatar]]:size-[calc(var(--badge-height)-var(--badge-inset)*2)]"
+    )
+  })
+
   it("wraps text in a truncating label and leaves elements alone", () => {
     const { container } = render(
       <Badge>
