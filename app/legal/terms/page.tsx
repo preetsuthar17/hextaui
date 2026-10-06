@@ -8,12 +8,14 @@ import {
   LegalSection,
 } from "@/components/legal/legal-page"
 import { siteRepository } from "@/lib/site"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Terms of Service",
   description:
     "The terms for using HextaUI, its accounts and HextaUI Pro purchases.",
-}
+  path: "/legal/terms",
+})
 
 export default function Page() {
   return (

@@ -10,9 +10,12 @@ import { SiteHeader } from "@/components/site/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 import {
   absoluteUrl,
-  siteDescription,
+  siteAlternateNames,
   siteName,
   siteRepository,
+  siteSummary,
+  siteTitle,
+  siteTwitter,
   siteUrl,
 } from "@/lib/site"
 import { getGithubStars } from "@/lib/github"
@@ -21,11 +24,15 @@ import { Toaster } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: siteName,
-  description: siteDescription,
+  title: {
+    default: siteTitle,
+    template: `%s — ${siteName}`,
+  },
+  description: siteSummary,
   applicationName: siteName,
   keywords: [
     "HextaUI",
+    "Hexta UI",
     "shadcn/ui",
     "React components",
     "Tailwind CSS",
@@ -36,34 +43,66 @@ export const metadata: Metadata = {
     "Next.js components",
     "copy and paste components",
   ],
+  authors: [{ name: "Preet Suthar", url: "https://twitter.com/preetsuthar17" }],
   creator: siteName,
   openGraph: {
-    title: siteName,
-    description: siteDescription,
+    title: siteTitle,
+    description: siteSummary,
+    url: "/",
     siteName,
     type: "website",
     locale: "en_US",
   },
   twitter: {
-    card: "summary",
-    title: siteName,
-    description: siteDescription,
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteSummary,
+    creator: siteTwitter,
   },
 }
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareSourceCode",
-  name: siteName,
-  description: siteDescription,
-  url: siteUrl,
-  codeRepository: siteRepository,
-  programmingLanguage: ["TypeScript", "React"],
-  runtimePlatform: "React",
-  license: "https://opensource.org/licenses/MIT",
-  isAccessibleForFree: true,
-  documentation: absoluteUrl("/docs"),
-  sameAs: [siteRepository],
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: siteName,
+      alternateName: siteAlternateNames,
+      url: `${siteUrl}/`,
+      description: siteSummary,
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: siteName,
+      alternateName: siteAlternateNames,
+      url: `${siteUrl}/`,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/hextaui-logo.png"),
+        width: 1040,
+        height: 1040,
+      },
+      sameAs: [siteRepository, "https://twitter.com/preetsuthar17"],
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": `${siteUrl}/#software`,
+      name: siteName,
+      description: siteSummary,
+      url: `${siteUrl}/`,
+      codeRepository: siteRepository,
+      programmingLanguage: ["TypeScript", "React"],
+      runtimePlatform: "React",
+      license: "https://opensource.org/licenses/MIT",
+      isAccessibleForFree: true,
+      documentation: absoluteUrl("/docs"),
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
 }
 
 const fontSans = Inter({

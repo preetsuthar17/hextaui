@@ -10,19 +10,18 @@ import {
 } from "@/components/docs/docs-content"
 import { DocsPage } from "@/components/docs/docs-page"
 import type { DocsTocItem } from "@/lib/docs"
+import { pageMetadata } from "@/lib/metadata"
 import { absoluteUrl } from "@/lib/site"
 
 const description =
   "Connect Claude Code, Cursor, VS Code and other AI assistants to HextaUI, so they search the docs, read each API and install components for you."
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "MCP server",
   description,
-  alternates: {
-    canonical: "/docs/mcp",
-    types: { "text/markdown": "/docs/mcp.md" },
-  },
-}
+  path: "/docs/mcp",
+  markdown: "/docs/mcp.md",
+})
 
 const toc: DocsTocItem[] = [
   { id: "setup", title: "Setup" },

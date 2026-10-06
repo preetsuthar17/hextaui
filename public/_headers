@@ -5,6 +5,10 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 
+/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
 /r/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300, must-revalidate

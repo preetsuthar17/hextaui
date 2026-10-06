@@ -2,11 +2,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { docsComponents as components } from "@/lib/docs"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Components",
   description: "Every HextaUI component, with a live preview of each state.",
-}
+  path: "/components",
+})
 
 export default function Page() {
   return (

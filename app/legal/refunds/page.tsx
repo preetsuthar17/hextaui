@@ -7,11 +7,13 @@ import {
   LegalPage,
   LegalSection,
 } from "@/components/legal/legal-page"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Refund Policy",
   description: "HextaUI Pro comes with a 14-day, no-questions-asked refund.",
-}
+  path: "/legal/refunds",
+})
 
 export default function Page() {
   return (

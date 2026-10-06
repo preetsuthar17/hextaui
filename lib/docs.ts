@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 
+import { pageMetadata } from "@/lib/metadata"
+
 type DocsNavItem = {
   title: string
   href: string
@@ -765,14 +767,12 @@ function getDocsComponent(slug: string) {
 function getDocsComponentMetadata(slug: string): Metadata {
   const component = getDocsComponent(slug)
 
-  return {
+  return pageMetadata({
     title: component.name,
     description: component.description,
-    alternates: {
-      canonical: `/docs/${component.slug}`,
-      types: { "text/markdown": `/docs/${component.slug}.md` },
-    },
-  }
+    path: `/docs/${component.slug}`,
+    markdown: `/docs/${component.slug}.md`,
+  })
 }
 
 function getDocsSlug(value: string) {

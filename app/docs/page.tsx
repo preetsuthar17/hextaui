@@ -17,16 +17,15 @@ import {
   type DocsTocItem,
 } from "@/lib/docs"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
-import { siteDescription, siteRepository } from "@/lib/site"
+import { pageMetadata } from "@/lib/metadata"
+import { siteDescription, siteRepository, siteSummary } from "@/lib/site"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Introduction",
-  description: siteDescription,
-  alternates: {
-    canonical: "/docs",
-    types: { "text/markdown": "/docs.md" },
-  },
-}
+  description: siteSummary,
+  path: "/docs",
+  markdown: "/docs.md",
+})
 
 const toc: DocsTocItem[] = [
   { id: "what-is-hextaui", title: "What is HextaUI" },

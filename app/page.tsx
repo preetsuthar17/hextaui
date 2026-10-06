@@ -1,8 +1,12 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 
 import { HeroActions } from "@/components/site/hero-actions"
 import { Showcase } from "@/components/site/showcase/showcase"
 import { getGithubStars } from "@/lib/github"
+import { pageMetadata } from "@/lib/metadata"
+
+export const metadata: Metadata = pageMetadata({ path: "/" })
 
 export default async function Page() {
   const stars = await getGithubStars()

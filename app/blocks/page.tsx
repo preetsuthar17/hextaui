@@ -2,12 +2,14 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { blocksNav, proBlocks } from "@/lib/pro/catalog"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blocks",
   description:
     "Complete flows built from HextaUI components, ready to drop into your app. Part of HextaUI Pro.",
-}
+  path: "/blocks",
+})
 
 export default function Page() {
   return (

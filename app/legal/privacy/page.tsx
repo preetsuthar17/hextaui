@@ -11,12 +11,14 @@ import {
   LegalPage,
   LegalSection,
 } from "@/components/legal/legal-page"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
     "What data HextaUI collects, why, who processes it and the choices you have.",
-}
+  path: "/legal/privacy",
+})
 
 export default function Page() {
   return (

@@ -69,6 +69,13 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    files: ["app/**/{opengraph,twitter}-image.tsx"],
+    rules: {
+      "shadcn/no-inline-styles": "off",
+      "shadcn/no-raw-colors": "off",
+    },
+  },
+  {
     files: ["**/*.test.{ts,tsx}"],
     rules: {
       "shadcn/no-inline-styles": "off",

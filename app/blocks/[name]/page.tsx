@@ -13,6 +13,7 @@ import {
 } from "@/components/docs/docs-content"
 import { DocsStep } from "@/components/docs/docs-install"
 import { DocsPage } from "@/components/docs/docs-page"
+import { pageMetadata } from "@/lib/metadata"
 import { blocksNavItems, getProBlock, proBlockParams } from "@/lib/pro/catalog"
 
 export const dynamicParams = false
@@ -39,7 +40,11 @@ export async function generateMetadata({
 }: PageProps<"/blocks/[name]">): Promise<Metadata> {
   const block = getProBlock((await params).name)
   return block
-    ? { title: `${block.title} block`, description: block.description }
+    ? pageMetadata({
+        title: `${block.title} block`,
+        description: block.description,
+        path: `/blocks/${block.name}`,
+      })
     : {}
 }
 

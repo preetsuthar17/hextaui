@@ -11,20 +11,19 @@ import {
 } from "@/components/docs/docs-content"
 import { DocsPage } from "@/components/docs/docs-page"
 import type { DocsTocItem } from "@/lib/docs"
+import { pageMetadata } from "@/lib/metadata"
 import { getRegistryItemUrl, getThemeCss } from "@/lib/docs-registry"
 import { absoluteUrl, siteUrl } from "@/lib/site"
 
 const description =
   "Add HextaUI to a React project with the shadcn CLI, or copy the files in by hand."
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Installation",
   description,
-  alternates: {
-    canonical: "/docs/installation",
-    types: { "text/markdown": "/docs/installation.md" },
-  },
-}
+  path: "/docs/installation",
+  markdown: "/docs/installation.md",
+})
 
 const toc: DocsTocItem[] = [
   { id: "requirements", title: "Requirements" },
