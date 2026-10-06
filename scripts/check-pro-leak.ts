@@ -14,11 +14,17 @@ function walk(dir: string): string[] {
 }
 
 function sourceLines(file: string) {
-  return fs
-    .readFileSync(file, "utf8")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line.length >= 24 && sourceSyntax.test(line))
+  const lines: string[] = []
+  let inTemplate = false
+  for (const raw of fs.readFileSync(file, "utf8").split("\n")) {
+    const startsInTemplate = inTemplate
+    const ticks = (raw.match(/(?<!\\)`/g) ?? []).length
+    if (ticks % 2 === 1) inTemplate = !inTemplate
+    if (startsInTemplate || ticks > 0) continue
+    const line = raw.trim()
+    if (line.length >= 24 && sourceSyntax.test(line)) lines.push(line)
+  }
+  return lines
 }
 
 function isSource(file: string) {

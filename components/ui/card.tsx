@@ -30,6 +30,8 @@ const cardVariants = cva(
         default:
           "[--card-radius:var(--radius-xl)] [--card-spacing:--spacing(6)] [--card-title-size:var(--text-base)]",
         sm: "[--card-radius:var(--radius-lg)] [--card-spacing:--spacing(4)] [--card-title-size:var(--text-sm)]",
+        flush:
+          "[--card-radius:var(--radius-lg)] [--card-spacing:--spacing(0)] [--card-title-size:var(--text-sm)]",
       },
     },
     defaultVariants: {

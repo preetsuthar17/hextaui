@@ -16,6 +16,7 @@ type BlockMeta = {
   description: string
   category: string
   component: string
+  entry?: string
   dependencies?: string[]
   usage?: { file: string; title: string; description: string }[]
 }
@@ -57,9 +58,13 @@ function listFiles(dir: string, base = dir): string[] {
   })
 }
 
+function withoutTemplates(source: string) {
+  return source.replace(/`(?:\\[\s\S]|[^`\\])*`/g, "``")
+}
+
 function registryDependencies(sources: string[]) {
   const deps = new Set<string>()
-  for (const source of sources) {
+  for (const source of sources.map(withoutTemplates)) {
     for (const [, kind, name] of source.matchAll(
       /from "@\/(components\/ui|hooks|lib)\/([a-z0-9-]+)"/g
     )) {
@@ -70,7 +75,11 @@ function registryDependencies(sources: string[]) {
       deps.add(`@hextaui-pro/${block}`)
     }
   }
-  if (sources.some((source) => /animate-shimmer|text-shimmer|ease-out-quint/.test(source))) {
+  if (
+    sources.some((source) =>
+      /animate-shimmer|text-shimmer|ease-out-quint/.test(source)
+    )
+  ) {
     deps.add(`${registryBase}/theme.json`)
   }
   return [...deps].sort()
@@ -78,7 +87,7 @@ function registryDependencies(sources: string[]) {
 
 function packageDependencies(sources: string[], extra: string[] = []) {
   const deps = new Set(extra)
-  for (const source of sources) {
+  for (const source of sources.map(withoutTemplates)) {
     for (const [, spec] of source.matchAll(
       /from "([^"./@][^"]*|@[^"/]+\/[^"]+)"/g
     )) {
@@ -121,8 +130,9 @@ async function main() {
     const meta = JSON.parse(
       fs.readFileSync(path.join(dir, "block.json"), "utf8")
     ) as BlockMeta
+    const entryFile = meta.entry ?? `${name}.tsx`
     const files = listFiles(dir).sort((a, b) =>
-      a === `${name}.tsx` ? -1 : b === `${name}.tsx` ? 1 : a.localeCompare(b)
+      a === entryFile ? -1 : b === entryFile ? 1 : a.localeCompare(b)
     )
     const usage = (meta.usage ?? []).map((example) => ({
       title: example.title,
@@ -134,8 +144,9 @@ async function main() {
     const sources = files.map((file) =>
       fs.readFileSync(path.join(dir, file), "utf8")
     )
-    const entry = files.find((file) => file === `${name}.tsx`)
-    if (!entry) throw new Error(`pro: ${name} needs an entry file ${name}.tsx`)
+    if (!files.includes(entryFile)) {
+      throw new Error(`pro: ${name} needs an entry file ${entryFile}`)
+    }
 
     catalog.push({
       name,
@@ -175,7 +186,7 @@ async function main() {
     }
 
     previewImports.push(
-      `  "${name}": dynamic(() =>\n    import("@/pro/blocks/${name}/${name}").then((mod) => mod.${meta.component})\n  ),`
+      `  "${name}": dynamic(() =>\n    import("@/pro/blocks/${name}/${entryFile.replace(/\.tsx$/, "")}").then((mod) => mod.${meta.component})\n  ),`
     )
   }
 

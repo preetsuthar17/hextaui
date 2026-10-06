@@ -85,6 +85,14 @@ describe("Card", () => {
     expect(className).not.toContain("[--card-spacing:--spacing(6)]")
   })
 
+  it("drops inner spacing when flush", () => {
+    const { container } = render(<Card size="flush">Rows</Card>)
+    const card = slot(container, "card")
+
+    expect(card.getAttribute("data-size")).toBe("flush")
+    expect(card.className).toContain("[--card-spacing:--spacing(0)]")
+  })
+
   it("keeps its slot and state attributes over user props", () => {
     const { container } = render(
       <Card data-slot="nope" data-variant="nope" variant="muted" />

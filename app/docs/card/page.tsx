@@ -113,7 +113,10 @@ export default function Page() {
             <>
               <DocsCode>size=&quot;sm&quot;</DocsCode> tightens the spacing,
               radius and title size together, so a compact card still looks like
-              part of the same family.
+              part of the same family.{" "}
+              <DocsCode>size=&quot;flush&quot;</DocsCode> removes the inner
+              spacing for custom layouts such as lists and collapsible rows that
+              bring their own padding.
             </>
           }
         >
@@ -250,7 +253,7 @@ export default function Page() {
               },
               {
                 name: "size",
-                type: '"default" | "sm"',
+                type: '"default" | "sm" | "flush"',
                 default: '"default"',
                 description: "Scales spacing, radius and title size together.",
               },
