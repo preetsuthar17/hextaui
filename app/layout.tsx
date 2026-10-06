@@ -108,7 +108,7 @@ const jsonLd = {
 
 const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 })
 
 export default async function RootLayout({
