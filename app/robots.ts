@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 
-import { absoluteUrl, siteUrl } from "@/lib/site"
+import { absoluteUrl, noindexPaths, siteUrl } from "@/lib/site"
 
 export const dynamic = "force-static"
 
@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/docs/stress", "/preview/", "/account", "/api/"],
+      disallow: noindexPaths,
     },
     sitemap: absoluteUrl("/sitemap.xml"),
     host: siteUrl,
