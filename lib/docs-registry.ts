@@ -96,9 +96,4 @@ function getRegistryKind(files: string[]) {
   return "component"
 }
 
-export {
-  getRegistryItemUrl,
-  getRegistryKind,
-  getRegistrySlug,
-  getThemeCss,
-}
+export { getRegistryItemUrl, getRegistryKind, getRegistrySlug, getThemeCss }
