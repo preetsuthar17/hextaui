@@ -9,9 +9,11 @@ import { buttonVariants } from "@/components/ui/button"
 import { NumberFlow } from "@/components/ui/number-flow"
 import { Separator } from "@/components/ui/separator"
 import { GithubLogo } from "@/components/site/github-logo"
+import { useGithubStars } from "@/components/site/use-github-stars"
 import { siteRepository } from "@/lib/site"
 
-function GithubStarsButton({ stars }: { stars: number | null }) {
+function GithubStarsButton({ stars: initial }: { stars: number | null }) {
+  const stars = useGithubStars(initial)
   const [shown, setShown] = React.useState(0)
 
   React.useEffect(() => {

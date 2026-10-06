@@ -2,11 +2,12 @@ import { siteRepository } from "@/lib/site"
 
 const repositoryPath = new URL(siteRepository).pathname.replace(/^\//, "")
 
-async function getGithubStars() {
+async function fetchGithubStars(init?: RequestInit & { next?: unknown }) {
   try {
     const response = await fetch(
       `https://api.github.com/repos/${repositoryPath}`,
       {
+        ...init,
         headers: { Accept: "application/vnd.github+json" },
         signal: AbortSignal.timeout(5000),
       }
@@ -23,6 +24,10 @@ async function getGithubStars() {
   }
 }
 
+function getGithubStars() {
+  return fetchGithubStars({ next: { revalidate: 300 } })
+}
+
 function formatStars(stars: number) {
   return new Intl.NumberFormat("en", {
     notation: "compact",
@@ -32,4 +37,4 @@ function formatStars(stars: number) {
     .toLowerCase()
 }
 
-export { formatStars, getGithubStars }
+export { fetchGithubStars, formatStars, getGithubStars }
