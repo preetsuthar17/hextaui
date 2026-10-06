@@ -21,6 +21,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { signOut, startCheckout, useSession } from "@/lib/auth-client"
+import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
 
 type Plan = {
   pro: boolean
@@ -117,13 +118,24 @@ function ProUpgrade() {
     <section className="flex flex-col gap-5 rounded-xl border p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="font-medium">HextaUI Pro</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="font-medium">HextaUI Pro</h2>
+            <Badge appearance="muted" shape="pill">
+              Early bird
+            </Badge>
+          </div>
           <p className="text-sm text-muted-foreground">
-            One payment, lifetime access.
+            One payment, lifetime access. Goes up to ${proRegularPrice} when
+            blocks launch.
           </p>
         </div>
-        <p className="text-2xl font-semibold tracking-tight tabular-nums">
-          $79
+        <p className="flex items-baseline gap-2 tabular-nums">
+          <del className="text-sm text-muted-foreground">
+            <span className="sr-only">Regular price </span>${proRegularPrice}
+          </del>
+          <span className="text-2xl font-semibold tracking-tight">
+            <span className="sr-only">Early bird price </span>${proPrice}
+          </span>
         </p>
       </div>
       <ul className="flex flex-col gap-2 text-sm">

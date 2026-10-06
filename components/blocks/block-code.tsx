@@ -18,6 +18,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { SignInOptions } from "@/components/account/sign-in-options"
 import { startCheckout, useSession } from "@/lib/auth-client"
+import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
 
 type ProFile = { path: string; code: string; html: string }
 
@@ -69,8 +70,9 @@ function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
         </EmptyMedia>
         <EmptyTitle>The code is part of HextaUI Pro</EmptyTitle>
         <EmptyDescription>
-          One payment of $79 unlocks every block, including future ones. Copy
-          the code here or install it with the shadcn CLI.
+          Early bird pricing: one payment of ${proPrice} (${proRegularPrice}{" "}
+          after launch) unlocks every block, including future ones. Copy the
+          code here or install it with the shadcn CLI.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
