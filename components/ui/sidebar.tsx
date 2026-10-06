@@ -323,12 +323,14 @@ type SidebarProps = React.ComponentProps<"div"> & {
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset" | "plain"
   collapsible?: "offcanvas" | "icon" | "none"
+  mobile?: "sheet" | "fullscreen"
 }
 
 function Sidebar({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
+  mobile = "sheet",
   className,
   children,
   dir,
@@ -413,7 +415,8 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-[calc(var(--sidebar-width)+var(--bleed))] max-w-[calc(100%-3rem+var(--bleed))] gap-0 bg-sidebar text-sidebar-foreground"
+          data-mobile-layout={mobile}
+          className="w-[calc(var(--sidebar-width)+var(--bleed))] max-w-[calc(100%-3rem+var(--bleed))] gap-0 bg-sidebar text-sidebar-foreground data-[mobile-layout=fullscreen]:w-[calc(100%+var(--bleed))] data-[mobile-layout=fullscreen]:max-w-none data-[mobile-layout=fullscreen]:rounded-none data-[mobile-layout=fullscreen]:shadow-none data-[mobile-layout=fullscreen]:ring-0"
           onClick={(event) => {
             if (isLinkNavigation(event)) {
               setOpenMobile(false)
@@ -565,7 +568,7 @@ function SidebarInset({
     props: mergeProps<"main">(
       {
         className: cn(
-          "relative flex w-full min-w-0 flex-1 flex-col bg-background motion-reduce:transition-none md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ms-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:ring-(length:--hairline) md:peer-data-[variant=inset]:ring-sidebar-border md:peer-data-[variant=inset]:duration-250 md:peer-data-[variant=inset]:ease-drawer md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ms-2 motion-safe:md:peer-data-[variant=inset]:transition-[margin]",
+          "relative flex w-full min-w-0 flex-1 flex-col bg-background motion-reduce:transition-none md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ms-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:ring-(length:--hairline) md:peer-data-[variant=inset]:ring-sidebar-border md:peer-data-[variant=inset]:duration-250 md:peer-data-[variant=inset]:ease-drawer md:peer-data-[variant=inset]:peer-data-[collapsible=offcanvas]:ms-2 motion-safe:md:peer-data-[variant=inset]:transition-[margin]",
           className
         ),
       },
@@ -719,13 +722,18 @@ function SidebarGroupContent({
   )
 }
 
-function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
+function SidebarMenu({
+  className,
+  gap = "default",
+  ...props
+}: React.ComponentProps<"ul"> & { gap?: "default" | "none" }) {
   return (
     <ul
       data-slot="sidebar-menu"
       data-sidebar="menu"
+      data-gap={gap}
       className={cn(
-        "flex w-full min-w-0 flex-col gap-1 group-data-[variant=plain]:gap-0",
+        "flex w-full min-w-0 flex-col gap-1 group-data-[variant=plain]:gap-0 data-[gap=none]:gap-0",
         className
       )}
       {...props}
@@ -945,13 +953,18 @@ function SidebarMenuSkeleton({
   )
 }
 
-function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
+function SidebarMenuSub({
+  className,
+  gap = "default",
+  ...props
+}: React.ComponentProps<"ul"> & { gap?: "default" | "none" }) {
   return (
     <ul
       data-slot="sidebar-menu-sub"
       data-sidebar="menu-sub"
+      data-gap={gap}
       className={cn(
-        "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 overflow-clip border-s border-sidebar-border px-2.5 py-0.5 transition-[height,padding,opacity,visibility] duration-250 ease-drawer [interpolate-size:allow-keywords] [overflow-clip-margin:3px] group-data-[collapsible=icon]:invisible group-data-[collapsible=icon]:h-0 group-data-[collapsible=icon]:py-0 group-data-[collapsible=icon]:opacity-0 motion-reduce:transition-none rtl:-translate-x-px",
+        "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 overflow-clip border-s border-sidebar-border px-2.5 py-0.5 transition-[height,padding,opacity,visibility] duration-250 ease-drawer [interpolate-size:allow-keywords] [overflow-clip-margin:3px] group-data-[collapsible=icon]:invisible group-data-[collapsible=icon]:h-0 group-data-[collapsible=icon]:py-0 group-data-[collapsible=icon]:opacity-0 data-[gap=none]:gap-0 motion-reduce:transition-none rtl:-translate-x-px",
         className
       )}
       {...props}

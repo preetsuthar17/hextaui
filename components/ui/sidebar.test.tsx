@@ -443,4 +443,52 @@ describe("Sidebar", () => {
     act(() => root?.unmount())
     host.remove()
   })
+
+  it("removes the space between items with gap none", () => {
+    render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarContent>
+            <SidebarMenu gap="none" aria-label="dense">
+              <SidebarMenuItem>
+                <SidebarMenuSub gap="none" aria-label="sub" />
+              </SidebarMenuItem>
+            </SidebarMenu>
+            <SidebarMenu aria-label="spaced" />
+          </SidebarContent>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(
+      document.querySelector('[aria-label="dense"]')!.getAttribute("data-gap")
+    ).toBe("none")
+    expect(
+      document.querySelector('[aria-label="sub"]')!.getAttribute("data-gap")
+    ).toBe("none")
+    expect(
+      document.querySelector('[aria-label="spaced"]')!.getAttribute("data-gap")
+    ).toBe("default")
+  })
+
+  it("fills the screen on phones with mobile fullscreen", async () => {
+    mockViewport(true)
+    render(
+      <SidebarProvider>
+        <Sidebar mobile="fullscreen">
+          <SidebarContent />
+        </Sidebar>
+        <SidebarTrigger />
+      </SidebarProvider>
+    )
+    fireEvent.click(
+      document.querySelector<HTMLElement>("[data-slot=sidebar-trigger]")!
+    )
+    await vi.waitFor(() =>
+      expect(
+        document
+          .querySelector('[data-mobile="true"]')
+          ?.getAttribute("data-mobile-layout")
+      ).toBe("fullscreen")
+    )
+  })
 })

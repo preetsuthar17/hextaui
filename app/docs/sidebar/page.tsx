@@ -466,6 +466,13 @@ export default function Page() {
                 default: '"offcanvas"',
               },
               {
+                name: "mobile",
+                type: '"sheet" | "fullscreen"',
+                default: '"sheet"',
+                description:
+                  "How it opens on phones: a sheet from the side, or sliding in to fill the screen, like chat apps.",
+              },
+              {
                 name: "dir",
                 type: '"ltr" | "rtl"',
                 description: "Also sets the direction of the phone sheet.",
@@ -634,8 +641,20 @@ export default function Page() {
         <DocsSection title="SidebarMenu, SidebarMenuItem" level={3}>
           <DocsParagraph>
             A <DocsCode>{"<ul>"}</DocsCode> and its{" "}
-            <DocsCode>{"<li>"}</DocsCode> items.
+            <DocsCode>{"<li>"}</DocsCode> items. Set{" "}
+            <DocsCode>gap=&quot;none&quot;</DocsCode> for dense lists like chat
+            history, where rows sit flush.
           </DocsParagraph>
+          <DocsPropsTable
+            props={[
+              {
+                name: "gap",
+                type: '"default" | "none"',
+                default: '"default"',
+                description: "Space between items. Also on SidebarMenuSub.",
+              },
+            ]}
+          />
           <DocsAttributesTable
             attributes={[
               {
