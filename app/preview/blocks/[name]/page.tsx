@@ -22,9 +22,19 @@ export default async function Page({
   const block = getProBlock(name)
   if (!block) notFound()
   return (
-    <div data-block-preview="">
-      <BlockPreviewBack name={name} title={block.title} />
-      <BlockPreview name={name} />
+    <div
+      data-block-preview=""
+      data-layout={block.layout}
+      className="data-[layout=app]:flex data-[layout=app]:h-svh data-[layout=app]:flex-col"
+    >
+      <BlockPreviewBack
+        name={name}
+        title={block.title}
+        docked={block.layout === "app"}
+      />
+      <div className="contents in-data-[layout=app]:block in-data-[layout=app]:min-h-0 in-data-[layout=app]:flex-1">
+        <BlockPreview name={name} />
+      </div>
     </div>
   )
 }

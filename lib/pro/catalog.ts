@@ -6,6 +6,7 @@ type ProBlock = {
   title: string
   description: string
   category: string
+  layout?: "app"
   files: string[]
   usage: { title: string; description: string; code: string }[]
   docs: ProBlockDocs

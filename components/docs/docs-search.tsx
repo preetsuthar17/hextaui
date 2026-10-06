@@ -1167,7 +1167,12 @@ function DocsSearchProvider({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.defaultPrevented || event.repeat || event.isComposing) {
+      if (
+        event.defaultPrevented ||
+        event.repeat ||
+        event.isComposing ||
+        document.querySelector("[data-block-preview]")
+      ) {
         return
       }
       if (matchesHotkey(event, "mod+k")) {

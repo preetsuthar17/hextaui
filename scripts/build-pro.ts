@@ -17,6 +17,7 @@ type BlockMeta = {
   category: string
   component: string
   entry?: string
+  layout?: "app"
   dependencies?: string[]
   usage?: { file: string; title: string; description: string }[]
   docs?: BlockDocs
@@ -171,6 +172,7 @@ async function main() {
       title: meta.title,
       description: meta.description,
       category: meta.category,
+      ...(meta.layout ? { layout: meta.layout } : {}),
       files: files.map((file) => `components/blocks/${name}/${file}`),
       usage,
       docs: meta.docs ?? {},

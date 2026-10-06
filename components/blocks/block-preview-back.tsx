@@ -16,13 +16,27 @@ function useStandalone() {
   )
 }
 
-function BlockPreviewBack({ name, title }: { name: string; title: string }) {
+function BlockPreviewBack({
+  name,
+  title,
+  docked = false,
+}: {
+  name: string
+  title: string
+  docked?: boolean
+}) {
   const standalone = useStandalone()
 
   if (!standalone) return null
 
   return (
-    <div className="fixed start-3 top-3 z-50 motion-safe:animate-in motion-safe:animation-duration-300 motion-safe:fade-in-0">
+    <div
+      className={
+        docked
+          ? "flex h-12 shrink-0 items-center border-b px-3"
+          : "fixed start-3 top-3 z-50 motion-safe:animate-in motion-safe:animation-duration-300 motion-safe:fade-in-0"
+      }
+    >
       <Button
         variant="ghost"
         size="sm"
