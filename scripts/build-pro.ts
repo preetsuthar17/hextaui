@@ -24,7 +24,6 @@ type BlockMeta = {
 
 type BlockDocs = {
   overview?: string[]
-  features?: { title: string; description: string }[]
   anatomy?: { name: string; description: string }[]
   api?: {
     component: string

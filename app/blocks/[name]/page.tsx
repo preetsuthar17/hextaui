@@ -57,8 +57,7 @@ export async function generateMetadata({
 export default async function Page({ params }: PageProps<"/blocks/[name]">) {
   const block = getProBlock((await params).name)
   if (!block) notFound()
-  const { overview, features, anatomy, api, keyboard, accessibility } =
-    block.docs
+  const { overview, anatomy, api, keyboard, accessibility } = block.docs
 
   return (
     <DocsPage
@@ -72,23 +71,11 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
         <BlockFrame name={block.name} title={block.title} />
       </div>
 
-      {overview?.length || features?.length ? (
+      {overview?.length ? (
         <DocsSection title="Overview">
-          {overview?.map((paragraph) => (
+          {overview.map((paragraph) => (
             <DocsParagraph key={paragraph}>{paragraph}</DocsParagraph>
           ))}
-          {features?.length ? (
-            <DocsList>
-              {features.map((feature) => (
-                <li key={feature.title}>
-                  <span className="font-medium text-foreground">
-                    {feature.title}.
-                  </span>{" "}
-                  {feature.description}
-                </li>
-              ))}
-            </DocsList>
-          ) : null}
         </DocsSection>
       ) : null}
 
