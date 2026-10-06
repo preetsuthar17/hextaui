@@ -303,7 +303,7 @@ export default function Page() {
               },
               {
                 name: "size",
-                type: '"xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg"',
+                type: '"xs" | "sm" | "default" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl"',
                 default: '"default"',
               },
               {

@@ -774,6 +774,10 @@
   }
 }
 
+:root:has([data-block-preview]) [data-slot="message-scroller-viewport"] {
+  overscroll-behavior: auto;
+}
+
 .shiki {
   --code-bg: var(--muted);
   direction: ltr;

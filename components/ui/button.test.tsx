@@ -158,6 +158,16 @@ describe("useButtonFeedback", () => {
 })
 
 describe("Button", () => {
+  it("has an extra large icon size for touch-first controls", () => {
+    render(
+      <Button size="icon-xl" aria-label="End">
+        x
+      </Button>
+    )
+    const button = screen.getByRole("button", { name: "End" })
+    expect(button.className).toContain("size-12")
+  })
+
   it("rounds fully with the pill shape at every size", () => {
     render(
       <>

@@ -30,6 +30,9 @@ export function ButtonSizes() {
         <Button size="icon-lg" variant="outline" aria-label="Add">
           <IconPlus />
         </Button>
+        <Button size="icon-xl" variant="outline" aria-label="Add">
+          <IconPlus />
+        </Button>
       </div>
     </div>
   )

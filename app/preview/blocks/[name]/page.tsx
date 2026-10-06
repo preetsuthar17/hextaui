@@ -23,8 +23,8 @@ export default async function Page({
   if (!block) notFound()
   return (
     <div data-block-preview="">
-      <BlockPreview name={name} />
       <BlockPreviewBack name={name} title={block.title} />
+      <BlockPreview name={name} />
     </div>
   )
 }

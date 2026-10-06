@@ -45,6 +45,7 @@ const buttonVariants = cva(
         "icon-sm":
           "size-8 shrink-0 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md pointer-coarse:after:absolute pointer-coarse:after:-inset-1.5 pointer-coarse:in-data-[slot=button-group]:after:hidden",
         "icon-lg": "size-10 shrink-0",
+        "icon-xl": "size-12 shrink-0 [&_svg:not([class*='size-'])]:size-5",
       },
       shape: {
         default: "",
