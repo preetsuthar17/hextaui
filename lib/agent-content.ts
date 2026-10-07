@@ -110,7 +110,7 @@ function getAuthMarkdown() {
       "Session cookie: the account endpoints under /api. These are for the signed-in person in a browser, not for agents.",
     ]),
     "## Register",
-    `Agents cannot register themselves. ${siteName} has no OAuth authorization server and does not implement agentic registration (no \`agent_auth\` block, \`identity_endpoint\`, \`identity_assertion\`, \`service_auth\` or ID-JAG exchange). A person signs in with GitHub or Google at ${absoluteUrl("/account")}, buys ${siteName} Pro, and creates an API token on that page.`,
+    `Agents cannot register themselves. ${siteName} has no authorization server or token endpoint, and does not implement agentic registration (no \`agent_auth\` block, \`identity_endpoint\`, \`identity_assertion\`, \`service_auth\` or ID-JAG exchange). A person signs in with GitHub or Google at ${absoluteUrl("/account")}, buys ${siteName} Pro, and creates an API token on that page.`,
     "## Claim",
     "There is no claim ceremony. Ask the user for a token from their account page, and have them store it in an environment variable such as `HEXTAUI_PRO_TOKEN`. Never ask for their password or session cookie.",
     "## Exchange",
