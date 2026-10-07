@@ -95,11 +95,6 @@ function getNotFoundMarkdown() {
 function getAuthMarkdown() {
   const prm = absoluteUrl("/.well-known/oauth-protected-resource")
   return `${[
-    frontmatter({
-      title: `Authenticating with ${siteName}`,
-      description: `How agents get credentials for the ${siteName} API.`,
-      canonical: absoluteUrl("/auth.md"),
-    }),
     `# Authenticating with ${siteName}`,
     `Most of ${siteName} needs no credentials. The docs, the shadcn registry at ${siteUrl}/r/<name>.json, ${absoluteUrl("/llms.txt")} and the MCP server at ${absoluteUrl("/mcp")} are public and read-only. Credentials are only needed for ${siteName} Pro blocks, which are paid.`,
     "## Discover",

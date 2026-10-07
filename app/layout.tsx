@@ -23,6 +23,7 @@ import {
   siteUrl,
 } from "@/lib/site"
 import { catalogViewScript } from "@/lib/catalog-view"
+import { getProProductJsonLd } from "@/lib/pricing-info"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toast"
@@ -111,6 +112,7 @@ const jsonLd = {
       },
       sameAs: [siteRepository, "https://twitter.com/preetsuthar17"],
     },
+    getProProductJsonLd(),
     {
       "@type": "SoftwareSourceCode",
       "@id": `${siteUrl}/#software`,

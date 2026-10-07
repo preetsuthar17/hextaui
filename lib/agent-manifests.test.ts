@@ -15,7 +15,7 @@ import {
   protectedResourceMetadataUrl,
 } from "@/lib/agent-manifests"
 import { getDocsLlms } from "@/lib/docs-markdown"
-import { getPricingJsonLd, getPricingMarkdown } from "@/lib/pricing-info"
+import { getProProductJsonLd, getPricingMarkdown } from "@/lib/pricing-info"
 import { proPrice } from "@/lib/pro/pricing"
 import { accessError } from "@/lib/pro/access"
 
@@ -73,10 +73,13 @@ describe("Markdown for agents", () => {
   it.each([
     ["index.md", getHomeMarkdown()],
     ["pricing.md", getPricingMarkdown()],
-    ["auth.md", getAuthMarkdown()],
     ["SKILL.md", getSkillMarkdown()],
   ])("opens %s with frontmatter", (_, markdown) => {
     expect(markdown).toMatch(frontmatterPattern)
+  })
+
+  it("opens auth.md with its heading", () => {
+    expect(getAuthMarkdown()).toMatch(/^# Authenticating with HextaUI\n/)
   })
 
   it("covers every auth.md section", () => {
@@ -96,7 +99,7 @@ describe("Markdown for agents", () => {
 
   it("takes prices from the pricing module", () => {
     expect(getPricingMarkdown()).toContain(`$${proPrice} one-time`)
-    expect(getPricingJsonLd().offers.price).toBe(proPrice)
+    expect(getProProductJsonLd().offers.price).toBe(proPrice)
   })
 
   it("scopes the section llms.txt files", () => {

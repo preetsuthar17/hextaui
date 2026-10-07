@@ -177,7 +177,7 @@ function getArdEntries() {
 }
 
 function getArdManifest() {
-  return { entries: getArdEntries() }
+  return { specVersion: "0.91", entries: getArdEntries() }
 }
 
 function getAiCatalog() {

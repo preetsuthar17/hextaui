@@ -7,7 +7,6 @@ import { pageMetadata } from "@/lib/metadata"
 import {
   freePlan,
   getPricingBlocks,
-  getPricingJsonLd,
   pricingCurrency,
   proPlan,
 } from "@/lib/pricing-info"
@@ -25,12 +24,6 @@ export default function Page() {
       title="HextaUI pricing"
       lead={`The component library is free. HextaUI Pro is one payment, not a subscription. Prices are in ${pricingCurrency}.`}
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPricingJsonLd()).replace(/</g, "\\u003c"),
-        }}
-      />
       <LegalSection title={`${freePlan.name}: free`}>
         <DocsParagraph>{freePlan.summary}</DocsParagraph>
         <DocsList>

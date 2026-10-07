@@ -1,3 +1,4 @@
+import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { frontmatter } from "@/lib/frontmatter"
 import { proBlocks } from "@/lib/pro/catalog"
 import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
@@ -64,6 +65,28 @@ function getPricingMarkdown() {
         (block) => `[${block.title}](${block.url}): ${block.description}`
       )
     ),
+    "## Compare plans",
+    [
+      `| | ${freePlan.name} | ${proPlan.name} |`,
+      "| --- | --- | --- |",
+      `| Price (${pricingCurrency}) | $0 | $${proPlan.price} once, then $${proPlan.regularPrice} |`,
+      "| Billing | None | One-time payment, no subscription |",
+      "| License | MIT | Pro License, per developer |",
+      `| Components, hooks and utilities | All ${docsComponents.length + docsHooks.length + docsUtilities.length} | All, same as free |`,
+      `| Pro blocks | None | All ${proBlocks.length} |`,
+      "| Install | shadcn CLI, public registry | shadcn CLI, private registry with an API token |",
+      "| Commercial use | Yes | Yes, in unlimited end products |",
+      "| Client work | Yes | Yes |",
+      "| Docs, llms.txt and MCP server | Yes | Yes |",
+      "| Refund | Not applicable | 14 days, no questions asked |",
+    ].join("\n"),
+    "## Common questions",
+    bullets([
+      "Is there a subscription? No. Pro is a single payment.",
+      "Does a team need one license? No. Each developer who installs or works on Pro code needs their own Pro; clients and teammates who only use the finished product don't.",
+      "Can Pro blocks go in an open-source project? Yes, in an open-source end product, as long as it isn't a UI library, kit or template collection.",
+      "What happens after a refund? Pro access, API tokens for Pro blocks and the Pro License end.",
+    ]),
     "## How to buy",
     `Sign in with GitHub or Google at ${absoluteUrl("/account")} and choose Get Pro. Checkout needs a person in a browser; agents cannot buy on a user's behalf through the API.`,
     "## Terms",
@@ -75,9 +98,8 @@ function getPricingMarkdown() {
   ].join("\n\n")}\n`
 }
 
-function getPricingJsonLd() {
+function getProProductJsonLd() {
   return {
-    "@context": "https://schema.org",
     "@type": "Product",
     "@id": absoluteUrl("/pricing#pro"),
     name: proPlan.name,
@@ -107,7 +129,7 @@ function getPricingJsonLd() {
 export {
   freePlan,
   getPricingBlocks,
-  getPricingJsonLd,
+  getProProductJsonLd,
   getPricingMarkdown,
   pricingCurrency,
   pricingUpdated,
