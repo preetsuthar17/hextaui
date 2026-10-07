@@ -7,6 +7,7 @@ import { cn } from "cn"
 import { useTheme } from "next-themes"
 
 import { GithubLogo } from "@/components/site/github-logo"
+import { useSharedHighlight } from "@/components/site/use-shared-highlight"
 import { useGithubStars } from "@/components/site/use-github-stars"
 import { UserMenu } from "@/components/site/user-menu"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -86,6 +87,11 @@ function SiteHeader({
   const pathname = usePathname()
   const active = sectionFor(pathname)
   const stars = useGithubStars(initialStars)
+  const { navRef, highlightRef, handlers } = useSharedHighlight<HTMLDivElement>(
+    pathname,
+    "[data-nav-link]",
+    "[data-nav-link][aria-current=page]"
+  )
 
   return (
     <header
@@ -98,25 +104,37 @@ function SiteHeader({
     >
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-2 px-3">
         <nav aria-label="Main" className="min-w-0 flex-1">
-          <ul className="flex [scrollbar-width:none] items-center gap-0.5 overflow-x-auto">
-            {links.map((link) => {
-              const current = link.section === active
-              return (
-                <li key={link.section} className="shrink-0">
-                  <Link
-                    href={link.href}
-                    aria-current={current ? "page" : undefined}
-                    className={cn(
-                      "inline-flex h-8 items-center rounded-md px-2.5 text-sm font-medium text-muted-foreground transition-colors duration-150 outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none",
-                      current && "bg-muted text-foreground"
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
+          <div
+            ref={navRef}
+            className="relative isolate -m-1 [scrollbar-width:none] overflow-x-auto p-1"
+            {...handlers}
+          >
+            <span
+              ref={highlightRef}
+              aria-hidden="true"
+              className="pointer-events-none absolute top-0 left-0 -z-10 rounded-md bg-muted opacity-0 transition-all duration-200 ease-out-quint data-instant:transition-none motion-reduce:transition-none forced-colors:hidden"
+            />
+            <ul className="flex items-center gap-0.5">
+              {links.map((link) => {
+                const current = link.section === active
+                return (
+                  <li key={link.section} className="shrink-0">
+                    <Link
+                      href={link.href}
+                      data-nav-link=""
+                      aria-current={current ? "page" : undefined}
+                      className={cn(
+                        "inline-flex h-8 items-center rounded-md px-2.5 text-sm font-medium text-muted-foreground transition-colors duration-150 outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none",
+                        current && "text-foreground"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </nav>
         <div className="flex shrink-0 items-center gap-1">
           <Separator orientation="vertical" className="mx-1 h-4 self-center" />

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 
 import { BlockPreview } from "@/components/blocks/block-preview"
 import { BlockPreviewBack } from "@/components/blocks/block-preview-back"
+import { PreviewDocument } from "@/components/blocks/preview-document"
 import { getProBlock, proBlockParams } from "@/lib/pro/catalog"
 
 export const dynamicParams = false
@@ -27,6 +28,7 @@ export default async function Page({
       data-layout={block.layout}
       className="data-[layout=app]:flex data-[layout=app]:h-svh data-[layout=app]:flex-col"
     >
+      <PreviewDocument />
       <BlockPreviewBack
         name={name}
         title={block.title}

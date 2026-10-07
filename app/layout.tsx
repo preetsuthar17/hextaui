@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
-import Script from "next/script"
 
 import "./globals.css"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
+import { AnalyticsScript } from "@/components/site/analytics-script"
 import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
 import { SiteChrome } from "@/components/site/site-chrome"
@@ -12,6 +12,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import {
   absoluteUrl,
   siteAlternateNames,
+  siteAuthor,
+  siteContactEmail,
   siteName,
   siteRepository,
   siteSummary,
@@ -19,6 +21,7 @@ import {
   siteTwitter,
   siteUrl,
 } from "@/lib/site"
+import { catalogViewScript } from "@/lib/catalog-view"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toast"
@@ -87,6 +90,24 @@ const jsonLd = {
         width: 1040,
         height: 1040,
       },
+      description: siteSummary,
+      email: siteContactEmail,
+      founder: {
+        "@type": "Person",
+        name: siteAuthor,
+        url: "https://twitter.com/preetsuthar17",
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "IN",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: siteContactEmail,
+        url: absoluteUrl("/contact"),
+        availableLanguage: ["en"],
+      },
       sameAs: [siteRepository, "https://twitter.com/preetsuthar17"],
     },
     {
@@ -126,6 +147,7 @@ export default async function RootLayout({
       className={cn("antialiased", "font-sans", fontSans.variable)}
     >
       <body>
+        <script dangerouslySetInnerHTML={{ __html: catalogViewScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -149,10 +171,7 @@ export default async function RootLayout({
             <CookieConsent />
           </SiteChrome>
         </ThemeProvider>
-        <Script
-          src="https://assets.onedollarstats.com/stonks.js"
-          strategy="lazyOnload"
-        />
+        <AnalyticsScript />
       </body>
     </html>
   )

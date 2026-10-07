@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 
+import { CatalogGrid, CatalogList } from "@/components/site/catalog-card"
+import { CatalogViewToggle } from "@/components/site/catalog-view"
+import { ComponentCard } from "@/components/site/component-card"
 import { docsComponents as components } from "@/lib/docs"
 import { pageMetadata } from "@/lib/metadata"
 
@@ -12,25 +14,31 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-10 px-4 py-16">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-xl font-semibold tracking-tight">Components</h1>
-        <p className="text-sm text-muted-foreground">
-          {components.length} components. Open one to see every state live.
-        </p>
+    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-16">
+      <header className="flex items-end justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-xl font-semibold tracking-tight">Components</h1>
+          <p className="text-sm text-muted-foreground">
+            {components.length} components. Open one to see every state live.
+          </p>
+        </div>
+        <CatalogViewToggle />
       </header>
-      <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <CatalogGrid className="in-data-[catalog-view=single]:mx-auto in-data-[catalog-view=single]:w-full in-data-[catalog-view=single]:max-w-3xl">
         {components.map((component) => (
-          <li key={component.slug}>
-            <Link
-              href={`/docs/${component.slug}`}
-              className="flex rounded-lg border px-4 py-3 text-sm font-medium transition-colors duration-150 outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
-            >
-              {component.name}
-            </Link>
-          </li>
+          <ComponentCard
+            key={component.slug}
+            slug={component.slug}
+            name={component.name}
+          />
         ))}
-      </ul>
+      </CatalogGrid>
+      <CatalogList
+        items={components.map((component) => ({
+          href: `/docs/${component.slug}`,
+          title: component.name,
+        }))}
+      />
     </main>
   )
 }

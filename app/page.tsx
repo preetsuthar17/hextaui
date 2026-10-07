@@ -2,11 +2,22 @@ import type { Metadata } from "next"
 import Image from "next/image"
 
 import { HeroActions } from "@/components/site/hero-actions"
-import { Showcase } from "@/components/site/showcase/showcase"
+import { HomeSections } from "@/components/site/home-sections"
+import { HomePreview } from "@/components/site/home-preview"
+import { docsComponents } from "@/lib/docs"
 import { getGithubStars } from "@/lib/github"
 import { pageMetadata } from "@/lib/metadata"
+import { getProBlock } from "@/lib/pro/catalog"
 
-export const metadata: Metadata = pageMetadata({ path: "/" })
+export const metadata: Metadata = pageMetadata({
+  path: "/",
+  markdown: "/index.md",
+})
+
+const previewBlocks = ["thinking", "prompt-input", "chat-thread", "voice-mode"]
+  .map((name) => getProBlock(name))
+  .filter((block) => block !== undefined)
+  .map(({ name, title }) => ({ name, title }))
 
 export default async function Page() {
   const stars = await getGithubStars()
@@ -14,31 +25,42 @@ export default async function Page() {
   return (
     <main className="flex flex-1 flex-col">
       <section className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-10 px-3 pt-20 pb-16 text-center sm:items-start sm:pt-28 sm:pb-24 sm:text-left">
-        <h1 className="text-hero font-medium tracking-tighter">
-          <span className="block whitespace-nowrap">
-            Ready to use blocks &amp; components
-          </span>{" "}
-          <span className="block whitespace-nowrap">
-            built on top of{" "}
-            <Image
-              src="https://github.com/shadcn.png"
-              alt=""
-              width={64}
-              height={64}
-              unoptimized
-              className="inline-block size-[1em] rounded-full"
-            />{" "}
-            shadcn/ui
-          </span>
-        </h1>
+        <div className="flex flex-col items-center gap-5 sm:items-start">
+          <h1 className="text-hero font-medium tracking-tighter">
+            <span className="block whitespace-nowrap">
+              Ready to use blocks &amp; components
+            </span>{" "}
+            <span className="block whitespace-nowrap">
+              built on top of{" "}
+              <Image
+                src="https://github.com/shadcn.png"
+                alt=""
+                width={64}
+                height={64}
+                unoptimized
+                className="inline-block size-[1em] rounded-full"
+              />{" "}
+              shadcn/ui
+            </span>
+          </h1>
+          <p className="max-w-xl text-base/7 text-pretty text-muted-foreground">
+            {docsComponents.length} accessible components with the states,
+            motion and keyboard support already done. Add them with the shadcn
+            CLI and make them yours.
+          </p>
+        </div>
         <HeroActions stars={stars} />
       </section>
       <section
-        aria-label="Live examples"
-        className="mx-auto w-full max-w-screen-2xl px-3 pb-24"
+        aria-labelledby="home-preview"
+        className="mx-auto w-full max-w-screen-2xl px-3 pb-24 sm:pb-32"
       >
-        <Showcase />
+        <h2 id="home-preview" className="sr-only">
+          Live previews
+        </h2>
+        <HomePreview blocks={previewBlocks} />
       </section>
+      <HomeSections />
     </main>
   )
 }

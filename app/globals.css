@@ -606,6 +606,60 @@
     border-width: var(--hairline);
 }
 
+@layer components {
+  .preview-tile {
+    --tile-radius: var(--radius-2xl);
+    --tile-inset: calc(var(--spacing) * 1);
+    --tile-inner-radius: calc(var(--tile-radius) - var(--tile-inset));
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--tile-inset);
+    border-radius: var(--tile-radius);
+    background-color: var(--color-muted);
+    padding: var(--tile-inset);
+  }
+
+  .preview-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--tile-inner-radius);
+    background-color: var(--color-background);
+    &::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 var(--hairline) var(--color-border);
+    }
+  }
+
+  .preview-caption {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing) * 2);
+    border-radius: var(--tile-inner-radius);
+    padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2.5)
+      calc(var(--spacing) * 1.5);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height, calc(1.25 / 0.875));
+    font-weight: var(--font-weight-medium);
+    color: var(--color-muted-foreground);
+    outline: none;
+    transition: color 150ms;
+    &:hover {
+      color: var(--color-foreground);
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
 @utility text-shimmer {
   background-image: linear-gradient(
     90deg,
@@ -767,14 +821,14 @@
     scrollbar-gutter: stable;
     -webkit-tap-highlight-color: transparent;
   }
-  :root:has([data-block-preview]),
-  :root:has([data-block-preview]) body {
+  :root[data-preview-document],
+  :root[data-preview-document] body {
     overscroll-behavior: auto;
     scrollbar-gutter: auto;
   }
 }
 
-:root:has([data-block-preview]) [data-slot="message-scroller-viewport"] {
+:root[data-preview-document] [data-slot="message-scroller-viewport"] {
   overscroll-behavior: auto;
 }
 

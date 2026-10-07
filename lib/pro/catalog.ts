@@ -55,11 +55,16 @@ function categoryTitle(category: string) {
   )
 }
 
-const blocksNav: DocsNavSection[] = Object.entries(
+const blockSections = Object.entries(
   Object.groupBy(proBlocks, (block) => block.category)
 ).map(([category, blocks]) => ({
   title: categoryTitle(category),
-  items: (blocks ?? []).map((block) => ({
+  blocks: blocks ?? [],
+}))
+
+const blocksNav: DocsNavSection[] = blockSections.map((section) => ({
+  title: section.title,
+  items: section.blocks.map((block) => ({
     title: block.title,
     href: `/blocks/${block.name}`,
   })),
@@ -68,6 +73,7 @@ const blocksNav: DocsNavSection[] = Object.entries(
 const blocksNavItems = blocksNav.flatMap((section) => section.items)
 
 export {
+  blockSections,
   blocksNav,
   blocksNavItems,
   getProBlock,

@@ -10,7 +10,6 @@ export default function nextConfig(phase: string): NextConfig {
     output: "export",
     experimental: {
       turbopackLazyDynamicImports: true,
-      turbopackGc: true,
     },
     rewrites: async () => [
       {
