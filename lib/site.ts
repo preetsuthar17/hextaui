@@ -8,6 +8,8 @@ const siteSummary =
 const siteAlternateNames = ["Hexta UI", "Hexta", "hextaui"]
 const siteTwitter = "@preetsuthar17"
 const siteRepository = "https://github.com/preetsuthar17/hextaui"
+const siteContactEmail = "hi@preetsuthar.me"
+const siteAuthor = "Preet Suthar"
 
 const noindexPaths = ["/docs/stress", "/preview/", "/account", "/api/"]
 
@@ -28,6 +30,8 @@ export {
   isNoindexPath,
   noindexPaths,
   siteAlternateNames,
+  siteAuthor,
+  siteContactEmail,
   siteDescription,
   siteName,
   siteRepository,

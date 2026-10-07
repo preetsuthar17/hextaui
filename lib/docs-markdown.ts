@@ -32,6 +32,7 @@ import {
 } from "@/lib/docs"
 import { getRegistryKind } from "@/lib/docs-registry"
 import { readDocsSource } from "@/lib/docs-source"
+import { getAgentGuideMarkdown } from "@/lib/agent-content"
 import { agentNotes } from "@/lib/agent-notes"
 import { absoluteUrl, siteDescription, siteName, siteUrl } from "@/lib/site"
 
@@ -445,6 +446,15 @@ function getLlmsIndex() {
       `- The shadcn registry index is ${absoluteUrl("/r/registry.json")}. Register it as a namespace in components.json with \`"registries": { "@hextaui": "${siteUrl}/r/{name}.json" }\` to run \`npx shadcn@latest add @hextaui/<name>\` or browse it through the shadcn MCP server.`,
       `- Without the CLI, add the theme tokens from ${absoluteUrl("/docs/installation#theme")} before copying component files.`,
       `- Append \`.md\` to any docs URL for its Markdown, for example ${absoluteUrl("/docs/button.md")}.`,
+    ].join("\n"),
+    getAgentGuideMarkdown(2),
+    heading(2, "Developer resources"),
+    [
+      `- [OpenAPI spec](${absoluteUrl("/openapi.json")}): every HTTP endpoint with operation ids, typed parameters and response schemas.`,
+      `- [API docs](${absoluteUrl("/docs/api.md")}): public endpoints, authentication with sessions and API tokens, and RFC 9457 error responses.`,
+      `- [MCP server](${absoluteUrl("/docs/mcp.md")}): Streamable HTTP at ${absoluteUrl("/mcp")}, server card at ${absoluteUrl("/.well-known/mcp/server-card.json")}.`,
+      `- [Agent skill](${absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md")}): how an agent should find, read and install ${siteName} components.`,
+      `- [API catalog](${absoluteUrl("/.well-known/api-catalog")}) (RFC 9727).`,
     ].join("\n"),
     heading(2, "Docs"),
     docsGuides

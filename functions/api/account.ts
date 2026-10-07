@@ -7,6 +7,7 @@ import {
   findProPurchase,
   type PaymentsEnv,
 } from "@/lib/payments"
+import { signInError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -18,7 +19,7 @@ export async function onRequestGet({ request, env }: Context) {
     headers: request.headers,
   })
   if (!session) {
-    return Response.json({ error: "Sign in first" }, { status: 401 })
+    return signInError()
   }
 
   const db = getDb(env.DB)

@@ -5,6 +5,7 @@ import {
   revokePurchase,
   type PaymentsEnv,
 } from "@/lib/payments"
+import { apiError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -20,7 +21,11 @@ export async function onRequestPost({ request, env }: Context) {
       headers: Object.fromEntries(request.headers),
     })
   } catch {
-    return new Response("Invalid signature", { status: 401 })
+    return apiError("invalid_signature", {
+      detail: "The webhook signature did not verify.",
+      resolution:
+        "Send Standard Webhooks headers signed with the endpoint's secret.",
+    })
   }
 
   const db = getDb(env.DB)

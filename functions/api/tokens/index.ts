@@ -3,6 +3,7 @@ import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
 import { findProPurchase, type PaymentsEnv } from "@/lib/payments"
 import { createToken, listTokens } from "@/lib/pro/tokens"
+import { apiError, sameOriginError, signInError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -21,7 +22,7 @@ async function getUserId(env: PaymentsEnv, request: Request) {
 export async function onRequestGet({ request, env }: Context) {
   const userId = await getUserId(env, request)
   if (!userId) {
-    return Response.json({ error: "Sign in first" }, { status: 401 })
+    return signInError()
   }
   const tokens = await listTokens(getDb(env.DB), userId)
   return Response.json({ tokens }, { headers: noStore })
@@ -29,22 +30,29 @@ export async function onRequestGet({ request, env }: Context) {
 
 export async function onRequestPost({ request, env }: Context) {
   if (!isSameOrigin(request, env.BETTER_AUTH_URL)) {
-    return Response.json({ error: "Forbidden" }, { status: 403 })
+    return sameOriginError()
   }
   const userId = await getUserId(env, request)
   if (!userId) {
-    return Response.json({ error: "Sign in first" }, { status: 401 })
+    return signInError()
   }
 
   const db = getDb(env.DB)
   if (!(await findProPurchase(db, userId))) {
-    return Response.json({ error: "Tokens need Pro" }, { status: 403 })
+    return apiError("pro_required", {
+      error: "Tokens need Pro",
+      detail: "API tokens are only available to HextaUI Pro accounts.",
+      resolution:
+        "Buy HextaUI Pro at https://hextaui.com/account, then create a token.",
+    })
   }
   if ((await listTokens(db, userId)).length >= 10) {
-    return Response.json(
-      { error: "Delete a token before creating another" },
-      { status: 400 }
-    )
+    return apiError("token_limit", {
+      error: "Delete a token before creating another",
+      detail: "An account can hold at most 10 API tokens.",
+      resolution:
+        "Delete an unused token with DELETE /api/tokens/{id}, then try again.",
+    })
   }
 
   const body = (await request.json().catch(() => ({}))) as { name?: unknown }

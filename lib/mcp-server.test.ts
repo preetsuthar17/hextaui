@@ -4,6 +4,7 @@ import {
 } from "@modelcontextprotocol/client"
 import { afterEach, describe, expect, it } from "vitest"
 
+import { getMcpServerCard, mcpTools } from "@/lib/agent-manifests"
 import { packDocsSearchIndex } from "@/lib/docs-search-query"
 import type { McpEntry, McpIndex } from "@/lib/mcp-manifest"
 import { createMcpFetch, type AssetLoader } from "@/lib/mcp-server"
@@ -212,6 +213,9 @@ describe("HextaUI MCP server", () => {
         "get_install_command",
         "get_setup",
       ])
+      expect(tools.map((tool) => tool.name)).toEqual(
+        mcpTools.map((tool) => tool.name)
+      )
       expect(tools.every((tool) => tool.annotations?.readOnlyHint)).toBe(true)
       const { text } = await call(client, "get_component", { name: "dialog" })
       expect(text).toContain("# Dialog")
@@ -427,6 +431,39 @@ describe("HextaUI MCP server", () => {
 
 describe("HTTP handling", () => {
   const mcp = createMcpFetch(fixtureLoader)
+
+  it.each(
+    getMcpServerCard().remotes[0].supportedProtocolVersions.filter(
+      (version) => version !== "2026-07-28"
+    )
+  )(
+    "initializes with protocol %s from the server card",
+    async (protocolVersion) => {
+      const response = await mcp(
+        new Request("https://hextaui.com/mcp", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            accept: "application/json, text/event-stream",
+            "mcp-protocol-version": protocolVersion,
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "initialize",
+            params: {
+              protocolVersion,
+              capabilities: {},
+              clientInfo: { name: "test", version: "1.0.0" },
+            },
+          }),
+        })
+      )
+      const body = await response.text()
+      expect(response.status).toBe(200)
+      expect(body).toContain(`"protocolVersion":"${protocolVersion}"`)
+    }
+  )
 
   it("answers CORS preflight", async () => {
     const response = await mcp(

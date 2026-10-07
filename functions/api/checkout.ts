@@ -2,6 +2,7 @@ import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
 import { findProPurchase, getPayments, type PaymentsEnv } from "@/lib/payments"
+import { sameOriginError, signInError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -10,14 +11,14 @@ type Context = {
 
 export async function onRequestPost({ request, env }: Context) {
   if (!isSameOrigin(request, env.BETTER_AUTH_URL)) {
-    return Response.json({ error: "Forbidden" }, { status: 403 })
+    return sameOriginError()
   }
 
   const session = await getAuth(env).api.getSession({
     headers: request.headers,
   })
   if (!session) {
-    return Response.json({ error: "Sign in first" }, { status: 401 })
+    return signInError()
   }
 
   const { user } = session

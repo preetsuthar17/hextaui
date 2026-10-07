@@ -612,6 +612,12 @@ const docsGuides: DocsGuide[] = [
     description:
       "Connect Claude Code, Cursor, VS Code and other AI assistants to HextaUI, so they search the docs, read each API and install components for you.",
   },
+  {
+    slug: "api",
+    title: "API",
+    description:
+      "The HextaUI HTTP API and OpenAPI spec: registry and docs endpoints, authentication with sessions and API tokens, Pro blocks and error responses.",
+  },
 ]
 
 const docsKeywords: Record<string, string[]> = {
@@ -704,6 +710,17 @@ const docsKeywords: Record<string, string[]> = {
     "cursor",
     "llm",
   ],
+  api: [
+    "openapi",
+    "swagger",
+    "rest",
+    "http",
+    "endpoints",
+    "auth",
+    "token",
+    "developer",
+    "sdk",
+  ],
   "": ["introduction", "about", "overview", "getting started"],
 }
 
@@ -716,6 +733,7 @@ const docsNav: DocsNavSection[] = [
       { title: "Introduction", href: "/docs" },
       { title: "Installation", href: "/docs/installation" },
       { title: "MCP server", href: "/docs/mcp" },
+      { title: "API", href: "/docs/api" },
     ],
   },
   {

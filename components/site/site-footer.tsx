@@ -6,6 +6,11 @@ import { CookieSettingsButton } from "@/components/site/cookie-consent"
 
 import { siteRepository } from "@/lib/site"
 
+const sitePages = [
+  { href: "/about", title: "About" },
+  { href: "/contact", title: "Contact" },
+]
+
 const linkClassName =
   "rounded-sm text-foreground/80 underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:text-foreground hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
 
@@ -34,10 +39,10 @@ function SiteFooter({ className }: { className?: string }) {
         .
       </p>
       <nav
-        aria-label="Legal"
+        aria-label="Site"
         className="mx-auto mt-3 flex max-w-screen-2xl flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-muted-foreground"
       >
-        {legalPages.map((page) => (
+        {[...sitePages, ...legalPages].map((page) => (
           <Link key={page.href} href={page.href} className={linkClassName}>
             {page.title}
           </Link>

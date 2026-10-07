@@ -1,6 +1,8 @@
 import * as React from "react"
 import Link from "next/link"
 
+import { siteContactEmail } from "@/lib/site"
+
 const legalPages = [
   { href: "/legal/privacy", title: "Privacy Policy" },
   { href: "/legal/terms", title: "Terms of Service" },
@@ -8,7 +10,7 @@ const legalPages = [
   { href: "/legal/license", title: "Pro License" },
 ]
 
-const contactEmail = "hi@preetsuthar.me"
+const contactEmail = siteContactEmail
 
 const linkClassName =
   "rounded-sm text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring motion-reduce:transition-none"

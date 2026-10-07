@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pnpm pro:build && next dev",
     "dev:api": "wrangler pages dev",
-    "build": "pnpm pro:build && pnpm registry:build && next build && node --experimental-strip-types --no-warnings scripts/check-pro-leak.ts",
+    "build": "pnpm pro:build && pnpm registry:build && next build && node --experimental-strip-types --no-warnings scripts/write-routes.ts && node --experimental-strip-types --no-warnings scripts/check-pro-leak.ts",
     "start": "next start",
     "registry:sync": "node scripts/sync-registry.mjs",
     "registry:build": "pnpm registry:sync && shadcn build",
