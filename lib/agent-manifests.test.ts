@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest"
 
 import {
-  getAuthMarkdown,
   getBlocksLlms,
   getHomeMarkdown,
   getSkillMarkdown,
@@ -76,25 +75,6 @@ describe("Markdown for agents", () => {
     ["SKILL.md", getSkillMarkdown()],
   ])("opens %s with frontmatter", (_, markdown) => {
     expect(markdown).toMatch(frontmatterPattern)
-  })
-
-  it("opens auth.md with its heading", () => {
-    expect(getAuthMarkdown()).toMatch(/^# Authenticating with HextaUI\n/)
-  })
-
-  it("covers every auth.md section", () => {
-    for (const section of [
-      "Discover",
-      "Pick a method",
-      "Register",
-      "Claim",
-      "Exchange",
-      "Use the access_token",
-      "Errors",
-      "Revocation",
-    ]) {
-      expect(getAuthMarkdown()).toContain(`\n## ${section}\n`)
-    }
   })
 
   it("takes prices from the pricing module", () => {

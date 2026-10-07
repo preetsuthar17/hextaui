@@ -128,9 +128,7 @@ export default function Page() {
         from the shadcn CLI or a script.
       </DocsParagraph>
       <DocsParagraph>
-        Agents can read the step-by-step guide at{" "}
-        <DocsCode>{absoluteUrl("/auth.md")}</DocsCode>, and the token rules are
-        published as protected-resource metadata at{" "}
+        The token rules are published as protected-resource metadata at{" "}
         <DocsCode>
           {absoluteUrl("/.well-known/oauth-protected-resource")}
         </DocsCode>

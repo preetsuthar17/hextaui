@@ -482,7 +482,7 @@ function getLlmsIndex() {
       `- [API docs](${absoluteUrl("/docs/api.md")}): public endpoints, authentication with sessions and API tokens, and RFC 9457 error responses.`,
       `- [MCP server](${absoluteUrl("/docs/mcp.md")}): Streamable HTTP at ${absoluteUrl("/mcp")}, server card at ${absoluteUrl("/.well-known/mcp/server-card.json")}.`,
       `- [Agent skill](${absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md")}): how an agent should find, read and install ${siteName} components.`,
-      `- [Authentication](${absoluteUrl("/auth.md")}): how agents get credentials for Pro endpoints, with protected-resource metadata at ${absoluteUrl("/.well-known/oauth-protected-resource")}.`,
+      `- [Authentication](${absoluteUrl("/docs/api.md")}): public endpoints need no key; Pro endpoints take an API token as a bearer token, described by ${absoluteUrl("/.well-known/oauth-protected-resource")}.`,
       `- [Pricing](${absoluteUrl("/pricing.md")}): free MIT components and the one-time ${siteName} Pro price.`,
       `- [API catalog](${absoluteUrl("/.well-known/api-catalog")}) (RFC 9727) and [ARD catalog](${absoluteUrl("/.well-known/ard.json")}).`,
     ].join("\n"),
