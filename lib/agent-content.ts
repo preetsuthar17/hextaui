@@ -93,15 +93,13 @@ function getNotFoundMarkdown() {
 }
 
 function getAuthMarkdown() {
-  const prm = absoluteUrl("/.well-known/oauth-protected-resource")
   return `${[
     `# Authenticating with ${siteName}`,
     `Most of ${siteName} needs no credentials. The docs, the shadcn registry at ${siteUrl}/r/<name>.json, ${absoluteUrl("/llms.txt")} and the MCP server at ${absoluteUrl("/mcp")} are public and read-only. Credentials are only needed for ${siteName} Pro blocks, which are paid.`,
     "## Discover",
     bullets([
-      `Protected-resource metadata (RFC 9728): ${prm}. It lists the bearer methods the API accepts.`,
       `Every endpoint and its security scheme: ${absoluteUrl("/openapi.json")}.`,
-      `A 401 from a Pro endpoint carries \`WWW-Authenticate: Bearer resource_metadata="${prm}"\`.`,
+      "A 401 from a Pro endpoint carries a `WWW-Authenticate: Bearer` header whose `resource_metadata` link describes the bearer methods the API accepts (RFC 9728).",
     ]),
     "## Pick a method",
     bullets([
@@ -110,7 +108,7 @@ function getAuthMarkdown() {
       "Session cookie: the account endpoints under /api. These are for the signed-in person in a browser, not for agents.",
     ]),
     "## Register",
-    `Agents cannot register themselves. ${siteName} has no authorization server or token endpoint, and does not implement agentic registration (no \`agent_auth\` block, \`identity_endpoint\`, \`identity_assertion\`, \`service_auth\` or ID-JAG exchange). A person signs in with GitHub or Google at ${absoluteUrl("/account")}, buys ${siteName} Pro, and creates an API token on that page.`,
+    `Agents cannot register themselves. There is no token endpoint and no agentic registration (no \`agent_auth\` block, \`identity_endpoint\`, \`identity_assertion\`, \`service_auth\` or ID-JAG exchange). A person signs in with GitHub or Google at ${absoluteUrl("/account")}, buys ${siteName} Pro, and creates an API token on that page.`,
     "## Claim",
     "There is no claim ceremony. Ask the user for a token from their account page, and have them store it in an environment variable such as `HEXTAUI_PRO_TOKEN`. Never ask for their password or session cookie.",
     "## Exchange",
