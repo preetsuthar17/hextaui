@@ -8,6 +8,10 @@ export default function nextConfig(phase: string): NextConfig {
 
   return {
     output: "export",
+    experimental: {
+      turbopackLazyDynamicImports: true,
+      turbopackGc: true,
+    },
     rewrites: async () => [
       {
         source: "/api/:path*",

@@ -8,20 +8,20 @@ allowBuilds:
   workerd: true
 
 minimumReleaseAgeExclude:
-  - '@next/env@16.3.7'
+  - '@next/env@16.3.7 || 16.4.0'
   - '@next/eslint-plugin-next@16.3.7'
-  - '@next/swc-darwin-arm64@16.3.7'
-  - '@next/swc-darwin-x64@16.3.7'
-  - '@next/swc-linux-arm64-gnu@16.3.7'
-  - '@next/swc-linux-arm64-musl@16.3.7'
-  - '@next/swc-linux-x64-gnu@16.3.7'
-  - '@next/swc-linux-x64-musl@16.3.7'
-  - '@next/swc-win32-arm64-msvc@16.3.7'
-  - '@next/swc-win32-x64-msvc@16.3.7'
+  - '@next/swc-darwin-arm64@16.3.7 || 16.4.0'
+  - '@next/swc-darwin-x64@16.3.7 || 16.4.0'
+  - '@next/swc-linux-arm64-gnu@16.3.7 || 16.4.0'
+  - '@next/swc-linux-arm64-musl@16.3.7 || 16.4.0'
+  - '@next/swc-linux-x64-gnu@16.3.7 || 16.4.0'
+  - '@next/swc-linux-x64-musl@16.3.7 || 16.4.0'
+  - '@next/swc-win32-arm64-msvc@16.3.7 || 16.4.0'
+  - '@next/swc-win32-x64-msvc@16.3.7 || 16.4.0'
   - eslint-config-next@16.3.7
-  - next@16.3.7
-  - '@shadcn/registry@0.1.0 || 0.1.1'
-  - shadcn@4.21.1 || 4.21.2
+  - next@16.3.7 || 16.4.0
+  - '@shadcn/registry@0.1.0 || 0.1.1 || 0.1.2'
+  - shadcn@4.21.1 || 4.21.2 || 4.21.3
   - eslint@10.12.0
   - '@tanstack/react-table@9.2.6'
   - '@tanstack/table-core@9.2.6'
@@ -41,10 +41,14 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/types@8.71.1'
   - '@typescript-eslint/typescript-estree@8.71.1'
   - '@typescript-eslint/visitor-keys@8.71.1'
-  - dodopayments@2.53.0
-  - '@ai-sdk/gateway@4.0.104'
-  - '@ai-sdk/mcp@2.0.67'
-  - '@ai-sdk/provider-utils@5.0.54'
-  - '@ai-sdk/provider@4.0.22'
-  - '@ai-sdk/react@4.0.131'
-  - ai@7.0.128
+  - dodopayments@2.53.0 || 2.54.0
+  - '@ai-sdk/gateway@4.0.104 || 4.0.106'
+  - '@ai-sdk/mcp@2.0.67 || 2.0.69'
+  - '@ai-sdk/provider-utils@5.0.54 || 5.0.56'
+  - '@ai-sdk/provider@4.0.22 || 4.0.24'
+  - '@ai-sdk/react@4.0.131 || 4.0.133'
+  - ai@7.0.128 || 7.0.130
+  - '@cloudflare/workers-types@5.20261007.1'
+  - '@next/third-parties@16.4.0'
+  - miniflare@5.20261006.0-alpha
+  - wrangler@4.148.0
