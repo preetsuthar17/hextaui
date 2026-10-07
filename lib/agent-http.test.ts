@@ -18,10 +18,18 @@ const assets = async (path: string) =>
       ? new Response("# Page not found\n\nSee https://hextaui.com/llms.txt\n")
       : new Response("missing", { status: 404 })
 
-function request(path: string, accept?: string, method = "GET") {
+function request(
+  path: string,
+  accept?: string,
+  method = "GET",
+  userAgent?: string
+) {
   return new Request(`https://hextaui.com${path}`, {
     method,
-    headers: accept ? { accept } : {},
+    headers: {
+      ...(accept ? { accept } : {}),
+      ...(userAgent ? { "user-agent": userAgent } : {}),
+    },
   })
 }
 
@@ -52,7 +60,7 @@ describe("handleAgentRequest", () => {
     expect(response.headers.get("content-type")).toBe(
       "text/markdown; charset=utf-8"
     )
-    expect(response.headers.get("vary")).toBe("Accept")
+    expect(response.headers.get("vary")).toBe("Accept, User-Agent")
     expect(await response.text()).toBe("# HextaUI\n")
   })
 
@@ -63,8 +71,37 @@ describe("handleAgentRequest", () => {
       assets
     )
     expect(response.headers.get("content-type")).toContain("text/html")
-    expect(response.headers.get("vary")).toBe("accept-encoding, Accept")
+    expect(response.headers.get("vary")).toBe(
+      "accept-encoding, Accept, User-Agent"
+    )
     expect(await response.text()).toContain("<h1>")
+  })
+
+  it.each([
+    "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+    "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; GPTBot/1.2; +https://openai.com/gptbot",
+    "PerplexityBot/1.0",
+  ])("serves Markdown on the homepage to AI agent %s", async (userAgent) => {
+    const response = await handleAgentRequest(
+      request("/", "text/html", "GET", userAgent),
+      async () => html(),
+      assets
+    )
+    expect(response.headers.get("content-type")).toContain("text/markdown")
+  })
+
+  it("keeps HTML for search engines and browsers", async () => {
+    for (const userAgent of [
+      "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_0) AppleWebKit/605.1.15 Safari/605.1.15",
+    ]) {
+      const response = await handleAgentRequest(
+        request("/", "text/html", "GET", userAgent),
+        async () => html(),
+        assets
+      )
+      expect(response.headers.get("content-type")).toContain("text/html")
+    }
   })
 
   it("sends no Markdown body for HEAD", async () => {

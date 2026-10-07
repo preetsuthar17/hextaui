@@ -53,14 +53,25 @@ function prefersMarkdown(accept: string | null) {
   return markdown > 0 && markdown >= acceptQuality(accept, "text/html")
 }
 
-function withVaryAccept(response: Response) {
+const aiAgentPattern =
+  /\b(GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-User|Claude-SearchBot|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|DeepSeekBot|ora-agent|cohere-ai|MistralAI-User)\b/i
+
+function isAiAgent(userAgent: string | null) {
+  return userAgent ? aiAgentPattern.test(userAgent) : false
+}
+
+function withVary(response: Response, ...headers: string[]) {
   const vary = response.headers.get("vary")
   const values = vary ? vary.split(",").map((value) => value.trim()) : []
-  if (values.some((value) => value.toLowerCase() === "accept")) {
+  const missing = headers.filter(
+    (header) =>
+      !values.some((value) => value.toLowerCase() === header.toLowerCase())
+  )
+  if (missing.length === 0) {
     return response
   }
   const next = new Response(response.body, response)
-  next.headers.set("vary", [...values, "Accept"].filter(Boolean).join(", "))
+  next.headers.set("vary", [...values, ...missing].filter(Boolean).join(", "))
   return next
 }
 
@@ -79,7 +90,7 @@ async function markdownResponse(
     status,
     headers: {
       "content-type": "text/markdown; charset=utf-8",
-      vary: "Accept",
+      vary: status === 200 ? "Accept, User-Agent" : "Accept",
       "cache-control":
         status === 200 ? "public, max-age=0, must-revalidate" : "no-store",
       "access-control-allow-origin": "*",
@@ -110,7 +121,7 @@ async function handleAgentRequest(
   const markdown = readable && prefersMarkdown(request.headers.get("accept"))
 
   if (url.pathname === "/" && readable) {
-    if (markdown) {
+    if (markdown || isAiAgent(request.headers.get("user-agent"))) {
       const response = await markdownResponse(
         assets,
         "/index.md",
@@ -121,7 +132,7 @@ async function handleAgentRequest(
         return response
       }
     }
-    return withVaryAccept(await next())
+    return withVary(await next(), "Accept", "User-Agent")
   }
 
   const response = await next()
@@ -147,10 +158,16 @@ async function handleAgentRequest(
         return notFound
       }
     }
-    return withVaryAccept(response)
+    return withVary(response, "Accept")
   }
 
   return response
 }
 
-export { acceptQuality, handleAgentRequest, isApiPath, prefersMarkdown }
+export {
+  acceptQuality,
+  handleAgentRequest,
+  isAiAgent,
+  isApiPath,
+  prefersMarkdown,
+}

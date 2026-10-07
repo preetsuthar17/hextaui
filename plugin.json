@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hextaui",
+  "version": "1.0.0",
+  "description": "Build React interfaces with HextaUI: a skill for finding, reading and installing accessible shadcn/ui-compatible components, and the hosted HextaUI MCP server.",
+  "author": {
+    "name": "Preet Suthar",
+    "email": "hi@preetsuthar.me",
+    "url": "https://hextaui.com"
+  },
+  "homepage": "https://hextaui.com/docs/mcp",
+  "repository": "https://github.com/preetsuthar17/hextaui",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "shadcn-ui",
+    "tailwindcss",
+    "base-ui",
+    "components",
+    "mcp"
+  ]
+}

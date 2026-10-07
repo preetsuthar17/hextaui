@@ -127,6 +127,16 @@ export default function Page() {
         <DocsCode>Authorization: Bearer hxt_…</DocsCode> to install Pro blocks
         from the shadcn CLI or a script.
       </DocsParagraph>
+      <DocsParagraph>
+        Agents can read the step-by-step guide at{" "}
+        <DocsCode>{absoluteUrl("/auth.md")}</DocsCode>, and the token rules are
+        published as protected-resource metadata at{" "}
+        <DocsCode>
+          {absoluteUrl("/.well-known/oauth-protected-resource")}
+        </DocsCode>
+        . A 401 from a Pro endpoint links to it in its{" "}
+        <DocsCode>WWW-Authenticate</DocsCode> header.
+      </DocsParagraph>
 
       <DocsHeading id="account-endpoints">Account endpoints</DocsHeading>
       <DocsList>

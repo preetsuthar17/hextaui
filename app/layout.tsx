@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
 import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
+import { WebMcp } from "@/components/site/web-mcp"
 import { ThemeProvider } from "@/components/theme-provider"
 import {
   absoluteUrl,
@@ -172,6 +173,7 @@ export default async function RootLayout({
           </SiteChrome>
         </ThemeProvider>
         <AnalyticsScript />
+        <WebMcp />
       </body>
     </html>
   )

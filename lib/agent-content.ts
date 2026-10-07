@@ -1,5 +1,7 @@
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { agentNotes } from "@/lib/agent-notes"
+import { frontmatter } from "@/lib/frontmatter"
+import { getPricingBlocks, proPlan } from "@/lib/pricing-info"
 import {
   absoluteUrl,
   siteAuthor,
@@ -48,6 +50,11 @@ function getAgentGuideMarkdown(level = 2) {
 
 function getHomeMarkdown() {
   return `${[
+    frontmatter({
+      title: `${siteName}: ready-to-use blocks and components built on top of shadcn/ui`,
+      description: siteSummary,
+      canonical: `${siteUrl}/`,
+    }),
     `# ${siteName}: ready-to-use blocks and components built on top of shadcn/ui`,
     `> ${siteSummary}`,
     `${siteName} has ${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for React, built on Base UI and Tailwind CSS v4. You add them with the shadcn CLI, the source lands in your project and it is yours to change. ${siteName} Pro adds paid, ready-made blocks for AI chat interfaces and app layouts.`,
@@ -85,12 +92,72 @@ function getNotFoundMarkdown() {
   ].join("\n\n")}\n`
 }
 
+function getAuthMarkdown() {
+  const prm = absoluteUrl("/.well-known/oauth-protected-resource")
+  return `${[
+    frontmatter({
+      title: `Authenticating with ${siteName}`,
+      description: `How agents get credentials for the ${siteName} API.`,
+      canonical: absoluteUrl("/auth.md"),
+    }),
+    `# Authenticating with ${siteName}`,
+    `Most of ${siteName} needs no credentials. The docs, the shadcn registry at ${siteUrl}/r/<name>.json, ${absoluteUrl("/llms.txt")} and the MCP server at ${absoluteUrl("/mcp")} are public and read-only. Credentials are only needed for ${siteName} Pro blocks, which are paid.`,
+    "## Discover",
+    bullets([
+      `Protected-resource metadata (RFC 9728): ${prm}. It lists the bearer methods the API accepts.`,
+      `Every endpoint and its security scheme: ${absoluteUrl("/openapi.json")}.`,
+      `A 401 from a Pro endpoint carries \`WWW-Authenticate: Bearer resource_metadata="${prm}"\`.`,
+    ]),
+    "## Pick a method",
+    bullets([
+      "No credentials: docs, registry, catalog and MCP server.",
+      "API token (`Authorization: Bearer hxt_…`): Pro registry items at /r/pro/<name>.json and Pro block files at /api/pro/blocks/<name>.",
+      "Session cookie: the account endpoints under /api. These are for the signed-in person in a browser, not for agents.",
+    ]),
+    "## Register",
+    `Agents cannot register themselves. ${siteName} has no OAuth authorization server and does not implement agentic registration (no \`agent_auth\` block, \`identity_endpoint\`, \`identity_assertion\`, \`service_auth\` or ID-JAG exchange). A person signs in with GitHub or Google at ${absoluteUrl("/account")}, buys ${siteName} Pro, and creates an API token on that page.`,
+    "## Claim",
+    "There is no claim ceremony. Ask the user for a token from their account page, and have them store it in an environment variable such as `HEXTAUI_PRO_TOKEN`. Never ask for their password or session cookie.",
+    "## Exchange",
+    "There is nothing to exchange. The token from the account page is the credential the API accepts.",
+    "## Use the access_token",
+    `Send the token as a bearer token. With the shadcn CLI, register the namespace in components.json: \`"@hextaui-pro": { "url": "${siteUrl}/r/pro/{name}.json", "headers": { "Authorization": "Bearer \${HEXTAUI_PRO_TOKEN}" } }\`, then run \`npx shadcn@latest add @hextaui-pro/<name>\`.`,
+    "## Errors",
+    bullets([
+      "401 `unauthorized`: no token, or the token is unknown or deleted. Ask the user for a new token.",
+      "403 `pro_required`: the account has not bought Pro. Send the user to the account page; do not retry.",
+      "404 `not_found`: no Pro block has that name. See https://hextaui.com/blocks.",
+      `Errors are RFC 9457 problem+json with \`code\`, \`detail\` and \`resolution\`. See ${absoluteUrl("/docs/api#errors")}.`,
+    ]),
+    "## Revocation",
+    `The user deletes a token on ${absoluteUrl("/account")}. A token also stops working for Pro blocks if the purchase is refunded or a chargeback is lost. Tokens do not expire on their own.`,
+  ].join("\n\n")}\n`
+}
+
+function getBlocksLlms() {
+  return `${[
+    `# ${siteName} Pro blocks`,
+    `> Ready-made blocks for AI chat interfaces and app layouts, built from ${siteName} components. ${proPlan.summary}`,
+    bullets([
+      `Install with the shadcn CLI from the private registry at ${siteUrl}/r/pro/<name>.json, using an API token from ${absoluteUrl("/account")}. Authentication: ${absoluteUrl("/auth.md")}.`,
+      `Pricing and license: ${absoluteUrl("/pricing.md")}.`,
+      `The free components these blocks use: ${absoluteUrl("/docs/llms.txt")}.`,
+    ]),
+    "## Blocks",
+    bullets(
+      getPricingBlocks().map(
+        (block) => `[${block.title}](${block.url}): ${block.description}`
+      )
+    ),
+  ].join("\n\n")}\n`
+}
+
 function getSkillMarkdown() {
   return `${[
-    "---",
-    "name: hextaui",
-    `description: Build React interfaces with ${siteName}, accessible shadcn/ui-compatible components on Base UI and Tailwind CSS v4. Use when adding or customizing dialogs, selects, comboboxes, data tables, toasts, sidebars or AI chat UI in a shadcn/ui project, or when you need a ${siteName} component's props, examples or install command.`,
-    "---",
+    frontmatter({
+      name: "hextaui",
+      description: `Build React interfaces with ${siteName}, accessible shadcn/ui-compatible components on Base UI and Tailwind CSS v4. Use when adding or customizing dialogs, selects, comboboxes, data tables, toasts, sidebars or AI chat UI in a shadcn/ui project, or when you need a ${siteName} component's props, examples or install command.`,
+    }),
     `# ${siteName}`,
     `${siteSummary} Maintained by ${siteAuthor} (${siteContactEmail}).`,
     getAgentGuideMarkdown(2),
@@ -111,6 +178,8 @@ export {
   agentWhenNotToUse,
   agentWhenToUse,
   getAgentGuideMarkdown,
+  getAuthMarkdown,
+  getBlocksLlms,
   getHomeMarkdown,
   getNotFoundMarkdown,
   getSkillMarkdown,

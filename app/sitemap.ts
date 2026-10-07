@@ -64,6 +64,25 @@ function ignoredFiles(files: string[]) {
   return new Set(output ? output.split("\n") : [])
 }
 
+function hasHistory() {
+  const shallow = () => git(["rev-parse", "--is-shallow-repository"])
+  if (shallow() === "true") {
+    try {
+      execFileSync(
+        "git",
+        ["fetch", "--quiet", "--unshallow", "--filter=blob:none"],
+        {
+          cwd: process.cwd(),
+          env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
+          stdio: "ignore",
+          timeout: 60_000,
+        }
+      )
+    } catch {}
+  }
+  return shallow() === "false"
+}
+
 function lastModified(file: string, history: boolean) {
   if (!history) {
     return undefined
@@ -102,7 +121,7 @@ function priority(route: string) {
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = findPages(appDir).filter((page) => !isNoindexPath(page.route))
   const ignored = ignoredFiles(pages.map((page) => page.file))
-  const history = git(["rev-parse", "--is-shallow-repository"]) === "false"
+  const history = hasHistory()
 
   return pages
     .filter((page) => !ignored.has(page.file))

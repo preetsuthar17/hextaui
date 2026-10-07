@@ -9,6 +9,7 @@ import { siteRepository } from "@/lib/site"
 const sitePages = [
   { href: "/about", title: "About" },
   { href: "/contact", title: "Contact" },
+  { href: "/pricing", title: "Pricing" },
 ]
 
 const linkClassName =

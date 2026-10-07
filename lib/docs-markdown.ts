@@ -427,15 +427,43 @@ function getDocsMarkdownHref(slug: string) {
   return slug === "" ? "/docs.md" : `/docs/${slug}.md`
 }
 
-function getLlmsIndex() {
-  const list = (entries: typeof docsEntries) =>
-    entries
-      .map(
-        (entry) =>
-          `- [${entry.name}](${absoluteUrl(getDocsMarkdownHref(entry.slug))}): ${entry.description}`
-      )
-      .join("\n")
+function list(entries: typeof docsEntries) {
+  return entries
+    .map(
+      (entry) =>
+        `- [${entry.name}](${absoluteUrl(getDocsMarkdownHref(entry.slug))}): ${entry.description}`
+    )
+    .join("\n")
+}
 
+function guideList() {
+  return docsGuides
+    .map(
+      (guide) =>
+        `- [${guide.title}](${absoluteUrl(getDocsMarkdownHref(guide.slug))}): ${guide.description}`
+    )
+    .join("\n")
+}
+
+function getDocsLlms() {
+  return `${[
+    heading(1, `${siteName} docs`),
+    `> Every ${siteName} docs page as Markdown: guides, components, hooks and utilities. Each component page has installation, usage, examples, keyboard support and an API reference.`,
+    agentNotes.map((note) => `- ${note}`).join("\n"),
+    heading(2, "Guides"),
+    guideList(),
+    heading(2, "Components"),
+    list(docsComponents),
+    heading(2, "Hooks"),
+    list(docsHooks),
+    heading(2, "Utilities"),
+    list(docsUtilities),
+    heading(2, "Optional"),
+    `- [Site index](${absoluteUrl("/llms.txt")}): what ${siteName} is, when to use it, and every developer resource.`,
+  ].join("\n\n")}\n`
+}
+
+function getLlmsIndex() {
   return `${[
     heading(1, siteName),
     `> ${siteDescription} Accessible React components on Base UI and Tailwind CSS v4 that you copy into your project and own.`,
@@ -454,15 +482,12 @@ function getLlmsIndex() {
       `- [API docs](${absoluteUrl("/docs/api.md")}): public endpoints, authentication with sessions and API tokens, and RFC 9457 error responses.`,
       `- [MCP server](${absoluteUrl("/docs/mcp.md")}): Streamable HTTP at ${absoluteUrl("/mcp")}, server card at ${absoluteUrl("/.well-known/mcp/server-card.json")}.`,
       `- [Agent skill](${absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md")}): how an agent should find, read and install ${siteName} components.`,
-      `- [API catalog](${absoluteUrl("/.well-known/api-catalog")}) (RFC 9727).`,
+      `- [Authentication](${absoluteUrl("/auth.md")}): how agents get credentials for Pro endpoints, with protected-resource metadata at ${absoluteUrl("/.well-known/oauth-protected-resource")}.`,
+      `- [Pricing](${absoluteUrl("/pricing.md")}): free MIT components and the one-time ${siteName} Pro price.`,
+      `- [API catalog](${absoluteUrl("/.well-known/api-catalog")}) (RFC 9727) and [ARD catalog](${absoluteUrl("/.well-known/ard.json")}).`,
     ].join("\n"),
     heading(2, "Docs"),
-    docsGuides
-      .map(
-        (guide) =>
-          `- [${guide.title}](${absoluteUrl(getDocsMarkdownHref(guide.slug))}): ${guide.description}`
-      )
-      .join("\n"),
+    guideList(),
     heading(2, "Components"),
     list(docsComponents),
     heading(2, "Hooks"),
@@ -470,6 +495,8 @@ function getLlmsIndex() {
     heading(2, "Utilities"),
     list(docsUtilities),
     heading(2, "Optional"),
+    `- [Docs index](${absoluteUrl("/docs/llms.txt")}): only the docs pages, for agents that need component context and nothing else.`,
+    `- [Pro blocks index](${absoluteUrl("/blocks/llms.txt")}): the ${siteName} Pro blocks and how to install them.`,
     `- [Full documentation](${absoluteUrl("/llms-full.txt")}): Every docs page in one file, with usage, installation, keyboard support and API reference. Component source and example code live in each component's Markdown page.`,
   ].join("\n\n")}\n`
 }
@@ -492,6 +519,7 @@ export {
   isElement,
   toArray,
   getDocsMarkdown,
+  getDocsLlms,
   getDocsMarkdownHref,
   getLlmsFull,
   getLlmsIndex,

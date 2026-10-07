@@ -1,3 +1,4 @@
+import { protectedResourceMetadataUrl } from "@/lib/agent-manifests"
 import { apiError } from "@/lib/api-error"
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
@@ -28,6 +29,9 @@ function accessError(access: Access) {
   if (access.status === "pro") return null
   return access.status === "anonymous"
     ? apiError("unauthorized", {
+        headers: {
+          "www-authenticate": `Bearer resource_metadata="${protectedResourceMetadataUrl}"`,
+        },
         error: "Unauthorized",
         message:
           "Sign in at https://hextaui.com/account, or set HEXTAUI_PRO_TOKEN to a token from that page.",

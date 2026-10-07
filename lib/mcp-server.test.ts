@@ -150,7 +150,8 @@ const assets: Record<string, unknown> = {
     "components/examples/dialog/form.tsx",
     "export function DialogForm() {}"
   ),
-  "/docs/installation.md": "# Installation\n\nRun the CLI.",
+  "/docs/installation.md":
+    "# Installation\n\nRun the CLI.\n\n```bash\nnpx shadcn@latest init\n```",
 }
 
 const fixtureLoader: AssetLoader = async (path) => {
@@ -393,6 +394,25 @@ describe("HextaUI MCP server", () => {
     const { text } = await call(client, "get_setup")
     expect(text).toContain("# Installation")
     expect(text).toContain("## Conventions")
+    expect(text).toContain("npx shadcn@latest init")
+    const pnpm = await call(client, "get_setup", { packageManager: "pnpm" })
+    expect(pnpm.text).toContain("pnpm dlx shadcn@latest init")
+    expect(pnpm.text).not.toContain("\nnpx shadcn@latest init")
+  })
+
+  it("gives every tool a typed input schema and the server an icon", async () => {
+    const client = await connect()
+    const { tools } = await client.listTools()
+    for (const tool of tools) {
+      expect(tool.inputSchema.type, tool.name).toBe("object")
+      expect(
+        Object.keys(tool.inputSchema.properties ?? {}).length,
+        tool.name
+      ).toBeGreaterThan(0)
+    }
+    expect(client.getServerVersion()?.icons?.[0]?.src).toBe(
+      "https://hextaui.com/hextaui-logo.svg"
+    )
   })
 
   it("exposes docs as resources and a build prompt", async () => {

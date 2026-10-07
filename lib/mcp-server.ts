@@ -7,6 +7,7 @@ import {
 } from "@modelcontextprotocol/server"
 import * as z from "zod"
 
+import { mcpIcons } from "@/lib/agent-manifests"
 import { agentNotes } from "@/lib/agent-notes"
 import {
   createDocsSearch,
@@ -533,6 +534,7 @@ function createServer(store: AssetStore) {
       title: siteName,
       version: serverVersion,
       websiteUrl: siteUrl,
+      icons: mcpIcons,
     },
     { instructions }
   )
@@ -814,12 +816,17 @@ function createServer(store: AssetStore) {
       title: "Get HextaUI setup guide",
       description:
         "How to add HextaUI to a project: requirements, the shadcn CLI, the @hextaui namespace, theme tokens for manual installs, and the conventions generated code should follow. Use this when the project has no HextaUI components yet.",
+      inputSchema: z.object({ packageManager: packageManagerSchema }),
       annotations: toolAnnotations,
     },
-    () =>
+    ({ packageManager }) =>
       run(async () =>
         [
-          await store.text("/docs/installation.md"),
+          (await store.text("/docs/installation.md")).replace(
+            /^npx (.+)$/gm,
+            (_, command: string) =>
+              getCommand(packageManager, command.split(" "), "dlx")
+          ),
           "## Conventions",
           agentNotes.map((note) => `- ${note}`).join("\n"),
         ].join("\n\n")

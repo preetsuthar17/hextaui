@@ -1,4 +1,10 @@
-import { absoluteUrl, siteName, siteRepository, siteSummary } from "@/lib/site"
+import {
+  absoluteUrl,
+  siteName,
+  siteRepository,
+  siteSummary,
+  siteUrl,
+} from "@/lib/site"
 
 const mcpName = "com.hextaui/hextaui"
 const mcpVersion = "1.0.0"
@@ -53,6 +59,15 @@ const mcpTools = [
 
 const repository = { url: siteRepository, source: "github" }
 
+const mcpIcons = [
+  { src: absoluteUrl("/hextaui-logo.svg"), mimeType: "image/svg+xml" },
+  {
+    src: absoluteUrl("/hextaui-logo.png"),
+    mimeType: "image/png",
+    sizes: ["1040x1040"],
+  },
+]
+
 function getMcpServerCard() {
   return {
     name: mcpName,
@@ -68,6 +83,7 @@ function getMcpServerCard() {
         supportedProtocolVersions: mcpProtocolVersions,
       },
     ],
+    icons: mcpIcons,
     serverInfo: { name: "hextaui", title: siteName, version: mcpVersion },
     transport: { type: "streamable-http", endpoint: "/mcp" },
     authentication: { required: false },
@@ -99,31 +115,73 @@ function getMcpRegistryServer() {
     version: mcpVersion,
     websiteUrl: absoluteUrl("/docs/mcp"),
     repository,
+    icons: mcpIcons,
     remotes: [{ type: "streamable-http", url: mcpUrl }],
   }
 }
 
+const trustManifest = {
+  identity: siteUrl,
+  identityType: "https",
+  provenance: [{ relation: "source", sourceId: siteRepository }],
+}
+
+function getArdEntries() {
+  return [
+    {
+      identifier: "urn:air:hextaui.com:mcp:hextaui",
+      displayName: `${siteName} MCP server`,
+      type: "application/mcp-server-card+json",
+      url: absoluteUrl("/.well-known/mcp/server-card.json"),
+      description: mcpDescription,
+      capabilities: mcpTools.map((tool) => tool.name),
+      representativeQueries: [
+        "which HextaUI component should I use for a confirm dialog",
+        "show the props of the HextaUI combobox",
+        "get the shadcn install command for HextaUI button and dialog",
+      ],
+      tags: ["react", "shadcn-ui", "ui-components", "documentation"],
+      version: mcpVersion,
+      trustManifest,
+    },
+    {
+      identifier: "urn:air:hextaui.com:api:hextaui",
+      displayName: `${siteName} API`,
+      type: "application/vnd.oai.openapi+json",
+      url: absoluteUrl("/openapi.json"),
+      description:
+        "HTTP API for the HextaUI shadcn registry, docs catalog, account and Pro blocks.",
+      representativeQueries: [
+        "download the source of the HextaUI data table",
+        "list every HextaUI registry item",
+        "fetch a HextaUI Pro block with an API token",
+      ],
+      tags: ["registry", "openapi", "shadcn-ui"],
+      trustManifest,
+    },
+    {
+      identifier: "urn:air:hextaui.com:skill:hextaui",
+      displayName: `${siteName} agent skill`,
+      type: "application/ai-skill+md",
+      url: absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md"),
+      description:
+        "How an agent should find, read and install HextaUI components in a shadcn/ui project.",
+      representativeQueries: [
+        "build a settings page with HextaUI components",
+        "add an accessible select to my shadcn project",
+      ],
+      tags: ["skill", "react", "shadcn-ui"],
+      trustManifest,
+    },
+  ]
+}
+
+function getArdManifest() {
+  return { entries: getArdEntries() }
+}
+
 function getAiCatalog() {
-  return {
-    specVersion: "1.0",
-    entries: [
-      {
-        identifier: "urn:air:hextaui.com:mcp:hextaui",
-        type: "application/mcp-server-card+json",
-        url: absoluteUrl("/.well-known/mcp/server-card.json"),
-      },
-      {
-        identifier: "urn:air:hextaui.com:api:hextaui",
-        type: "application/vnd.oai.openapi+json",
-        url: absoluteUrl("/openapi.json"),
-      },
-      {
-        identifier: "urn:air:hextaui.com:skill:hextaui",
-        type: "text/markdown",
-        url: absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md"),
-      },
-    ],
-  }
+  return { specVersion: "1.0", entries: getArdEntries() }
 }
 
 function getApiCatalog() {
@@ -140,6 +198,14 @@ function getApiCatalog() {
 
   return {
     linkset: [
+      {
+        anchor: absoluteUrl("/.well-known/api-catalog"),
+        item: [
+          { href: absoluteUrl("/api"), type: "application/json" },
+          { href: absoluteUrl("/r/registry.json"), type: "application/json" },
+          { href: mcpUrl, type: "application/json" },
+        ],
+      },
       describe(absoluteUrl("/api")),
       describe(absoluteUrl("/r/registry.json")),
       {
@@ -153,6 +219,21 @@ function getApiCatalog() {
         "service-doc": [{ href: absoluteUrl("/docs/mcp"), type: "text/html" }],
       },
     ],
+  }
+}
+
+const protectedResourceMetadataUrl = absoluteUrl(
+  "/.well-known/oauth-protected-resource"
+)
+
+function getProtectedResourceMetadata() {
+  return {
+    resource: siteUrl,
+    resource_name: `${siteName} API`,
+    resource_documentation: absoluteUrl("/docs/api"),
+    resource_policy_uri: absoluteUrl("/legal/terms"),
+    resource_tos_uri: absoluteUrl("/legal/terms"),
+    bearer_methods_supported: ["header"],
   }
 }
 
@@ -184,8 +265,12 @@ async function getAgentSkillsIndex(skill: string) {
 export {
   getAgentSkillsIndex,
   getAiCatalog,
+  getArdManifest,
   getApiCatalog,
   getMcpRegistryServer,
   getMcpServerCard,
+  getProtectedResourceMetadata,
+  mcpIcons,
   mcpTools,
+  protectedResourceMetadataUrl,
 }

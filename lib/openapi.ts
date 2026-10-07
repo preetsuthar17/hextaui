@@ -40,8 +40,26 @@ const nameParameter = (description: string, example: string) => ({
 const signedIn = [{ sessionCookie: [] }]
 const proAccess = [{ bearerToken: [] }, { sessionCookie: [] }]
 
+const functionPath = /^\/(api|r\/pro)(\/|$)/
+
+function withDefaultErrors<T extends { paths: Record<string, object> }>(
+  document: T
+) {
+  for (const [route, item] of Object.entries(document.paths)) {
+    if (!functionPath.test(route)) continue
+    for (const operation of Object.values(item) as {
+      responses?: Record<string, unknown>
+    }[]) {
+      if (operation.responses) {
+        operation.responses.default = { $ref: "#/components/responses/Error" }
+      }
+    }
+  }
+  return document
+}
+
 function getOpenApiDocument() {
-  return {
+  return withDefaultErrors({
     openapi: "3.1.0",
     info: {
       title: `${siteName} API`,
@@ -226,7 +244,10 @@ function getOpenApiDocument() {
               },
             },
             "202": { description: "A notification or response was accepted." },
-            "400": errors["400"],
+            "400": {
+              description: "The request was not a valid MCP message.",
+              content: { [json]: { schema: ref("JsonRpcMessage") } },
+            },
           },
         },
       },
@@ -501,7 +522,19 @@ function getOpenApiDocument() {
       },
       responses: {
         BadRequest: errorResponse("The request was invalid."),
-        Unauthorized: errorResponse("No valid session or token was sent."),
+        Unauthorized: {
+          ...errorResponse("No valid session or token was sent."),
+          headers: {
+            "WWW-Authenticate": {
+              description:
+                'On Pro endpoints: `Bearer resource_metadata="https://hextaui.com/.well-known/oauth-protected-resource"`.',
+              schema: { type: "string" },
+            },
+          },
+        },
+        Error: errorResponse(
+          "Any other error, as RFC 9457 problem details with a stable code and a resolution hint."
+        ),
         Forbidden: errorResponse(
           "The request is not allowed: wrong origin, or the account does not own HextaUI Pro."
         ),
@@ -710,7 +743,7 @@ function getOpenApiDocument() {
       },
     },
     "x-repository": siteRepository,
-  }
+  })
 }
 
 export { getOpenApiDocument }
