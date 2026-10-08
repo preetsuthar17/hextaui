@@ -47,3 +47,5 @@ next-env.d.ts
 # private pro blocks checkout and generated pro data
 /pro/
 /lib/pro/generated/
+
+/founder/
