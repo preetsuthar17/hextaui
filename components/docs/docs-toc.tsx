@@ -292,7 +292,7 @@ function DocsToc({
           data-passed={itemIndex <= activeTarget ? "" : undefined}
           aria-current={active ? "location" : undefined}
           className={cn(
-            "group/toc-link flex min-h-7 min-w-0 flex-1 items-center rounded-sm text-sm text-muted-foreground transition-colors duration-300 ease-out-quint outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden data-passed:text-foreground motion-reduce:transition-none",
+            "group/toc-link flex min-h-7 min-w-0 flex-1 items-center rounded-sm text-sm text-muted-foreground transition-colors duration-300 ease-out-quint outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset focus-visible:outline-hidden data-passed:text-foreground motion-reduce:transition-none",
             item.depth === 3 ? "ps-7" : "ps-5"
           )}
         >

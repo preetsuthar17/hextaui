@@ -121,7 +121,7 @@ function Table({
         data-slot="table-container"
         data-sticky-header={stickyHeader ? "" : undefined}
         className={cn(
-          "relative w-full overflow-x-auto overscroll-x-none rounded-[inherit] outline-none [--fade-end:0px] [--fade-start:0px] focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden focus-visible:ring-inset data-sticky-header:overflow-y-auto",
+          "relative w-full scroll-p-1 overflow-x-auto overscroll-x-none rounded-[inherit] outline-none [--fade-end:0px] [--fade-start:0px] focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden focus-visible:ring-inset data-sticky-header:overflow-y-auto",
           scrollFade &&
             "not-has-[[data-pinned]]:mask-[linear-gradient(to_right,transparent,#000_var(--fade-start),#000_calc(100%-var(--fade-end)),transparent)] data-scrolled-end:[--fade-end:--spacing(8)] data-scrolled-start:[--fade-start:--spacing(8)] rtl:not-has-[[data-pinned]]:mask-[linear-gradient(to_left,transparent,#000_var(--fade-start),#000_calc(100%-var(--fade-end)),transparent)]",
           containerClassName

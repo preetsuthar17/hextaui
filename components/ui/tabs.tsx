@@ -123,7 +123,7 @@ function useRevealActive(list: HTMLElement | null) {
 }
 
 const tabsListVariants = cva(
-  "group/tabs-list relative isolate flex max-w-full min-w-0 [scrollbar-width:none] overflow-x-auto overscroll-x-none data-[orientation=vertical]:flex-col data-[orientation=vertical]:overflow-x-visible data-[orientation=vertical]:overflow-y-auto [&::-webkit-scrollbar]:hidden",
+  "group/tabs-list relative isolate flex max-w-full min-w-0 scroll-p-1 [scrollbar-width:none] overflow-x-auto overscroll-x-none data-[orientation=vertical]:flex-col data-[orientation=vertical]:overflow-x-visible data-[orientation=vertical]:overflow-y-auto [&::-webkit-scrollbar]:hidden",
   {
     variants: {
       variant: {

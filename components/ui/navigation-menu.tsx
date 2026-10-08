@@ -139,7 +139,7 @@ function NavigationMenuList({
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
       className={mergeClassName(
-        "-my-1 flex min-w-0 flex-1 [scrollbar-width:none] list-none items-center gap-0.5 overflow-x-auto overscroll-x-none py-1 group-data-[orientation=vertical]/navigation-menu:flex-col group-data-[orientation=vertical]/navigation-menu:items-stretch",
+        "-m-1 flex min-w-0 flex-1 scroll-p-1 [scrollbar-width:none] list-none items-center gap-0.5 overflow-x-auto overscroll-x-none p-1 group-data-[orientation=vertical]/navigation-menu:flex-col group-data-[orientation=vertical]/navigation-menu:items-stretch",
         className
       )}
       {...props}
