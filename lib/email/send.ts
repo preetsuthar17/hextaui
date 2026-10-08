@@ -19,7 +19,7 @@ type Email = {
 
 type SendResult = { ok: true } | { ok: false; error: string; status: number }
 
-const sender = { email: "updates@hextaui.com", name: "HextaUI" }
+const sender = { address: "updates@hextaui.com", name: "HextaUI" }
 
 async function sendEmail(env: MailerEnv, email: Email): Promise<SendResult> {
   if (!env.CF_ACCOUNT_ID || !env.CF_EMAIL_TOKEN) {
@@ -33,7 +33,7 @@ async function sendEmail(env: MailerEnv, email: Email): Promise<SendResult> {
         authorization: `Bearer ${env.CF_EMAIL_TOKEN}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify({ from: sender, ...email }),
+      body: JSON.stringify({ ...email, from: sender, to: [email.to] }),
     }
   )
   const body = (await response.json().catch(() => null)) as {

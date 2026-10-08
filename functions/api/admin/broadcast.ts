@@ -58,7 +58,7 @@ export async function onRequestPost({ request, env }: Context) {
     const result = await sendEmail(env, releaseEmail(entry, body.to, links))
     return Response.json(
       { test: true, to: body.to, ...result },
-      { status: result.ok ? 200 : 502, headers: noStore }
+      { headers: noStore }
     )
   }
 
