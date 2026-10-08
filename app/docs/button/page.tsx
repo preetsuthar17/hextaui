@@ -74,8 +74,10 @@ export default function Page() {
           title="Variants"
           description={
             <>
-              Six variants. <DocsCode>destructive</DocsCode> is a soft tint so a
-              dangerous action reads clearly without shouting.
+              Seven variants. <DocsCode>destructive</DocsCode> is a soft tint so a
+              dangerous action reads clearly without shouting, and{" "}
+              <DocsCode>ghost-destructive</DocsCode> is the quiet version for
+              repeated row actions like Sign out or Remove.
             </>
           }
         >
@@ -298,7 +300,7 @@ export default function Page() {
             props={[
               {
                 name: "variant",
-                type: '"default" | "outline" | "secondary" | "ghost" | "destructive" | "link"',
+                type: '"default" | "outline" | "secondary" | "ghost" | "ghost-destructive" | "destructive" | "link"',
                 default: '"default"',
               },
               {

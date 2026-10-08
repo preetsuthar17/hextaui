@@ -77,12 +77,12 @@ function DocsKeyboardTable({ keys }: { keys: DocsKey[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {keys.map((row) => (
-          <TableRow key={row.keys.join("+")}>
+        {keys.map((row, index) => (
+          <TableRow key={`${index}-${row.keys.join("+")}`}>
             <TableHead scope="row">
               <KbdGroup className="flex-wrap">
-                {row.keys.map((key) => (
-                  <Kbd key={key}>{key}</Kbd>
+                {row.keys.map((key, index) => (
+                  <Kbd key={`${index}-${key}`}>{key}</Kbd>
                 ))}
               </KbdGroup>
             </TableHead>
