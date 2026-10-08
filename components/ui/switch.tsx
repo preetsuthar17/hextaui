@@ -188,9 +188,25 @@ function Switch({
   const rootRef = React.useRef<HTMLElement | null>(null)
   const [internal, setInternal] = React.useState(defaultChecked)
   const [pending, setPending] = React.useState(false)
+  const [optimistic, setOptimistic] = React.useState<boolean | null>(null)
+  const [slow, setSlow] = React.useState(false)
   const controlled = checkedProp !== undefined
-  const checked = controlled ? checkedProp : internal
+  const checked =
+    pending && optimistic !== null
+      ? optimistic
+      : controlled
+        ? checkedProp
+        : internal
   const latest = React.useRef(0)
+
+  React.useEffect(() => {
+    if (!pending) {
+      setSlow(false)
+      return
+    }
+    const timer = setTimeout(() => setSlow(true), 400)
+    return () => clearTimeout(timer)
+  }, [pending])
 
   const blocked = Boolean(disabled || readOnly || pending)
   const dragHandlers = useThumbDrag(rootRef, () => !blocked)
@@ -225,11 +241,13 @@ function Switch({
       return
     }
     const id = ++latest.current
+    setOptimistic(next)
     setPending(true)
     Promise.resolve(result).then(
       () => {
         if (latest.current === id) {
           setPending(false)
+          setOptimistic(null)
         }
       },
       () => {
@@ -237,6 +255,7 @@ function Switch({
           return
         }
         setPending(false)
+        setOptimistic(null)
         if (!controlled) {
           setInternal(!next)
         }
@@ -315,7 +334,7 @@ function Switch({
         data-slot="switch-thumb"
         className="pointer-events-none relative z-1 flex h-(--switch-thumb) w-[calc(var(--switch-thumb-w)+var(--switch-stretch))] translate-x-[calc(var(--switch-x)*var(--switch-dir))] items-center justify-center rounded-full bg-background ring-(length:--hairline) ring-foreground/5 transition-[translate,width] duration-300 ease-spring group-data-dragging/switch:transition-none motion-reduce:transition-none dark:bg-foreground dark:group-data-[drag=off]/switch:bg-foreground dark:group-data-[drag=on]/switch:bg-primary-foreground dark:group-data-[variant=ios]/switch:group-data-[drag=on]/switch:bg-foreground dark:group-data-checked/switch:bg-primary-foreground dark:group-data-[variant=ios]/switch:group-data-checked/switch:bg-foreground forced-colors:border forced-colors:bg-canvas-text"
       >
-        {pending ? (
+        {pending && slow ? (
           <Spinner
             aria-hidden
             size={null}

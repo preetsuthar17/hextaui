@@ -46,12 +46,43 @@ describe("Switch", () => {
     fireEvent.click(control)
     expect(control.getAttribute("aria-checked")).toBe("true")
     expect(control.getAttribute("aria-busy")).toBe("true")
+    expect(control.querySelector("[data-slot=spinner]")).toBeNull()
+    await act(() => new Promise((resolve) => setTimeout(resolve, 450)))
     expect(control.querySelector("[data-slot=spinner]")).toBeTruthy()
 
     fireEvent.click(control)
     expect(control.getAttribute("aria-checked")).toBe("true")
 
     finish()
+    await flush()
+    expect(control.hasAttribute("aria-busy")).toBe(false)
+    expect(control.getAttribute("aria-checked")).toBe("true")
+  })
+
+  it("flips a controlled switch right away while its promise runs", async () => {
+    let finish: () => void = () => {}
+    function Controlled() {
+      const [on, setOn] = React.useState(false)
+      return (
+        <Switch
+          aria-label="Auto-join"
+          checked={on}
+          onCheckedChange={(next) =>
+            new Promise<void>((resolve) => {
+              finish = () => {
+                setOn(next)
+                resolve()
+              }
+            })
+          }
+        />
+      )
+    }
+    render(<Controlled />)
+    const control = screen.getByRole("switch", { name: "Auto-join" })
+    fireEvent.click(control)
+    expect(control.getAttribute("aria-checked")).toBe("true")
+    await act(async () => finish())
     await flush()
     expect(control.hasAttribute("aria-busy")).toBe(false)
     expect(control.getAttribute("aria-checked")).toBe("true")

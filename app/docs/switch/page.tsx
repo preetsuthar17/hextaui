@@ -86,7 +86,8 @@ export default function Page() {
           description={
             <>
               Return a promise from <DocsCode>onCheckedChange</DocsCode> and the
-              switch flips right away with a spinner in the thumb. If it
+              switch flips right away, even when it&apos;s controlled. A spinner
+              shows in the thumb only if saving takes longer than 400ms. If it
               rejects, the switch flips back and shakes.
             </>
           }
