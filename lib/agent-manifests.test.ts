@@ -15,7 +15,7 @@ import {
 } from "@/lib/agent-manifests"
 import { getDocsLlms } from "@/lib/docs-markdown"
 import { getProProductJsonLd, getPricingMarkdown } from "@/lib/pricing-info"
-import { proPrice } from "@/lib/pro/pricing"
+import { isEarlyBird, proPlans } from "@/lib/pro/pricing"
 import { accessError } from "@/lib/pro/access"
 
 const frontmatterPattern = /^---\n(?:[\w-]+: "(?:[^"\\]|\\.)*"\n)+---\n/
@@ -78,8 +78,13 @@ describe("Markdown for agents", () => {
   })
 
   it("takes prices from the pricing module", () => {
-    expect(getPricingMarkdown()).toContain(`$${proPrice} one-time`)
-    expect(getProProductJsonLd().offers.price).toBe(proPrice)
+    const solo = isEarlyBird() ? proPlans.solo.earlyPrice : proPlans.solo.price
+    const team = isEarlyBird() ? proPlans.team.earlyPrice : proPlans.team.price
+    expect(getPricingMarkdown()).toContain(`Solo: $${solo} once`)
+    expect(getProProductJsonLd().offers.map((offer) => offer.price)).toEqual([
+      solo,
+      team,
+    ])
   })
 
   it("scopes the section llms.txt files", () => {

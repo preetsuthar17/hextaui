@@ -22,7 +22,7 @@ export default function Page() {
     <LegalPage
       href="/legal/terms"
       title="Terms of Service"
-      updated="2026-10-06"
+      updated="2026-10-08"
     >
       <DocsParagraph>
         These terms cover your use of HextaUI (hextaui.com), run by Preet
@@ -93,7 +93,10 @@ export default function Page() {
       <LegalSection title="Acceptable use">
         <DocsParagraph>Please don’t:</DocsParagraph>
         <DocsList>
-          <li>Share your account or API tokens, or resell access.</li>
+          <li>
+            Share your account or API tokens, or resell access. A Team plan may
+            keep one shared token in CI, as the Pro License describes.
+          </li>
           <li>Redistribute Pro code outside what the Pro License allows.</li>
           <li>
             Get around access controls, scrape gated content, or use the site in

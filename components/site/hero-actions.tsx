@@ -54,11 +54,20 @@ function HeroActions({ stars }: { stars: number | null }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Link
-        href="/docs/installation"
+        href="/blocks"
         className={cn(buttonVariants({ size: "lg" }), "px-4")}
       >
-        Get started
+        Browse blocks
         <IconArrowRight data-icon="inline-end" aria-hidden="true" />
+      </Link>
+      <Link
+        href="/blocks/prompt-input"
+        className={cn(
+          buttonVariants({ variant: "outline", size: "lg" }),
+          "px-4"
+        )}
+      >
+        Try Prompt Input free
       </Link>
       <GithubStarsButton stars={stars} />
     </div>

@@ -79,33 +79,58 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
         </DocsSection>
       ) : null}
 
-      <DocsSection title="Installation">
-        <ol className="flex flex-col">
-          <DocsStep step={1} title="Add the Pro registry to components.json">
-            <DocsCodeBlock
-              code={registryCode}
-              lang="json"
-              title="components.json"
-            />
-          </DocsStep>
-          <DocsStep step={2} title="Add your token">
-            <DocsParagraph>
-              Create a token on your{" "}
-              <Link href="/account" className={linkClassName}>
-                account page
-              </Link>{" "}
-              and put it in <DocsCode>.env.local</DocsCode> as{" "}
-              <DocsCode>HEXTAUI_PRO_TOKEN</DocsCode>.
-            </DocsParagraph>
-          </DocsStep>
-          <DocsStep step={3} title="Add the block">
-            <DocsCommand
-              mode="dlx"
-              packages={["shadcn@latest", "add", `@hextaui-pro/${block.name}`]}
-            />
-          </DocsStep>
-        </ol>
-      </DocsSection>
+      {block.free ? (
+        <DocsSection title="Installation">
+          <DocsParagraph>
+            {block.title} is free. Install it without an account or a token, and
+            use it under the{" "}
+            <Link href="/legal/license" className={linkClassName}>
+              Pro License
+            </Link>{" "}
+            in as many projects as you like.
+          </DocsParagraph>
+          <DocsCommand
+            mode="dlx"
+            packages={[
+              "shadcn@latest",
+              "add",
+              `https://hextaui.com/r/pro/${block.name}.json`,
+            ]}
+          />
+        </DocsSection>
+      ) : (
+        <DocsSection title="Installation">
+          <ol className="flex flex-col">
+            <DocsStep step={1} title="Add the Pro registry to components.json">
+              <DocsCodeBlock
+                code={registryCode}
+                lang="json"
+                title="components.json"
+              />
+            </DocsStep>
+            <DocsStep step={2} title="Add your token">
+              <DocsParagraph>
+                Create a token on your{" "}
+                <Link href="/account" className={linkClassName}>
+                  account page
+                </Link>{" "}
+                and put it in <DocsCode>.env.local</DocsCode> as{" "}
+                <DocsCode>HEXTAUI_PRO_TOKEN</DocsCode>.
+              </DocsParagraph>
+            </DocsStep>
+            <DocsStep step={3} title="Add the block">
+              <DocsCommand
+                mode="dlx"
+                packages={[
+                  "shadcn@latest",
+                  "add",
+                  `@hextaui-pro/${block.name}`,
+                ]}
+              />
+            </DocsStep>
+          </ol>
+        </DocsSection>
+      )}
 
       {block.usage.length > 0 ? (
         <DocsSection title="Usage">
@@ -166,7 +191,7 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
         title="Code"
         description={`${block.files.length} ${block.files.length === 1 ? "file" : "files"}, added to components/blocks/${block.name}.`}
       >
-        <BlockCode name={block.name} />
+        <BlockCode name={block.name} free={block.free} />
       </DocsSection>
     </DocsPage>
   )

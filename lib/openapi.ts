@@ -257,7 +257,7 @@ function getOpenApiDocument() {
           tags: ["Account"],
           summary: "Get the signed-in account's Pro status",
           description:
-            "Returns whether the signed-in user owns HextaUI Pro, when they bought it and which sign-in providers are linked. Pass `payment_id` after checkout to confirm a payment that has not arrived by webhook yet.",
+            "Returns whether the signed-in user has HextaUI Pro, on which plan, whether they bought it or hold a seat on someone's Team plan, and which sign-in providers are linked. Pass `payment_id` after checkout to confirm a payment that has not arrived by webhook yet.",
           security: signedIn,
           parameters: [
             {
@@ -284,14 +284,32 @@ function getOpenApiDocument() {
           tags: ["Account"],
           summary: "Start a HextaUI Pro checkout",
           description:
-            "Creates a Dodo Payments checkout for HextaUI Pro and returns its URL. If the account already owns Pro, returns `/account` instead. Only accepted from pages on hextaui.com.",
+            "Creates a Dodo Payments checkout for the Solo or Team plan and returns its URL. If the account already has that plan or a bigger one, returns `/account` instead. Only accepted from pages on hextaui.com.",
           security: signedIn,
+          requestBody: {
+            required: false,
+            content: {
+              [json]: {
+                schema: {
+                  type: "object",
+                  properties: {
+                    plan: {
+                      type: "string",
+                      enum: ["solo", "team"],
+                      default: "solo",
+                      description: "Which plan to buy.",
+                    },
+                  },
+                },
+              },
+            },
+          },
           responses: {
             "200": {
               description: "Where to send the user next.",
               content: { [json]: { schema: ref("CheckoutUrl") } },
             },
-            ...pick("401", "403"),
+            ...pick("400", "401", "403"),
           },
         },
       },
@@ -364,6 +382,79 @@ function getOpenApiDocument() {
           ],
           responses: {
             "204": { description: "The token was deleted." },
+            ...pick("401", "403", "404"),
+          },
+        },
+      },
+      "/api/team": {
+        get: {
+          operationId: "listTeamMembers",
+          tags: ["Account"],
+          summary: "List the teammates on a Team plan",
+          description:
+            "Lists the teammates the signed-in Team owner has given a seat, oldest first, with the number of seats on the plan. The owner's own seat isn't listed.",
+          security: signedIn,
+          responses: {
+            "200": {
+              description: "The seats and teammates.",
+              content: { [json]: { schema: ref("TeamMemberList") } },
+            },
+            ...pick("401", "403"),
+          },
+        },
+        post: {
+          operationId: "addTeamMember",
+          tags: ["Account"],
+          summary: "Give a teammate a seat",
+          description:
+            "Adds a teammate by email to the signed-in owner's Team plan. They get Pro as soon as they sign in with that verified email. A Team plan has 10 seats including the owner's. Only accepted from pages on hextaui.com.",
+          security: signedIn,
+          requestBody: {
+            required: true,
+            content: {
+              [json]: {
+                schema: {
+                  type: "object",
+                  required: ["email"],
+                  properties: {
+                    email: {
+                      type: "string",
+                      format: "email",
+                      example: "teammate@example.com",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            "201": {
+              description: "The teammate's seat.",
+              content: { [json]: { schema: ref("TeamMember") } },
+            },
+            ...pick("400", "401", "403"),
+          },
+        },
+      },
+      "/api/team/{id}": {
+        delete: {
+          operationId: "removeTeamMember",
+          tags: ["Account"],
+          summary: "Remove a teammate",
+          description:
+            "Takes a seat back from a teammate on the signed-in owner's Team plan. Their Pro access ends right away. Only accepted from pages on hextaui.com.",
+          security: signedIn,
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description: "Teammate id from listTeamMembers.",
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "204": { description: "The teammate was removed." },
             ...pick("401", "403", "404"),
           },
         },
@@ -650,9 +741,27 @@ function getOpenApiDocument() {
         },
         Account: {
           type: "object",
-          required: ["pro", "purchasedAt", "providers"],
+          required: [
+            "pro",
+            "plan",
+            "via",
+            "teamOwner",
+            "purchasedAt",
+            "providers",
+          ],
           properties: {
             pro: { type: "boolean" },
+            plan: { type: ["string", "null"], enum: ["solo", "team", null] },
+            via: {
+              type: ["string", "null"],
+              enum: ["owner", "member", null],
+              description:
+                "`owner` if this account bought the plan, `member` if it holds a seat on someone's Team plan.",
+            },
+            teamOwner: {
+              type: ["string", "null"],
+              description: "Name of the Team owner when `via` is `member`.",
+            },
             purchasedAt: { type: ["string", "null"], format: "date-time" },
             providers: {
               type: "array",
@@ -677,6 +786,23 @@ function getOpenApiDocument() {
             },
             createdAt: { type: "string", format: "date-time" },
             lastUsedAt: { type: ["string", "null"], format: "date-time" },
+          },
+        },
+        TeamMember: {
+          type: "object",
+          required: ["id", "email", "createdAt"],
+          properties: {
+            id: { type: "string" },
+            email: { type: "string", format: "email" },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
+        TeamMemberList: {
+          type: "object",
+          required: ["seats", "members"],
+          properties: {
+            seats: { type: "integer", example: 10 },
+            members: { type: "array", items: ref("TeamMember") },
           },
         },
         TokenList: {

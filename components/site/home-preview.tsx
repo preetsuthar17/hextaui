@@ -76,7 +76,15 @@ const tiles = [
   },
 ]
 
-function BlockTile({ name, title }: { name: string; title: string }) {
+function BlockTile({
+  name,
+  title,
+  free,
+}: {
+  name: string
+  title: string
+  free: boolean
+}) {
   const [ref, inView] = useInViewOnce<HTMLLIElement>()
   const [granted, done] = useLoadSlot(inView)
   const [loaded, setLoaded] = React.useState(false)
@@ -104,7 +112,7 @@ function BlockTile({ name, title }: { name: string; title: string }) {
         className="preview-caption after:absolute after:inset-0 after:rounded-(--tile-radius)"
       >
         {title}
-        <span className="text-xs font-normal">Pro</span>
+        <span className="text-xs font-normal">{free ? "Free" : "Pro"}</span>
       </Link>
     </li>
   )
@@ -140,12 +148,17 @@ function DemoTile({
 function HomePreview({
   blocks,
 }: {
-  blocks: { name: string; title: string }[]
+  blocks: { name: string; title: string; free: boolean }[]
 }) {
   return (
     <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {blocks.map((block) => (
-        <BlockTile key={block.name} name={block.name} title={block.title} />
+        <BlockTile
+          key={block.name}
+          name={block.name}
+          title={block.title}
+          free={block.free}
+        />
       ))}
       {tiles.map((tile) => (
         <DemoTile key={tile.slug} {...tile} />

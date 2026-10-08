@@ -3,6 +3,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { highlight } from "../lib/highlight.ts"
+import { isFreeBlock } from "../lib/pro/free-blocks.ts"
 
 const root = path.resolve(import.meta.dirname, "..")
 const proDir = path.join(root, "pro")
@@ -79,6 +80,44 @@ function listFiles(dir: string, base = dir): string[] {
 
 function withoutTemplates(source: string) {
   return source.replace(/`(?:\\[\s\S]|[^`\\])*`/g, "``")
+}
+
+const blockImport = /from "\.\.\/([a-z0-9-]+)\/([a-z0-9-]+)"/g
+const localImport = /from "\.\/([a-z0-9-]+)"/g
+
+function withoutBlockImports(source: string) {
+  return source.replace(/from "\.\.\/[^"]+"/g, 'from "./borrowed"')
+}
+
+function borrowedFiles(name: string, sources: string[]) {
+  const borrowed = new Map<string, string>()
+  const queue = sources.flatMap((source) =>
+    [...withoutTemplates(source).matchAll(blockImport)].map(
+      ([, block, file]) => [block, file] as const
+    )
+  )
+  for (let next = queue.shift(); next; next = queue.shift()) {
+    const [block, file] = next
+    if (block === name) continue
+    const resolved = [`${file}.tsx`, `${file}.ts`].find((candidate) =>
+      fs.existsSync(path.join(blocksDir, block, candidate))
+    )
+    if (!resolved) {
+      throw new Error(`pro: ${name} imports ../${block}/${file}, not found`)
+    }
+    const key = `${block}/${resolved}`
+    if (borrowed.has(key)) continue
+    const source = fs.readFileSync(path.join(blocksDir, key), "utf8")
+    borrowed.set(key, source)
+    const stripped = withoutTemplates(source)
+    for (const [, local] of stripped.matchAll(localImport)) {
+      queue.push([block, local])
+    }
+    for (const [, other, otherFile] of stripped.matchAll(blockImport)) {
+      queue.push([other, otherFile])
+    }
+  }
+  return [...borrowed].map(([file, source]) => ({ file, source }))
 }
 
 function registryDependencies(sources: string[]) {
@@ -166,6 +205,19 @@ async function main() {
     if (!files.includes(entryFile)) {
       throw new Error(`pro: ${name} needs an entry file ${entryFile}`)
     }
+    const free = isFreeBlock(name)
+    const borrowed = free ? borrowedFiles(name, sources) : []
+    const itemFiles = [
+      ...files.map((file, index) => ({
+        path: `components/blocks/${name}/${file}`,
+        code: sources[index],
+      })),
+      ...borrowed.map(({ file, source }) => ({
+        path: `components/blocks/${file}`,
+        code: source,
+      })),
+    ]
+    const itemSources = itemFiles.map((file) => file.code)
 
     catalog.push({
       name,
@@ -173,12 +225,14 @@ async function main() {
       description: meta.description,
       category: meta.category,
       ...(meta.layout ? { layout: meta.layout } : {}),
-      files: files.map((file) => `components/blocks/${name}/${file}`),
+      ...(free ? { free } : {}),
+      files: itemFiles.map((file) => file.path),
       usage,
       docs: meta.docs ?? {},
     })
 
     items[name] = {
+      free,
       registry: {
         $schema: "https://ui.shadcn.com/schema/registry-item.json",
         name,
@@ -186,20 +240,22 @@ async function main() {
         title: meta.title,
         description: meta.description,
         categories: [meta.category],
-        dependencies: packageDependencies(sources, meta.dependencies),
-        registryDependencies: registryDependencies(sources),
-        files: files.map((file, index) => ({
-          path: `components/blocks/${name}/${file}`,
+        dependencies: packageDependencies(itemSources, meta.dependencies),
+        registryDependencies: registryDependencies(
+          free ? itemSources.map(withoutBlockImports) : itemSources
+        ),
+        files: itemFiles.map((file) => ({
+          path: file.path,
           type: "registry:component",
-          target: `components/blocks/${name}/${file}`,
-          content: sources[index],
+          target: file.path,
+          content: file.code,
         })),
       },
       files: await Promise.all(
-        files.map(async (file, index) => ({
-          path: `components/blocks/${name}/${file}`,
-          code: sources[index],
-          html: await highlight(sources[index], lang(file), {
+        itemFiles.map(async (file) => ({
+          path: file.path,
+          code: file.code,
+          html: await highlight(file.code, lang(file.path), {
             lineNumbers: true,
           }),
         }))

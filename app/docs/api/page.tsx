@@ -139,12 +139,12 @@ export default function Page() {
       <DocsHeading id="account-endpoints">Account endpoints</DocsHeading>
       <DocsList>
         <li>
-          <DocsCode>GET /api/account</DocsCode> returns whether the account owns
-          Pro and which providers are linked.
+          <DocsCode>GET /api/account</DocsCode> returns whether the account has
+          Pro, on which plan, and which providers are linked.
         </li>
         <li>
-          <DocsCode>POST /api/checkout</DocsCode> starts a Pro checkout and
-          returns its URL.
+          <DocsCode>POST /api/checkout</DocsCode> starts a Solo or Team checkout
+          and returns its URL.
         </li>
         <li>
           <DocsCode>GET /api/tokens</DocsCode> and{" "}
@@ -152,6 +152,12 @@ export default function Page() {
         </li>
         <li>
           <DocsCode>DELETE /api/tokens/&#123;id&#125;</DocsCode> deletes one.
+        </li>
+        <li>
+          <DocsCode>GET /api/team</DocsCode> and{" "}
+          <DocsCode>POST /api/team</DocsCode> list and add teammates on a Team
+          plan, and <DocsCode>DELETE /api/team/&#123;id&#125;</DocsCode> removes
+          one.
         </li>
         <li>
           <DocsCode>GET /api/auth/get-session</DocsCode> returns the current
@@ -163,7 +169,8 @@ export default function Page() {
       <DocsList>
         <li>
           <DocsCode>GET /r/pro/&#123;name&#125;.json</DocsCode> returns a Pro
-          block as a shadcn registry item.
+          block as a shadcn registry item. Free blocks, like Prompt Input, need
+          no token.
         </li>
         <li>
           <DocsCode>GET /api/pro/blocks/&#123;name&#125;</DocsCode> returns the

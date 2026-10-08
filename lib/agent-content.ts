@@ -1,7 +1,7 @@
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { agentNotes } from "@/lib/agent-notes"
 import { frontmatter } from "@/lib/frontmatter"
-import { getPricingBlocks, proPlan } from "@/lib/pricing-info"
+import { getPricingBlocks, proSummary } from "@/lib/pricing-info"
 import {
   absoluteUrl,
   siteAuthor,
@@ -57,7 +57,7 @@ function getHomeMarkdown() {
     }),
     `# ${siteName}: ready-to-use blocks and components built on top of shadcn/ui`,
     `> ${siteSummary}`,
-    `${siteName} has ${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for React, built on Base UI and Tailwind CSS v4. You add them with the shadcn CLI, the source lands in your project and it is yours to change. ${siteName} Pro adds paid, ready-made blocks for AI chat interfaces and app layouts.`,
+    `${siteName} has ${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for React, built on Base UI and Tailwind CSS v4. You add them with the shadcn CLI, the source lands in your project and it is yours to change. ${siteName} Pro adds practical blocks built for AI products, with the hard states handled: today the chat, tool call, reasoning and voice screens, next the account, settings and dashboard screens around them.`,
     getAgentGuideMarkdown(2),
     "## Conventions",
     bullets(agentNotes),
@@ -95,9 +95,9 @@ function getNotFoundMarkdown() {
 function getBlocksLlms() {
   return `${[
     `# ${siteName} Pro blocks`,
-    `> Ready-made blocks for AI chat interfaces and app layouts, built from ${siteName} components. ${proPlan.summary}`,
+    `> ${proSummary} Built from ${siteName} components.`,
     bullets([
-      `Install with the shadcn CLI from the private registry at ${siteUrl}/r/pro/<name>.json, using an API token from ${absoluteUrl("/account")}.`,
+      `Install with the shadcn CLI from the private registry at ${siteUrl}/r/pro/<name>.json, using an API token from ${absoluteUrl("/account")}. Free blocks need no token.`,
       `Pricing and license: ${absoluteUrl("/pricing.md")}.`,
       `The free components these blocks use: ${absoluteUrl("/docs/llms.txt")}.`,
     ]),

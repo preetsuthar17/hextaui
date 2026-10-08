@@ -1,5 +1,11 @@
 import { relations, sql } from "drizzle-orm"
-import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core"
+import {
+  sqliteTable,
+  text,
+  integer,
+  index,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core"
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
@@ -116,6 +122,9 @@ export const purchase = sqliteTable(
       .notNull()
       .references(() => user.id),
     productId: text("product_id").notNull(),
+    plan: text("plan", { enum: ["solo", "team"] })
+      .default("solo")
+      .notNull(),
     customerId: text("customer_id").notNull(),
     status: text("status", {
       enum: ["paid", "refunded", "disputed"],
@@ -133,10 +142,39 @@ export const purchase = sqliteTable(
   (table) => [index("purchase_userId_idx").on(table.userId)]
 )
 
-export const purchaseRelations = relations(purchase, ({ one }) => ({
+export const purchaseRelations = relations(purchase, ({ one, many }) => ({
   user: one(user, {
     fields: [purchase.userId],
     references: [user.id],
+  }),
+  members: many(teamMember),
+}))
+
+export const teamMember = sqliteTable(
+  "team_member",
+  {
+    id: text("id").primaryKey(),
+    purchaseId: text("purchase_id")
+      .notNull()
+      .references(() => purchase.id, { onDelete: "cascade" }),
+    email: text("email").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("team_member_purchase_email_idx").on(
+      table.purchaseId,
+      table.email
+    ),
+    index("team_member_email_idx").on(table.email),
+  ]
+)
+
+export const teamMemberRelations = relations(teamMember, ({ one }) => ({
+  purchase: one(purchase, {
+    fields: [teamMember.purchaseId],
+    references: [purchase.id],
   }),
 }))
 

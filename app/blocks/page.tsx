@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/metadata"
 export const metadata: Metadata = pageMetadata({
   title: "Blocks",
   description:
-    "Complete flows built from HextaUI components, ready to drop into your app. Part of HextaUI Pro.",
+    "Practical blocks built for AI products, with the hard states handled: streaming, tool calls, reasoning, voice and the screens around them. Part of HextaUI Pro, with Prompt Input free.",
   path: "/blocks",
 })
 
@@ -26,12 +26,19 @@ export default function Page() {
               : "The first blocks are on the way. "}
             Every block is part of{" "}
             <Link
-              href="/account"
+              href="/pricing"
               className="text-foreground underline underline-offset-4"
             >
               HextaUI Pro
             </Link>
-            .
+            , and{" "}
+            <Link
+              href="/blocks/prompt-input"
+              className="text-foreground underline underline-offset-4"
+            >
+              Prompt Input
+            </Link>{" "}
+            is free.
           </p>
         </div>
         {proBlocks.length > 0 ? <CatalogViewToggle /> : null}

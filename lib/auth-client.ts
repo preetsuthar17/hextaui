@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import { createAuthClient } from "better-auth/react"
 
+import type { ProPlanId } from "@/lib/pro/pricing"
+
 const authClient = createAuthClient()
 
 type Session = typeof authClient.$Infer.Session
@@ -100,8 +102,12 @@ function signIn(provider: SignInProvider) {
   })
 }
 
-async function startCheckout() {
-  const response = await fetch("/api/checkout", { method: "POST" })
+async function startCheckout(plan: ProPlanId = "solo") {
+  const response = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ plan }),
+  })
   if (response.status === 401) {
     window.location.assign("/account")
     return

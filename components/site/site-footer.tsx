@@ -10,6 +10,7 @@ const sitePages = [
   { href: "/about", title: "About" },
   { href: "/contact", title: "Contact" },
   { href: "/pricing", title: "Pricing" },
+  { href: "/changelog", title: "Changelog" },
 ]
 
 const linkClassName =

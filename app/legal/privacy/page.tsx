@@ -25,7 +25,7 @@ export default function Page() {
     <LegalPage
       href="/legal/privacy"
       title="Privacy Policy"
-      updated="2026-10-06"
+      updated="2026-10-08"
     >
       <DocsParagraph>
         HextaUI (hextaui.com) is run by Preet Suthar, an individual based in
@@ -115,6 +115,15 @@ export default function Page() {
           and issues the invoice, under its own privacy policy. From Dodo I
           receive and keep the payment ID, its customer ID for you, the product,
           amount, currency, status and date.
+        </DocsParagraph>
+      </LegalSection>
+
+      <LegalSection title="When you manage a Team plan">
+        <DocsParagraph>
+          If you buy Team and add teammates, I store the email addresses you add
+          and when you added them, so those people get Pro when they sign in.
+          Only add people who expect it. Removing a teammate deletes their email
+          from the team.
         </DocsParagraph>
       </LegalSection>
 
@@ -219,6 +228,10 @@ export default function Page() {
             out.
           </li>
           <li>API tokens: until you revoke them or delete your account.</li>
+          <li>
+            Teammate emails: until the Team owner removes them, or the Team plan
+            is refunded or deleted.
+          </li>
           <li>
             Purchase records: kept for as long as tax, accounting and fraud
             rules require, even after the account is deleted.

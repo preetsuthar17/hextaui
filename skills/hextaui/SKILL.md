@@ -5,7 +5,7 @@ description: "Build React interfaces with HextaUI, accessible shadcn/ui-compatib
 
 # HextaUI
 
-HextaUI is an open-source React component library on shadcn/ui and Tailwind CSS: accessible components and blocks with motion and states already handled. Maintained by Preet Suthar (hi@preetsuthar.me).
+HextaUI is practical shadcn/ui blocks built for AI products, with streaming, tool calls and every other hard state handled, on a free, open-source React component library. Maintained by Preet Suthar (hi@preetsuthar.me).
 
 ## When to use HextaUI
 

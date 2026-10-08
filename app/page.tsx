@@ -17,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 const previewBlocks = ["thinking", "prompt-input", "chat-thread", "voice-mode"]
   .map((name) => getProBlock(name))
   .filter((block) => block !== undefined)
-  .map(({ name, title }) => ({ name, title }))
+  .map(({ name, title, free }) => ({ name, title, free: Boolean(free) }))
 
 export default async function Page() {
   const stars = await getGithubStars()
@@ -28,10 +28,10 @@ export default async function Page() {
         <div className="flex flex-col items-center gap-5 sm:items-start">
           <h1 className="text-hero font-medium tracking-tighter">
             <span className="block whitespace-nowrap">
-              Ready to use blocks &amp; components
+              The hard states, handled.
             </span>{" "}
             <span className="block whitespace-nowrap">
-              built on top of{" "}
+              Practical blocks for{" "}
               <Image
                 src="https://github.com/shadcn.png"
                 alt=""
@@ -44,9 +44,10 @@ export default async function Page() {
             </span>
           </h1>
           <p className="max-w-xl text-base/7 text-pretty text-muted-foreground">
-            {docsComponents.length} accessible components with the states,
-            motion and keyboard support already done. Add them with the shadcn
-            CLI and make them yours.
+            Production blocks for products built with AI, from the chat that
+            streams, retries and asks before a tool runs to the screens around
+            it. Built on {docsComponents.length} free, open-source components,
+            and ready for your agent to install with the shadcn CLI.
           </p>
         </div>
         <HeroActions stars={stars} />

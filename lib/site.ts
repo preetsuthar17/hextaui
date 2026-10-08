@@ -1,10 +1,10 @@
 const siteName = "HextaUI"
 const siteUrl = "https://hextaui.com"
 const siteDescription =
-  "Ready-to-use foundation components/blocks built on top of shadcn/ui."
+  "Practical shadcn/ui blocks built for AI products, with the hard states handled."
 const siteTitle = "HextaUI — React components and blocks for shadcn/ui"
 const siteSummary =
-  "HextaUI is an open-source React component library on shadcn/ui and Tailwind CSS: accessible components and blocks with motion and states already handled."
+  "HextaUI is practical shadcn/ui blocks built for AI products, with streaming, tool calls and every other hard state handled, on a free, open-source React component library."
 const siteAlternateNames = ["Hexta UI", "Hexta", "hextaui"]
 const siteTwitter = "@preetsuthar17"
 const siteRepository = "https://github.com/preetsuthar17/hextaui"

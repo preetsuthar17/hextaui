@@ -8,7 +8,12 @@ import {
 } from "@/components/ui/accordion"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { proBlocks } from "@/lib/pro/catalog"
-import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
+import {
+  earlyBirdLastDay,
+  isEarlyBird,
+  proPlans,
+  refundDays,
+} from "@/lib/pro/pricing"
 import { absoluteUrl, siteRepository } from "@/lib/site"
 
 const linkClassName =
@@ -33,7 +38,7 @@ const inside = [
   {
     name: "Pro blocks",
     href: "/blocks",
-    detail: `${proBlocks.length}, for AI chat interfaces and app layouts`,
+    detail: `${proBlocks.length}, practical blocks for AI products, with more categories coming`,
   },
   {
     name: "MCP server",
@@ -41,6 +46,12 @@ const inside = [
     detail: "So your AI assistant can read the docs too",
   },
 ]
+
+const { solo, team } = proPlans
+const earlyBird = isEarlyBird()
+const proPriceText = earlyBird
+  ? `$${solo.earlyPrice} once for one developer, or $${team.earlyPrice} for a team of ${team.seats}, until ${earlyBirdLastDay}. After that, Solo is $${solo.price} and Team is $${team.price}`
+  : `$${solo.price} once for one developer, or $${team.price} for a team of ${team.seats}`
 
 const steps = [
   {
@@ -102,7 +113,7 @@ const questions = [
   },
   {
     question: "What is HextaUI Pro?",
-    answer: `Complete blocks for AI chat interfaces and app layouts, such as a chat thread, agent todos and voice mode. It costs $${proPrice} once while blocks are in early access, then $${proRegularPrice}, covers unlimited personal and commercial projects and comes with a 14-day refund.`,
+    answer: `Practical blocks built for AI products: complete screens such as a chat thread, tool calls, agent todos and voice mode today, with account, settings and dashboard blocks next, and the hard states like streaming, retries and approvals already handled. It costs ${proPriceText}. It covers unlimited personal and commercial projects, includes every future block category and comes with a ${refundDays}-day refund. Prompt Input is free to try.`,
   },
   {
     question: "Can my AI assistant use it?",
@@ -241,15 +252,26 @@ function HomeSections() {
             components: a chat thread, streaming text, tool calls, agent todos,
             a code block with diffs, voice mode and more. They are the screens
             an AI product needs on day one, with the states and motion already
-            worked out.
+            worked out, and the account, settings and dashboard screens around
+            them come next.
+          </p>
+          <p>
+            Free AI kits get you a chat that looks right. Pro is about what
+            happens next: stopping a reply mid-sentence and retrying it,
+            approving a tool call before it runs, switching between message
+            versions, and a thread that doesn&apos;t jump while the model is
+            still talking. Every block ships with a working AI SDK example.
           </p>
           <p>
             Every block has a live preview anyone can open, and installs through
-            the same shadcn CLI from a private registry. Pro is ${proPrice} once
-            while blocks are in early access, then ${proRegularPrice}, for
-            unlimited personal and commercial projects.{" "}
-            <Link href="/blocks" className={linkClassName}>
-              Browse the blocks
+            the same shadcn CLI from a private registry. Pro is {proPriceText},
+            for unlimited personal and commercial projects.{" "}
+            <Link href="/pricing" className={linkClassName}>
+              Compare plans
+            </Link>{" "}
+            or{" "}
+            <Link href="/blocks/prompt-input" className={linkClassName}>
+              install Prompt Input free
             </Link>
             .
           </p>
@@ -262,10 +284,11 @@ function HomeSections() {
             browser&apos;s voice or a realtime voice API.
           </p>
           <p>
-            The license is per developer: everyone who works with Pro code needs
-            their own, while clients and teammates who only use the finished
-            product don&apos;t. If it isn&apos;t right for you, you get a full
-            refund within 14 days, no questions asked.
+            Solo covers one developer. Team covers up to {team.seats}, managed
+            by email from your account, with one shared token allowed in CI.
+            Clients and colleagues who only use the finished product don&apos;t
+            need a seat. If it isn&apos;t right for you, you get a full refund
+            within {refundDays} days, no questions asked.
           </p>
         </div>
       </HomeSection>

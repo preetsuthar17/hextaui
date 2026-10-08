@@ -11,21 +11,22 @@ import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: "Refund Policy",
-  description: "HextaUI Pro comes with a 14-day, no-questions-asked refund.",
+  description:
+    "HextaUI Pro, Solo or Team, comes with a 30-day, no-questions-asked refund.",
   path: "/legal/refunds",
 })
 
 export default function Page() {
   return (
-    <LegalPage href="/legal/refunds" title="Refund Policy" updated="2026-10-06">
+    <LegalPage href="/legal/refunds" title="Refund Policy" updated="2026-10-08">
       <DocsParagraph>
-        If HextaUI Pro isn’t right for you, you can get a full refund within 14
-        days of your purchase. No questions asked.
+        If HextaUI Pro isn’t right for you, Solo or Team, you can get a full
+        refund within 30 days of your purchase. No questions asked.
       </DocsParagraph>
 
       <LegalSection title="How to ask for a refund">
         <DocsParagraph>
-          Email <ContactEmail /> within 14 days of buying. Send it from, or
+          Email <ContactEmail /> within 30 days of buying. Send it from, or
           mention, the email you used at checkout, and include the order or
           payment ID from your receipt if you have it.
         </DocsParagraph>
@@ -39,6 +40,7 @@ export default function Page() {
       <LegalSection title="What happens after a refund">
         <DocsList>
           <li>Your HextaUI Pro access ends.</li>
+          <li>On a Team plan, every teammate’s access ends too.</li>
           <li>Your API tokens stop working for Pro blocks.</li>
           <li>
             Your <LegalLink href="/legal/license">Pro License</LegalLink> ends,
@@ -47,9 +49,9 @@ export default function Page() {
         </DocsList>
       </LegalSection>
 
-      <LegalSection title="After 14 days">
+      <LegalSection title="After 30 days">
         <DocsParagraph>
-          Purchases are final after 14 days, except for duplicate charges,
+          Purchases are final after 30 days, except for duplicate charges,
           billing errors, or where the law gives you a right to a refund.
         </DocsParagraph>
       </LegalSection>

@@ -7,6 +7,7 @@ type ProBlock = {
   description: string
   category: string
   layout?: "app"
+  free?: boolean
   files: string[]
   usage: { title: string; description: string; code: string }[]
   docs: ProBlockDocs
@@ -34,6 +35,7 @@ const categoryTitles: Record<string, string> = {
   authentication: "Authentication",
   marketing: "Marketing",
   application: "Application",
+  settings: "Settings",
 }
 
 const proBlocks = catalog as ProBlock[]

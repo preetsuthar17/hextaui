@@ -22,7 +22,8 @@ import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { formatStars } from "@/lib/github"
 import { siteRepository } from "@/lib/site"
 
-type SiteSection = "home" | "docs" | "components" | "blocks" | "hooks"
+type SiteSection =
+  "home" | "docs" | "components" | "blocks" | "hooks" | "pricing"
 
 const componentPaths = new Set([
   "/components",
@@ -38,12 +39,14 @@ const links: { section: SiteSection; label: string; href: string }[] = [
   { section: "components", label: "Components", href: "/components" },
   { section: "blocks", label: "Blocks", href: "/blocks" },
   { section: "hooks", label: "Hooks", href: `/docs/${docsHooks[0]?.slug}` },
+  { section: "pricing", label: "Pricing", href: "/pricing" },
 ]
 
 function sectionFor(pathname: string): SiteSection | null {
   const path = pathname.replace(/\/$/, "") || "/"
   if (path === "/") return "home"
   if (path === "/blocks" || path.startsWith("/blocks/")) return "blocks"
+  if (path === "/pricing") return "pricing"
   if (componentPaths.has(path)) return "components"
   if (hookPaths.has(path)) return "hooks"
   if (path === "/docs" || path.startsWith("/docs/")) return "docs"

@@ -166,4 +166,4 @@ function ProTokens() {
   )
 }
 
-export { ProTokens }
+export { ProTokens, request }

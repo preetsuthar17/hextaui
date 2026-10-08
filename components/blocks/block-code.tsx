@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { IconLock } from "@tabler/icons-react"
 
 import { DocsCodePanel } from "@/components/docs/docs-code-panel"
@@ -18,7 +19,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { SignInOptions } from "@/components/account/sign-in-options"
 import { startCheckout, useSession } from "@/lib/auth-client"
-import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
+import { earlyBirdLastDay, proPlans, refundDays } from "@/lib/pro/pricing"
+import { useEarlyBird } from "@/lib/pro/use-early-bird"
 
 type ProFile = { path: string; code: string; html: string }
 
@@ -28,12 +30,12 @@ type CodeState =
   | { status: "error" }
   | { status: "ready"; files: ProFile[] }
 
-function useBlockCode(name: string): CodeState {
+function useBlockCode(name: string, free: boolean): CodeState {
   const { session, pending } = useSession()
   const [state, setState] = React.useState<CodeState>({ status: "loading" })
 
   React.useEffect(() => {
-    if (pending || !session) return
+    if (!free && (pending || !session)) return
     let active = true
     fetch(`/api/pro/blocks/${name}`)
       .then(async (response) => {
@@ -54,14 +56,18 @@ function useBlockCode(name: string): CodeState {
     return () => {
       active = false
     }
-  }, [name, pending, session])
+  }, [free, name, pending, session])
 
+  if (free) return state
   if (pending) return { status: "loading" }
   if (!session) return { status: "locked", reason: "signed-out" }
   return state
 }
 
 function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
+  const early = useEarlyBird()
+  const { solo, team } = proPlans
+
   return (
     <Empty variant="outline">
       <EmptyHeader>
@@ -70,23 +76,33 @@ function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
         </EmptyMedia>
         <EmptyTitle>The code is part of HextaUI Pro</EmptyTitle>
         <EmptyDescription>
-          Early bird pricing: one payment of ${proPrice} (${proRegularPrice}{" "}
-          after launch) unlocks every block, including future ones. Copy the
-          code here or install it with the shadcn CLI.
+          One payment of ${early ? solo.earlyPrice : solo.price}, or $
+          {early ? team.earlyPrice : team.price} for a team of {team.seats},
+          unlocks every block, including future ones.
+          {early ? ` Early-bird prices end on ${earlyBirdLastDay}.` : ""}{" "}
+          Refundable within {refundDays} days.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         {reason === "signed-out" ? (
           <SignInOptions />
         ) : (
-          <Button
-            feedback
-            successLabel="Redirecting…"
-            errorLabel="Try again"
-            onClick={() => startCheckout()}
-          >
-            Get Pro
-          </Button>
+          <>
+            <Button
+              feedback
+              successLabel="Redirecting…"
+              errorLabel="Try again"
+              onClick={() => startCheckout("solo")}
+            >
+              Get Pro Solo
+            </Button>
+            <Link
+              href="/account"
+              className="text-sm text-muted-foreground underline underline-offset-4"
+            >
+              Buying for a team? See Team
+            </Link>
+          </>
         )}
       </EmptyContent>
     </Empty>
@@ -113,8 +129,8 @@ function CodeFile({ file }: { file: ProFile }) {
   )
 }
 
-function BlockCode({ name }: { name: string }) {
-  const state = useBlockCode(name)
+function BlockCode({ name, free = false }: { name: string; free?: boolean }) {
+  const state = useBlockCode(name, free)
 
   if (state.status === "loading") {
     return <Skeleton className="h-56 w-full rounded-xl" />

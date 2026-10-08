@@ -19,11 +19,19 @@ export async function onRequestGet({ request, env, params }: Context) {
     })
   }
 
-  const denied = accessError(await getAccess(env, request))
-  if (denied) return denied
+  if (!item.free) {
+    const denied = accessError(await getAccess(env, request))
+    if (denied) return denied
+  }
 
   return Response.json(
     { files: item.files },
-    { headers: { "cache-control": "private, no-store" } }
+    {
+      headers: {
+        "cache-control": item.free
+          ? "public, max-age=300"
+          : "private, no-store",
+      },
+    }
   )
 }

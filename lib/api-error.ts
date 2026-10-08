@@ -9,6 +9,8 @@ const apiErrors = {
   not_found: { status: 404, title: "Not found" },
   method_not_allowed: { status: 405, title: "Method not allowed" },
   token_limit: { status: 400, title: "Token limit reached" },
+  seat_limit: { status: 400, title: "Seat limit reached" },
+  team_required: { status: 403, title: "Team plan required" },
 } as const
 
 type ApiErrorCode = keyof typeof apiErrors

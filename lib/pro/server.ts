@@ -3,6 +3,7 @@ import items from "@/lib/pro/generated/items.json"
 type ProFile = { path: string; code: string; html: string }
 
 type ProItem = {
+  free: boolean
   registry: Record<string, unknown>
   files: ProFile[]
 }

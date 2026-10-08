@@ -5,6 +5,7 @@ import Link from "next/link"
 import { IconCheck, IconCircleX, IconLock } from "@tabler/icons-react"
 
 import { ProTokens } from "@/components/account/pro-tokens"
+import { TeamSeats } from "@/components/account/team-seats"
 import { SignInOptions } from "@/components/account/sign-in-options"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -21,10 +22,23 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { signOut, startCheckout, useSession } from "@/lib/auth-client"
-import { proPrice, proRegularPrice } from "@/lib/pro/pricing"
+import {
+  earlyBirdLastDay,
+  proPlanIds,
+  proPlans,
+  refundDays,
+  type ProPlanId,
+} from "@/lib/pro/pricing"
+import { useEarlyBird } from "@/lib/pro/use-early-bird"
+import { siteContactEmail } from "@/lib/site"
+
+type ProPlan = (typeof proPlans)[ProPlanId]
 
 type Plan = {
   pro: boolean
+  plan: ProPlanId | null
+  via: "owner" | "member" | null
+  teamOwner: string | null
   purchasedAt: string | null
   providers: string[]
 }
@@ -37,9 +51,9 @@ const providerNames: Record<string, string> = {
 const dateFormat = new Intl.DateTimeFormat("en", { dateStyle: "long" })
 
 const proFeatures = [
-  "Every Pro block, including future releases",
+  "Every Pro block, including future categories",
   "Install with the shadcn CLI or copy the code",
-  "Unlimited personal and commercial projects",
+  "Unlimited personal and commercial projects, including client work",
 ]
 
 const signInErrors: Record<string, string> = {
@@ -113,29 +127,59 @@ function usePlan(enabled: boolean) {
   return { plan, confirming }
 }
 
-function ProUpgrade() {
+function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
   return (
-    <section className="flex flex-col gap-5 rounded-xl border p-5">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <h2 className="font-medium">HextaUI Pro</h2>
+    <div className="flex flex-col gap-4 rounded-xl border p-5">
+      <div className="flex flex-col gap-1">
+        <h3 className="font-medium">{plan.name}</h3>
+        <p className="text-sm text-pretty text-muted-foreground">
+          {plan.summary}
+        </p>
+      </div>
+      <p className="mt-auto flex items-baseline gap-2 tabular-nums">
+        {early ? (
+          <del className="text-sm text-muted-foreground">
+            <span className="sr-only">Regular price </span>${plan.price}
+          </del>
+        ) : null}
+        <span className="text-2xl font-semibold tracking-tight">
+          {early ? <span className="sr-only">Early bird price </span> : null}$
+          {early ? plan.earlyPrice : plan.price}
+        </span>
+        <span className="text-sm text-muted-foreground">once</span>
+      </p>
+      <Button
+        variant={plan.id === "solo" ? "default" : "outline"}
+        feedback
+        successLabel="Redirecting…"
+        errorLabel="Try again"
+        onClick={() => startCheckout(plan.id)}
+      >
+        Get {plan.name}
+      </Button>
+    </div>
+  )
+}
+
+function ProUpgrade() {
+  const early = useEarlyBird()
+
+  return (
+    <section className="flex flex-col gap-5">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <h2 className="font-medium">HextaUI Pro</h2>
+          {early ? (
             <Badge appearance="muted" shape="pill">
               Early bird
             </Badge>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            One payment, lifetime access. Goes up to ${proRegularPrice} when
-            blocks launch.
-          </p>
+          ) : null}
         </div>
-        <p className="flex items-baseline gap-2 tabular-nums">
-          <del className="text-sm text-muted-foreground">
-            <span className="sr-only">Regular price </span>${proRegularPrice}
-          </del>
-          <span className="text-2xl font-semibold tracking-tight">
-            <span className="sr-only">Early bird price </span>${proPrice}
-          </span>
+        <p className="text-sm text-pretty text-muted-foreground">
+          One payment, no subscription.
+          {early
+            ? ` Early-bird prices end on ${earlyBirdLastDay}, then they go up.`
+            : ""}
         </p>
       </div>
       <ul className="flex flex-col gap-2 text-sm">
@@ -146,15 +190,11 @@ function ProUpgrade() {
           </li>
         ))}
       </ul>
-      <Button
-        feedback
-        successLabel="Redirecting…"
-        errorLabel="Try again"
-        className="self-start"
-        onClick={() => startCheckout()}
-      >
-        Get Pro
-      </Button>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {proPlanIds.map((id) => (
+          <PlanCard key={id} plan={proPlans[id]} early={early} />
+        ))}
+      </div>
       <p className="text-xs text-muted-foreground">
         By buying you agree to the{" "}
         <Link href="/legal/terms" className="underline underline-offset-4">
@@ -164,11 +204,29 @@ function ProUpgrade() {
         <Link href="/legal/license" className="underline underline-offset-4">
           Pro License
         </Link>
-        . Refundable within 14 days, see the{" "}
+        . Refundable within {refundDays} days, no questions asked, see the{" "}
         <Link href="/legal/refunds" className="underline underline-offset-4">
           Refund Policy
         </Link>
         .
+      </p>
+    </section>
+  )
+}
+
+function TeamUpgrade() {
+  return (
+    <section className="flex flex-col gap-1">
+      <h2 className="font-medium">Need seats for your team?</h2>
+      <p className="text-sm text-pretty text-muted-foreground">
+        Email{" "}
+        <a
+          href={`mailto:${siteContactEmail}?subject=Upgrade%20to%20HextaUI%20Pro%20Team`}
+          className="text-foreground underline underline-offset-4"
+        >
+          {siteContactEmail}
+        </a>{" "}
+        from this account’s email to move to Team. You only pay the difference.
       </p>
     </section>
   )
@@ -190,7 +248,12 @@ function PlanStatus({
     )
   }
   if (!plan) return <Skeleton className="h-5 w-12" />
-  return plan.pro ? <Badge variant="success">Pro</Badge> : <Badge>Free</Badge>
+  if (!plan.pro) return <Badge>Free</Badge>
+  return (
+    <Badge variant="success">
+      {plan.plan === "team" ? "Pro Team" : "Pro Solo"}
+    </Badge>
+  )
 }
 
 function AccountView() {
@@ -265,7 +328,12 @@ function AccountContent() {
         <dd>
           <PlanStatus plan={plan} confirming={confirming} />
         </dd>
-        {plan?.purchasedAt ? (
+        {plan?.via === "member" ? (
+          <>
+            <dt className="text-muted-foreground">Seat on</dt>
+            <dd>{plan.teamOwner}’s team</dd>
+          </>
+        ) : plan?.purchasedAt ? (
           <>
             <dt className="text-muted-foreground">Purchased</dt>
             <dd>{dateFormat.format(new Date(plan.purchasedAt))}</dd>
@@ -285,7 +353,9 @@ function AccountContent() {
         <dd>{dateFormat.format(new Date(user.createdAt))}</dd>
       </dl>
       {plan && !plan.pro && !confirming ? <ProUpgrade /> : null}
+      {plan?.via === "owner" && plan.plan === "team" ? <TeamSeats /> : null}
       {plan?.pro ? <ProTokens /> : null}
+      {plan?.via === "owner" && plan.plan === "solo" ? <TeamUpgrade /> : null}
       <div>
         <Button variant="outline" size="sm" onClick={() => signOut()}>
           Sign out

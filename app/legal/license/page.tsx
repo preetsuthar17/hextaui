@@ -19,7 +19,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <LegalPage href="/legal/license" title="Pro License" updated="2026-10-06">
+    <LegalPage href="/legal/license" title="Pro License" updated="2026-10-08">
       <DocsParagraph>
         This license covers the code of HextaUI Pro blocks. It applies when you
         buy HextaUI Pro, and lasts as long as you follow it. The free components
@@ -31,10 +31,13 @@ export default function Page() {
       <LegalSection title="What you get">
         <DocsParagraph>
           A perpetual, worldwide, non-exclusive, non-transferable license for
-          you, the buyer, to use, copy and modify Pro blocks in your own end
-          products. An end product is an app, website or piece of software where
-          the blocks are part of something larger, not a collection of the
-          blocks themselves.
+          the people your plan covers to use, copy and modify Pro blocks in
+          their own end products. Solo covers you, the buyer. Team covers the
+          buyer and up to nine teammates they give a seat on their account page.
+          Free blocks, like Prompt Input, are covered the same way for anyone
+          who installs them. An end product is an app, website or piece of
+          software where the blocks are part of something larger, not a
+          collection of the blocks themselves.
         </DocsParagraph>
       </LegalSection>
 
@@ -66,7 +69,10 @@ export default function Page() {
             Publish Pro code in a way that lets others use it without buying,
             such as a public registry, gist or snippet collection.
           </li>
-          <li>Share your account or API tokens with anyone.</li>
+          <li>
+            Share your account or API tokens with anyone, except the one shared
+            CI token a Team plan allows.
+          </li>
           <li>
             Use Pro code to build a product that competes with HextaUI Pro, or
             to train AI models that generate UI components for others.
@@ -76,9 +82,12 @@ export default function Page() {
 
       <LegalSection title="Teams">
         <DocsParagraph>
-          The license is personal: each developer who installs or works on Pro
-          code needs their own HextaUI Pro. Clients and teammates who only use
-          the finished product don’t.
+          Each developer who installs or works on Pro code needs a seat: their
+          own Solo plan, or a seat on a Team plan. A Team plan has 10 seats,
+          including the buyer’s. The buyer can move a seat from one teammate to
+          another at any time, and the team may keep one shared API token in
+          continuous integration and build systems. Clients and colleagues who
+          only use the finished product don’t need a seat.
         </DocsParagraph>
       </LegalSection>
 

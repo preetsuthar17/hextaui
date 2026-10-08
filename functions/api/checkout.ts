@@ -1,8 +1,14 @@
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
-import { findProPurchase, getPayments, type PaymentsEnv } from "@/lib/payments"
-import { sameOriginError, signInError } from "@/lib/api-error"
+import {
+  checkoutProduct,
+  findProAccess,
+  getPayments,
+  type PaymentsEnv,
+} from "@/lib/payments"
+import { isProPlanId } from "@/lib/pro/pricing"
+import { apiError, sameOriginError, signInError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -21,15 +27,26 @@ export async function onRequestPost({ request, env }: Context) {
     return signInError()
   }
 
+  const body = (await request.json().catch(() => ({}))) as { plan?: unknown }
+  const plan = body.plan ?? "solo"
+  if (!isProPlanId(plan)) {
+    return apiError("bad_request", {
+      error: "Unknown plan",
+      detail: "The plan must be solo or team.",
+      resolution: 'Send { "plan": "solo" } or { "plan": "team" }.',
+    })
+  }
+
   const { user } = session
-  if (await findProPurchase(getDb(env.DB), user.id)) {
+  const access = await findProAccess(getDb(env.DB), user.id)
+  if (access && (access.plan === "team" || plan === "solo")) {
     return Response.json({ url: "/account" })
   }
 
   const checkout = await getPayments(env).checkoutSessions.create({
-    product_cart: [{ product_id: env.DODO_PRO_PRODUCT_ID, quantity: 1 }],
+    product_cart: [{ product_id: checkoutProduct(env, plan), quantity: 1 }],
     customer: { email: user.email, name: user.name },
-    metadata: { user_id: user.id },
+    metadata: { user_id: user.id, plan },
     return_url: new URL("/account?checkout=done", env.BETTER_AUTH_URL).href,
   })
 

@@ -2,7 +2,7 @@ import { protectedResourceMetadataUrl } from "@/lib/agent-manifests"
 import { apiError } from "@/lib/api-error"
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
-import { findProPurchase, type PaymentsEnv } from "@/lib/payments"
+import { findProAccess, type PaymentsEnv } from "@/lib/payments"
 import { findTokenUser } from "@/lib/pro/tokens"
 
 type Access =
@@ -20,7 +20,7 @@ async function getAccess(env: PaymentsEnv, request: Request): Promise<Access> {
     : (await getAuth(env).api.getSession({ headers: request.headers }))?.user.id
 
   if (!userId) return { status: "anonymous" }
-  return (await findProPurchase(db, userId))
+  return (await findProAccess(db, userId))
     ? { status: "pro", userId }
     : { status: "free", userId }
 }

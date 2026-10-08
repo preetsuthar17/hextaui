@@ -1,7 +1,7 @@
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
-import { findProPurchase, type PaymentsEnv } from "@/lib/payments"
+import { findProAccess, type PaymentsEnv } from "@/lib/payments"
 import { createToken, listTokens } from "@/lib/pro/tokens"
 import { apiError, sameOriginError, signInError } from "@/lib/api-error"
 
@@ -38,7 +38,7 @@ export async function onRequestPost({ request, env }: Context) {
   }
 
   const db = getDb(env.DB)
-  if (!(await findProPurchase(db, userId))) {
+  if (!(await findProAccess(db, userId))) {
     return apiError("pro_required", {
       error: "Tokens need Pro",
       detail: "API tokens are only available to HextaUI Pro accounts.",

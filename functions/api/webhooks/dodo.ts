@@ -32,11 +32,7 @@ export async function onRequestPost({ request, env }: Context) {
 
   switch (event.type) {
     case "payment.succeeded": {
-      const result = await recordPayment(
-        db,
-        event.data,
-        env.DODO_PRO_PRODUCT_ID
-      )
+      const result = await recordPayment(db, event.data, env)
       if (result === "unmatched") {
         console.error("Pro payment without a matching user", {
           paymentId: event.data.payment_id,

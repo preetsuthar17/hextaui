@@ -2,11 +2,7 @@ import { getAuth } from "@/lib/auth"
 import { eq } from "drizzle-orm"
 
 import { getDb, schema } from "@/lib/db"
-import {
-  confirmPayment,
-  findProPurchase,
-  type PaymentsEnv,
-} from "@/lib/payments"
+import { confirmPayment, findProAccess, type PaymentsEnv } from "@/lib/payments"
 import { signInError } from "@/lib/api-error"
 
 type Context = {
@@ -24,12 +20,12 @@ export async function onRequestGet({ request, env }: Context) {
 
   const db = getDb(env.DB)
   const userId = session.user.id
-  let purchase = await findProPurchase(db, userId)
+  let access = await findProAccess(db, userId)
 
   const paymentId = new URL(request.url).searchParams.get("payment_id")
-  if (!purchase && paymentId?.startsWith("pay_")) {
+  if (paymentId?.startsWith("pay_") && access?.purchase.id !== paymentId) {
     await confirmPayment(env, db, paymentId, userId)
-    purchase = await findProPurchase(db, userId)
+    access = await findProAccess(db, userId)
   }
 
   const accounts = await db
@@ -39,8 +35,11 @@ export async function onRequestGet({ request, env }: Context) {
 
   return Response.json(
     {
-      pro: Boolean(purchase),
-      purchasedAt: purchase?.createdAt ?? null,
+      pro: Boolean(access),
+      plan: access?.plan ?? null,
+      via: access?.via ?? null,
+      teamOwner: access?.via === "member" ? access.ownerName : null,
+      purchasedAt: access?.purchase.createdAt ?? null,
       providers: [...new Set(accounts.map((account) => account.providerId))],
     },
     { headers: { "cache-control": "no-store" } }
