@@ -1,11 +1,15 @@
 import type { Metadata } from "next"
 
-import { changelog, upcoming, type ChangelogEntry } from "@/lib/changelog"
+import {
+  changelog,
+  changelogGroups,
+  type ChangelogEntry,
+} from "@/lib/changelog"
 import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: "Changelog",
-  description: "What shipped in HextaUI and HextaUI Pro, and what ships next.",
+  description: "What shipped in HextaUI and HextaUI Pro.",
   path: "/changelog",
 })
 
@@ -17,7 +21,7 @@ const dateFormat = new Intl.DateTimeFormat("en", {
 function Entry({ entry }: { entry: ChangelogEntry }) {
   return (
     <article
-      id={entry.label ? undefined : entry.date}
+      id={entry.date}
       className="grid scroll-mt-20 gap-x-10 gap-y-3 border-t py-12 first:border-t-0 first:pt-0 md:grid-cols-[12rem_1fr]"
     >
       <div>
@@ -25,13 +29,10 @@ function Entry({ entry }: { entry: ChangelogEntry }) {
           dateTime={entry.date}
           className="block text-sm text-muted-foreground tabular-nums md:sticky md:top-20"
         >
-          {entry.label ?? dateFormat.format(new Date(entry.date))}
+          {dateFormat.format(new Date(entry.date))}
         </time>
       </div>
       <div className="flex max-w-2xl flex-col gap-4">
-        {entry.label ? (
-          <p className="text-sm text-muted-foreground">Coming next</p>
-        ) : null}
         <h2 className="text-2xl font-semibold tracking-tight text-balance">
           {entry.title}
         </h2>
@@ -40,6 +41,22 @@ function Entry({ entry }: { entry: ChangelogEntry }) {
             {paragraph}
           </p>
         ))}
+        {changelogGroups.map(({ key, heading }) => {
+          const items = entry[key]
+          if (!items?.length) return null
+          return (
+            <section key={key} className="flex flex-col gap-2 pt-2">
+              <h3 className="text-sm font-medium text-muted-foreground">
+                {heading}
+              </h3>
+              <ul className="flex list-disc flex-col gap-1.5 ps-5 text-base/7 text-pretty marker:text-muted-foreground">
+                {items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        })}
       </div>
     </article>
   )
@@ -54,12 +71,12 @@ export default function Page() {
             Changelog
           </h1>
           <p className="text-base/7 text-pretty text-muted-foreground">
-            What shipped in HextaUI and HextaUI Pro, and what ships next.
+            What shipped in HextaUI and HextaUI Pro.
           </p>
         </div>
       </header>
       <div className="flex flex-col">
-        {[...upcoming, ...changelog].map((entry) => (
+        {changelog.map((entry) => (
           <Entry key={entry.title} entry={entry} />
         ))}
       </div>

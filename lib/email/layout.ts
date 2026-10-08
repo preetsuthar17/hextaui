@@ -9,6 +9,7 @@ type EmailContent = {
   eyebrow?: string
   preheader?: string
   paragraphs: string[]
+  lists?: { heading: string; items: string[] }[]
   links?: EmailLink[]
   footer: EmailInline[]
 }
@@ -60,6 +61,12 @@ function emailHtml(content: EmailContent) {
         `<p class="text" style="margin:0 0 16px;font-size:15px;line-height:24px;color:${colors.text};">${escapeHtml(text)}</p>`
     )
     .join("")
+  const lists = (content.lists ?? [])
+    .map(
+      ({ heading, items }) =>
+        `<p class="heading" style="margin:0 0 8px;font-size:14px;line-height:20px;font-weight:600;color:${colors.heading};">${escapeHtml(heading)}</p><ul class="text" style="margin:0 0 16px;padding-left:20px;font-size:15px;line-height:24px;color:${colors.text};">${items.map((item) => `<li style="margin:0 0 6px;">${escapeHtml(item)}</li>`).join("")}</ul>`
+    )
+    .join("")
   const links = content.links?.length
     ? `<p class="text" style="margin:0 0 32px;font-size:15px;line-height:24px;color:${colors.text};">${content.links.map((link) => anchor(link, colors.heading)).join(" &nbsp;·&nbsp; ")}</p>`
     : `<div style="height:16px;line-height:16px;">&nbsp;</div>`
@@ -95,6 +102,7 @@ function emailHtml(content: EmailContent) {
 ${eyebrow}
 <h1 class="heading" style="margin:0 0 16px;font-size:20px;line-height:28px;font-weight:600;color:${colors.heading};">${escapeHtml(content.title)}</h1>
 ${paragraphs}
+${lists}
 ${links}
 <p class="muted rule" style="margin:0;padding-top:16px;border-top:1px solid ${colors.rule};font-size:12px;line-height:18px;color:${colors.muted};">${inlineHtml(content.footer, colors.muted)}</p>
 </td></tr>
@@ -111,6 +119,11 @@ function emailText(content: EmailContent) {
     ...(content.eyebrow ? [content.eyebrow] : []),
     "",
     ...content.paragraphs.flatMap((text) => [text, ""]),
+    ...(content.lists ?? []).flatMap(({ heading, items }) => [
+      heading,
+      ...items.map((item) => `- ${item}`),
+      "",
+    ]),
     ...(content.links ?? []).map((link) => `${link.label}: ${link.href}`),
     "",
     "—",

@@ -1,4 +1,4 @@
-import type { ChangelogEntry } from "@/lib/changelog"
+import { changelogGroups, type ChangelogEntry } from "@/lib/changelog"
 import { renderEmail, type EmailContent } from "@/lib/email/layout"
 import { siteName, siteUrl } from "@/lib/site"
 
@@ -17,6 +17,10 @@ function releaseContent(
     title: entry.title,
     eyebrow: dateFormat.format(new Date(entry.date)),
     paragraphs: entry.body,
+    lists: changelogGroups.flatMap(({ key, heading }) => {
+      const items = entry[key]
+      return items?.length ? [{ heading, items }] : []
+    }),
     links: [
       { label: "See what’s new", href: `${siteUrl}/changelog#${entry.date}` },
       { label: "Browse blocks", href: `${siteUrl}/blocks` },
