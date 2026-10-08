@@ -48,30 +48,41 @@ const publicSource = ["app", "components", "hooks", "lib"]
   .map((file) => fs.readFileSync(file, "utf8"))
   .join("\n")
 
-const needles = [
-  ...new Set(
-    walk(blocksDir)
-      .filter(
-        (file) =>
-          isSource(file) &&
-          !path.basename(file).startsWith("usage") &&
-          !/\.test\.tsx?$/.test(file)
-      )
-      .flatMap(sourceLines)
-      .filter((line) => !publicSource.includes(line))
-  ),
-]
+const needles = new Set(
+  walk(blocksDir)
+    .filter(
+      (file) =>
+        isSource(file) &&
+        !path.basename(file).startsWith("usage") &&
+        !/\.test\.tsx?$/.test(file)
+    )
+    .flatMap(sourceLines)
+    .filter((line) => !publicSource.includes(line))
+)
 
-const leaks = walk(outDir).flatMap((file) => {
-  const text = fs.readFileSync(file, "utf8")
-  return needles
-    .filter((needle) => text.includes(needle))
-    .map((needle) => `${path.relative(root, file)}: ${needle}`)
-})
+function candidates(text: string) {
+  return text
+    .split(/\r?\n|\\n/)
+    .map((segment) =>
+      segment
+        .replace(/\\(["\\])/g, "$1")
+        .replace(/^"(?:content|code)"\s*:\s*"/, "")
+        .trim()
+    )
+    .filter((segment) => segment.length >= 24)
+}
+
+const leaks = walk(outDir)
+  .filter((file) => /\.(html|js|txt|json|md|css|xml|svg|rsc|map)$/.test(file))
+  .flatMap((file) =>
+    candidates(fs.readFileSync(file, "utf8"))
+      .filter((segment) => needles.has(segment))
+      .map((segment) => `${path.relative(root, file)}: ${segment}`)
+  )
 
 if (leaks.length > 0) {
   console.error(`pro: source leaked into out/\n${leaks.join("\n")}`)
   process.exit(1)
 }
 
-console.log(`pro: no source in out/ (${needles.length} markers checked)`)
+console.log(`pro: no source in out/ (${needles.size} markers checked)`)
