@@ -4,6 +4,7 @@ import { and, desc, eq } from "drizzle-orm"
 
 import type { AuthEnv } from "@/lib/auth"
 import { schema, type Db } from "@/lib/db"
+import { sendPurchaseEmail } from "@/lib/email/account"
 import { isEarlyBird, type ProPlanId } from "@/lib/pro/pricing"
 
 type PaymentsEnv = AuthEnv & {
@@ -127,7 +128,8 @@ async function recordPayment(db: Db, payment: Payment, env: PaymentsEnv) {
   const buyer = await findBuyer(db, payment)
   if (!buyer) return "unmatched"
 
-  await db
+  const status = payment.refund_status === "full" ? "refunded" : "paid"
+  const created = await db
     .insert(schema.purchase)
     .values({
       id: payment.payment_id,
@@ -135,11 +137,15 @@ async function recordPayment(db: Db, payment: Payment, env: PaymentsEnv) {
       productId,
       plan,
       customerId: payment.customer.customer_id,
-      status: payment.refund_status === "full" ? "refunded" : "paid",
+      status,
       amount: payment.total_amount,
       currency: payment.currency,
     })
     .onConflictDoNothing()
+    .returning({ id: schema.purchase.id })
+  if (created.length > 0 && status === "paid") {
+    await sendPurchaseEmail(env, buyer, plan)
+  }
   return "recorded"
 }
 

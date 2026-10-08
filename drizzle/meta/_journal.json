@@ -29,6 +29,13 @@
       "when": 1791433368068,
       "tag": "0003_team",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791460157351,
+      "tag": "0004_email",
+      "breakpoints": true
     }
   ]
 }

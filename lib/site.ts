@@ -11,7 +11,13 @@ const siteRepository = "https://github.com/preetsuthar17/hextaui"
 const siteContactEmail = "hi@preetsuthar.me"
 const siteAuthor = "Preet Suthar"
 
-const noindexPaths = ["/docs/stress", "/preview/", "/account", "/api/"]
+const noindexPaths = [
+  "/docs/stress",
+  "/preview/",
+  "/account",
+  "/api/",
+  "/unsubscribe",
+]
 
 function isNoindexPath(route: string) {
   return noindexPaths.some((prefix) =>

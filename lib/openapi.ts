@@ -277,6 +277,47 @@ function getOpenApiDocument() {
             ...pick("401"),
           },
         },
+        patch: {
+          operationId: "updateAccount",
+          tags: ["Account"],
+          summary: "Turn release emails on or off",
+          description:
+            "Sets whether the signed-in user gets an email when new HextaUI components and blocks ship. Every account starts subscribed. Only accepted from pages on hextaui.com.",
+          security: signedIn,
+          requestBody: {
+            required: true,
+            content: {
+              [json]: {
+                schema: {
+                  type: "object",
+                  required: ["emailUpdates"],
+                  properties: {
+                    emailUpdates: {
+                      type: "boolean",
+                      description: "`false` stops release emails.",
+                      example: false,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            "200": {
+              description: "The saved choice.",
+              content: {
+                [json]: {
+                  schema: {
+                    type: "object",
+                    required: ["emailUpdates"],
+                    properties: { emailUpdates: { type: "boolean" } },
+                  },
+                },
+              },
+            },
+            ...pick("400", "401", "403"),
+          },
+        },
       },
       "/api/checkout": {
         post: {
@@ -748,6 +789,7 @@ function getOpenApiDocument() {
             "teamOwner",
             "purchasedAt",
             "providers",
+            "emailUpdates",
           ],
           properties: {
             pro: { type: "boolean" },
@@ -766,6 +808,10 @@ function getOpenApiDocument() {
             providers: {
               type: "array",
               items: { type: "string", enum: ["github", "google"] },
+            },
+            emailUpdates: {
+              type: "boolean",
+              description: "Whether the account gets release emails.",
             },
           },
         },

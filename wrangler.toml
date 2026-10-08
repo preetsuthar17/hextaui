@@ -10,6 +10,7 @@ database_id = "565a1eac-d4e8-47f3-b4d0-eb8f9687d034"
 migrations_dir = "drizzle"
 
 [vars]
+CF_ACCOUNT_ID = "ef1087da0ee7eb63ff60e490b6f43650"
 BETTER_AUTH_URL = "https://hextaui.com"
 DODO_PAYMENTS_ENVIRONMENT = "live_mode"
 DODO_SOLO_EARLY_PRODUCT_ID = "pdt_0Np7uK8yvPVAMHVYjsOIb"

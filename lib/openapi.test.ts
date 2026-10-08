@@ -94,7 +94,13 @@ describe("OpenAPI document", () => {
         .replace("{id}", "[id]")
         .replace("{name}", "[name]")
     )
-    const internal = ["/api/webhooks/dodo", "/api/auth/[[path]]"]
+    const internal = [
+      "/api/webhooks/dodo",
+      "/api/auth/[[path]]",
+      "/api/admin/broadcast",
+      "/api/admin/email-preview",
+      "/api/email/unsubscribe",
+    ]
     const routes = functionRoutes(path.join(process.cwd(), "functions"))
       .map((route) => route.replace(/\/index$/, ""))
       .filter((route) => !internal.includes(route))

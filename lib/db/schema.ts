@@ -15,6 +15,7 @@ export const user = sqliteTable("user", {
     .default(false)
     .notNull(),
   image: text("image"),
+  unsubscribedAt: integer("unsubscribed_at", { mode: "timestamp_ms" }),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .notNull(),
@@ -202,3 +203,23 @@ export const apiTokenRelations = relations(apiToken, ({ one }) => ({
     references: [user.id],
   }),
 }))
+
+export const emailSend = sqliteTable(
+  "email_send",
+  {
+    id: text("id").primaryKey(),
+    campaign: text("campaign").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    sentAt: integer("sent_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("email_send_campaign_user_idx").on(
+      table.campaign,
+      table.userId
+    ),
+  ]
+)

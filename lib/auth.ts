@@ -3,8 +3,10 @@ import { drizzleAdapter } from "@better-auth/drizzle-adapter"
 import { betterAuth } from "better-auth/minimal"
 
 import { getDb, schema } from "@/lib/db"
+import { sendWelcomeEmail } from "@/lib/email/account"
+import type { MailerEnv } from "@/lib/email/send"
 
-type AuthEnv = {
+type AuthEnv = MailerEnv & {
   DB: D1Database
   BETTER_AUTH_URL: string
   BETTER_AUTH_SECRET: string
@@ -39,6 +41,15 @@ function createAuth(env: AuthEnv) {
     },
     account: {
       encryptOAuthTokens: true,
+    },
+    databaseHooks: {
+      user: {
+        create: {
+          after: async (user) => {
+            await sendWelcomeEmail(env, user)
+          },
+        },
+      },
     },
     session: {
       expiresIn: 60 * 60 * 24 * 30,

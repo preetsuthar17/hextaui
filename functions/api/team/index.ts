@@ -1,5 +1,6 @@
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
+import { sendTeamInviteEmail } from "@/lib/email/account"
 import { isSameOrigin } from "@/lib/origin"
 import type { PaymentsEnv } from "@/lib/payments"
 import {
@@ -97,5 +98,6 @@ export async function onRequestPost({ request, env }: Context) {
       resolution: "Add a different email address.",
     })
   }
+  await sendTeamInviteEmail(env, user, email)
   return Response.json(member, { status: 201, headers: noStore })
 }

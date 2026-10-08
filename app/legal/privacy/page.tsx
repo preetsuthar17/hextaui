@@ -47,6 +47,11 @@ export default function Page() {
             Payments go through Dodo Payments. I never see your full card
             details.
           </li>
+          <li>
+            Signed-in accounts get a short email when new components or blocks
+            ship. One click in any email, or a switch in your account, turns
+            them off.
+          </li>
           <li>I don’t sell your data, show ads or track you across sites.</li>
         </DocsList>
       </LegalSection>
@@ -122,6 +127,7 @@ export default function Page() {
         <DocsParagraph>
           If you buy Team and add teammates, I store the email addresses you add
           and when you added them, so those people get Pro when they sign in.
+          Each teammate gets one email saying who added them and how to sign in.
           Only add people who expect it. Removing a teammate deletes their email
           from the team.
         </DocsParagraph>
@@ -136,12 +142,31 @@ export default function Page() {
         </DocsParagraph>
       </LegalSection>
 
+      <LegalSection title="Emails">
+        <DocsParagraph>
+          Some emails come with your account: a welcome email when you sign up,
+          a confirmation when you buy HextaUI Pro, and the email a teammate gets
+          when you add them to a Team plan. These are sent once each and aren’t
+          marketing.
+        </DocsParagraph>
+        <DocsParagraph>
+          When new components or blocks ship, I email the address on your
+          account to say what’s new. Every account starts subscribed. Each email
+          has an unsubscribe link that works in one click, and you can turn
+          release emails on or off any time in{" "}
+          <LegalLink href="/account">your account</LegalLink>. I keep a record
+          of which release emails went to which account so nobody gets the same
+          one twice, and the date you unsubscribed so I stop emailing you.
+        </DocsParagraph>
+      </LegalSection>
+
       <LegalSection title="How the data is used">
         <DocsList>
           <li>To sign you in and keep you signed in.</li>
           <li>To check your HextaUI Pro access and deliver Pro blocks.</li>
           <li>To process purchases, refunds and disputes.</li>
           <li>To prevent fraud and abuse, such as shared or leaked tokens.</li>
+          <li>To email you when new components and blocks ship.</li>
           <li>To answer you when you email me.</li>
           <li>To understand, in aggregate, which pages are useful.</li>
         </DocsList>
@@ -182,7 +207,8 @@ export default function Page() {
         <DocsList>
           <li>
             <strong className="font-medium text-foreground">Cloudflare</strong>{" "}
-            hosts the site, its functions and the database.
+            hosts the site, its functions and the database, and delivers release
+            emails.
           </li>
           <li>
             <strong className="font-medium text-foreground">
@@ -228,6 +254,7 @@ export default function Page() {
             out.
           </li>
           <li>API tokens: until you revoke them or delete your account.</li>
+          <li>Release email records: until you delete your account.</li>
           <li>
             Teammate emails: until the Team owner removes them, or the Team plan
             is refunded or deleted.

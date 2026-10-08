@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { IconCheck, IconCircleX, IconLock } from "@tabler/icons-react"
 
-import { ProTokens } from "@/components/account/pro-tokens"
+import { ProTokens, request } from "@/components/account/pro-tokens"
 import { TeamSeats } from "@/components/account/team-seats"
 import { SignInOptions } from "@/components/account/sign-in-options"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -19,8 +19,15 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
+import { Switch } from "@/components/ui/switch"
 import { signOut, startCheckout, useSession } from "@/lib/auth-client"
 import {
   earlyBirdLastDay,
@@ -41,6 +48,7 @@ type Plan = {
   teamOwner: string | null
   purchasedAt: string | null
   providers: string[]
+  emailUpdates: boolean
 }
 
 const providerNames: Record<string, string> = {
@@ -232,6 +240,34 @@ function TeamUpgrade() {
   )
 }
 
+function EmailSettings({ subscribed }: { subscribed: boolean }) {
+  const save = (emailUpdates: boolean) =>
+    request("/api/account", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ emailUpdates }),
+    })
+
+  return (
+    <section className="flex flex-col gap-5">
+      <h2 className="font-medium">Emails</h2>
+      <Field orientation="horizontal">
+        <FieldContent>
+          <FieldLabel htmlFor="email-updates">Release emails</FieldLabel>
+          <FieldDescription>
+            A short email when new components and blocks ship.
+          </FieldDescription>
+        </FieldContent>
+        <Switch
+          id="email-updates"
+          defaultChecked={subscribed}
+          onCheckedChange={save}
+        />
+      </Field>
+    </section>
+  )
+}
+
 function PlanStatus({
   plan,
   confirming,
@@ -356,6 +392,7 @@ function AccountContent() {
       {plan?.via === "owner" && plan.plan === "team" ? <TeamSeats /> : null}
       {plan?.pro ? <ProTokens /> : null}
       {plan?.via === "owner" && plan.plan === "solo" ? <TeamUpgrade /> : null}
+      {plan ? <EmailSettings subscribed={plan.emailUpdates} /> : null}
       <div>
         <Button variant="outline" size="sm" onClick={() => signOut()}>
           Sign out
