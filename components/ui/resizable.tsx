@@ -89,7 +89,7 @@ function ResizablePanelGroup({
         interacted.current = true
       }}
       className={cn(
-        "flex h-full w-full min-w-0 aria-[orientation=vertical]:flex-col data-ready:not-has-[>[data-separator=active]]:*:data-panel:transition-[flex-grow] data-ready:not-has-[>[data-separator=active]]:*:data-panel:duration-300 data-ready:not-has-[>[data-separator=active]]:*:data-panel:ease-out-quint motion-reduce:*:data-panel:transition-none",
+        "flex h-full w-full min-w-0 aria-[orientation=vertical]:flex-col motion-safe:data-ready:not-has-[>[data-separator=active]]:*:data-panel:transition-[flex-grow] motion-safe:data-ready:not-has-[>[data-separator=active]]:*:data-panel:duration-300 motion-safe:data-ready:not-has-[>[data-separator=active]]:*:data-panel:ease-out-quint",
         className
       )}
       {...props}

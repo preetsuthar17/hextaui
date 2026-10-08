@@ -96,6 +96,49 @@ function syncCollapsedGap(panel: HTMLElement) {
   }
 }
 
+function observeSettled(panel: HTMLDivElement | null) {
+  if (!panel) {
+    return
+  }
+
+  const sync = () => {
+    const open =
+      panel.hasAttribute("data-open") &&
+      !panel.hasAttribute("data-starting-style") &&
+      !panel.hasAttribute("data-ending-style")
+    const animating =
+      typeof panel.getAnimations === "function" &&
+      panel
+        .getAnimations()
+        .some(
+          (animation) =>
+            "transitionProperty" in animation &&
+            animation.transitionProperty === "height"
+        )
+    panel.toggleAttribute("data-settled", open && !animating)
+  }
+
+  sync()
+  const observer = new MutationObserver(sync)
+  observer.observe(panel, {
+    attributes: true,
+    attributeFilter: [
+      "data-open",
+      "data-starting-style",
+      "data-ending-style",
+      "style",
+    ],
+  })
+  panel.addEventListener("transitionend", sync)
+  panel.addEventListener("transitioncancel", sync)
+
+  return () => {
+    observer.disconnect()
+    panel.removeEventListener("transitionend", sync)
+    panel.removeEventListener("transitioncancel", sync)
+  }
+}
+
 function Collapsible(props: CollapsiblePrimitive.Root.Props) {
   return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />
 }
@@ -173,7 +216,7 @@ function CollapsibleContent({
     }
   }, [])
   const setRef = React.useMemo(
-    () => mergeRefs(observeGap, ref),
+    () => mergeRefs(observeGap, observeSettled, ref),
     [observeGap, ref]
   )
 
@@ -182,7 +225,7 @@ function CollapsibleContent({
       data-slot="collapsible-content"
       ref={setRef}
       hiddenUntilFound={hiddenUntilFound}
-      className="group/collapsible-content h-(--collapsible-panel-height) overflow-hidden transition-[height,margin] duration-300 ease-spring data-ending-style:h-0 data-ending-style:duration-150 data-starting-style:-mt-(--collapsible-gap-start) data-starting-style:-mb-(--collapsible-gap-end) data-starting-style:h-0 motion-reduce:transition-none data-closed:-mt-(--collapsible-gap-start) data-closed:-mb-(--collapsible-gap-end)"
+      className="group/collapsible-content h-(--collapsible-panel-height) overflow-clip transition-[height,margin] data-settled:overflow-visible duration-300 ease-spring data-ending-style:h-0 data-ending-style:duration-150 data-starting-style:-mt-(--collapsible-gap-start) data-starting-style:-mb-(--collapsible-gap-end) data-starting-style:h-0 motion-reduce:transition-none data-closed:-mt-(--collapsible-gap-start) data-closed:-mb-(--collapsible-gap-end)"
       {...props}
     >
       <div
