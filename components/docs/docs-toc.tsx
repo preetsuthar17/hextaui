@@ -327,7 +327,7 @@ function DocsToc({
       >
         <ScrollArea
           viewportRef={viewportRef}
-          className="[&>[data-slot=scroll-area-scrollbar]]:hidden [&>[data-slot=scroll-area-viewport]]:max-h-[min(28rem,calc(100svh-10rem))]"
+          className="[&>[data-slot=scroll-area-scrollbar]]:hidden [&>[data-slot=scroll-area-viewport]]:max-h-[min(28rem,calc(100svh-25rem))] [@media(max-height:40rem)]:[&>[data-slot=scroll-area-viewport]]:max-h-[calc(100svh-10rem)]"
         >
           <div className="relative py-1 pe-4">
             {track ? (

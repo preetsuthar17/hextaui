@@ -11,6 +11,7 @@ const apiErrors = {
   token_limit: { status: 400, title: "Token limit reached" },
   seat_limit: { status: 400, title: "Seat limit reached" },
   team_required: { status: 403, title: "Team plan required" },
+  sponsor_slot_taken: { status: 409, title: "Sponsor slot booked" },
 } as const
 
 type ApiErrorCode = keyof typeof apiErrors

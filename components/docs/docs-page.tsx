@@ -4,6 +4,7 @@ import { cn } from "cn"
 import { DocsPageActions } from "@/components/docs/docs-page-actions"
 import { DocsPageNav } from "@/components/docs/docs-page-nav"
 import { DocsPager } from "@/components/docs/docs-pager"
+import { DocsSponsor } from "@/components/docs/docs-sponsor"
 import { DocsToc } from "@/components/docs/docs-toc"
 import type { DocsNavItem, DocsTocItem } from "@/lib/docs"
 
@@ -70,7 +71,10 @@ function DocsPage({
         <DocsPager href={href} items={navItems} className="mt-16" />
       </article>
       <div className="hidden xl:block">
-        <DocsToc items={toc} className="sticky top-14 pe-4 pt-10 pb-14" />
+        <div className="sticky top-14 flex flex-col gap-8 pe-4 pt-10 pb-14">
+          <DocsToc items={toc} />
+          <DocsSponsor className="[@media(max-height:40rem)]:hidden" />
+        </div>
       </div>
     </div>
   )

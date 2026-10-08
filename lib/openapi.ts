@@ -7,6 +7,7 @@ import {
   siteSummary,
   siteUrl,
 } from "@/lib/site"
+import { sponsorLimits } from "@/lib/sponsor"
 
 const json = "application/json"
 const problem = "application/problem+json"
@@ -98,6 +99,10 @@ function getOpenApiDocument() {
       {
         name: "Pro",
         description: "HextaUI Pro blocks, for accounts that bought Pro.",
+      },
+      {
+        name: "Sponsor",
+        description: "The sponsor card on every docs and blocks page.",
       },
       {
         name: "Auth",
@@ -351,6 +356,77 @@ function getOpenApiDocument() {
               content: { [json]: { schema: ref("CheckoutUrl") } },
             },
             ...pick("400", "401", "403"),
+          },
+        },
+      },
+      "/api/sponsor": {
+        post: {
+          operationId: "createSponsorCheckout",
+          tags: ["Sponsor"],
+          summary: "Start a sponsor checkout",
+          description:
+            "Saves the sponsor card copy and creates a monthly Dodo Payments subscription checkout for the sponsor slot, returning its URL. No account is needed. The card goes live after a manual review. Only accepted from pages on hextaui.com.",
+          security: [],
+          requestBody: {
+            required: true,
+            content: {
+              [json]: {
+                schema: {
+                  type: "object",
+                  required: [
+                    "name",
+                    "headline",
+                    "description",
+                    "cta",
+                    "url",
+                    "email",
+                  ],
+                  properties: {
+                    name: {
+                      type: "string",
+                      maxLength: sponsorLimits.name,
+                      description: "Brand or product name.",
+                    },
+                    headline: {
+                      type: "string",
+                      maxLength: sponsorLimits.headline,
+                      description: "Bold first line of the card.",
+                    },
+                    description: {
+                      type: "string",
+                      maxLength: sponsorLimits.description,
+                      description: "Muted body text under the headline.",
+                    },
+                    cta: {
+                      type: "string",
+                      maxLength: sponsorLimits.cta,
+                      description: "Button label.",
+                    },
+                    url: {
+                      type: "string",
+                      format: "uri",
+                      pattern: "^https://",
+                      maxLength: sponsorLimits.url,
+                      description: "Where the button goes.",
+                    },
+                    email: {
+                      type: "string",
+                      format: "email",
+                      maxLength: sponsorLimits.email,
+                      description: "Billing and contact email.",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            "200": {
+              description: "The checkout to send the sponsor to.",
+              content: { [json]: { schema: ref("CheckoutUrl") } },
+            },
+            "409": errorResponse("The sponsor slot is booked."),
+            ...pick("400", "403"),
           },
         },
       },

@@ -123,6 +123,16 @@ export default function Page() {
         </DocsParagraph>
       </LegalSection>
 
+      <LegalSection title="When you sponsor HextaUI">
+        <DocsParagraph>
+          If you book the sponsor slot, I store the card copy you write, the
+          link and the contact email you give, plus the subscription ID,
+          customer ID and status that Dodo Payments sends back. The copy is
+          published on the site; the email is only used for the sponsorship.
+          Dodo Payments handles the payment as merchant of record.
+        </DocsParagraph>
+      </LegalSection>
+
       <LegalSection title="When you manage a Team plan">
         <DocsParagraph>
           If you buy Team and add teammates, I store the email addresses you add

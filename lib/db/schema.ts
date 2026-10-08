@@ -223,3 +223,41 @@ export const emailSend = sqliteTable(
     ),
   ]
 )
+
+export const sponsor = sqliteTable(
+  "sponsor",
+  {
+    id: text("id").primaryKey(),
+    status: text("status", {
+      enum: [
+        "pending",
+        "active",
+        "on_hold",
+        "paused",
+        "cancelled",
+        "failed",
+        "expired",
+        "past_due",
+      ],
+    })
+      .default("pending")
+      .notNull(),
+    name: text("name").notNull(),
+    headline: text("headline").notNull(),
+    description: text("description").notNull(),
+    cta: text("cta").notNull(),
+    url: text("url").notNull(),
+    email: text("email").notNull(),
+    subscriptionId: text("subscription_id").unique(),
+    customerId: text("customer_id"),
+    activatedAt: integer("activated_at", { mode: "timestamp_ms" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [index("sponsor_status_idx").on(table.status)]
+)

@@ -36,6 +36,13 @@
       "when": 1791460157351,
       "tag": "0004_email",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1791468255188,
+      "tag": "0005_sponsor",
+      "breakpoints": true
     }
   ]
 }

@@ -1,15 +1,11 @@
 import { getDb } from "@/lib/db"
-import {
-  getPayments,
-  recordPayment,
-  revokePurchase,
-  type PaymentsEnv,
-} from "@/lib/payments"
+import { getPayments, recordPayment, revokePurchase } from "@/lib/payments"
+import { syncSponsorSubscription, type SponsorEnv } from "@/lib/sponsor-server"
 import { apiError } from "@/lib/api-error"
 
 type Context = {
   request: Request
-  env: PaymentsEnv
+  env: SponsorEnv
 }
 
 export async function onRequestPost({ request, env }: Context) {
@@ -48,6 +44,24 @@ export async function onRequestPost({ request, env }: Context) {
     case "dispute.lost":
       await revokePurchase(db, event.data.payment_id, "disputed")
       break
+    case "subscription.active":
+    case "subscription.renewed":
+    case "subscription.updated":
+    case "subscription.on_hold":
+    case "subscription.past_due":
+    case "subscription.paused":
+    case "subscription.unpaused":
+    case "subscription.cancelled":
+    case "subscription.failed":
+    case "subscription.expired": {
+      const result = await syncSponsorSubscription(env, db, event.data)
+      if (result === "unmatched") {
+        console.error("Sponsor subscription without a matching sponsor", {
+          subscriptionId: event.data.subscription_id,
+        })
+      }
+      break
+    }
   }
 
   return new Response(null, { status: 204 })
