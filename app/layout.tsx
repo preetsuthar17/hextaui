@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import type { Metadata } from "next"
 
 import "./globals.css"
@@ -135,6 +136,16 @@ const fontSans = Inter({
   variable: "--font-inter",
 })
 
+const fontMono = localFont({
+  src: "./fonts/PaperMono.woff2",
+  weight: "100 800",
+  style: "normal",
+  display: "swap",
+  variable: "--font-paper-mono",
+  fallback: ["ui-monospace", "Menlo", "Consolas", "monospace"],
+  adjustFontFallback: false,
+})
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -147,7 +158,12 @@ export default async function RootLayout({
       lang="en"
       dir="ltr"
       suppressHydrationWarning
-      className={cn("antialiased", "font-sans", fontSans.variable)}
+      className={cn(
+        "antialiased",
+        "font-sans",
+        fontSans.variable,
+        fontMono.variable
+      )}
     >
       <body>
         <script dangerouslySetInnerHTML={{ __html: catalogViewScript }} />

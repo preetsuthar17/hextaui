@@ -301,8 +301,8 @@
 @theme {
   --default-border-width: var(--hairline);
   --font-mono:
-    Menlo, ui-monospace, SFMono-Regular, Monaco, Consolas, "DejaVu Sans Mono",
-    "Liberation Mono", "Courier New", monospace;
+    var(--font-paper-mono), ui-monospace, Menlo, SFMono-Regular, Monaco,
+    Consolas, "DejaVu Sans Mono", "Liberation Mono", "Courier New", monospace;
 
   --text-xs: 0.6875rem;
   --text-sm: 0.8125rem;
