@@ -157,6 +157,7 @@ export default async function RootLayout({
     <html
       lang="en"
       dir="ltr"
+      data-catalog-view="single"
       suppressHydrationWarning
       className={cn(
         "antialiased",

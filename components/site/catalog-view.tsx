@@ -29,7 +29,7 @@ function subscribe(listener: () => void) {
 
 function readView(): CatalogView {
   const view = document.documentElement.dataset.catalogView
-  return views.find((item) => item.value === view)?.value ?? "cards"
+  return views.find((item) => item.value === view)?.value ?? "single"
 }
 
 function writeView(view: CatalogView) {
@@ -41,7 +41,7 @@ function writeView(view: CatalogView) {
 }
 
 function CatalogViewToggle() {
-  const view = React.useSyncExternalStore(subscribe, readView, () => "cards")
+  const view = React.useSyncExternalStore(subscribe, readView, () => "single")
 
   return (
     <ToggleGroup
