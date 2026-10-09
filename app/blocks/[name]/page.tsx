@@ -14,13 +14,19 @@ import {
 } from "@/components/docs/docs-content"
 import { DocsStep } from "@/components/docs/docs-install"
 import { DocsPage } from "@/components/docs/docs-page"
+import { DocsRelated } from "@/components/docs/docs-related"
+import { JsonLd } from "@/components/site/json-ld"
 import {
   DocsAttributesTable,
   DocsKeyboardTable,
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
+import { getBlockComponents } from "@/lib/docs-related"
 import { pageMetadata } from "@/lib/metadata"
+import { absoluteUrl } from "@/lib/site"
+import { docsArticleJsonLd } from "@/lib/structured-data"
 import { blocksNavItems, getProBlock, proBlockParams } from "@/lib/pro/catalog"
+import { getProBlockTitle } from "@/lib/pro/titles"
 
 export const dynamicParams = false
 
@@ -47,7 +53,7 @@ export async function generateMetadata({
   const block = getProBlock((await params).name)
   return block
     ? pageMetadata({
-        title: `${block.title} block`,
+        title: getProBlockTitle(block),
         description: block.description,
         path: `/blocks/${block.name}`,
       })
@@ -67,6 +73,22 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       navItems={blocksNavItems}
       className="max-w-4xl"
     >
+      <JsonLd
+        data={docsArticleJsonLd({
+          path: `/blocks/${block.name}`,
+          headline: block.title,
+          description: block.description,
+          breadcrumbs: [
+            { name: "Blocks", path: "/blocks" },
+            { name: block.title, path: `/blocks/${block.name}` },
+          ],
+          code: {
+            name: `${block.title} block`,
+            free: Boolean(block.free),
+            license: absoluteUrl("/legal/license"),
+          },
+        })}
+      />
       <div className="mt-8">
         <BlockFrame name={block.name} title={block.title} />
       </div>
@@ -186,6 +208,13 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
           </DocsList>
         </DocsSection>
       ) : null}
+
+      <DocsRelated
+        title="Built with"
+        description={`The free HextaUI components ${block.title} is made from. Each one installs on its own.`}
+        links={getBlockComponents(block.name)}
+        variant="names"
+      />
 
       <DocsSection
         title="Code"

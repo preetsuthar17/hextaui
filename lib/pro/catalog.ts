@@ -9,6 +9,7 @@ type ProBlock = {
   layout?: "app"
   free?: boolean
   files: string[]
+  components?: string[]
   usage: { title: string; description: string; code: string }[]
   docs: ProBlockDocs
 }

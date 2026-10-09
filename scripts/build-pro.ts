@@ -143,6 +143,18 @@ function registryDependencies(sources: string[]) {
   return [...deps].sort()
 }
 
+function uiComponents(sources: string[]) {
+  const names = new Set<string>()
+  for (const source of sources.map(withoutTemplates)) {
+    for (const [, name] of source.matchAll(
+      /from "@\/components\/ui\/([a-z0-9-]+)"/g
+    )) {
+      names.add(name)
+    }
+  }
+  return [...names].sort()
+}
+
 function packageDependencies(sources: string[], extra: string[] = []) {
   const deps = new Set(extra)
   for (const source of sources.map(withoutTemplates)) {
@@ -227,6 +239,7 @@ async function main() {
       ...(meta.layout ? { layout: meta.layout } : {}),
       ...(free ? { free } : {}),
       files: itemFiles.map((file) => file.path),
+      components: uiComponents(sources),
       usage,
       docs: meta.docs ?? {},
     })

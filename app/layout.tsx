@@ -7,6 +7,7 @@ import { DocsSearchProvider } from "@/components/docs/docs-search"
 import { AnalyticsScript } from "@/components/site/analytics-script"
 import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
+import { JsonLd } from "@/components/site/json-ld"
 import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
 import { WebMcp } from "@/components/site/web-mcp"
@@ -18,13 +19,13 @@ import {
   siteContactEmail,
   siteName,
   siteRepository,
+  siteMetaDescription,
   siteSummary,
   siteTitle,
   siteTwitter,
   siteUrl,
 } from "@/lib/site"
 import { catalogViewScript } from "@/lib/catalog-view"
-import { getProProductJsonLd } from "@/lib/pricing-info"
 import { getGithubStars } from "@/lib/github"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toast"
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     default: siteTitle,
     template: `%s — ${siteName}`,
   },
-  description: siteSummary,
+  description: siteMetaDescription,
   applicationName: siteName,
   keywords: [
     "HextaUI",
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   creator: siteName,
   openGraph: {
     title: siteTitle,
-    description: siteSummary,
+    description: siteMetaDescription,
     url: "/",
     siteName,
     type: "website",
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
-    description: siteSummary,
+    description: siteMetaDescription,
     creator: siteTwitter,
   },
 }
@@ -113,7 +114,6 @@ const jsonLd = {
       },
       sameAs: [siteRepository, "https://twitter.com/preetsuthar17"],
     },
-    getProProductJsonLd(),
     {
       "@type": "SoftwareSourceCode",
       "@id": `${siteUrl}/#software`,
@@ -168,12 +168,7 @@ export default async function RootLayout({
     >
       <body>
         <script dangerouslySetInnerHTML={{ __html: catalogViewScript }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
+        <JsonLd data={jsonLd} />
         <ThemeProvider>
           <DocsSearchProvider>
             <div className="flex min-h-svh flex-col">

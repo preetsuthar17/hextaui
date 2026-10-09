@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { proBlocks } from "@/lib/pro/catalog"
 import {
@@ -15,6 +16,7 @@ import {
   refundDays,
 } from "@/lib/pro/pricing"
 import { absoluteUrl, siteRepository } from "@/lib/site"
+import { faqPageJsonLd } from "@/lib/structured-data"
 
 const linkClassName =
   "rounded-sm text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring motion-reduce:transition-none"
@@ -124,12 +126,7 @@ const questions = [
 
 const faqJsonLd = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: questions.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
+  ...faqPageJsonLd("/", questions),
 }
 
 function HomeSection({
@@ -304,12 +301,7 @@ function HomeSections() {
             ))}
           </Accordion>
         </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
+        <JsonLd data={faqJsonLd} />
       </HomeSection>
     </>
   )

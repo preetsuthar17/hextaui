@@ -30,19 +30,22 @@ import {
   PlanButton,
   PlanPrice,
 } from "@/components/site/pricing-plan"
+import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { pageMetadata } from "@/lib/metadata"
 import {
   getPricingBlocks,
+  getProProductJsonLd,
   pricingCurrency,
   pricingQuestions,
   proSummary,
 } from "@/lib/pricing-info"
 import { proPlans, refundDays, type ProPlanId } from "@/lib/pro/pricing"
+import { faqPageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "Pricing",
-  description: `HextaUI components are free under the MIT License. HextaUI Pro, practical blocks built for AI products, is one payment: Solo from $${proPlans.solo.earlyPrice}, Team for ${proPlans.team.seats} developers from $${proPlans.team.earlyPrice}.`,
+  description: `HextaUI components are free and MIT licensed. HextaUI Pro blocks for AI products are one payment: Solo from $${proPlans.solo.earlyPrice}, a team of ${proPlans.team.seats} from $${proPlans.team.earlyPrice}.`,
   path: "/pricing",
   markdown: "/pricing.md",
 })
@@ -232,6 +235,15 @@ function Section({
 export default function Page() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-4 pt-16 pb-24 sm:pt-24">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            getProProductJsonLd(),
+            faqPageJsonLd("/pricing", pricingQuestions),
+          ],
+        }}
+      />
       <header className="flex max-w-2xl flex-col gap-3">
         <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
           The hard states, handled.

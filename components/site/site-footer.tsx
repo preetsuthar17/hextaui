@@ -7,6 +7,9 @@ import { CookieSettingsButton } from "@/components/site/cookie-consent"
 import { siteRepository } from "@/lib/site"
 
 const sitePages = [
+  { href: "/docs", title: "Docs" },
+  { href: "/components", title: "Components" },
+  { href: "/blocks", title: "Blocks" },
   { href: "/about", title: "About" },
   { href: "/contact", title: "Contact" },
   { href: "/pricing", title: "Pricing" },
