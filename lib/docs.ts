@@ -724,6 +724,43 @@ const docsKeywords: Record<string, string[]> = {
   "": ["introduction", "about", "overview", "getting started"],
 }
 
+const docsTitles: Record<string, string> = {
+  attachment: "File Attachment component for React & shadcn/ui",
+  bubble: "Chat Bubble component for React & shadcn/ui",
+  chart: "Chart components for React & shadcn/ui with Recharts",
+  combobox: "Combobox & Multi-Select for React & shadcn/ui",
+  command: "Command Palette component for React & shadcn/ui",
+  "data-table": "Data Table for React & shadcn/ui with TanStack Table",
+  "date-picker": "Date Picker & Date Range Picker for React & shadcn/ui",
+  empty: "Empty State component for React & shadcn/ui",
+  field: "Form Field component for React & shadcn/ui",
+  "input-otp": "OTP Input component for React & shadcn/ui",
+  kbd: "Kbd: keyboard shortcut keys for React & shadcn/ui",
+  marker: "Chat Date Divider & Event Marker for React & shadcn/ui",
+  message: "AI Chat Message component for React & shadcn/ui",
+  "message-scroller": "Chat Scroll Area that sticks to the bottom for React",
+  "number-flow": "Animated Number (Number Flow) for React & shadcn/ui",
+  questionnaire: "Multi-Step Form (Questionnaire) for React & shadcn/ui",
+  toast: "Toast Notifications for React & shadcn/ui",
+  tree: "Tree View component for React & shadcn/ui",
+  "use-autosize": "useAutosize: auto-resizing textarea hook for React",
+  "use-button-feedback":
+    "useButtonFeedback: async button states hook for React",
+  "use-composed-ref": "useComposedRef: keep and forward a ref in React",
+  "use-delayed-loading":
+    "useDelayedLoading: flicker-free loading hook for React",
+  "use-held-keys": "useHeldKeys: track pressed keys in React",
+  "use-invalid-shake": "useInvalidShake: shake invalid form fields in React",
+  "use-merged-ref": "useMergedRef: merge refs in React 19",
+  "use-pagination": "usePagination: page range hook with ellipses for React",
+  "use-today": "useToday: a React date hook that rolls over at midnight",
+  hairline: "Hairline: one-device-pixel borders for Tailwind CSS",
+  hotkey: "Hotkey: parse and match keyboard shortcuts in React",
+  motion: "Motion: easing, durations and reduced motion for React",
+  "scroll-fade": "Scroll Fade: CSS-only scroll edge fades for Tailwind",
+  shimmer: "Shimmer: loading text effect for Tailwind CSS",
+}
+
 const docsEntries = [...docsComponents, ...docsHooks, ...docsUtilities]
 
 const docsNav: DocsNavSection[] = [
@@ -782,11 +819,26 @@ function getDocsComponent(slug: string) {
   return component
 }
 
+function titleCase(value: string) {
+  return value.replace(
+    /(^|\s)(\p{Ll})/gu,
+    (_, space, letter) => `${space}${letter.toUpperCase()}`
+  )
+}
+
+function getDocsTitle(slug: string) {
+  const component = getDocsComponent(slug)
+  return (
+    docsTitles[slug] ??
+    `${titleCase(component.name)} component for React & shadcn/ui`
+  )
+}
+
 function getDocsComponentMetadata(slug: string): Metadata {
   const component = getDocsComponent(slug)
 
   return pageMetadata({
-    title: component.name,
+    title: getDocsTitle(slug),
     description: component.description,
     path: `/docs/${component.slug}`,
     markdown: `/docs/${component.slug}.md`,
@@ -811,10 +863,12 @@ export {
   docsKeywords,
   docsUtilities,
   docsNav,
+  docsTitles,
   getDocsComponent,
   getDocsComponentMetadata,
   getDocsPager,
   getDocsSlug,
+  getDocsTitle,
 }
 export type {
   DocsCategory,

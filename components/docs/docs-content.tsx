@@ -33,10 +33,8 @@ function DocsHeading({
         <span data-docs-heading-text="">{children}</span>
         <span
           aria-hidden="true"
-          className="ms-2 text-muted-foreground opacity-0 transition-opacity duration-150 group-hover/heading:opacity-100 group-has-focus-visible/heading:opacity-100 motion-reduce:transition-none"
-        >
-          #
-        </span>
+          className="heading-anchor ms-2 text-muted-foreground opacity-0 transition-opacity duration-150 group-hover/heading:opacity-100 group-has-focus-visible/heading:opacity-100 motion-reduce:transition-none"
+        />
       </a>
     </Tag>
   )

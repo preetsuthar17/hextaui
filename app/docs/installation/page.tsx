@@ -19,7 +19,7 @@ const description =
   "Add HextaUI to a React project with the shadcn CLI, or copy the files in by hand."
 
 export const metadata: Metadata = pageMetadata({
-  title: "Installation",
+  title: "Install HextaUI with the shadcn CLI",
   description,
   path: "/docs/installation",
   markdown: "/docs/installation.md",

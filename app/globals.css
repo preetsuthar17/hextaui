@@ -658,6 +658,10 @@
       transition: none;
     }
   }
+
+  .heading-anchor::after {
+    content: "#";
+  }
 }
 
 @utility text-shimmer {

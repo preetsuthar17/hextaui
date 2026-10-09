@@ -7,8 +7,8 @@ import { docsComponents as components } from "@/lib/docs"
 import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Components",
-  description: "Every HextaUI component, with a live preview of each state.",
+  title: "React UI components for shadcn/ui",
+  description: `${components.length} free, open-source React components for shadcn/ui on Base UI and Tailwind CSS, from inputs and dialogs to data tables, date pickers and chat. Live previews of each.`,
   path: "/components",
 })
 

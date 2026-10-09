@@ -8,7 +8,7 @@ import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Blocks",
+  title: "React blocks for AI products, built on shadcn/ui",
   description:
     "Practical blocks built for AI products, with the hard states handled: streaming, tool calls, reasoning, voice and the screens around them. Part of HextaUI Pro, with Prompt Input free.",
   path: "/blocks",

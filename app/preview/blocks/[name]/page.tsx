@@ -9,7 +9,7 @@ import { getProBlock, proBlockParams } from "@/lib/pro/catalog"
 export const dynamicParams = false
 
 export const metadata: Metadata = {
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: false, indexifembedded: true },
 }
 
 export function generateStaticParams() {

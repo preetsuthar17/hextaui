@@ -17,6 +17,39 @@
   Content-Type: text/markdown; charset=utf-8
   Access-Control-Allow-Origin: *
 
+/docs/*.md
+  Link: <https://hextaui.com/docs/:splat>; rel="canonical"
+
+/docs.md
+  Link: <https://hextaui.com/docs>; rel="canonical"
+
+/index.md
+  Link: <https://hextaui.com/>; rel="canonical"
+
+/pricing.md
+  Link: <https://hextaui.com/pricing>; rel="canonical"
+
+/404.md
+  X-Robots-Tag: noindex
+
+/*.txt
+  X-Robots-Tag: noindex
+
+/r/*
+  X-Robots-Tag: noindex
+
+/mcp/*
+  X-Robots-Tag: noindex
+
+/docs/search.json
+  X-Robots-Tag: noindex
+
+/docs/source/*
+  X-Robots-Tag: noindex
+
+/preview/*
+  X-Robots-Tag: noindex, nofollow, indexifembedded
+
 /llms.txt
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *

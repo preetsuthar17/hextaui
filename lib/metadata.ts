@@ -1,6 +1,11 @@
 import type { Metadata } from "next"
 
-import { siteName, siteSummary, siteTitle, siteTwitter } from "@/lib/site"
+import {
+  siteMetaDescription,
+  siteName,
+  siteTitle,
+  siteTwitter,
+} from "@/lib/site"
 
 type PageMetadataOptions = {
   path: string
@@ -9,12 +14,32 @@ type PageMetadataOptions = {
   markdown?: string
 }
 
+const maxDescriptionLength = 160
+const minSentenceSummaryLength = 110
+
+function clampDescription(text: string, max = maxDescriptionLength) {
+  if (text.length <= max) return text
+
+  let summary = ""
+  for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+    if (!/[.!?]$/.test(sentence)) break
+    const next = `${summary} ${sentence}`.trim()
+    if (next.length > max) break
+    summary = next
+  }
+  if (summary.length >= minSentenceSummaryLength) return summary
+
+  const cut = text.slice(0, max - 1)
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:]+$/, "")}…`
+}
+
 function pageMetadata({
   path,
   title,
-  description = siteSummary,
+  description: fullDescription = siteMetaDescription,
   markdown,
 }: PageMetadataOptions): Metadata {
+  const description = clampDescription(fullDescription)
   const socialTitle = title ? `${title} — ${siteName}` : siteTitle
   const image = {
     url: "/opengraph-image",
@@ -49,4 +74,4 @@ function pageMetadata({
   }
 }
 
-export { pageMetadata }
+export { clampDescription, pageMetadata }

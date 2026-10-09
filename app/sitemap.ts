@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process"
-import { readdirSync } from "node:fs"
+import { existsSync, readdirSync } from "node:fs"
 import path from "node:path"
 
 import type { MetadataRoute } from "next"
@@ -83,13 +83,46 @@ function hasHistory() {
   return shallow() === "false"
 }
 
-function lastModified(file: string, history: boolean) {
+const proDir = path.join(process.cwd(), "pro")
+
+function sourcesFor(route: string, file: string) {
+  const slug = /^\/docs\/([^/]+)$/.exec(route)?.[1]
+  if (!slug) return [file]
+
+  return [
+    file,
+    `components/examples/${slug}`,
+    `components/ui/${slug}.tsx`,
+    `hooks/${slug}.ts`,
+    `lib/${slug}.ts`,
+  ].filter((source) => existsSync(path.resolve(process.cwd(), source)))
+}
+
+function commitDate(args: string[], cwd = process.cwd()) {
+  try {
+    const date = execFileSync("git", ["log", "-1", "--format=%cI", ...args], {
+      cwd,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim()
+    return date ? new Date(date) : undefined
+  } catch {
+    return undefined
+  }
+}
+
+function lastModified(route: string, file: string, history: boolean) {
   if (!history) {
     return undefined
   }
 
-  const date = git(["log", "-1", "--format=%cI", "--", file])
-  return date ? new Date(date) : undefined
+  const block = /^\/blocks\/([^/]+)$/.exec(route)?.[1]
+  if (block && existsSync(path.join(proDir, ".git"))) {
+    const date = commitDate(["--", `blocks/${block}`], proDir)
+    if (date) return date
+  }
+
+  return commitDate(["--", ...sourcesFor(route, file)])
 }
 
 function expand(route: string) {
@@ -128,7 +161,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .flatMap((page) =>
       expand(page.route).map((route) => ({
         url: absoluteUrl(route),
-        lastModified: lastModified(page.file, history),
+        lastModified: lastModified(route, page.file, history),
         priority: priority(route),
       }))
     )

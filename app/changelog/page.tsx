@@ -9,7 +9,8 @@ import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: "Changelog",
-  description: "What shipped in HextaUI and HextaUI Pro.",
+  description:
+    "Every HextaUI and HextaUI Pro release, newest first: new components and blocks, improvements and what was removed.",
   path: "/changelog",
 })
 

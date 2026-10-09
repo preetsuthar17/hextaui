@@ -17,7 +17,7 @@ const description =
   "Connect Claude Code, Cursor, VS Code and other AI assistants to HextaUI, so they search the docs, read each API and install components for you."
 
 export const metadata: Metadata = pageMetadata({
-  title: "MCP server",
+  title: "MCP server for Claude Code, Cursor and VS Code",
   description,
   path: "/docs/mcp",
   markdown: "/docs/mcp.md",

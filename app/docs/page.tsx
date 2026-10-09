@@ -18,11 +18,11 @@ import {
 } from "@/lib/docs"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
 import { pageMetadata } from "@/lib/metadata"
-import { siteDescription, siteRepository, siteSummary } from "@/lib/site"
+import { siteDescription, siteRepository } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Introduction",
-  description: siteSummary,
+  title: "React components for shadcn/ui, built on Base UI",
+  description: `${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for shadcn/ui, built on Base UI and Tailwind CSS v4. Add them with the shadcn CLI and own the code.`,
   path: "/docs",
   markdown: "/docs.md",
 })
