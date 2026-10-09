@@ -9,6 +9,20 @@
         "dev"
       ],
       "port": 3000
+    },
+    {
+      "name": "pages",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "exec",
+        "wrangler",
+        "pages",
+        "dev",
+        "out",
+        "--port",
+        "8790"
+      ],
+      "port": 8790
     }
   ]
 }
