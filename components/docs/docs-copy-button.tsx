@@ -5,12 +5,36 @@ import { IconCheck, IconCopy } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 
+type CopyValue = string | (() => string | Promise<string>)
+
+async function writeClipboard(value: CopyValue) {
+  const text = typeof value === "function" ? value() : value
+
+  if (typeof text === "string") {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  if (typeof ClipboardItem === "function" && navigator.clipboard.write) {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "text/plain": text.then(
+          (content) => new Blob([content], { type: "text/plain" })
+        ),
+      }),
+    ])
+    return
+  }
+
+  await navigator.clipboard.writeText(await text)
+}
+
 function DocsCopyButton({
   value,
   label = "Copy code",
   className,
 }: {
-  value: string
+  value: CopyValue
   label?: string
   className?: string
 }) {
@@ -36,7 +60,7 @@ function DocsCopyButton({
       className={className}
       onClick={async () => {
         try {
-          await navigator.clipboard.writeText(value)
+          await writeClipboard(value)
           setCopied(true)
         } catch {
           setCopied(false)

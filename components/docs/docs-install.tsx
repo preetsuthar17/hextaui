@@ -1,7 +1,7 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { DocsCodeBlock } from "@/components/docs/docs-code-block"
+import { DocsCodePanel } from "@/components/docs/docs-code-panel"
 import { DocsCommand } from "@/components/docs/docs-command"
 import { DocsSection } from "@/components/docs/docs-content"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,7 +10,11 @@ import {
   getRegistryKind,
   getRegistrySlug,
 } from "@/lib/docs-registry"
-import { readDocsSource } from "@/lib/docs-source"
+import {
+  getDocsInstallPreview,
+  getDocsSourceHref,
+  getDocsSourceUrl,
+} from "@/lib/docs-install-source"
 
 function DocsStep({
   step,
@@ -44,10 +48,9 @@ async function DocsInstall({
   dependencies: string[]
   files: string[]
 }) {
-  const sources = await Promise.all(
-    files.map(async (file) => ({ file, code: await readDocsSource(file) }))
-  )
-  const registryUrl = getRegistryItemUrl(getRegistrySlug(files))
+  const slug = getRegistrySlug(files)
+  const previews = await Promise.all(files.map(getDocsInstallPreview))
+  const registryUrl = getRegistryItemUrl(slug)
   const kind = getRegistryKind(files)
   const steps: {
     key: string
@@ -85,12 +88,22 @@ async function DocsInstall({
     {
       key: "source",
       title: "Copy and paste the following code into your project.",
-      children: sources.map((source) => (
-        <DocsCodeBlock
-          key={source.file}
-          title={source.file}
-          code={source.code}
+      children: previews.map((preview) => (
+        <DocsCodePanel
+          key={preview.path}
+          html={preview.html}
+          title={preview.path}
+          lang="tsx"
           collapsible
+          source={
+            preview.partial
+              ? {
+                  url: getDocsSourceUrl(slug),
+                  path: preview.path,
+                  href: getDocsSourceHref(preview.path),
+                }
+              : undefined
+          }
         />
       )),
     },

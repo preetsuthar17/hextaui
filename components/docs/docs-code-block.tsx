@@ -2,8 +2,6 @@ import { cn } from "cn"
 import type { BundledLanguage, SpecialLanguage } from "shiki"
 
 import { DocsCodePanel } from "@/components/docs/docs-code-panel"
-import { DocsCopyButton } from "@/components/docs/docs-copy-button"
-import { DocsFileIcon } from "@/components/docs/docs-file-icon"
 import { highlight } from "@/lib/highlight"
 
 const collapseAfterLines = 14
@@ -27,7 +25,20 @@ async function DocsCodeBlock({
 }) {
   const source = code.trimEnd()
   const html = await highlight(source, lang, { highlightLines, lineNumbers })
-  const lines = source.split("\n").length
+  const isCollapsible =
+    collapsible ?? source.split("\n").length > collapseAfterLines
+
+  if (title) {
+    return (
+      <DocsCodePanel
+        html={html}
+        title={title}
+        lang={lang}
+        collapsible={isCollapsible}
+        className={className}
+      />
+    )
+  }
 
   return (
     <figure
@@ -36,21 +47,7 @@ async function DocsCodeBlock({
         className
       )}
     >
-      {title ? (
-        <figcaption className="flex h-10 items-center justify-between gap-2 border-b ps-4 pe-1 font-mono text-xs text-muted-foreground">
-          <span className="flex min-w-0 items-center gap-2">
-            <DocsFileIcon title={title} lang={lang} />
-            <span className="truncate">{title}</span>
-          </span>
-          <DocsCopyButton value={source} />
-        </figcaption>
-      ) : null}
-      <DocsCodePanel
-        html={html}
-        code={source}
-        collapsible={collapsible ?? lines > collapseAfterLines}
-        copyable={!title}
-      />
+      <DocsCodePanel html={html} collapsible={isCollapsible} />
     </figure>
   )
 }

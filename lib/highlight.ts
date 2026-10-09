@@ -1,7 +1,9 @@
 import {
   createJavaScriptRegexEngine,
   getSingletonHighlighter,
+  hastToHtml,
   type BundledLanguage,
+  type ShikiTransformer,
   type SpecialLanguage,
 } from "shiki"
 
@@ -17,6 +19,24 @@ const specialLanguages = new Set<string>([
   "plain",
   "ansi",
 ])
+
+const plainToken = "--shiki-light:#1F2328;--shiki-dark:#E6EDF3"
+
+const tokenClasses: Record<string, string> = {
+  "--shiki-light:#CF222E;--shiki-dark:#FF7B72": "hk",
+  "--shiki-light:#0A3069;--shiki-dark:#A5D6FF": "hs",
+  "--shiki-light:#0550AE;--shiki-dark:#79C0FF": "hc",
+  "--shiki-light:#8250DF;--shiki-dark:#D2A8FF": "hf",
+  "--shiki-light:#116329;--shiki-dark:#7EE787": "ht",
+  "--shiki-light:#116329;--shiki-light-font-weight:bold;--shiki-dark:#7EE787;--shiki-dark-font-weight:bold":
+    "ht",
+  "--shiki-light:#953800;--shiki-dark:#FFA657": "hv",
+  "--shiki-light:#6E7781;--shiki-dark:#8B949E": "hm",
+}
+
+type LineNode = Parameters<NonNullable<ShikiTransformer["line"]>>[0]
+
+type TokenNode = LineNode["children"][number]
 
 type HighlightOptions = {
   highlightLines?: string | number[]
@@ -47,6 +67,26 @@ function parseLines(value: string | number[] | undefined) {
   return lines
 }
 
+function compactToken(node: TokenNode): TokenNode[] {
+  if (node.type !== "element" || node.tagName !== "span") {
+    return [node]
+  }
+
+  const style = node.properties.style
+
+  if (style === plainToken) {
+    return node.children
+  }
+
+  const token = typeof style === "string" ? tokenClasses[style] : undefined
+
+  if (token) {
+    node.properties = { class: token }
+  }
+
+  return [node]
+}
+
 async function highlight(
   code: string,
   lang: BundledLanguage | SpecialLanguage = "tsx",
@@ -69,25 +109,37 @@ async function highlight(
   const highlighted = parseLines(highlightLines)
   const digits = String(source.split("\n").length).length
 
-  return highlighter.codeToHtml(source, {
+  const tree = highlighter.codeToHast(source, {
     lang,
     themes,
     defaultColor: false,
     transformers: [
       {
         pre(node) {
-          if (lineNumbers) {
-            node.properties["data-line-numbers"] = ""
-            node.properties.style = `${node.properties.style ?? ""};--code-digits:${digits}ch`
+          node.properties = {
+            class: "shiki",
+            tabindex: "0",
+            ...(lineNumbers
+              ? {
+                  "data-line-numbers": "",
+                  style: `--code-digits:${digits}ch`,
+                }
+              : {}),
           }
         },
         line(node, line) {
+          node.children = node.children.flatMap(compactToken)
           if (highlighted.has(line)) {
             node.properties["data-highlighted"] = ""
           }
         },
       },
     ],
+  })
+
+  return hastToHtml(tree, {
+    preferUnquoted: true,
+    characterReferences: { useShortestReferences: true },
   })
 }
 

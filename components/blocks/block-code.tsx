@@ -5,8 +5,6 @@ import Link from "next/link"
 import { IconLock } from "@tabler/icons-react"
 
 import { DocsCodePanel } from "@/components/docs/docs-code-panel"
-import { DocsCopyButton } from "@/components/docs/docs-copy-button"
-import { DocsFileIcon } from "@/components/docs/docs-file-icon"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -110,23 +108,7 @@ function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
 }
 
 function CodeFile({ file }: { file: ProFile }) {
-  return (
-    <figure className="min-w-0 overflow-hidden rounded-xl border bg-muted">
-      <figcaption className="flex h-10 items-center justify-between gap-2 border-b ps-4 pe-1 font-mono text-xs text-muted-foreground">
-        <span className="flex min-w-0 items-center gap-2">
-          <DocsFileIcon title={file.path} />
-          <span className="truncate">{file.path}</span>
-        </span>
-        <DocsCopyButton value={file.code} />
-      </figcaption>
-      <DocsCodePanel
-        html={file.html}
-        code={file.code}
-        collapsible
-        copyable={false}
-      />
-    </figure>
-  )
+  return <DocsCodePanel html={file.html} title={file.path} collapsible />
 }
 
 function BlockCode({ name, free = false }: { name: string; free?: boolean }) {

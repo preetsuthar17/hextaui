@@ -193,7 +193,25 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
 }
 
 const cellBase =
-  "border-b align-middle whitespace-nowrap group-data-wrap/table:align-top group-data-wrap/table:whitespace-normal group-data-wrap/table:text-pretty group-data-wrap/table:wrap-break-word data-[align=center]:text-center data-[align=end]:text-end data-[align=end]:tabular-nums data-pinned:sticky data-pinned:z-1 data-pinned:has-[:focus-visible]:z-4 data-pinned:has-[[data-slot=checkbox]]:z-2 data-pinned:bg-(--table-bg) group-hover/table-row:data-pinned:bg-(--table-hover) group-data-[state=selected]/table-row:data-pinned:bg-muted data-[pinned=start]:start-(--pin-offset) data-[pinned=end]:end-(--pin-offset) data-pinned:[--pin-offset:0px] data-pinned-edge:after:pointer-events-none data-pinned-edge:after:absolute data-pinned-edge:after:inset-y-0 data-pinned-edge:after:hidden data-pinned-edge:after:w-4 data-[pinned=start]:data-pinned-edge:after:-end-4 data-[pinned=start]:data-pinned-edge:after:bg-linear-to-r data-[pinned=start]:data-pinned-edge:after:from-foreground/6 data-[pinned=start]:data-pinned-edge:after:to-transparent rtl:data-[pinned=start]:data-pinned-edge:after:bg-linear-to-l data-[pinned=end]:data-pinned-edge:after:-start-4 data-[pinned=end]:data-pinned-edge:after:bg-linear-to-l data-[pinned=end]:data-pinned-edge:after:from-foreground/6 data-[pinned=end]:data-pinned-edge:after:to-transparent rtl:data-[pinned=end]:data-pinned-edge:after:bg-linear-to-r in-data-scrolled-start:data-[pinned=start]:data-pinned-edge:after:block in-data-scrolled-end:data-[pinned=end]:data-pinned-edge:after:block [&:has([role=checkbox])]:w-px [&>[role=checkbox]]:flex group-data-[variant=surface]/table:first:ps-4 group-data-[variant=surface]/table:last:pe-4"
+  "border-b align-middle whitespace-nowrap group-data-wrap/table:align-top group-data-wrap/table:whitespace-normal group-data-wrap/table:text-pretty group-data-wrap/table:wrap-break-word data-[align=center]:text-center data-[align=end]:text-end data-[align=end]:tabular-nums"
+
+const cellPinned =
+  "data-pinned:sticky data-pinned:z-1 data-pinned:has-[:focus-visible]:z-4 data-pinned:has-[[data-slot=checkbox]]:z-2 data-pinned:bg-(--table-bg) group-hover/table-row:data-pinned:bg-(--table-hover) group-data-[state=selected]/table-row:data-pinned:bg-muted data-[pinned=start]:start-(--pin-offset) data-[pinned=end]:end-(--pin-offset) data-pinned:[--pin-offset:0px]"
+
+const cellPinnedEdge =
+  "data-pinned-edge:after:pointer-events-none data-pinned-edge:after:absolute data-pinned-edge:after:inset-y-0 data-pinned-edge:after:hidden data-pinned-edge:after:w-4 data-[pinned=start]:data-pinned-edge:after:-end-4 data-[pinned=start]:data-pinned-edge:after:bg-linear-to-r data-[pinned=start]:data-pinned-edge:after:from-foreground/6 data-[pinned=start]:data-pinned-edge:after:to-transparent rtl:data-[pinned=start]:data-pinned-edge:after:bg-linear-to-l data-[pinned=end]:data-pinned-edge:after:-start-4 data-[pinned=end]:data-pinned-edge:after:bg-linear-to-l data-[pinned=end]:data-pinned-edge:after:from-foreground/6 data-[pinned=end]:data-pinned-edge:after:to-transparent rtl:data-[pinned=end]:data-pinned-edge:after:bg-linear-to-r in-data-scrolled-start:data-[pinned=start]:data-pinned-edge:after:block in-data-scrolled-end:data-[pinned=end]:data-pinned-edge:after:block"
+
+const cellLayout =
+  "[&:has([role=checkbox])]:w-px [&>[role=checkbox]]:flex group-data-[variant=surface]/table:first:ps-4 group-data-[variant=surface]/table:last:pe-4"
+
+function cellClasses(pinned: string | undefined, pinnedEdge?: boolean) {
+  return cn(
+    cellBase,
+    pinned && cellPinned,
+    pinned && pinnedEdge && cellPinnedEdge,
+    cellLayout
+  )
+}
 
 type TableCellExtraProps = {
   align?: "start" | "center" | "end"
@@ -215,8 +233,11 @@ function TableHead({
       data-pinned={pinned}
       data-pinned-edge={pinnedEdge ? "" : undefined}
       className={cn(
-        cellBase,
-        "h-(--table-head-h) bg-(--table-head-bg,var(--table-bg)) px-(--table-cell-px) text-start font-medium text-muted-foreground group-data-wrap/table:align-middle in-data-scrolled-top:shadow-[inset_0_calc(var(--hairline)*-1)_0_var(--border)] in-data-sticky-header:sticky in-data-sticky-header:top-0 in-data-sticky-header:z-2 in-[tbody]:h-auto in-[tbody]:bg-transparent in-[tbody]:py-(--table-cell-py) in-[tbody]:text-foreground in-[tbody]:shadow-none in-[tbody]:group-data-wrap/table:align-top data-pinned:bg-(--table-head-bg,var(--table-bg)) in-data-sticky-header:data-pinned:z-3 in-[tbody]:data-pinned:bg-(--table-bg) in-[tbody]:group-hover/table-row:data-pinned:bg-(--table-hover) in-[tbody]:group-data-[state=selected]/table-row:data-pinned:bg-muted [&:has([role=checkbox])]:pe-0",
+        cellClasses(pinned, pinnedEdge),
+        "h-(--table-head-h) bg-(--table-head-bg,var(--table-bg)) px-(--table-cell-px) text-start font-medium text-muted-foreground group-data-wrap/table:align-middle in-data-scrolled-top:shadow-[inset_0_calc(var(--hairline)*-1)_0_var(--border)] in-data-sticky-header:sticky in-data-sticky-header:top-0 in-data-sticky-header:z-2 in-[tbody]:h-auto in-[tbody]:bg-transparent in-[tbody]:py-(--table-cell-py) in-[tbody]:text-foreground in-[tbody]:shadow-none in-[tbody]:group-data-wrap/table:align-top",
+        pinned &&
+          "data-pinned:bg-(--table-head-bg,var(--table-bg)) in-data-sticky-header:data-pinned:z-3 in-[tbody]:data-pinned:bg-(--table-bg) in-[tbody]:group-hover/table-row:data-pinned:bg-(--table-hover) in-[tbody]:group-data-[state=selected]/table-row:data-pinned:bg-muted",
+        "[&:has([role=checkbox])]:pe-0",
         className
       )}
       {...props}
@@ -238,7 +259,7 @@ function TableCell({
       data-pinned={pinned}
       data-pinned-edge={pinnedEdge ? "" : undefined}
       className={cn(
-        cellBase,
+        cellClasses(pinned, pinnedEdge),
         "px-(--table-cell-px) py-(--table-cell-py) [&:has([role=checkbox])]:pe-0",
         className
       )}

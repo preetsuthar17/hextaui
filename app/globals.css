@@ -834,6 +834,8 @@
 
 .shiki {
   --code-bg: var(--muted);
+  --shiki-light: #1f2328;
+  --shiki-dark: #e6edf3;
   direction: ltr;
   overflow-x: auto;
   overscroll-behavior-x: none;
@@ -907,6 +909,41 @@
 .dark .shiki,
 .dark .shiki span {
   color: var(--shiki-dark);
+}
+
+.shiki .hk {
+  --shiki-light: #cf222e;
+  --shiki-dark: #ff7b72;
+}
+
+.shiki .hs {
+  --shiki-light: #0a3069;
+  --shiki-dark: #a5d6ff;
+}
+
+.shiki .hc {
+  --shiki-light: #0550ae;
+  --shiki-dark: #79c0ff;
+}
+
+.shiki .hf {
+  --shiki-light: #8250df;
+  --shiki-dark: #d2a8ff;
+}
+
+.shiki .ht {
+  --shiki-light: #116329;
+  --shiki-dark: #7ee787;
+}
+
+.shiki .hv {
+  --shiki-light: #953800;
+  --shiki-dark: #ffa657;
+}
+
+.shiki .hm {
+  --shiki-light: #6e7781;
+  --shiki-dark: #8b949e;
 }
 
 @media (min-resolution: 1.5dppx) {
