@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { getPagesRoutes } from "@/lib/pages-routes"
+import { getPagesRoutes, getRedirectSources } from "@/lib/pages-routes"
 
 const entries = [
   { name: "_next", directory: true },
@@ -65,5 +65,31 @@ describe("getPagesRoutes", () => {
       directory: false,
     }))
     expect(() => getPagesRoutes(many, functions)).toThrow(/100/)
+  })
+
+  it("skips Functions for redirect sources that no static rule covers", () => {
+    const sources = getRedirectSources(
+      [
+        "/preview/:slug /docs/:slug 301",
+        "/docs/ui/components/button /docs/button 301",
+        "/sponsors /sponsor 301",
+        "/api/old /api/new 301",
+        "/mcp /docs/mcp 301",
+        "",
+        "# comment",
+      ].join("\n")
+    )
+    expect(sources).toEqual([
+      "/docs/ui/components/button",
+      "/sponsors",
+      "/api/old",
+      "/mcp",
+    ])
+
+    const withRedirects = getPagesRoutes(entries, functions, sources)
+    expect(withRedirects.exclude).toContain("/sponsors")
+    expect(withRedirects.exclude).not.toContain("/docs/ui/components/button")
+    expect(withRedirects.exclude).not.toContain("/api/old")
+    expect(withRedirects.exclude).not.toContain("/mcp")
   })
 })

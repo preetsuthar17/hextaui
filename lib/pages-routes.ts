@@ -36,15 +36,54 @@ function excludeEntries(
   }
 }
 
-function getPagesRoutes(entries: OutEntry[], functions: FunctionRoutes) {
+function isExcluded(route: string, exclude: Set<string>) {
+  if (exclude.has(route)) return true
+  return [...exclude].some(
+    (rule) =>
+      rule.endsWith("/*") &&
+      (route === rule.slice(0, -2) || route.startsWith(rule.slice(0, -1)))
+  )
+}
+
+function servedByFunctions(route: string, functions: FunctionRoutes) {
+  return (
+    functions.files.includes(route) ||
+    functions.directories.some(
+      (directory) => route === directory || route.startsWith(`${directory}/`)
+    )
+  )
+}
+
+function getRedirectSources(redirects: string) {
+  return redirects
+    .split("\n")
+    .map((line) => line.trim().split(/\s+/)[0])
+    .filter(
+      (source): source is string =>
+        Boolean(source) &&
+        source.startsWith("/") &&
+        !source.includes(":") &&
+        !source.includes("*")
+    )
+}
+
+function getPagesRoutes(
+  entries: OutEntry[],
+  functions: FunctionRoutes,
+  redirectSources: string[] = []
+) {
   const exclude = new Set<string>()
   excludeEntries(entries, "", functions, exclude)
   for (const file of functions.files) exclude.delete(file)
+  for (const source of redirectSources) {
+    if (source === "/" || servedByFunctions(source, functions)) continue
+    if (!isExcluded(source, exclude)) exclude.add(source)
+  }
 
   const routes = {
     version: 1,
     description:
-      "Functions run for /, /api/*, /mcp, /r/* and unknown paths. Static pages and assets never invoke them.",
+      "Functions run for /, /api/*, /mcp, /r/* and unknown paths. Static pages, assets and redirects never invoke them.",
     include: ["/*"],
     exclude: [...exclude].sort(),
   }
@@ -63,4 +102,9 @@ function getPagesRoutes(entries: OutEntry[], functions: FunctionRoutes) {
   return routes
 }
 
-export { getPagesRoutes, type FunctionRoutes, type OutEntry }
+export {
+  getPagesRoutes,
+  getRedirectSources,
+  type FunctionRoutes,
+  type OutEntry,
+}

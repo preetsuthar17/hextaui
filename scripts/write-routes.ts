@@ -1,7 +1,11 @@
 import fs from "node:fs"
 import path from "node:path"
 
-import { getPagesRoutes, type OutEntry } from "../lib/pages-routes.ts"
+import {
+  getPagesRoutes,
+  getRedirectSources,
+  type OutEntry,
+} from "../lib/pages-routes.ts"
 
 const root = path.resolve(import.meta.dirname, "..")
 const outDir = path.join(root, "out")
@@ -20,14 +24,23 @@ function read(dir: string, depth: number): OutEntry[] {
 
 const functions = fs.readdirSync(functionsDir, { withFileTypes: true })
 
-const routes = getPagesRoutes(read(outDir, 1), {
-  files: functions
-    .filter((entry) => entry.isFile() && !entry.name.startsWith("_"))
-    .map((entry) => `/${entry.name.replace(/\.ts$/, "")}`),
-  directories: functions
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => `/${entry.name}`),
-})
+const redirectsFile = path.join(outDir, "_redirects")
+const redirects = fs.existsSync(redirectsFile)
+  ? fs.readFileSync(redirectsFile, "utf8")
+  : ""
+
+const routes = getPagesRoutes(
+  read(outDir, 1),
+  {
+    files: functions
+      .filter((entry) => entry.isFile() && !entry.name.startsWith("_"))
+      .map((entry) => `/${entry.name.replace(/\.ts$/, "")}`),
+    directories: functions
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => `/${entry.name}`),
+  },
+  getRedirectSources(redirects)
+)
 
 fs.writeFileSync(
   path.join(outDir, "_routes.json"),
