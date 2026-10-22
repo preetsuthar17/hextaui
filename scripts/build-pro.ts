@@ -3,6 +3,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { highlight } from "../lib/highlight.ts"
+import { encodeCompactHtml } from "../lib/pro/compact-html.ts"
 import { isFreeBlock } from "../lib/pro/free-blocks.ts"
 
 const root = path.resolve(import.meta.dirname, "..")
@@ -271,17 +272,18 @@ async function main() {
           path: file.path,
           type: "registry:component",
           target: file.path,
-          content: file.code,
         })),
       },
       files: await Promise.all(
-        itemFiles.map(async (file) => ({
-          path: file.path,
-          code: file.code,
-          html: await highlight(file.code, lang(file.path), {
+        itemFiles.map(async (file) => {
+          const html = await highlight(file.code, lang(file.path), {
             lineNumbers: true,
-          }),
-        }))
+          })
+          const compact = encodeCompactHtml(file.code, html)
+          return compact
+            ? { path: file.path, code: file.code, compact }
+            : { path: file.path, code: file.code, html }
+        })
       ),
     }
 
