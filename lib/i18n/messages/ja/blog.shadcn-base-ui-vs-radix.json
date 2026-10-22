@@ -46,6 +46,5 @@
   "Two reasons were given. Base UI had reached a stable 1.6.0 with over six million weekly downloads, and projects created through `shadcn/create` were already choosing Base UI over Radix about two to one. The default followed what people were picking.": "理由は二つ挙げられました。Base UI が安定版 1.6.0 に達し、週間ダウンロードが 600 万を超えていたこと、そして `shadcn/create` で作られたプロジェクトがすでに Radix より Base UI をおよそ 2 対 1 で選んでいたことです。デフォルトは人々の選択に従いました。",
   "What I would not do": "私ならやらないこと",
   "What changed, in one paragraph": "何が変わったか、一段落で",
-  "Why the default moved": "なぜデフォルトが変わったのか",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code": "shadcn/ui が Base UI に切り替わりました。コードで実際に変わることはこれです"
+  "Why the default moved": "なぜデフォルトが変わったのか"
 }

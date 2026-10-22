@@ -5,9 +5,9 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
 import { t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
@@ -48,6 +48,7 @@ const questions = [
 export default function Page() {
   return (
     <InfoPage
+      eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
         { name: "HextaUI vs prompt-kit", path: "/compare/prompt-kit" },
@@ -70,7 +71,7 @@ export default function Page() {
         }}
       />
 
-      <LegalSection title="The short answer">
+      <InfoSection title="The short answer">
         <DocsParagraph>
           Use prompt-kit when you want free, small pieces for a chat and plan to
           design the screens and their failure states yourself. Use HextaUI when
@@ -79,9 +80,9 @@ export default function Page() {
           approvals worked out. Both install with the shadcn CLI and share the
           shadcn/ui theme tokens, so you can mix them.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="At a glance">
+      <InfoSection title="At a glance" wide>
         <CompareTable
           caption="HextaUI compared with prompt-kit"
           columns={["HextaUI", "prompt-kit"]}
@@ -137,9 +138,9 @@ export default function Page() {
             },
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Pieces or screens">
+      <InfoSection title="Pieces or screens">
         <DocsParagraph>
           <LegalLink href="https://github.com/ibelick/prompt-kit">
             prompt-kit
@@ -192,9 +193,9 @@ export default function Page() {
           block together into a complete chat app you can open and try before
           you install anything.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Piece by piece">
+      <InfoSection title="Piece by piece">
         <DocsParagraph>
           Most prompt-kit components have a HextaUI counterpart. The names below
           are from the prompt-kit docs.
@@ -296,9 +297,9 @@ export default function Page() {
           <LegalLink href="/blocks/api-keys">API keys</LegalLink> and{" "}
           <LegalLink href="/blocks/billing">Billing</LegalLink>.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="When prompt-kit is the better choice">
+      <InfoSection title="When prompt-kit is the better choice">
         <DocsList>
           <li>
             You want everything free and open source. Most of HextaUI’s AI
@@ -319,9 +320,9 @@ export default function Page() {
             is built with prompt-kit by the same author.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Moving from prompt-kit">
+      <InfoSection title="Moving from prompt-kit">
         <DocsParagraph>
           You don’t have to replace everything at once. Both libraries copy
           source into your project, so swap one piece when you need what it
@@ -332,9 +333,9 @@ export default function Page() {
           <LegalLink href="/blocks/chat-thread">Chat Thread</LegalLink> when
           failed replies, retries and edits start to matter.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Questions">
+      <InfoSection title="Questions">
         {questions.map((item) => (
           <div key={item.question}>
             <h3 className="mt-6 text-base font-medium text-balance">
@@ -343,7 +344,7 @@ export default function Page() {
             <DocsParagraph className="mt-2">{item.answer}</DocsParagraph>
           </div>
         ))}
-      </LegalSection>
+      </InfoSection>
 
       <MoreComparisons current={path} />
     </InfoPage>

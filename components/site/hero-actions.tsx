@@ -1,81 +1,62 @@
 "use client"
 
-import * as React from "react"
 import Link from "@/components/site/link"
-import { IconArrowRight } from "@tabler/icons-react"
 import { cn } from "cn"
 
-import { buttonVariants } from "@/components/ui/button"
-import { NumberFlow } from "@/components/ui/number-flow"
-import { Separator } from "@/components/ui/separator"
 import { GithubLogo } from "@/components/site/github-logo"
 import { useGithubStars } from "@/components/site/use-github-stars"
-import { siteRepository } from "@/lib/site"
+import { formatStars } from "@/lib/github"
 import { useChrome } from "@/lib/i18n/chrome"
+import { siteRepository } from "@/lib/site"
 
-function GithubStarsButton({ stars: initial }: { stars: number | null }) {
+function HeroActions({ stars: initial }: { stars: number | null }) {
   const c = useChrome()
   const stars = useGithubStars(initial)
-  const [shown, setShown] = React.useState(0)
-
-  React.useEffect(() => {
-    if (stars === null) {
-      return
-    }
-    const frame = requestAnimationFrame(() => setShown(stars))
-    return () => cancelAnimationFrame(frame)
-  }, [stars])
 
   return (
-    <a
-      href={siteRepository}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={
-        stars === null
-          ? "Star on GitHub"
-          : `Star on GitHub, ${stars.toLocaleString("en")} stars`
-      }
-      className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-3")}
-    >
-      <GithubLogo />
-      {c("Star on GitHub")}
-      {stars === null ? null : (
-        <>
-          <Separator orientation="vertical" className="mx-1 h-4 self-center" />
-          <span aria-hidden="true" className="text-muted-foreground">
-            <NumberFlow value={shown} />
-          </span>
-        </>
-      )}
-    </a>
-  )
-}
-
-function HeroActions({ stars }: { stars: number | null }) {
-  const c = useChrome()
-
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Link
-        href="/blocks"
-        className={cn(buttonVariants({ size: "lg" }), "px-4")}
-      >
+    <div className="flex flex-wrap items-center justify-center gap-3">
+      <Link href="/blocks" className="hero-cta">
         {c("Browse blocks")}
-        <IconArrowRight data-icon="inline-end" aria-hidden="true" />
       </Link>
-      <Link
-        href="/blocks/prompt-input"
-        className={cn(
-          buttonVariants({ variant: "outline", size: "lg" }),
-          "px-4"
-        )}
+      <a
+        href={siteRepository}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={
+          stars === null
+            ? c("Star on GitHub")
+            : `${c("Star on GitHub")}, ${stars.toLocaleString("en")}`
+        }
+        className="hero-cta-secondary"
       >
-        {c("Try Prompt Input free")}
-      </Link>
-      <GithubStarsButton stars={stars} />
+        <GithubLogo />
+        {c("Star on GitHub")}
+        {stars === null ? null : (
+          <>
+            <span aria-hidden="true" className="h-4 w-px bg-white/20" />
+            <span aria-hidden="true" className="text-white/75 tabular-nums">
+              {formatStars(stars)}
+            </span>
+          </>
+        )}
+      </a>
     </div>
   )
 }
 
-export { HeroActions }
+function StartActions({ className }: { className?: string }) {
+  const c = useChrome()
+
+  return (
+    <div className={cn("flex flex-wrap items-center gap-3", className)}>
+      <Link href="/docs/installation" className="cta-primary">
+        {c("Get started")}
+      </Link>
+      <Link href="/blocks" className="cta-secondary">
+        {c("Browse blocks")}
+      </Link>
+    </div>
+  )
+}
+
+export { HeroActions, StartActions }

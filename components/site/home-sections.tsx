@@ -1,4 +1,5 @@
 import Link from "@/components/site/link"
+import { cn } from "cn"
 
 import {
   Accordion,
@@ -6,47 +7,52 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { StartActions } from "@/components/site/hero-actions"
+import { HomeBlockStage, HomeDemos } from "@/components/site/home-preview"
 import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
-import { proBlocks } from "@/lib/pro/catalog"
+import { getProBlock, proBlocks } from "@/lib/pro/catalog"
 import {
   earlyBirdLastDay,
   isEarlyBird,
   proPlans,
   refundDays,
 } from "@/lib/pro/pricing"
-import { T, t, translateNode } from "@/lib/i18n/rich"
-import { absoluteUrl, siteRepository } from "@/lib/site"
+import { T, t } from "@/lib/i18n/rich"
+import { siteRepository } from "@/lib/site"
 import { faqPageJsonLd } from "@/lib/structured-data"
 
 const linkClassName =
   "rounded-sm text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring motion-reduce:transition-none"
 
-const inside = [
+const stats = [
   {
     name: "Components",
     href: "/components",
-    detail: `${docsComponents.length}, from ${docsComponents[0]?.name} to ${docsComponents.at(-1)?.name}`,
+    value: docsComponents.length,
+    detail: "From {first} to {last}",
+    values: {
+      first: docsComponents[0]?.name ?? "",
+      last: docsComponents.at(-1)?.name ?? "",
+    },
   },
   {
     name: "Hooks",
     href: `/docs/${docsHooks[0]?.slug}`,
-    detail: `${docsHooks.length}, like useButtonFeedback and useDelayedLoading`,
+    value: docsHooks.length,
+    detail: "Like useButtonFeedback and useDelayedLoading",
   },
   {
     name: "Utilities",
     href: `/docs/${docsUtilities[0]?.slug}`,
-    detail: `${docsUtilities.length}, for motion, hotkeys, hairlines and scroll fades`,
+    value: docsUtilities.length,
+    detail: "For motion, hotkeys, hairlines and scroll fades",
   },
   {
     name: "Pro blocks",
     href: "/blocks",
-    detail: `${proBlocks.length}, practical blocks for AI products, with more categories coming`,
-  },
-  {
-    name: "MCP server",
-    href: "/docs/mcp",
-    detail: "So your AI assistant can read the docs too",
+    value: proBlocks.length,
+    detail: "For AI products and stores, with more categories coming",
   },
 ]
 
@@ -55,39 +61,6 @@ const earlyBird = isEarlyBird()
 const proPriceText = earlyBird
   ? `$${solo.earlyPrice} once for one developer, or $${team.earlyPrice} for a team of ${team.seats}, until ${earlyBirdLastDay}. After that, Solo is $${solo.price} and Team is $${team.price}`
   : `$${solo.price} once for one developer, or $${team.price} for a team of ${team.seats}`
-
-const steps = [
-  {
-    name: "Set up shadcn/ui",
-    detail:
-      "Run shadcn init in a React 19 project with Tailwind CSS v4. If the project already uses shadcn/ui, skip ahead.",
-  },
-  {
-    name: "Add a component",
-    detail:
-      "Pass its registry URL to the shadcn CLI. The source, its dependencies, the theme tokens and any HextaUI components it builds on land in your project.",
-  },
-  {
-    name: "Make it yours",
-    detail:
-      "Import it from @/components/ui like any other shadcn/ui component, then change the markup, the motion or the styles. Nothing is locked inside a package.",
-  },
-  {
-    name: "Stay current",
-    detail: (
-      <>
-        Components improve in the open on GitHub. When one changes, run the same
-        add command with{" "}
-        <code className="font-mono whitespace-nowrap">--overwrite</code> and
-        review the diff in git before you keep it.
-      </>
-    ),
-  },
-  {
-    name: "Bring your agent",
-    detail: `Point Claude Code, Cursor or any MCP client at ${absoluteUrl("/mcp")} and it can look up props and examples while it writes code with you.`,
-  },
-]
 
 const questions = [
   {
@@ -125,33 +98,177 @@ const questions = [
   },
 ]
 
-function HomeSection({
+function SectionHead({
   id,
+  eyebrow,
   title,
+  className,
   children,
 }: {
   id: string
+  eyebrow: string
   title: string
+  className?: string
+  children?: React.ReactNode
+}) {
+  return (
+    <div className={cn("flex max-w-2xl flex-col items-start", className)}>
+      <p className="text-sm font-medium text-brand">{t(eyebrow)}</p>
+      <h2 id={id} className="marketing-heading mt-3 text-balance">
+        {t(title)}
+      </h2>
+      {children ? (
+        <p className="marketing-lede mt-4 max-w-xl text-pretty text-muted-foreground">
+          {children}
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
+function Band({
+  id,
+  className,
+  children,
+}: {
+  id: string
+  className?: string
   children: React.ReactNode
 }) {
   return (
-    <section
-      aria-labelledby={id}
-      className="mx-auto grid w-full max-w-screen-2xl gap-x-10 gap-y-4 px-3 pb-20 sm:pb-24 lg:grid-cols-4"
-    >
-      <h2 id={id} className="text-sm font-medium lg:pt-3">
-        {t(title)}
-      </h2>
-      <div className="min-w-0 lg:col-span-2">{children}</div>
+    <section aria-labelledby={id} className={cn("border-t", className)}>
+      <div className="mx-auto w-full max-w-5xl px-4 py-20 sm:py-28">
+        {children}
+      </div>
     </section>
   )
 }
 
+function Prose({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-12 grid gap-x-12 gap-y-5 text-sm/6 text-pretty text-muted-foreground sm:grid-cols-2">
+      {children}
+    </div>
+  )
+}
+
 function HomeSections() {
+  const chatThread = getProBlock("chat-thread")
+
   return (
     <>
-      <HomeSection id="home-about" title="About">
-        <div className="flex flex-col gap-4 text-sm/6 text-pretty text-muted-foreground lg:pt-2.5">
+      <section aria-label={t("What’s inside")} className="border-t">
+        <ul className="mx-auto grid w-full max-w-5xl grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <li
+              key={stat.name}
+              className="border-b lg:border-b-0 lg:not-last:border-e"
+            >
+              <Link
+                href={stat.href}
+                className="home-stat"
+              >
+                <span className="marketing-number tabular-nums">
+                  {stat.value}
+                </span>
+                <span className="text-sm font-medium">{t(stat.name)}</span>
+                <span className="text-sm text-pretty text-muted-foreground transition-colors duration-150 motion-reduce:transition-none">
+                  {t(stat.detail, stat.values)}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <Band id="home-pro">
+        <SectionHead
+          id="home-pro"
+          eyebrow="HextaUI Pro"
+          title="Built for what happens next"
+          className="mb-12 sm:mb-16"
+        >
+          {t(
+            "Stop a reply mid-sentence, approve a tool call before it runs, and keep the thread still while the model writes."
+          )}
+        </SectionHead>
+        {chatThread ? (
+          <HomeBlockStage
+            name={chatThread.name}
+            title={chatThread.title}
+            free={Boolean(chatThread.free)}
+          />
+        ) : null}
+        <Prose>
+          <p>
+            <T>
+              Free AI kits get you a chat that looks right. Pro is about what
+              happens next: stopping a reply mid-sentence and retrying it,
+              approving a tool call before it runs, switching between message
+              versions, and a thread that doesn&apos;t jump while the model is
+              still talking. Every block ships with a working AI SDK example.
+            </T>
+          </p>
+          <p>
+            <T>
+              Pro is a growing set of complete blocks built from the same
+              components: a chat thread, streaming text, tool calls, agent
+              todos, a code block with diffs, voice mode and more. They are the
+              screens an AI product needs on day one, with the states and motion
+              already worked out, and the account, settings and dashboard
+              screens around them come next.
+            </T>
+          </p>
+          <p>
+            <T>
+              The four previews at the top of this page are Pro blocks running
+              live. Thinking shows a model&apos;s reasoning and tool steps as
+              they stream in. Prompt input handles model and effort picks,
+              dictation, mentions, commands and file uploads. Chat thread
+              renders a full conversation, and Voice mode turns it into a spoken
+              one, through the browser&apos;s voice or a realtime voice API.
+            </T>
+          </p>
+          <p>
+            <T>
+              Every block has a live preview anyone can open, and installs
+              through the same shadcn CLI from a private registry. Pro is{" "}
+              {proPriceText}, for unlimited personal and commercial projects.{" "}
+              <Link href="/pricing" className={linkClassName}>
+                Compare plans
+              </Link>{" "}
+              or{" "}
+              <Link href="/blocks/prompt-input" className={linkClassName}>
+                install Prompt Input free
+              </Link>
+              .
+            </T>
+          </p>
+          <p>
+            <T>
+              Solo covers one developer. Team covers up to {team.seats}, managed
+              by email from your account, with one shared token allowed in CI.
+              Clients and colleagues who only use the finished product
+              don&apos;t need a seat. If it isn&apos;t right for you, you get a
+              full refund within {refundDays} days, no questions asked.
+            </T>
+          </p>
+        </Prose>
+      </Band>
+
+      <Band id="home-components">
+        <SectionHead
+          id="home-components"
+          eyebrow="Open source"
+          title="Free components underneath"
+          className="mb-12 sm:mb-16"
+        >
+          {t(
+            "Every component handles its loading, error and empty states, and works with the keyboard alone."
+          )}
+        </SectionHead>
+        <HomeDemos />
+        <Prose>
           <p>
             <T>
               HextaUI is a collection of React components built on top of
@@ -216,111 +333,24 @@ function HomeSections() {
               .
             </T>
           </p>
-        </div>
-      </HomeSection>
+        </Prose>
+      </Band>
 
-      <HomeSection id="home-inside" title="What’s inside">
-        <ul className="border-t">
-          {inside.map((item) => (
-            <li key={item.name} className="border-b">
-              <Link
-                href={item.href}
-                className="grid gap-x-10 gap-y-0.5 rounded-sm py-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-focus-ring sm:grid-cols-2 [@media(hover:hover)]:hover:*:last:text-foreground"
-              >
-                <span className="font-medium">{t(item.name)}</span>
-                <span className="text-muted-foreground transition-colors duration-150 motion-reduce:transition-none">
-                  {t(item.detail)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </HomeSection>
-
-      <HomeSection id="home-how" title="How it works">
-        <ol className="border-t">
-          {steps.map((step) => (
-            <li
-              key={step.name}
-              className="grid gap-x-10 gap-y-0.5 border-b py-3 text-sm sm:grid-cols-2"
-            >
-              <span className="font-medium">{t(step.name)}</span>
-              <span className="text-pretty text-muted-foreground">
-                {translateNode(step.detail)}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </HomeSection>
-
-      <HomeSection id="home-pro" title="HextaUI Pro">
-        <div className="flex flex-col gap-4 text-sm/6 text-pretty text-muted-foreground lg:pt-2.5">
-          <p>
-            <T>
-              Pro is a growing set of complete blocks built from the same
-              components: a chat thread, streaming text, tool calls, agent
-              todos, a code block with diffs, voice mode and more. They are the
-              screens an AI product needs on day one, with the states and motion
-              already worked out, and the account, settings and dashboard
-              screens around them come next.
-            </T>
-          </p>
-          <p>
-            <T>
-              Free AI kits get you a chat that looks right. Pro is about what
-              happens next: stopping a reply mid-sentence and retrying it,
-              approving a tool call before it runs, switching between message
-              versions, and a thread that doesn&apos;t jump while the model is
-              still talking. Every block ships with a working AI SDK example.
-            </T>
-          </p>
-          <p>
-            <T>
-              Every block has a live preview anyone can open, and installs
-              through the same shadcn CLI from a private registry. Pro is{" "}
-              {proPriceText}, for unlimited personal and commercial projects.{" "}
-              <Link href="/pricing" className={linkClassName}>
-                Compare plans
-              </Link>{" "}
-              or{" "}
-              <Link href="/blocks/prompt-input" className={linkClassName}>
-                install Prompt Input free
-              </Link>
-              .
-            </T>
-          </p>
-          <p>
-            <T>
-              The four previews at the top of this page are Pro blocks running
-              live. Thinking shows a model&apos;s reasoning and tool steps as
-              they stream in. Prompt input handles model and effort picks,
-              dictation, mentions, commands and file uploads. Chat thread
-              renders a full conversation, and Voice mode turns it into a spoken
-              one, through the browser&apos;s voice or a realtime voice API.
-            </T>
-          </p>
-          <p>
-            <T>
-              Solo covers one developer. Team covers up to {team.seats}, managed
-              by email from your account, with one shared token allowed in CI.
-              Clients and colleagues who only use the finished product
-              don&apos;t need a seat. If it isn&apos;t right for you, you get a
-              full refund within {refundDays} days, no questions asked.
-            </T>
-          </p>
-        </div>
-      </HomeSection>
-
-      <HomeSection id="home-faq" title="Before you ask">
-        <div className="border-t">
-          <Accordion>
-            {questions.map((item) => (
-              <AccordionItem key={item.question} value={item.question}>
-                <AccordionTrigger>{t(item.question)}</AccordionTrigger>
-                <AccordionContent>{t(item.answer)}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <Band id="home-faq">
+        <div className="grid gap-x-12 gap-y-8 lg:grid-cols-2">
+          <SectionHead id="home-faq" eyebrow="FAQ" title="Before you ask">
+            {t("Short answers about licensing, setup and Pro.")}
+          </SectionHead>
+          <div className="border-t">
+            <Accordion>
+              {questions.map((item) => (
+                <AccordionItem key={item.question} value={item.question}>
+                  <AccordionTrigger>{t(item.question)}</AccordionTrigger>
+                  <AccordionContent>{t(item.answer)}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
         <JsonLd
           data={{
@@ -334,7 +364,49 @@ function HomeSections() {
             ),
           }}
         />
-      </HomeSection>
+      </Band>
+
+      <section aria-labelledby="home-start" className="px-4 pb-20 sm:pb-28">
+        <div className="brand-surface relative mx-auto w-full max-w-5xl rounded-3xl bg-brand p-2 text-foreground">
+          <div className="relative isolate grid min-h-80 overflow-hidden rounded-2xl inset-ring-(length:--hairline) inset-ring-white/20 sm:grid-cols-[1fr_33.5%] forced-colors:border">
+            <div className="flex flex-col items-start justify-center gap-6 px-6 py-12 sm:py-20 sm:ps-16">
+              <h2 id="home-start" className="marketing-heading text-balance">
+                <span className="block">
+                  {t("Start with the free components.")}
+                </span>
+                <span className="block text-brand-ice">
+                  {t("Add Pro when you need it.")}
+                </span>
+              </h2>
+              <StartActions />
+            </div>
+            <div
+              aria-hidden="true"
+              className="relative -z-10 h-56 border-white/20 max-sm:border-t sm:h-auto sm:border-s"
+            >
+              <span className="absolute inset-x-0 top-[calc(50%-5.1875rem)] h-px bg-white/20" />
+              <span className="absolute inset-x-0 top-1/2 h-px bg-white/20" />
+              <span className="absolute top-0 left-1/5 h-1/2 w-px bg-white/20" />
+              <span className="absolute top-0 left-2/5 h-1/2 w-px bg-white/20" />
+              <span className="absolute top-0 left-3/5 h-1/2 w-px bg-white/20" />
+              <span className="absolute top-0 left-4/5 h-1/2 w-px bg-white/20" />
+              <span className="absolute top-[calc(50%-3px)] -left-[3px] size-1.5 bg-brand-ice max-sm:hidden" />
+              <svg
+                viewBox="0 0 100 100"
+                className="absolute end-0 bottom-0 h-1/2 text-white/35"
+              >
+                <path
+                  d="M50 4 90 27v46L50 96 10 73V27ZM50 20l26 15v30L50 80 24 65V35Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="0.75"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

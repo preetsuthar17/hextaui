@@ -6,9 +6,9 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
-import { MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { LegalLink } from "@/components/legal/legal-page"
+import { CompareLinkGrid, MoreComparisons } from "@/components/site/compare"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
 import { pageMetadata } from "@/lib/metadata"
@@ -28,6 +28,7 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <InfoPage
+      eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
         { name: "HextaUI vs shadcn/ui", path: "/compare/shadcn-ui" },
@@ -35,7 +36,7 @@ export default function Page() {
       title="HextaUI and shadcn/ui"
       lead="HextaUI is not a replacement for shadcn/ui. It is a registry you add to a shadcn/ui project, with the same CLI, the same component names and the same theme tokens. This page explains what it adds and when you don’t need it."
     >
-      <LegalSection title="The short answer">
+      <InfoSection title="The short answer">
         <DocsParagraph>
           Use shadcn/ui when you want a clean starting point and plan to write
           the loading, error and empty states yourself. Add HextaUI when you
@@ -43,9 +44,9 @@ export default function Page() {
           done, or when you need a component shadcn/ui doesn’t ship. You can mix
           both in one project, one component at a time.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="What stays the same">
+      <InfoSection title="What stays the same">
         <DocsList>
           <li>
             You install with the shadcn CLI, and the source is copied into your
@@ -72,9 +73,9 @@ export default function Page() {
           mode="dlx"
           packages={["shadcn@latest", "add", getRegistryItemUrl("button")]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="What HextaUI adds">
+      <InfoSection title="What HextaUI adds">
         <DocsList>
           <li>
             Finished states. Buttons show pending, success and error feedback
@@ -128,9 +129,9 @@ export default function Page() {
             assistant can query.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="When shadcn/ui alone is the better choice">
+      <InfoSection title="When shadcn/ui alone is the better choice">
         <DocsList>
           <li>
             You want Radix primitives. HextaUI components are built on Base UI
@@ -150,9 +151,9 @@ export default function Page() {
             shadcn/ui has far more of both.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Using both together">
+      <InfoSection title="Using both together">
         <DocsParagraph>
           Because the names and tokens match, you can replace one component at a
           time. Run the add command with <DocsCode>--overwrite</DocsCode> to
@@ -162,23 +163,20 @@ export default function Page() {
           <LegalLink href="/docs/installation">Installation</LegalLink> covers
           the theme tokens they expect.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Component by component">
+      <InfoSection title="Component by component">
         <DocsParagraph>
           Each of these pages puts one HextaUI component next to its shadcn/ui
           version, with the parts, variants and props that differ.
         </DocsParagraph>
-        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-base/7">
-          {getShadcnComparisons().map((item) => (
-            <li key={item.slug}>
-              <LegalLink href={getShadcnComparisonHref(item.slug)}>
-                {item.name}
-              </LegalLink>
-            </li>
-          ))}
-        </ul>
-      </LegalSection>
+        <CompareLinkGrid
+          items={getShadcnComparisons().map((item) => ({
+            href: getShadcnComparisonHref(item.slug),
+            title: item.name,
+          }))}
+        />
+      </InfoSection>
 
       <MoreComparisons current="/compare/shadcn-ui" />
     </InfoPage>

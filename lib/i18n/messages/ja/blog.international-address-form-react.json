@@ -34,7 +34,6 @@
   "Fields after the street": "番地以降のフィールド",
   "Germany": "ドイツ",
   "Google's Places API uses session tokens to group the suggest and details calls of one search. Use them, or the calls may be billed separately.": "Google の Places API は、1 回の検索における候補と詳細の呼び出しをセッショントークンでまとめます。使わないと、呼び出しが別々に課金されることがあります。",
-  "How to build an address form that works in every country, in React": "どの国でも使える住所フォームを React で作る方法",
   "In some countries the postal code already tells you the city and region. Japan is the classic case: addresses start with the postal code, and the code alone identifies the prefecture and city. When the shopper finishes the postal code, look it up and fill city and region, but never overwrite something they already typed. Their input wins over your data.": "国によっては、郵便番号だけで市区町村と地域がわかります。典型的なのが日本です。住所は郵便番号から始まり、番号だけで都道府県と市区町村が特定できます。買い物客が郵便番号を入力し終えたら検索して市区町村と地域を埋めますが、すでに入力されたものは決して上書きしないでください。あなたのデータより本人の入力が優先です。",
   "International address form in React: a practical guide": "React で作る海外対応の住所フォーム: 実践ガイド",
   "Japan": "日本",

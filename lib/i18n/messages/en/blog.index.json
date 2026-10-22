@@ -1,14 +1,5 @@
 [
   "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces, e-commerce UI and registries that AI coding agents can use.",
-  "Building an e-commerce admin dashboard in Next.js: orders, refunds and inventory",
-  "How to build a one-page checkout in React and Next.js that survives declines and changed prices",
-  "How to build a shadcn/ui registry that Claude Code and Cursor can actually use",
-  "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users",
-  "How to build an address form that works in every country, in React",
   "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens, checkout and store admin UI, and registries for coding agents.",
-  "Product variant picker UX in React: sold-out sizes, missing combinations and back-in-stock",
-  "Shopping cart UX in React: optimistic updates, undo and money in minor units",
-  "The states shadcn/ui leaves to you: loading, success, error, empty and reduced motion",
-  "Vercel's AI Elements is being deprecated. Here are the alternatives for shadcn/ui AI chat UI",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code"
+  "The hard parts, written down"
 ]

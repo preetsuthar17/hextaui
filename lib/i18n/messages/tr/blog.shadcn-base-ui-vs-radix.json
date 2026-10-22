@@ -46,6 +46,5 @@
   "Two reasons were given. Base UI had reached a stable 1.6.0 with over six million weekly downloads, and projects created through `shadcn/create` were already choosing Base UI over Radix about two to one. The default followed what people were picking.": "İki gerekçe verildi. Base UI, haftada altı milyonun üzerinde indirmeyle kararlı 1.6.0 sürümüne ulaşmıştı ve `shadcn/create` ile oluşturulan projeler zaten yaklaşık ikiye bir oranla Radix yerine Base UI seçiyordu. Varsayılan, insanların seçtiğini izledi.",
   "What I would not do": "Yapmayacağım şeyler",
   "What changed, in one paragraph": "Tek paragrafta ne değişti",
-  "Why the default moved": "Varsayılan neden değişti",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code": "shadcn/ui Base UI’a geçti. İşte kodunuzda gerçekten değişenler"
+  "Why the default moved": "Varsayılan neden değişti"
 }

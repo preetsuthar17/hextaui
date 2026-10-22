@@ -47,6 +47,7 @@
   "Sign out one session. Remove it from sessions when it resolves and the row folds away.": "Encerra uma sessão. Remova-a de sessions quando for resolvido e a linha se dobra.",
   "Sign-outs, added and removed passkeys and the password strength are announced politely. Errors from your callbacks are announced as alerts and stay next to the field or button they belong to.": "Os encerramentos de sessão, as passkeys adicionadas e removidas e a força da senha são anunciados de forma polite. Os erros dos seus callbacks são anunciados como alertas e permanecem ao lado do campo ou botão a que pertencem.",
   "Submits the password form from any field, and deletes the account from the phrase field once it matches.": "Envia o formulário de senha a partir de qualquer campo e exclui a conta a partir do campo da frase quando ela corresponde.",
+  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "A seção Segurança das configurações de um produto de IA. Cobre sessões, dois fatores com códigos de recuperação e exclusão atrás de uma confirmação digitada.",
   "The account’s email. Used in the delete phrase, the password manager hint and the recovery codes file.": "O e-mail da conta. Usado na frase de exclusão, na dica do gerenciador de senhas e no arquivo de códigos de recuperação.",
   "The confirmation phrase is delete followed by this.": "A frase de confirmação é delete seguido disto.",
   "The group heading.": "O título do grupo.",

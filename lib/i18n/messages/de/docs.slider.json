@@ -43,7 +43,6 @@
   "The track's thickness, set by size.": "Die Dicke der Spur, über size gesetzt.",
   "The track.": "Die Spur.",
   "The value bubble from showValue.": "Die Wertblase von showValue.",
-  "The value.": "Der Wert.",
   "The whole slider dims and ignores pointer and keyboard input.": "Der ganze Slider dimmt und ignoriert Zeiger- und Tastatureingaben.",
   "Value bubble": "Wertblase",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.": "Beim Ziehen folgt der Thumb dem Zeiger exakt. Springt der Wert, durch einen Druck auf die Spur, eine Taste oder einen neuen kontrollierten Wert, gleiten Thumb und Füllung in 180ms dorthin, statt zu teleportieren.",

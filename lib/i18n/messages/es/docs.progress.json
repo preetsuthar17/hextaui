@@ -44,7 +44,6 @@
   "The size: xs, sm, default or lg.": "El tamaño: xs, sm, default o lg.",
   "The status variant.": "La variante de estado.",
   "The track.": "La pista.",
-  "The value.": "El valor.",
   "Values are formatted in `en-US` unless you pass `locale`, so the server and browser render the same text.": "Los valores se formatean en `en-US` salvo que pases `locale`, para que el servidor y el navegador rendericen el mismo texto.",
   "With reduced motion, the fill jumps to each new value, and the indeterminate bar and ring pulse in place instead of moving.": "Con movimiento reducido, el relleno salta a cada nuevo valor, y la barra y el anillo indeterminados pulsan en su sitio en lugar de moverse.",
   "Without a visible label": "Sin etiqueta visible",

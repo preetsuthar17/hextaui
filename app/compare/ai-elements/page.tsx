@@ -5,9 +5,9 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
 import { t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
@@ -48,6 +48,7 @@ const questions = [
 export default function Page() {
   return (
     <InfoPage
+      eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
         { name: "HextaUI vs AI Elements", path: "/compare/ai-elements" },
@@ -70,7 +71,7 @@ export default function Page() {
         }}
       />
 
-      <LegalSection title="Two things called AI Elements">
+      <InfoSection title="Two things called AI Elements">
         <DocsParagraph>
           <LegalLink href="https://elements.ai-sdk.dev">AI Elements</LegalLink>{" "}
           started at Vercel as a component library for the AI SDK. Its
@@ -83,9 +84,9 @@ export default function Page() {
           install. This page covers both, because people searching for one
           usually find the other.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="The short answer">
+      <InfoSection title="The short answer">
         <DocsParagraph>
           Use AI Elements when you want free building blocks and plan to design
           the screens and their failure states yourself. Use HextaUI when you
@@ -94,9 +95,9 @@ export default function Page() {
           out. Both put their source in your project and share the shadcn/ui
           theme tokens, so you can mix them.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="At a glance">
+      <InfoSection title="At a glance" wide>
         <CompareTable
           caption="HextaUI compared with both versions of AI Elements"
           columns={[
@@ -165,9 +166,9 @@ export default function Page() {
             },
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Pieces or screens">
+      <InfoSection title="Pieces or screens">
         <DocsParagraph>
           A chat looks simple until something goes wrong. The reply fails
           halfway. The person stops it, edits an earlier message or sends
@@ -223,9 +224,9 @@ export default function Page() {
           block together into a complete chat app you can open and try before
           you install anything.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Piece by piece">
+      <InfoSection title="Piece by piece">
         <DocsParagraph>
           Most AI Elements pieces have a HextaUI counterpart. The names below
           are from both AI Elements docs.
@@ -331,9 +332,9 @@ export default function Page() {
           <LegalLink href="/blocks/api-keys">API keys</LegalLink> and{" "}
           <LegalLink href="/blocks/billing">Billing</LegalLink>.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="When AI Elements is the better choice">
+      <InfoSection title="When AI Elements is the better choice">
         <DocsList>
           <li>
             You want everything free and open source. Most of HextaUI’s AI
@@ -356,9 +357,9 @@ export default function Page() {
             examples behind it.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Moving off Vercel’s AI Elements">
+      <InfoSection title="Moving off Vercel’s AI Elements">
         <DocsParagraph>
           Nothing breaks at the end of November. The components are already
           source in your repository, and shadcn/ui says existing users don’t
@@ -374,9 +375,9 @@ export default function Page() {
           free, then swap the thread and the tool calls when you need what they
           handle.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Questions">
+      <InfoSection title="Questions">
         {questions.map((item) => (
           <div key={item.question}>
             <h3 className="mt-6 text-base font-medium text-balance">
@@ -385,7 +386,7 @@ export default function Page() {
             <DocsParagraph className="mt-2">{item.answer}</DocsParagraph>
           </div>
         ))}
-      </LegalSection>
+      </InfoSection>
 
       <MoreComparisons current={path} />
     </InfoPage>

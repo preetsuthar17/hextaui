@@ -1,13 +1,14 @@
+import Image from "next/image"
 import Link from "@/components/site/link"
+import { IconBrandX } from "@tabler/icons-react"
 import { cn } from "cn"
 
 import { legalPages } from "@/components/legal/legal-page"
 import { CookieSettingsButton } from "@/components/site/cookie-consent"
+import { GithubLogo } from "@/components/site/github-logo"
 import { LocaleSwitcher } from "@/components/site/locale-switcher"
-import { SubscribeForm } from "@/components/site/subscribe-form"
 import { Chrome } from "@/lib/i18n/chrome"
 
-import { comparisons } from "@/lib/compare"
 import { siteName, siteRepository } from "@/lib/site"
 
 const groups = [
@@ -22,85 +23,124 @@ const groups = [
       { href: "/changelog", title: "Changelog" },
     ],
   },
-  { id: "footer-compare", title: "Compare", pages: comparisons },
   {
-    id: "footer-project",
-    title: "Project",
+    id: "footer-resources",
+    title: "Resources",
     pages: [
-      { href: "/about", title: "About" },
       { href: "/blog", title: "Blog" },
+      { href: "/compare", title: "Compare" },
+      { href: "/docs/mcp", title: "MCP server" },
       { href: "/sponsor", title: "Sponsor" },
-      { href: "/contact", title: "Contact" },
     ],
   },
-  { id: "footer-legal", title: "Legal", pages: legalPages },
+  {
+    id: "footer-company",
+    title: "Company",
+    pages: [
+      { href: "/about", title: "About" },
+      { href: "/contact", title: "Contact" },
+      ...legalPages,
+    ],
+  },
 ]
 
-const inlineLinkClassName =
-  "rounded-sm text-foreground/80 underline decoration-foreground/30 underline-offset-4 transition-colors duration-150 outline-none hover:text-foreground hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+const socials = [
+  { href: "https://twitter.com/preetsuthar17", label: "X", icon: IconBrandX },
+  { href: siteRepository, label: "GitHub", icon: GithubLogo },
+]
+
+const linkClassName = "site-footer-link"
 
 function SiteFooter({ className }: { className?: string }) {
   return (
-    <footer className={cn("px-3 pt-8 pb-10", className)}>
-      <div className="mx-auto mb-12 flex max-w-screen-2xl justify-center text-center">
-        <SubscribeForm />
-      </div>
-      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 border-t pt-8 text-sm lg:flex-row lg:justify-between">
-        <div className="flex flex-col items-start gap-1">
-          <Link href="/" className="footer-link font-medium text-foreground">
-            {siteName}
-          </Link>
-          <p className="max-w-xs text-sm/6 text-pretty text-muted-foreground">
-            <Chrome>Built by</Chrome>{" "}
-            <a
-              href="https://twitter.com/preetsuthar17"
-              target="_blank"
-              rel="noreferrer"
-              className={inlineLinkClassName}
+    <footer className={cn("border-t", className)}>
+      <div className="frame-width px-4 pt-16 pb-12 sm:px-8 sm:pt-20 sm:pb-10">
+        <div className="mx-auto flex w-full max-w-252 flex-col gap-12 lg:flex-row lg:justify-between lg:gap-16">
+          <div className="flex shrink-0 flex-col items-start gap-6 lg:w-53">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-md font-display text-lg font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden"
             >
-              Preet Suthar
-            </a>
-            .{" "}
-            <Chrome>Open source under the MIT license, with the code on</Chrome>{" "}
-            <a
-              href={siteRepository}
-              target="_blank"
-              rel="noreferrer"
-              className={inlineLinkClassName}
-            >
-              GitHub
-            </a>
-            .
-          </p>
+              <Image
+                src="/hextaui-logo.svg"
+                alt=""
+                width={22}
+                height={22}
+                unoptimized
+                className="size-5.5"
+              />
+              {siteName}
+            </Link>
+            <p className="marketing-small text-sm/[1.375rem] font-medium text-foreground/75">
+              <Chrome>The hard states, handled.</Chrome>
+              <br />
+              <Chrome>Blocks for shadcn/ui.</Chrome>
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 sm:gap-x-18 lg:w-188">
+            {groups.map((group) => (
+              <nav
+                key={group.id}
+                aria-labelledby={group.id}
+                className="flex flex-col gap-5"
+              >
+                <p
+                  id={group.id}
+                  className="text-xs/[1.125rem] font-medium text-muted-foreground"
+                >
+                  <Chrome>{group.title}</Chrome>
+                </p>
+                <ul className="flex flex-col items-start gap-2">
+                  {group.pages.map((page) => (
+                    <li key={page.href}>
+                      <Link href={page.href} className={linkClassName}>
+                        <Chrome>{page.title}</Chrome>
+                      </Link>
+                    </li>
+                  ))}
+                  {group.id === "footer-company" ? (
+                    <li>
+                      <CookieSettingsButton
+                        className={cn(
+                          linkClassName,
+                          "cursor-pointer disabled:cursor-default"
+                        )}
+                      />
+                    </li>
+                  ) : null}
+                </ul>
+              </nav>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8 sm:flex sm:gap-x-16">
-          {groups.map((group) => (
-            <nav key={group.id} aria-labelledby={group.id}>
-              <p id={group.id} className="py-1 font-medium">
-                <Chrome>{group.title}</Chrome>
-              </p>
-              <ul>
-                {group.pages.map((page) => (
-                  <li key={page.href}>
-                    <Link href={page.href} className="footer-link">
-                      <Chrome>{page.title}</Chrome>
-                    </Link>
-                  </li>
-                ))}
-                {group.pages === legalPages ? (
-                  <li>
-                    <CookieSettingsButton className="footer-link cursor-pointer disabled:cursor-default" />
-                  </li>
-                ) : null}
-              </ul>
-            </nav>
-          ))}
+        <div className="mx-auto mt-16 flex w-full max-w-252 flex-col gap-6 border-t pt-8 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4">
+            <p className="text-xs/[1.125rem] text-muted-foreground">
+              © {new Date().getFullYear()} {siteName}.{" "}
+              <Chrome>Open source under the MIT license.</Chrome>
+            </p>
+            <ul className="flex items-center gap-4">
+              {socials.map((social) => (
+                <li key={social.label} className="flex">
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="site-footer-link site-footer-icon"
+                  >
+                    <social.icon aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <LocaleSwitcher
+            className="flex flex-wrap gap-x-4 gap-y-1 text-xs/[1.125rem]"
+            linkClassName="site-footer-link site-footer-meta"
+          />
         </div>
       </div>
-      <LocaleSwitcher
-        className="mx-auto mt-8 flex max-w-screen-2xl flex-wrap gap-x-4 border-t pt-3 text-sm"
-        linkClassName="footer-link"
-      />
     </footer>
   )
 }

@@ -16,18 +16,18 @@ function PlanPrice({ plan }: { plan: ProPlanId }) {
   return (
     <div className="flex flex-col gap-1">
       <p className="flex items-baseline gap-2 tabular-nums">
-        {early ? (
-          <del className="text-base text-muted-foreground">
-            <span className="sr-only">Regular price </span>${price}
-          </del>
-        ) : null}
-        <span className="text-4xl font-semibold tracking-tight">
+        <span className="marketing-number">
           {early ? <span className="sr-only">Early bird price </span> : null}$
           {early ? earlyPrice : price}
         </span>
+        {early ? (
+          <del className="text-sm text-muted-foreground">
+            <span className="sr-only">Regular price </span>${price}
+          </del>
+        ) : null}
         <span className="text-sm text-muted-foreground">once</span>
       </p>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         {early
           ? `Early bird until ${earlyBirdLastDay}`
           : "One payment, no subscription"}

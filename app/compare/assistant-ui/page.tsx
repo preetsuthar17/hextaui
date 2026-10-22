@@ -5,9 +5,9 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
 import { t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
@@ -48,6 +48,7 @@ const questions = [
 export default function Page() {
   return (
     <InfoPage
+      eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
         { name: "HextaUI vs assistant-ui", path: "/compare/assistant-ui" },
@@ -70,7 +71,7 @@ export default function Page() {
         }}
       />
 
-      <LegalSection title="The short answer">
+      <InfoSection title="The short answer">
         <DocsParagraph>
           Use assistant-ui when you want a free, complete chat framework and are
           happy to build on its runtime, especially with an agent backend such
@@ -79,9 +80,9 @@ export default function Page() {
           components you pass data to. Both put their source in your project and
           share the shadcn/ui theme tokens.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="At a glance">
+      <InfoSection title="At a glance" wide>
         <CompareTable
           caption="HextaUI compared with assistant-ui"
           columns={["HextaUI", "assistant-ui"]}
@@ -144,9 +145,9 @@ export default function Page() {
             },
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="A framework or a set of screens">
+      <InfoSection title="A framework or a set of screens">
         <DocsParagraph>
           <LegalLink href="https://github.com/assistant-ui/assistant-ui">
             assistant-ui
@@ -198,9 +199,9 @@ export default function Page() {
           block together into a complete chat app you can open and try before
           you install anything.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Piece by piece">
+      <InfoSection title="Piece by piece">
         <DocsParagraph>
           Most assistant-ui components have a HextaUI counterpart. The names
           below are from the assistant-ui docs.
@@ -308,9 +309,9 @@ export default function Page() {
             },
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="When assistant-ui is the better choice">
+      <InfoSection title="When assistant-ui is the better choice">
         <DocsList>
           <li>
             You want everything free and open source. Most of HextaUI’s AI
@@ -336,9 +337,9 @@ export default function Page() {
             large community behind it.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Using them together">
+      <InfoSection title="Using them together">
         <DocsParagraph>
           Pick one to own the conversation. If assistant-ui already runs your
           chat, keep it, and use HextaUI for the screens around it, such as{" "}
@@ -350,9 +351,9 @@ export default function Page() {
           <LegalLink href="/blocks/prompt-input">Prompt Input</LegalLink> is
           free.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Questions">
+      <InfoSection title="Questions">
         {questions.map((item) => (
           <div key={item.question}>
             <h3 className="mt-6 text-base font-medium text-balance">
@@ -361,7 +362,7 @@ export default function Page() {
             <DocsParagraph className="mt-2">{item.answer}</DocsParagraph>
           </div>
         ))}
-      </LegalSection>
+      </InfoSection>
 
       <MoreComparisons current={path} />
     </InfoPage>

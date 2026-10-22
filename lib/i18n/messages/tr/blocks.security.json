@@ -47,6 +47,7 @@
   "Sign out one session. Remove it from sessions when it resolves and the row folds away.": "Bir oturumu kapatır. Resolve olunca sessions'tan kaldırın ve satır katlanır.",
   "Sign-outs, added and removed passkeys and the password strength are announced politely. Errors from your callbacks are announced as alerts and stay next to the field or button they belong to.": "Oturum kapatmalar, eklenen ve kaldırılan passkey'ler ve parola gücü polite olarak duyurulur. Callback'lerinizden gelen hatalar alert olarak duyurulur ve ait oldukları alanın ya da düğmenin yanında kalır.",
   "Submits the password form from any field, and deletes the account from the phrase field once it matches.": "Parola formunu herhangi bir alandan gönderir ve ifade eşleşince hesabı ifade alanından siler.",
+  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "Bir yapay zeka ürününün ayarlarındaki Güvenlik bölümü. Oturumları, kurtarma kodlu iki aşamalı doğrulamayı ve yazılı onay gerektiren silmeyi ele alır.",
   "The account’s email. Used in the delete phrase, the password manager hint and the recovery codes file.": "Hesabın e-postası. Silme ifadesinde, parola yöneticisi ipucunda ve kurtarma kodları dosyasında kullanılır.",
   "The confirmation phrase is delete followed by this.": "Onay ifadesi delete ve ardından bu değerdir.",
   "The group heading.": "Grup başlığı.",

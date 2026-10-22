@@ -1,7 +1,9 @@
 import * as React from "react"
 
-import { DocsList } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { IconArrowRight } from "@tabler/icons-react"
+
+import Link from "@/components/site/link"
+import { InfoSection } from "@/components/site/info-page"
 import {
   Table,
   TableBody,
@@ -60,23 +62,64 @@ function CompareTable({
   )
 }
 
-function MoreComparisons({ current }: { current: string }) {
+type CompareLinkItem = { href: string; title: string }
+
+function CompareLinks({ items }: { items: CompareLinkItem[] }) {
   return (
-    <LegalSection title="More comparisons">
-      <DocsList>
-        <li>
-          <LegalLink href="/compare">All comparisons</LegalLink>
+    <ul className="mt-4 flex flex-col border-t">
+      {items.map((item) => (
+        <li key={item.href} className="border-b">
+          <Link
+            href={item.href}
+            className="group/link flex items-center justify-between gap-4 rounded-sm py-4 text-base font-medium outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden"
+          >
+            <span>{t(item.title)}</span>
+            <IconArrowRight
+              aria-hidden="true"
+              className="size-4 shrink-0 text-muted-foreground transition duration-150 ease-out-cubic group-hover/link:translate-x-0.5 group-hover/link:text-foreground motion-reduce:transition-none rtl:-scale-x-100 rtl:group-hover/link:-translate-x-0.5"
+            />
+          </Link>
         </li>
-        {comparisons
-          .filter((page) => page.href !== current)
-          .map((page) => (
-            <li key={page.href}>
-              <LegalLink href={page.href}>{page.title}</LegalLink>
-            </li>
-          ))}
-      </DocsList>
-    </LegalSection>
+      ))}
+    </ul>
   )
 }
 
-export { CompareTable, MoreComparisons, type CompareRow }
+function CompareLinkGrid({ items }: { items: CompareLinkItem[] }) {
+  return (
+    <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+      {items.map((item) => (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className="rounded-sm text-muted-foreground transition-colors duration-150 outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+          >
+            {t(item.title)}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function MoreComparisons({ current }: { current: string }) {
+  return (
+    <InfoSection title="More comparisons">
+      <CompareLinks
+        items={[
+          { href: "/compare", title: "All comparisons" },
+          ...comparisons.filter((page) => page.href !== current),
+        ]}
+      />
+    </InfoSection>
+  )
+}
+
+export {
+  CompareLinkGrid,
+  CompareLinks,
+  CompareTable,
+  MoreComparisons,
+  type CompareLinkItem,
+  type CompareRow,
+}

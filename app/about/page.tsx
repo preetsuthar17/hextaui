@@ -1,12 +1,8 @@
 import type { Metadata } from "next"
 
 import { DocsList, DocsParagraph } from "@/components/docs/docs-content"
-import {
-  ContactEmail,
-  LegalLink,
-  LegalSection,
-} from "@/components/legal/legal-page"
-import { InfoPage } from "@/components/site/info-page"
+import { ContactEmail, LegalLink } from "@/components/legal/legal-page"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { pageMetadata } from "@/lib/metadata"
 import { siteRepository } from "@/lib/site"
@@ -23,10 +19,11 @@ export default function Page() {
     <InfoPage
       breadcrumbs={[{ name: "About", path: "/about" }]}
       pageType="AboutPage"
+      eyebrow="About"
       title="About HextaUI"
       lead="HextaUI is an open-source React component library built on top of shadcn/ui, made by Preet Suthar, an independent developer based in India."
     >
-      <LegalSection title="What HextaUI is">
+      <InfoSection title="What HextaUI is">
         <DocsParagraph>
           HextaUI has {docsComponents.length} components, {docsHooks.length}{" "}
           hooks and {docsUtilities.length} utilities for React. They keep the
@@ -40,18 +37,18 @@ export default function Page() {
           support, touch-sized targets, right-to-left layouts and the loading,
           empty and error states every real interface needs.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Who makes it">
+      <InfoSection title="Who makes it">
         <DocsParagraph>
           HextaUI is a one-person project, designed, built and maintained by
           Preet Suthar. Bugs and ideas go to{" "}
           <LegalLink href={`${siteRepository}/issues`}>GitHub issues</LegalLink>
           , and everything else to <ContactEmail />.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="How it is funded">
+      <InfoSection title="How it is funded">
         <DocsList>
           <li>
             Every component, hook and utility is free and MIT licensed, for
@@ -70,9 +67,9 @@ export default function Page() {
             <LegalLink href="/legal/privacy">privacy policy</LegalLink>.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="For developers and AI assistants">
+      <InfoSection title="For developers and AI assistants">
         <DocsParagraph>
           Every docs page has a Markdown version, the full index is at{" "}
           <LegalLink href="/llms.txt">llms.txt</LegalLink>, assistants can
@@ -80,7 +77,7 @@ export default function Page() {
           the HTTP endpoints are described in the{" "}
           <LegalLink href="/docs/api">API docs</LegalLink>.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
     </InfoPage>
   )
 }

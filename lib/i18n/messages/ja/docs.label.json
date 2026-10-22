@@ -21,6 +21,7 @@
   "The id of the control. Leave it out when the label wraps the control.": "コントロールの id。ラベルがコントロールを囲む場合は省略してください。",
   "The label dims and shows a not-allowed cursor while its control is disabled, and exposes `data-required`, `data-invalid` and `data-readonly` for your own styles. It keeps up when the control changes.": "コントロールが無効の間、ラベルは薄くなり not-allowed カーソルを表示します。独自のスタイル用に `data-required`、`data-invalid`、`data-readonly` も公開されます。コントロールが変化しても追従します。",
   "The required or optional mark.": "必須または任意の印。",
+  "The team page of an AI product’s workspace settings. Handles seats running out, pending invites and ownership transfer with a typed confirmation.": "AI 製品のワークスペース設定にあるチームページ。席数の上限、保留中の招待、入力確認を経た所有権の移譲に対応します。",
   "Wrap a checkbox so the whole label toggles it, or place the label beside it with htmlFor. A disabled checkbox dims its label either way.": "チェックボックスを囲んでラベル全体で切り替えるか、htmlFor でラベルを隣に置きます。どちらの場合も、無効なチェックボックスはラベルを薄くします。",
   "`indicator=\"optional\"` tags controls without `required`, and `indicator=\"required\"` adds an asterisk to controls with it. The mark is hidden from screen readers, which already announce required fields.": "`indicator=\"optional\"` は `required` のないコントロールにタグを付け、`indicator=\"required\"` は付いているコントロールにアスタリスクを追加します。印はスクリーンリーダーからは隠されます。必須フィールドはすでに読み上げられるためです。"
 }

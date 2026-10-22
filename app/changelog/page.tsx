@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { JsonLd } from "@/components/site/json-ld"
+import { SubscribeForm } from "@/components/site/subscribe-form"
 
 import {
   changelog,
@@ -26,22 +27,30 @@ function Entry({ entry }: { entry: ChangelogEntry }) {
   return (
     <article
       id={entry.date}
-      className="grid scroll-mt-20 gap-x-10 gap-y-3 border-t py-12 first:border-t-0 first:pt-0 md:grid-cols-[12rem_1fr]"
+      className="grid scroll-mt-24 gap-x-16 gap-y-3 border-t py-12 first:border-t-0 first:pt-0 sm:py-16 md:grid-cols-[12rem_1fr]"
     >
       <div>
         <time
           dateTime={entry.date}
-          className="block text-sm text-muted-foreground tabular-nums md:sticky md:top-20"
+          className="block text-sm text-muted-foreground tabular-nums md:sticky md:top-24"
         >
           {dateFormat.format(new Date(entry.date))}
         </time>
       </div>
-      <div className="flex max-w-2xl flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-balance">
-          {entry.title}
+      <div className="flex max-w-170 min-w-0 flex-col gap-4">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-balance">
+          <a
+            href={`#${entry.date}`}
+            className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-focus-ring"
+          >
+            {entry.title}
+          </a>
         </h2>
         {entry.body.map((paragraph) => (
-          <p key={paragraph} className="text-base/7 text-pretty">
+          <p
+            key={paragraph}
+            className="text-base/7 text-pretty text-muted-foreground"
+          >
             {paragraph}
           </p>
         ))}
@@ -50,10 +59,8 @@ function Entry({ entry }: { entry: ChangelogEntry }) {
           if (!items?.length) return null
           return (
             <section key={key} className="flex flex-col gap-2 pt-2">
-              <h3 className="text-sm font-medium text-muted-foreground">
-                {heading}
-              </h3>
-              <ul className="flex list-disc flex-col gap-1.5 ps-5 text-base/7 text-pretty marker:text-muted-foreground">
+              <h3 className="text-sm font-medium text-foreground">{heading}</h3>
+              <ul className="flex list-disc flex-col gap-2 ps-5 text-base/7 text-pretty text-muted-foreground marker:text-border">
                 {items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -68,7 +75,7 @@ function Entry({ entry }: { entry: ChangelogEntry }) {
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pt-16 pb-24 sm:pt-24">
+    <main className="flex w-full flex-1 flex-col">
       <JsonLd
         data={pageJsonLd({
           path: "/changelog",
@@ -78,20 +85,22 @@ export default function Page() {
           type: "WebPage",
         })}
       />
-      <header className="grid gap-x-10 pb-16 md:grid-cols-[12rem_1fr]">
-        <div className="flex max-w-2xl flex-col gap-3 md:col-start-2">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Changelog
-          </h1>
-          <p className="text-base/7 text-pretty text-muted-foreground">
-            What shipped in HextaUI and HextaUI Pro.
-          </p>
+      <header className="mx-auto flex w-full max-w-252 flex-col items-start px-4 pt-16 pb-14 sm:pt-24 sm:pb-20">
+        <p className="text-sm font-medium text-brand">Releases</p>
+        <h1 className="marketing-heading mt-3 text-balance">Changelog</h1>
+        <p className="marketing-lede mt-4 max-w-xl text-pretty text-muted-foreground">
+          What shipped in HextaUI and HextaUI Pro.
+        </p>
+        <div className="mt-8 w-full">
+          <SubscribeForm />
         </div>
       </header>
-      <div className="flex flex-col">
-        {changelog.map((entry) => (
-          <Entry key={entry.title} entry={entry} />
-        ))}
+      <div className="border-t">
+        <div className="mx-auto flex w-full max-w-252 flex-col px-4 pt-12 pb-24 sm:pt-16 sm:pb-28">
+          {changelog.map((entry) => (
+            <Entry key={entry.title} entry={entry} />
+          ))}
+        </div>
       </div>
     </main>
   )

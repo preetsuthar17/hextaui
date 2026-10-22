@@ -9,14 +9,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   Table,
   TableBody,
   TableCell,
@@ -31,6 +23,12 @@ import {
   PlanPrice,
 } from "@/components/site/pricing-plan"
 import { JsonLd } from "@/components/site/json-ld"
+import {
+  Band,
+  PageColumn,
+  PageHead,
+  SectionHead,
+} from "@/components/site/pricing-sections"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { pageMetadata } from "@/lib/metadata"
 import {
@@ -184,82 +182,48 @@ function CellValue({ value }: { value: Cell }) {
   return value
 }
 
-function PlanCard({ plan }: { plan: (typeof plans)[number] }) {
+function PlanColumn({ plan }: { plan: (typeof plans)[number] }) {
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <CardTitle>{plan.name}</CardTitle>
+    <li className="row-span-4 grid grid-rows-subgrid gap-6 bg-background p-6 sm:p-8">
+      <div className="flex flex-col gap-2">
+        <div className="flex min-h-6 items-center gap-2">
+          <h3 className="font-medium">{plan.name}</h3>
           {plan.id === "free" ? null : <EarlyBirdBadge />}
         </div>
-        <CardDescription>{plan.description}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <div className="flex flex-col gap-6">
-          {plan.id === "free" ? (
-            <div className="flex flex-col gap-1">
-              <p className="flex items-baseline gap-2">
-                <span className="text-4xl font-semibold tracking-tight">
-                  $0
-                </span>
-                <span className="text-sm text-muted-foreground">forever</span>
-              </p>
-              <p className="text-xs text-muted-foreground">MIT License</p>
-            </div>
-          ) : (
-            <PlanPrice plan={plan.id} />
-          )}
-          <ul className="flex flex-col gap-2.5">
-            {plan.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-2">
-                <IconCheck
-                  aria-hidden="true"
-                  className="mt-0.5 size-4 shrink-0 text-muted-foreground"
-                />
-                {feature}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </CardContent>
-      <CardFooter>
-        {plan.id === "free" ? <FreePlanLink /> : <PlanButton plan={plan.id} />}
-      </CardFooter>
-    </Card>
-  )
-}
-
-function Section({
-  id,
-  title,
-  description,
-  children,
-}: {
-  id: string
-  title: string
-  description?: string
-  children: React.ReactNode
-}) {
-  return (
-    <section aria-labelledby={id} className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h2 id={id} className="text-xl font-semibold tracking-tight">
-          {title}
-        </h2>
-        {description ? (
-          <p className="text-sm text-pretty text-muted-foreground">
-            {description}
-          </p>
-        ) : null}
+        <p className="text-sm text-pretty text-muted-foreground">
+          {plan.description}
+        </p>
       </div>
-      {children}
-    </section>
+      {plan.id === "free" ? (
+        <div className="flex flex-col gap-1">
+          <p className="flex items-baseline gap-2 tabular-nums">
+            <span className="marketing-number">$0</span>
+            <span className="text-sm text-muted-foreground">forever</span>
+          </p>
+          <p className="text-sm text-muted-foreground">MIT License</p>
+        </div>
+      ) : (
+        <PlanPrice plan={plan.id} />
+      )}
+      {plan.id === "free" ? <FreePlanLink /> : <PlanButton plan={plan.id} />}
+      <ul className="flex flex-col gap-2.5 self-start border-t pt-6 text-sm">
+        {plan.features.map((feature) => (
+          <li key={feature} className="flex items-start gap-2">
+            <IconCheck
+              aria-hidden="true"
+              className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+            />
+            {feature}
+          </li>
+        ))}
+      </ul>
+    </li>
   )
 }
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-4 pt-16 pb-24 sm:pt-24">
+    <main className="flex flex-1 flex-col">
       <JsonLd
         data={pageJsonLd({
           path: "/pricing",
@@ -278,41 +242,46 @@ export default function Page() {
           ],
         }}
       />
-      <header className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-          The hard states, handled.
-        </h1>
-        <p className="text-base/7 text-pretty text-muted-foreground">
-          {proSummary} The component library underneath stays free and open
-          source.
-        </p>
-      </header>
-
-      <section aria-label="Plans" className="flex flex-col gap-4">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {plans.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} />
-          ))}
-        </div>
-        <p className="text-xs text-pretty text-muted-foreground">
-          Prices in {pricingCurrency}, before any sales tax. Payments are
-          handled by Dodo Payments. Pro is covered by the{" "}
-          <Link href="/legal/license" className={linkClassName}>
-            Pro License
-          </Link>{" "}
-          and the{" "}
-          <Link href="/legal/refunds" className={linkClassName}>
-            Refund Policy
-          </Link>
-          .
-        </p>
+      <section aria-labelledby="pricing-title">
+        <PageColumn className="pt-20 pb-20 sm:pt-28 sm:pb-28">
+          <PageHead
+            id="pricing-title"
+            eyebrow="Pricing"
+            title="Pay once, keep every block"
+          >
+            {proSummary} The component library underneath stays free and open
+            source.
+          </PageHead>
+          <h2 className="sr-only">Plans</h2>
+          <ul className="mt-12 grid gap-(--hairline) overflow-hidden rounded-2xl border bg-border sm:mt-16 sm:grid-cols-2 lg:grid-cols-4 forced-colors:gap-px">
+            {plans.map((plan) => (
+              <PlanColumn key={plan.id} plan={plan} />
+            ))}
+          </ul>
+          <p className="mt-6 text-sm text-pretty text-muted-foreground">
+            Prices in {pricingCurrency}, before any sales tax. Payments are
+            handled by Dodo Payments. Pro is covered by the{" "}
+            <Link href="/legal/license" className={linkClassName}>
+              Pro License
+            </Link>{" "}
+            and the{" "}
+            <Link href="/legal/refunds" className={linkClassName}>
+              Refund Policy
+            </Link>
+            .
+          </p>
+        </PageColumn>
       </section>
 
-      <Section
-        id="pricing-compare"
-        title="Compare plans"
-        description="Every plan uses the same components and the same shadcn CLI."
-      >
+      <Band id="pricing-compare">
+        <SectionHead
+          id="pricing-compare"
+          eyebrow="Compare"
+          title="Compare plans"
+          className="mb-12 sm:mb-16"
+        >
+          Every plan uses the same components and the same shadcn CLI.
+        </SectionHead>
         <Table>
           <TableHeader>
             <TableRow>
@@ -337,14 +306,18 @@ export default function Page() {
             ))}
           </TableBody>
         </Table>
-      </Section>
+      </Band>
 
-      <Section
-        id="pricing-blocks"
-        title="What’s in Pro"
-        description="Every block has a live preview you can open before you buy."
-      >
-        <ul className="grid gap-x-10 border-t sm:grid-cols-2">
+      <Band id="pricing-blocks">
+        <SectionHead
+          id="pricing-blocks"
+          eyebrow="HextaUI Pro"
+          title="What’s in Pro"
+          className="mb-12 sm:mb-16"
+        >
+          Every block has a live preview you can open before you buy.
+        </SectionHead>
+        <ul className="grid gap-x-12 border-t sm:grid-cols-2 lg:grid-cols-3">
           {blocks.map((block) => (
             <li key={block.url} className="border-b">
               <Link
@@ -359,20 +332,25 @@ export default function Page() {
             </li>
           ))}
         </ul>
-      </Section>
+      </Band>
 
-      <Section id="pricing-faq" title="Questions">
-        <div className="max-w-3xl border-t">
-          <Accordion>
-            {pricingQuestions.map((item) => (
-              <AccordionItem key={item.question} value={item.question}>
-                <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent>{item.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <Band id="pricing-faq">
+        <div className="grid gap-x-12 gap-y-8 lg:grid-cols-2">
+          <SectionHead id="pricing-faq" eyebrow="FAQ" title="Questions">
+            Short answers about plans, seats and refunds.
+          </SectionHead>
+          <div className="border-t">
+            <Accordion>
+              {pricingQuestions.map((item) => (
+                <AccordionItem key={item.question} value={item.question}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
-      </Section>
+      </Band>
     </main>
   )
 }

@@ -37,7 +37,6 @@
   "The rule I use: anything that moves across the screen becomes a fade. Anything that fades stays a fade. Anything that loops stops. Durations get shorter, not zero.",
   "The same delay rule applies to skeletons. A skeleton that appears for 50ms and gets replaced by the content is a flash of grey. Delay it by 150ms, and when the content arrives, fade it in without moving anything around it.",
   "The shake itself should be short, three or four oscillations in about 300ms, and under `prefers-reduced-motion` it becomes a color change on the border and nothing else.",
-  "The states shadcn/ui leaves to you: loading, success, error, empty and reduced motion",
   "This is cheap to build and almost always skipped because the person building the feature has test data. Clear your database once in a while.",
   "Two details that matter more than they sound:",
   "Two rules fix it:",

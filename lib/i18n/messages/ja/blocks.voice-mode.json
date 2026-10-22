@@ -63,6 +63,7 @@
   "Three hex colors.": "3 つの 16 進数カラー。",
   "Top-right controls, such as VoicePicker.": "右上のコントロール。VoicePicker など。",
   "Voice Mode is the visual and the controls for talking to an assistant. Pick one of eight shader styles (Sky, Dither, ASCII, CRT, Ferrofluid, Halftone, Ring or Aura) or four plain dots. Each listens, thinks and answers while moving with the sound, and monochrome styles follow your light or dark theme.": "Voice Mode は、アシスタントと会話するためのビジュアルとコントロールです。8 つのシェーダースタイル（Sky、Dither、ASCII、CRT、Ferrofluid、Halftone、Ring、Aura）または 4 つのシンプルなドットから選べます。いずれも聞き取り、思考、応答の間、音に合わせて動き、モノクロのスタイルはライトテーマ・ダークテーマに従います。",
+  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.": "AI アシスタントとの音声会話。全画面のセッションでもチャット内の音声ピルでも、聞き取り、割り込み、字幕に対応します。",
   "VoiceComposer": "VoiceComposer",
   "VoiceComposer replaces the composer while a voice session runs, with a small orb, the status, a timer, mute and End. Your words and the replies can stream into the thread as text.": "VoiceComposer は、音声セッションの実行中にコンポーザーの代わりに表示され、小さなオーブ、ステータス、タイマー、ミュート、終了ボタンを備えます。あなたの発言と返答は、テキストとしてスレッドにストリーミングできます。",
   "VoiceOrb": "VoiceOrb",

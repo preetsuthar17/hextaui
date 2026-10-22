@@ -47,6 +47,7 @@
   "Sign out one session. Remove it from sessions when it resolves and the row folds away.",
   "Sign-outs, added and removed passkeys and the password strength are announced politely. Errors from your callbacks are announced as alerts and stay next to the field or button they belong to.",
   "Submits the password form from any field, and deletes the account from the phrase field once it matches.",
+  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.",
   "The account’s email. Used in the delete phrase, the password manager hint and the recovery codes file.",
   "The confirmation phrase is delete followed by this.",
   "The group heading.",

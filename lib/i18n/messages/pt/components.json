@@ -43,6 +43,7 @@
   "Navigation components for React & shadcn/ui": "Componentes de navegação para React e shadcn/ui",
   "Nested, expandable rows for files and hierarchies, with indent guides, connector lines, cascading checkboxes, typeahead and full keyboard support.": "Linhas aninhadas e expansíveis para arquivos e hierarquias, com guias de recuo, linhas conectoras, checkboxes em cascata, typeahead e suporte completo ao teclado.",
   "One-time code slots that take typing, paste and SMS autofill, with an opt-in animation that cascades codes in and a status for verifying.": "Slots de código de uso único que aceitam digitação, colagem e preenchimento automático de SMS, com uma animação opcional que faz os códigos entrarem em cascata e um status para a verificação.",
+  "Open source": "Código aberto",
   "Other categories": "Outras categorias",
   "Overlay components": "Componentes de sobreposição",
   "Pick a value or a range by dragging, tapping the track or using the keys, with jumps that glide and an optional value bubble.": "Escolha um valor ou um intervalo arrastando, tocando na trilha ou usando as teclas, com saltos que deslizam e um balão de valor opcional.",

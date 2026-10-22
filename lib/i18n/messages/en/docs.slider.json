@@ -43,7 +43,6 @@
   "The track's thickness, set by size.",
   "The track.",
   "The value bubble from showValue.",
-  "The value.",
   "The whole slider dims and ignores pointer and keyboard input.",
   "Value bubble",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.",

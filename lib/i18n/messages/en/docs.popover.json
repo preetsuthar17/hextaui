@@ -51,6 +51,7 @@
   "The trigger’s width.",
   "Unbroken text wraps inside the popup. When the content is taller than the space available, the popup scrolls inside instead of running off screen.",
   "Use `className=\"w-auto p-0\"` to fit content that brings its own padding. The popup follows the calendar as it changes months.",
+  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.",
   "When the content grows or shrinks, the popup animates its height instead of jumping. Continuous changes, like typing, follow the content directly so nothing lags behind.",
   "Where focus goes when the popover closes.",
   "Where focus goes when the popover opens.",

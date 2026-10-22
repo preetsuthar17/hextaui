@@ -1,6 +1,6 @@
 [
   "9 hooks and 5 utilities you can install on their own, like <0>useButtonFeedback</0> and <1>useDelayedLoading</1>.",
-  "<0>25 blocks</0> for AI products, such as a chat thread, tool calls and voice mode. These are part of HextaUI Pro, which is paid, and <1>Prompt Input</1> is free.",
+  "<0>49 blocks</0> for AI products, such as a chat thread, tool calls and voice mode. These are part of HextaUI Pro, which is paid, and <1>Prompt Input</1> is free.",
   "Adding a component looks like this:",
   "Because the names and tokens match, you can replace one component at a time. Run the add command with `--overwrite` to swap a shadcn/ui component for the HextaUI version, then review the diff in git before you keep it. Components you don’t replace keep working. HextaUI has 65 components, and <0>Installation</0> covers the theme tokens they expect.",
   "Component by component",

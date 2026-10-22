@@ -37,7 +37,6 @@
   "The rule I use: anything that moves across the screen becomes a fade. Anything that fades stays a fade. Anything that loops stops. Durations get shorter, not zero.": "私が使っているルールはこうです。画面上を移動するものはフェードにする。フェードするものはフェードのまま。ループするものは止める。時間は短くするが、ゼロにはしない。",
   "The same delay rule applies to skeletons. A skeleton that appears for 50ms and gets replaced by the content is a flash of grey. Delay it by 150ms, and when the content arrives, fade it in without moving anything around it.": "同じ遅延のルールはスケルトンにも当てはまります。50ms だけ現れてコンテンツに置き換わるスケルトンは、灰色の一瞬の点滅です。150ms 遅らせ、コンテンツが届いたら、周囲を何も動かさずにフェードインさせます。",
   "The shake itself should be short, three or four oscillations in about 300ms, and under `prefers-reduced-motion` it becomes a color change on the border and nothing else.": "揺れ自体は短くします。300ms ほどで三、四回の振動です。`prefers-reduced-motion` のもとでは、境界線の色の変化だけになり、それ以外は何もしません。",
-  "The states shadcn/ui leaves to you: loading, success, error, empty and reduced motion": "shadcn/ui があなたに委ねる状態: ローディング、成功、エラー、空、そして reduced motion",
   "This is cheap to build and almost always skipped because the person building the feature has test data. Clear your database once in a while.": "これは作るのが安く、それでいてほぼ必ず飛ばされます。機能を作っている人にはテストデータがあるからです。ときどきデータベースを空にしてみてください。",
   "Two details that matter more than they sound:": "聞こえ以上に重要な細部が二つあります:",
   "Two rules fix it:": "二つのルールで直ります:",

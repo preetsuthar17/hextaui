@@ -46,6 +46,5 @@
   "Two reasons were given. Base UI had reached a stable 1.6.0 with over six million weekly downloads, and projects created through `shadcn/create` were already choosing Base UI over Radix about two to one. The default followed what people were picking.",
   "What I would not do",
   "What changed, in one paragraph",
-  "Why the default moved",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code"
+  "Why the default moved"
 ]

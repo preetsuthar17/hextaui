@@ -49,6 +49,7 @@
   "Separate",
   "Slots fill from the right and the arrow keys follow what you see. Give slots after the first a translated `aria-label`. Set `dir=\"ltr\"` on the field to keep a code left to right in a right-to-left page.",
   "Target the separator in CSS.",
+  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.",
   "The box.",
   "The class names behind a slot and a group (`inputOTPGroupVariants`). Call them with `{ variant, size }`.",
   "The default look. Each <l0/> joins its slots into one strip with shared edges.",

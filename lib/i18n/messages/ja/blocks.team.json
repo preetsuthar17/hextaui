@@ -42,6 +42,7 @@
   "The seat meter is a meter with its label and the count as text. With reduced motion it changes without sliding.": "シートメーターはmeterで、ラベルと件数がテキストとして付きます。モーション軽減時は、スライドせずに変化します。",
   "The seat meter shows members, pending invites and the chips you're typing as three layers, so you see the cost of an invite before you send it. Expired invites don't hold a seat. When the invites would go past the limit, sending is blocked with how many to remove, and at the limit the meter turns into an Add seats call to action.": "シートメーターは、メンバー、保留中の招待、入力中のチップを3つの層で表示するため、送信する前に招待のコストがわかります。期限切れの招待はシートを占有しません。招待が上限を超える場合、送信はブロックされ、何件削除すべきかが示され、上限に達するとメーターはAdd seatsの行動喚起に変わります。",
   "The signed-in member. Their role decides which actions show up.": "サインイン中のメンバー。そのロールによって、表示されるアクションが決まります。",
+  "The team page of an AI product’s workspace settings. Handles seats running out, pending invites and ownership transfer with a typed confirmation.": "AI 製品のワークスペース設定にあるチームページ。席数の上限、保留中の招待、入力確認を経た所有権の移譲に対応します。",
   "The whole page: seats, the invite box, pending invites, members and the optional domain auto-join row. Place it inside a SettingsSection.": "ページ全体。シート、招待ボックス、保留中の招待、メンバー、任意のドメイン自動参加の行。SettingsSectionの内側に置きます。",
   "Undo a removal": "削除を元に戻す",
   "parseEmailList": "parseEmailList",

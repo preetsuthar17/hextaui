@@ -10,6 +10,7 @@
   "Streaming Text for AI responses in React & shadcn/ui": "Streaming Text für KI-Antworten in React & shadcn/ui",
   "StreamingText": "StreamingText",
   "Text that isn’t streaming renders in full on the first frame, so history and server renders never animate. StreamingText adds a soft fade on the newest words and a caret while it writes. useSmoothText gives you the pacing alone, to put in front of any renderer, including Markdown.": "Text, der nicht streamt, wird im ersten Frame vollständig gerendert, sodass Verlauf und Server-Renders nie animieren. StreamingText fügt ein sanftes Einblenden der neuesten Wörter und einen Cursor hinzu, während geschrieben wird. useSmoothText liefert nur das Timing, um es vor jeden Renderer zu setzen, auch Markdown.",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Text, der in gleichmäßigem Tempo aus einem Modell streamt. Stoßweise Chunks werden geglättet, mit einem Einblenden neuer Wörter und einem Cursor beim Schreiben.",
   "The caret is decorative and hidden from assistive technology.": "Der Cursor ist dekorativ und vor assistiven Technologien verborgen.",
   "The full text received so far.": "Der bisher empfangene vollständige Text.",
   "The pacing on its own. Returns the text to show right now and whether it is still catching up.": "Nur das Timing. Gibt den Text zurück, der gerade angezeigt werden soll, und ob es noch aufholt.",

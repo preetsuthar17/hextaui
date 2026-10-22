@@ -23,7 +23,6 @@
   "Do not hand-write the Markdown. Generate it from the same source as the page so the two never drift. On HextaUI the `.md` route walks the page's React tree and serializes it, so adding an example to the page adds it to the Markdown for free.",
   "Document this snippet on your installation page and in your `llms.txt`. The short form is what the shadcn MCP server searches across, so a registry without a namespace is invisible to the one tool most agents use to browse registries.",
   "Everything above is also plain HTTP, and agents increasingly call HTTP directly. Publish an `openapi.json` with operation ids and typed responses. Return errors as RFC 9457 `application/problem+json` with a `resolution` field that says what to do next:",
-  "How to build a shadcn/ui registry that Claude Code and Cursor can actually use",
   "I run <0>HextaUI</0>, a shadcn/ui registry, and I spent a chunk of this year making it work for Claude Code, Cursor and the shadcn MCP server. This is everything that turned out to matter, in the order I would do it again.",
   "If the registry is private, the object form takes headers with environment variables that the CLI expands and never logs:",
   "If you want to see all of it live: <0>hextaui.com/llms.txt</0>, any docs page with `.md` appended, the <1>MCP docs</1>, and the <2>API docs</2> with the OpenAPI spec.",

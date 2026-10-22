@@ -9,9 +9,9 @@ import {
   DocsParagraph,
 } from "@/components/docs/docs-content"
 import { DocsExample } from "@/components/docs/docs-example"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
-import { MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { LegalLink } from "@/components/legal/legal-page"
+import { CompareLinkGrid, MoreComparisons } from "@/components/site/compare"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
 import {
   Table,
@@ -122,7 +122,8 @@ export default async function Page({
           date: shadcnSnapshot.fetched,
         }
       )}
-      eyebrow={<DocsBreadcrumbs crumbs={crumbs} className="mb-2" />}
+      eyebrow="Compare"
+      nav={<DocsBreadcrumbs crumbs={crumbs} />}
     >
       <JsonLd
         data={pageJsonLd({
@@ -134,7 +135,7 @@ export default async function Page({
         })}
       />
 
-      <LegalSection title="At a glance">
+      <InfoSection title="At a glance">
         <div className="mt-6">
           <Table wrap aria-label={t("At a glance")}>
             <TableHeader>
@@ -206,10 +207,10 @@ export default async function Page({
           HextaUI handle states, motion and edge cases that you would otherwise
           write yourself.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
       {comparison.hextaParts.length > 0 || comparison.shadcnParts.length > 0 ? (
-        <LegalSection title="Parts">
+        <InfoSection title="Parts">
           {comparison.hextaParts.length > 0 ? (
             <p className={rowClassName}>
               <span>{t("Only in HextaUI")}</span>
@@ -228,11 +229,11 @@ export default async function Page({
               <CodeList items={comparison.sharedParts} />
             </p>
           ) : null}
-        </LegalSection>
+        </InfoSection>
       ) : null}
 
       {comparison.addedProps.length > 0 ? (
-        <LegalSection title="Props HextaUI adds">
+        <InfoSection title="Props HextaUI adds">
           <DocsParagraph>
             Props the HextaUI wrapper handles itself that the shadcn/ui wrapper
             does not. Props passed straight through to Base UI or the underlying
@@ -276,11 +277,11 @@ export default async function Page({
               </TableBody>
             </Table>
           </div>
-        </LegalSection>
+        </InfoSection>
       ) : null}
 
       {variantRows.length > 0 ? (
-        <LegalSection title="Variants">
+        <InfoSection title="Variants" wide>
           <div className="mt-6">
             <Table wrap aria-label={t("Variants")}>
               <TableHeader>
@@ -316,11 +317,11 @@ export default async function Page({
               </TableBody>
             </Table>
           </div>
-        </LegalSection>
+        </InfoSection>
       ) : null}
 
       {demo ? (
-        <LegalSection title="The HextaUI version">
+        <InfoSection title="The HextaUI version">
           <DocsExample
             file={demo.file}
             previewClassName={demo.previewClassName}
@@ -338,10 +339,10 @@ export default async function Page({
               })}
             </p>
           ) : null}
-        </LegalSection>
+        </InfoSection>
       ) : null}
 
-      <LegalSection title="Switch one component">
+      <InfoSection title="Switch one component">
         <DocsParagraph>
           Run the add command with <DocsCode>--overwrite</DocsCode> to replace
           the shadcn/ui file in <DocsCode>@/components/ui</DocsCode>, then
@@ -368,19 +369,16 @@ export default async function Page({
             switch, and map it to the closest HextaUI one.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Other components compared">
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {others.map((item) => (
-            <li key={item.slug}>
-              <LegalLink href={getShadcnComparisonHref(item.slug)}>
-                {item.name}
-              </LegalLink>
-            </li>
-          ))}
-        </ul>
-      </LegalSection>
+      <InfoSection title="Other components compared">
+        <CompareLinkGrid
+          items={others.map((item) => ({
+            href: getShadcnComparisonHref(item.slug),
+            title: item.name,
+          }))}
+        />
+      </InfoSection>
 
       <MoreComparisons current="/compare/shadcn-ui" />
     </InfoPage>

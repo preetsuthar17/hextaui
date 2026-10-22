@@ -97,6 +97,7 @@
   "Starts dictation, and inserts the transcript when pressed again.",
   "Stops a streaming reply, closes a menu, or cancels a recording.",
   "Switch label.",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.",
   "The character that opens it, such as @ or /.",
   "The choices. Descriptions show under each label.",

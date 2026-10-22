@@ -2,7 +2,6 @@
   "\"expanded\" or \"collapsed\".": "\"expanded\" または \"collapsed\"。",
   "A <l0/> and its <l1/> items. Set `gap=\"none\"` for dense lists like chat history, where rows sit flush.": "<l0/> とその <l1/> 項目。チャット履歴のように行を詰めて並べる密なリストには、`gap=\"none\"` を設定します。",
   "A <l0/> that takes the rest of the width. Next to an `inset` sidebar it becomes a rounded card.": "残りの幅を占める <l0/>。`inset` サイドバーの隣では、角丸のカードになります。",
-  "A count at the end of the item.": "項目の末尾のカウント。",
   "A ghost icon `Button` that calls `toggleSidebar`. Call `event.preventDefault()` in `onClick` to stop it. Pass children to replace the icon.": "`toggleSidebar` を呼ぶ、ゴースト型のアイコン `Button`。止めるには `onClick` で `event.preventDefault()` を呼びます。アイコンを置き換えるには子要素を渡します。",
   "A nested link.": "ネストされたリンク。",
   "A nested list with a line on its leading edge. It folds away when the sidebar collapses to icons.": "先頭側の端に線があるネストされたリスト。サイドバーがアイコンに折りたたまれると畳まれます。",

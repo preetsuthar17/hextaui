@@ -25,6 +25,7 @@ export default function Page() {
     <LegalPage
       href="/legal/privacy"
       title="Privacy Policy"
+      description={String(metadata.description)}
       updated="2026-10-11"
     >
       <DocsParagraph>

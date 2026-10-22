@@ -43,6 +43,7 @@
   "Navigation components for React & shadcn/ui": "React ve shadcn/ui için gezinme bileşenleri",
   "Nested, expandable rows for files and hierarchies, with indent guides, connector lines, cascading checkboxes, typeahead and full keyboard support.": "Dosyalar ve hiyerarşiler için girinti kılavuzları, bağlayıcı çizgiler, basamaklı onay kutuları, typeahead ve tam klavye desteğiyle iç içe, genişletilebilir satırlar.",
   "One-time code slots that take typing, paste and SMS autofill, with an opt-in animation that cascades codes in and a status for verifying.": "Yazmayı, yapıştırmayı ve SMS otomatik doldurmayı kabul eden tek kullanımlık kod slotları; kodları basamaklayarak getiren isteğe bağlı bir animasyon ve doğrulama için bir durum içerir.",
+  "Open source": "Açık kaynak",
   "Other categories": "Diğer kategoriler",
   "Overlay components": "Katman bileşenleri",
   "Pick a value or a range by dragging, tapping the track or using the keys, with jumps that glide and an optional value bubble.": "Sürükleyerek, ize dokunarak veya tuşlarla bir değer ya da aralık seçin; süzülen atlamalar ve isteğe bağlı bir değer balonuyla.",

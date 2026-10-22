@@ -2,7 +2,6 @@
   "\"expanded\" or \"collapsed\".": "\"expanded\" o \"collapsed\".",
   "A <l0/> and its <l1/> items. Set `gap=\"none\"` for dense lists like chat history, where rows sit flush.": "Un <l0/> y sus elementos <l1/>. Define `gap=\"none\"` para listas densas como el historial de chat, donde las filas van pegadas.",
   "A <l0/> that takes the rest of the width. Next to an `inset` sidebar it becomes a rounded card.": "Un <l0/> que ocupa el resto del ancho. Junto a un sidebar `inset` se convierte en una tarjeta redondeada.",
-  "A count at the end of the item.": "Un contador al final del elemento.",
   "A ghost icon `Button` that calls `toggleSidebar`. Call `event.preventDefault()` in `onClick` to stop it. Pass children to replace the icon.": "Un `Button` ghost con icono que llama a `toggleSidebar`. Llama a `event.preventDefault()` en `onClick` para detenerlo. Pasa hijos para sustituir el icono.",
   "A nested link.": "Un enlace anidado.",
   "A nested list with a line on its leading edge. It folds away when the sidebar collapses to icons.": "Una lista anidada con una línea en su borde de inicio. Se pliega cuando el sidebar se colapsa a iconos.",

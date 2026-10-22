@@ -25,7 +25,6 @@
   "Preselecting the first size is how stores ship a lot of size S. Preselect the color, since it is what the photo already shows, and leave size empty.",
   "Prices can differ per variant too. Before a full selection, show a range, \"From $28\". Once a variant is chosen, show its price, its compare-at price struck through if it is on sale, and its stock in words: \"Only 3 left\", \"Pre-order, ships Nov 12\" or \"Backordered\". Use tabular figures for the price so the line doesn't shift when the digits change.",
   "Product variant picker UX in React: sizes and stock",
-  "Product variant picker UX in React: sold-out sizes, missing combinations and back-in-stock",
   "Put the selection in the URL",
   "Semantically each option is a radio group. Use real radio inputs, or `role=\"radiogroup\"` with roving focus, so arrow keys move between values and the group has a name. Expose the state to assistive technology as well, because a strike-through line is invisible to a screen reader and easy to miss for everyone else:",
   "Size is never preselected, and a missing size is flagged and focused.",

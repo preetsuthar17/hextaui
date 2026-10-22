@@ -44,7 +44,6 @@
   "The size: xs, sm, default or lg.": "Boyut: xs, sm, default veya lg.",
   "The status variant.": "Durum varyantı.",
   "The track.": "İz.",
-  "The value.": "Değer.",
   "Values are formatted in `en-US` unless you pass `locale`, so the server and browser render the same text.": "`locale` vermedikçe değerler `en-US` ile biçimlendirilir; böylece sunucu ve tarayıcı aynı metni işler.",
   "With reduced motion, the fill jumps to each new value, and the indeterminate bar and ring pulse in place instead of moving.": "Azaltılmış harekette dolgu her yeni değere atlar; belirsiz çubuk ve halka hareket etmek yerine yerinde nabız atar.",
   "Without a visible label": "Görünür etiket olmadan",

@@ -139,10 +139,10 @@ function SponsorForm() {
 
   if (done) {
     return (
-      <div className="flex flex-col gap-2 rounded-xl bg-muted p-6">
-        <h2 className="text-lg font-semibold tracking-tight">
+      <div className="flex max-w-xl flex-col gap-2 rounded-2xl p-6 inset-ring-(length:--hairline) inset-ring-border sm:p-8">
+        <h3 className="text-lg font-semibold tracking-tight">
           Thanks for sponsoring
-        </h2>
+        </h3>
         <p className="text-sm/6 text-pretty text-muted-foreground">
           Your card is in review and goes live within {sponsorReviewDays}{" "}
           business day. You’ll get an email when it does. To change the copy,

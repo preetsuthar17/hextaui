@@ -34,7 +34,6 @@
   "Fields after the street",
   "Germany",
   "Google's Places API uses session tokens to group the suggest and details calls of one search. Use them, or the calls may be billed separately.",
-  "How to build an address form that works in every country, in React",
   "In some countries the postal code already tells you the city and region. Japan is the classic case: addresses start with the postal code, and the code alone identifies the prefecture and city. When the shopper finishes the postal code, look it up and fill city and region, but never overwrite something they already typed. Their input wins over your data.",
   "International address form in React: a practical guide",
   "Japan",

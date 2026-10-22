@@ -1,14 +1,5 @@
 {
   "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces, e-commerce UI and registries that AI coding agents can use.": "Artículos del creador de HextaUI sobre shadcn/ui, Base UI, los estados difíciles de la UI, interfaces de chat con IA, UI de e-commerce y registros que pueden usar los agentes de IA para programar.",
-  "Building an e-commerce admin dashboard in Next.js: orders, refunds and inventory": "Cómo construir un dashboard de administración de e-commerce en Next.js: pedidos, reembolsos e inventario",
-  "How to build a one-page checkout in React and Next.js that survives declines and changed prices": "Cómo construir un checkout de una página en React y Next.js que resista rechazos y cambios de precio",
-  "How to build a shadcn/ui registry that Claude Code and Cursor can actually use": "Cómo construir un registro de shadcn/ui que Claude Code y Cursor puedan usar de verdad",
-  "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users": "Cómo construir una interfaz de chat con IA con shadcn/ui y el AI SDK de Vercel que sobreviva a usuarios reales",
-  "How to build an address form that works in every country, in React": "Cómo construir en React un formulario de dirección que funcione en todos los países",
   "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens, checkout and store admin UI, and registries for coding agents.": "Notas de la construcción de HextaUI: shadcn/ui y Base UI, los estados que la mayoría de las interfaces se saltan, pantallas de chat con IA, UI de checkout y de admin de tienda, y registros para agentes de programación.",
-  "Product variant picker UX in React: sold-out sizes, missing combinations and back-in-stock": "UX del selector de variantes en React: tallas agotadas, combinaciones inexistentes y avisos de reposición",
-  "Shopping cart UX in React: optimistic updates, undo and money in minor units": "UX del carrito de compra en React: actualizaciones optimistas, deshacer y dinero en unidades menores",
-  "The states shadcn/ui leaves to you: loading, success, error, empty and reduced motion": "Los estados que shadcn/ui te deja a ti: carga, éxito, error, vacío y movimiento reducido",
-  "Vercel's AI Elements is being deprecated. Here are the alternatives for shadcn/ui AI chat UI": "AI Elements de Vercel queda obsoleto. Estas son las alternativas para interfaces de chat con IA con shadcn/ui",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code": "shadcn/ui ha cambiado a Base UI. Esto es lo que cambia de verdad en tu código"
+  "The hard parts, written down": "Lo difícil, por escrito"
 }

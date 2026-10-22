@@ -18,10 +18,15 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <LegalPage href="/legal/refunds" title="Refund Policy" updated="2026-10-08">
+    <LegalPage
+      href="/legal/refunds"
+      title="Refund Policy"
+      description={String(metadata.description)}
+      updated="2026-10-08"
+    >
       <DocsParagraph>
-        If HextaUI Pro isn’t right for you, Solo, Team or Unlimited, you can
-        get a full refund within 30 days of your purchase. No questions asked.
+        If HextaUI Pro isn’t right for you, Solo, Team or Unlimited, you can get
+        a full refund within 30 days of your purchase. No questions asked.
       </DocsParagraph>
 
       <LegalSection title="How to ask for a refund">
@@ -40,7 +45,9 @@ export default function Page() {
       <LegalSection title="What happens after a refund">
         <DocsList>
           <li>Your HextaUI Pro access ends.</li>
-          <li>On a Team or Unlimited plan, every teammate’s access ends too.</li>
+          <li>
+            On a Team or Unlimited plan, every teammate’s access ends too.
+          </li>
           <li>Your API tokens stop working for Pro blocks.</li>
           <li>
             Your <LegalLink href="/legal/license">Pro License</LegalLink> ends,

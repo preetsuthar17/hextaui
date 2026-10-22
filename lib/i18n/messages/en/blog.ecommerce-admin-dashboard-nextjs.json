@@ -8,7 +8,6 @@
   "A rejected row stays in the draft with a message such as \"Quantity changed to 40 by another device\", and Reapply sends it again on top of the new number. Shopify's `inventoryAdjustQuantities` mutation works the same way with its `changeFromQuantity` field.",
   "Also split the number. On hand is what is in the building, but committed stock is already sold and unavailable stock is damaged or on hold. Merchants need to see available separately from on hand, or they sell stock that has already been sold.",
   "An e-commerce admin looks like a CRUD app: a table of orders, a page per order, a form per product. The tables are the easy part. The hard part is that every number in a store admin is money or stock, and both have to stay right while customers keep buying in the background.",
-  "Building an e-commerce admin dashboard in Next.js: orders, refunds and inventory",
   "Bulk actions fail partially",
   "Discount forms are usually a long list of fields, and merchants can't tell what they built until a customer complains. Write the offer as one sentence with editable parts, \"Customers get 15% off Ring Vase and Glass Carafe\", put minimum purchase, customer eligibility, usage limits, combinations and schedule in collapsed rows that show their current value, and preview a sample checkout with the discount applied.",
   "Discounts as a sentence",

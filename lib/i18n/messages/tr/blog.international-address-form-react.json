@@ -34,7 +34,6 @@
   "Fields after the street": "Sokaktan sonraki alanlar",
   "Germany": "Almanya",
   "Google's Places API uses session tokens to group the suggest and details calls of one search. Use them, or the calls may be billed separately.": "Google’ın Places API’si, bir aramanın öneri ve ayrıntı çağrılarını gruplamak için oturum token’ları kullanır. Bunları kullanın, yoksa çağrılar ayrı ayrı faturalandırılabilir.",
-  "How to build an address form that works in every country, in React": "React’te her ülkede çalışan bir adres formu nasıl kurulur",
   "In some countries the postal code already tells you the city and region. Japan is the classic case: addresses start with the postal code, and the code alone identifies the prefecture and city. When the shopper finishes the postal code, look it up and fill city and region, but never overwrite something they already typed. Their input wins over your data.": "Bazı ülkelerde posta kodu size şehri ve bölgeyi zaten söyler. Japonya klasik örnektir: adresler posta koduyla başlar ve kod tek başına prefektörlüğü ve şehri belirler. Müşteri posta kodunu bitirdiğinde onu sorgulayın ve şehir ile bölgeyi doldurun, ama zaten yazdıkları bir şeyin üzerine asla yazmayın. Onların girdisi sizin verinize üstün gelir.",
   "International address form in React: a practical guide": "React’te uluslararası adres formu: pratik bir rehber",
   "Japan": "Japonya",

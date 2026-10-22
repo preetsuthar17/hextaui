@@ -63,6 +63,7 @@
   "Three hex colors.": "Três cores hex.",
   "Top-right controls, such as VoicePicker.": "Controles no canto superior direito, como VoicePicker.",
   "Voice Mode is the visual and the controls for talking to an assistant. Pick one of eight shader styles (Sky, Dither, ASCII, CRT, Ferrofluid, Halftone, Ring or Aura) or four plain dots. Each listens, thinks and answers while moving with the sound, and monochrome styles follow your light or dark theme.": "Voice Mode é o visual e os controles para conversar com um assistente. Escolha um dos oito estilos com shader (Sky, Dither, ASCII, CRT, Ferrofluid, Halftone, Ring ou Aura) ou quatro pontos simples. Cada um escuta, pensa e responde acompanhando o som, e os estilos monocromáticos seguem o seu tema claro ou escuro.",
+  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.": "Conversas por voz com um assistente de IA. Cobre escuta, interrupções e legendas, em uma sessão em tela cheia ou em uma pílula de voz dentro do chat.",
   "VoiceComposer": "VoiceComposer",
   "VoiceComposer replaces the composer while a voice session runs, with a small orb, the status, a timer, mute and End. Your words and the replies can stream into the thread as text.": "VoiceComposer substitui o composer enquanto uma sessão de voz está ativa, com um orb pequeno, o status, um cronômetro, mudo e End. O que você diz e as respostas podem chegar à conversa como texto, via streaming.",
   "VoiceOrb": "VoiceOrb",

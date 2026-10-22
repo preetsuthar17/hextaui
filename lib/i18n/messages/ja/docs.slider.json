@@ -43,7 +43,6 @@
   "The track's thickness, set by size.": "トラックの太さ。size によって設定されます。",
   "The track.": "トラック。",
   "The value bubble from showValue.": "showValue による値のバブル。",
-  "The value.": "値。",
   "The whole slider dims and ignores pointer and keyboard input.": "スライダー全体が薄くなり、ポインターとキーボードの入力を無視します。",
   "Value bubble": "値のバブル",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.": "ドラッグ中、つまみはポインターにぴったり追従します。トラックの押下、キー、制御された新しい値によって値がジャンプするときは、つまみと塗りは瞬間移動せず、180msで滑らかに移動します。",

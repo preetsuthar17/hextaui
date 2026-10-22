@@ -34,7 +34,6 @@
   "Fields after the street": "Campos después de la calle",
   "Germany": "Alemania",
   "Google's Places API uses session tokens to group the suggest and details calls of one search. Use them, or the calls may be billed separately.": "La Places API de Google usa tokens de sesión para agrupar las llamadas de sugerencias y de detalles de una misma búsqueda. Úsalos, o puede que las llamadas se facturen por separado.",
-  "How to build an address form that works in every country, in React": "Cómo construir en React un formulario de dirección que funcione en todos los países",
   "In some countries the postal code already tells you the city and region. Japan is the classic case: addresses start with the postal code, and the code alone identifies the prefecture and city. When the shopper finishes the postal code, look it up and fill city and region, but never overwrite something they already typed. Their input wins over your data.": "En algunos países el código postal ya te dice la ciudad y la región. Japón es el caso clásico: las direcciones empiezan por el código postal, y el código por sí solo identifica la prefectura y la ciudad. Cuando el cliente termine el código postal, búscalo y rellena la ciudad y la región, pero nunca sobrescribas algo que ya haya escrito. Lo que escribe manda sobre tus datos.",
   "International address form in React: a practical guide": "Formulario de dirección internacional en React: una guía práctica",
   "Japan": "Japón",

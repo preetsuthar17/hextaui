@@ -97,6 +97,7 @@
   "Starts dictation, and inserts the transcript when pressed again.": "音声入力を開始し、もう一度押すと文字起こしを挿入します。",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "ストリーミング中の返信を停止するか、メニューを閉じるか、録音をキャンセルします。",
   "Switch label.": "スイッチのラベル。",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "モデルからのテキストを一定の速さで流します。ばらついたチャンクをならし、新しい語をフェードで表示し、書いている間はキャレットを示します。",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "キャレット位置のメニューはaria-activedescendantを持つコンボボックスなので、移動中もフォーカスがテキストから離れることはありません。",
   "The character that opens it, such as @ or /.": "開くための文字。@や/など。",
   "The choices. Descriptions show under each label.": "選択肢。説明は各ラベルの下に表示されます。",

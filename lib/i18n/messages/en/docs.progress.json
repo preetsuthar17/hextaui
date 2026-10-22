@@ -44,7 +44,6 @@
   "The size: xs, sm, default or lg.",
   "The status variant.",
   "The track.",
-  "The value.",
   "Values are formatted in `en-US` unless you pass `locale`, so the server and browser render the same text.",
   "With reduced motion, the fill jumps to each new value, and the indeterminate bar and ring pulse in place instead of moving.",
   "Without a visible label",

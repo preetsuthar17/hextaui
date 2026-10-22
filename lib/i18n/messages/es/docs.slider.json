@@ -43,7 +43,6 @@
   "The track's thickness, set by size.": "El grosor de la pista, definido por size.",
   "The track.": "La pista.",
   "The value bubble from showValue.": "La burbuja de valor de showValue.",
-  "The value.": "El valor.",
   "The whole slider dims and ignores pointer and keyboard input.": "Todo el slider se atenúa e ignora la entrada del puntero y del teclado.",
   "Value bubble": "Burbuja de valor",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.": "Mientras arrastras, el thumb sigue exactamente al puntero. Cuando el valor salta, por un toque en la pista, una tecla o un nuevo valor controlado, el thumb y el relleno se deslizan hasta allí en 180ms en lugar de teletransportarse.",

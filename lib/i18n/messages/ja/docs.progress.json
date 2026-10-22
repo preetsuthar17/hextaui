@@ -44,7 +44,6 @@
   "The size: xs, sm, default or lg.": "サイズ: xs、sm、default、lg。",
   "The status variant.": "ステータスのバリアント。",
   "The track.": "トラック。",
-  "The value.": "値。",
   "Values are formatted in `en-US` unless you pass `locale`, so the server and browser render the same text.": "`locale` を渡さない限り値は `en-US` でフォーマットされるため、サーバーとブラウザーで同じテキストが描画されます。",
   "With reduced motion, the fill jumps to each new value, and the indeterminate bar and ring pulse in place instead of moving.": "視差効果の軽減が有効な場合、塗りは新しい値へ直接移り、不確定のバーとリングは動く代わりにその場で脈動します。",
   "Without a visible label": "表示されるラベルなし",

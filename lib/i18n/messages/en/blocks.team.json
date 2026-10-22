@@ -42,6 +42,7 @@
   "The seat meter is a meter with its label and the count as text. With reduced motion it changes without sliding.",
   "The seat meter shows members, pending invites and the chips you're typing as three layers, so you see the cost of an invite before you send it. Expired invites don't hold a seat. When the invites would go past the limit, sending is blocked with how many to remove, and at the limit the meter turns into an Add seats call to action.",
   "The signed-in member. Their role decides which actions show up.",
+  "The team page of an AI product’s workspace settings. Handles seats running out, pending invites and ownership transfer with a typed confirmation.",
   "The whole page: seats, the invite box, pending invites, members and the optional domain auto-join row. Place it inside a SettingsSection.",
   "Undo a removal",
   "parseEmailList",

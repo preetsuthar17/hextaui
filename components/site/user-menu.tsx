@@ -2,6 +2,7 @@
 
 import Link from "@/components/site/link"
 import { IconLogout, IconUser } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -36,7 +37,7 @@ function initials(name: string) {
     .join("")
 }
 
-function UserMenu() {
+function UserMenu({ signInClassName }: { signInClassName?: string }) {
   const { session, pending, cachedUser } = useSession()
   const user = session?.user ?? cachedUser
   const c = useChrome()
@@ -46,11 +47,18 @@ function UserMenu() {
       <Dialog>
         <DialogTrigger
           render={
-            <Button
-              variant="ghost"
-              size="sm"
-              className={pending ? "invisible" : undefined}
-            />
+            signInClassName ? (
+              <button
+                type="button"
+                className={cn(signInClassName, pending && "invisible")}
+              />
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                className={pending ? "invisible" : undefined}
+              />
+            )
           }
         >
           {c("Sign in")}

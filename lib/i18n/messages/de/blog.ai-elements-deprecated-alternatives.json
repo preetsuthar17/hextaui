@@ -45,7 +45,6 @@
   "They ship alongside two new components, Trace and Code Block, that work across Base UI, React Aria and Radix.": "Sie erscheinen zusammen mit zwei neuen Komponenten, Trace und Code Block, die mit Base UI, React Aria und Radix funktionieren.",
   "This post covers what that means for your code, what the replacement is, and the other options if you are starting an AI chat UI with shadcn/ui in late 2026. I maintain one of those options, <0>HextaUI</0>, so I will say where it fits and where it does not.": "Dieser Beitrag behandelt, was das für deinen Code bedeutet, was der Ersatz ist und welche anderen Optionen es gibt, wenn du Ende 2026 eine KI-Chat-UI mit shadcn/ui anfängst. Ich pflege eine dieser Optionen, <0>HextaUI</0>, also sage ich, wo sie passt und wo nicht.",
   "Used in examples": "In Beispielen verwendet",
-  "Vercel's AI Elements is being deprecated. Here are the alternatives for shadcn/ui AI chat UI": "Vercels AI Elements wird eingestellt. Das sind die Alternativen für KI-Chat-UIs mit shadcn/ui",
   "What replaces it": "Was es ersetzt",
   "You already have Vercel's AI Elements in your tree: keep it until you need something new, then move pattern by pattern using the migration prompts.": "Du hast Vercels AI Elements schon im Projekt: Behalte es, bis du etwas Neues brauchst, und wechsle dann Pattern für Pattern mit den Migrations-Prompts.",
   "You are starting fresh and want to compose your own: <0>AI Elements from shadcn/ui</0>.": "Du fängst neu an und willst selbst zusammensetzen: <0>AI Elements von shadcn/ui</0>.",

@@ -43,6 +43,7 @@
   "Navigation components for React & shadcn/ui",
   "Nested, expandable rows for files and hierarchies, with indent guides, connector lines, cascading checkboxes, typeahead and full keyboard support.",
   "One-time code slots that take typing, paste and SMS autofill, with an opt-in animation that cascades codes in and a status for verifying.",
+  "Open source",
   "Other categories",
   "Overlay components",
   "Pick a value or a range by dragging, tapping the track or using the keys, with jumps that glide and an optional value bubble.",

@@ -43,7 +43,6 @@
   "The track's thickness, set by size.": "İzin kalınlığı; size ile belirlenir.",
   "The track.": "İz.",
   "The value bubble from showValue.": "showValue'dan gelen değer balonu.",
-  "The value.": "Değer.",
   "The whole slider dims and ignores pointer and keyboard input.": "Tüm slider solar ve işaretçi ile klavye girdisini yok sayar.",
   "Value bubble": "Değer balonu",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.": "Sürüklerken başparmak işaretçiyi tam olarak izler. Değer ize basma, bir tuş veya yeni kontrollü bir değerle atladığında başparmak ve dolgu ışınlanmak yerine 180ms'de oraya süzülür.",

@@ -45,7 +45,6 @@
   "They ship alongside two new components, Trace and Code Block, that work across Base UI, React Aria and Radix.": "これらは、Base UI、React Aria、Radix のいずれでも動く Trace と Code Block という二つの新しいコンポーネントとともに公開されています。",
   "This post covers what that means for your code, what the replacement is, and the other options if you are starting an AI chat UI with shadcn/ui in late 2026. I maintain one of those options, <0>HextaUI</0>, so I will say where it fits and where it does not.": "この記事では、それがあなたのコードにとって何を意味するか、置き換え先は何か、そして 2026 年後半に shadcn/ui で AI チャット UI を始めるなら他にどんな選択肢があるかを扱います。私はその選択肢の一つである <0>HextaUI</0> をメンテナンスしているので、どこに向いていてどこに向いていないかも述べます。",
   "Used in examples": "サンプルで使用",
-  "Vercel's AI Elements is being deprecated. Here are the alternatives for shadcn/ui AI chat UI": "Vercel の AI Elements が非推奨になります。shadcn/ui の AI チャット UI の代替はこちら",
   "What replaces it": "置き換え先",
   "You already have Vercel's AI Elements in your tree: keep it until you need something new, then move pattern by pattern using the migration prompts.": "すでにツリーに Vercel の AI Elements がある場合: 新しいものが必要になるまではそのままにし、その後、移行プロンプトを使ってパターンごとに移します。",
   "You are starting fresh and want to compose your own: <0>AI Elements from shadcn/ui</0>.": "ゼロから始めて自分で組み立てたい場合: <0>shadcn/ui の AI Elements</0>。",

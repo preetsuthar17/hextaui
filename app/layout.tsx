@@ -5,8 +5,10 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
 import { AnalyticsScript } from "@/components/site/analytics-script"
+import { FrameLines } from "@/components/site/frame-lines"
 import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
+import { InlineScript } from "@/components/site/inline-script"
 import { JsonLd } from "@/components/site/json-ld"
 import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
@@ -133,6 +135,7 @@ const jsonLd = {
 
 const fontSans = Inter({
   subsets: ["latin"],
+  axes: ["opsz"],
   variable: "--font-inter",
 })
 
@@ -167,7 +170,7 @@ export default async function RootLayout({
       )}
     >
       <body>
-        <script dangerouslySetInnerHTML={{ __html: catalogViewScript }} />
+        <InlineScript html={catalogViewScript} />
         <JsonLd data={jsonLd} />
         <ThemeProvider>
           <DocsSearchProvider>
@@ -181,6 +184,7 @@ export default async function RootLayout({
               </SiteChrome>
             </div>
           </DocsSearchProvider>
+          <FrameLines />
           <Toaster />
           <SiteChrome>
             <CookieConsent />

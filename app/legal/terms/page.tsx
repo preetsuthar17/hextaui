@@ -22,6 +22,7 @@ export default function Page() {
     <LegalPage
       href="/legal/terms"
       title="Terms of Service"
+      description={String(metadata.description)}
       updated="2026-10-08"
     >
       <DocsParagraph>

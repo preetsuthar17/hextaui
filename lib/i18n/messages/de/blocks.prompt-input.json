@@ -97,6 +97,7 @@
   "Starts dictation, and inserts the transcript when pressed again.": "Startet das Diktat und fügt das Transkript ein, wenn erneut gedrückt.",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "Stoppt eine streamende Antwort, schließt ein Menü oder bricht eine Aufnahme ab.",
   "Switch label.": "Switch-Label.",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Text, der in gleichmäßigem Tempo aus einem Modell streamt. Stoßweise Chunks werden geglättet, mit einem Einblenden neuer Wörter und einem Cursor beim Schreiben.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "Das Menü an der Einfügemarke ist eine Combobox mit aria-activedescendant, sodass der Fokus beim Navigieren nie den Text verlässt.",
   "The character that opens it, such as @ or /.": "Das Zeichen, das es öffnet, etwa @ oder /.",
   "The choices. Descriptions show under each label.": "Die Auswahlmöglichkeiten. Beschreibungen erscheinen unter jedem Label.",

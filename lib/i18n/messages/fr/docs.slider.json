@@ -43,7 +43,6 @@
   "The track's thickness, set by size.": "L'épaisseur de la piste, définie par size.",
   "The track.": "La piste.",
   "The value bubble from showValue.": "La bulle de valeur de showValue.",
-  "The value.": "La valeur.",
   "The whole slider dims and ignores pointer and keyboard input.": "Tout le slider s'atténue et ignore la souris et le clavier.",
   "Value bubble": "Bulle de valeur",
   "While you drag, the thumb follows the pointer exactly. When the value jumps, from a press on the track, a key or a new controlled value, the thumb and fill glide there in 180ms instead of teleporting.": "Pendant le glissement, le curseur suit exactement le pointeur. Quand la valeur saute, par un appui sur la piste, une touche ou une nouvelle valeur contrôlée, le curseur et le remplissage y glissent en 180ms au lieu de se téléporter.",

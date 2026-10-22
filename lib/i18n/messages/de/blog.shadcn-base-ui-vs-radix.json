@@ -46,6 +46,5 @@
   "Two reasons were given. Base UI had reached a stable 1.6.0 with over six million weekly downloads, and projects created through `shadcn/create` were already choosing Base UI over Radix about two to one. The default followed what people were picking.": "Zwei Gründe wurden genannt. Base UI hatte ein stabiles 1.6.0 mit über sechs Millionen wöchentlichen Downloads erreicht, und über `shadcn/create` erstellte Projekte wählten bereits etwa zwei zu eins Base UI statt Radix. Der Standard folgte dem, was die Leute wählten.",
   "What I would not do": "Was ich nicht tun würde",
   "What changed, in one paragraph": "Was sich geändert hat, in einem Absatz",
-  "Why the default moved": "Warum sich der Standard verschoben hat",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code": "shadcn/ui ist auf Base UI umgestiegen. Das ändert sich wirklich in deinem Code"
+  "Why the default moved": "Warum sich der Standard verschoben hat"
 }

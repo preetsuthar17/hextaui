@@ -51,6 +51,7 @@
   "The trigger’s width.": "La largeur du déclencheur.",
   "Unbroken text wraps inside the popup. When the content is taller than the space available, the popup scrolls inside instead of running off screen.": "Le texte sans espace passe à la ligne dans la popup. Quand le contenu dépasse l'espace disponible, la popup défile en interne au lieu de sortir de l'écran.",
   "Use `className=\"w-auto p-0\"` to fit content that brings its own padding. The popup follows the calendar as it changes months.": "Utilisez `className=\"w-auto p-0\"` pour ajuster un contenu qui apporte son propre padding. La popup suit le calendrier quand il change de mois.",
+  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.": "Des conversations vocales avec un assistant IA. Gère l’écoute, les interruptions et les sous-titres, en session plein écran ou dans une pastille vocale du chat.",
   "When the content grows or shrinks, the popup animates its height instead of jumping. Continuous changes, like typing, follow the content directly so nothing lags behind.": "Quand le contenu grandit ou rétrécit, la popup anime sa hauteur au lieu de sauter. Les changements continus, comme la saisie, suivent directement le contenu pour que rien ne traîne.",
   "Where focus goes when the popover closes.": "Où va le focus quand le popover se ferme.",
   "Where focus goes when the popover opens.": "Où va le focus quand le popover s'ouvre.",

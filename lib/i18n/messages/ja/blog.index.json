@@ -1,14 +1,5 @@
 {
   "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces, e-commerce UI and registries that AI coding agents can use.": "HextaUI の作者による記事。shadcn/ui、Base UI、難しい UI の状態、AI チャットのインターフェース、EC の UI、AI コーディングエージェントが使えるレジストリについて。",
-  "Building an e-commerce admin dashboard in Next.js: orders, refunds and inventory": "Next.js で作る EC 管理ダッシュボード: 注文、返金、在庫",
-  "How to build a one-page checkout in React and Next.js that survives declines and changed prices": "カード拒否や価格変更にも耐える 1 ページチェックアウトを React と Next.js で作る方法",
-  "How to build a shadcn/ui registry that Claude Code and Cursor can actually use": "Claude Code と Cursor が本当に使える shadcn/ui レジストリの作り方",
-  "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users": "実際のユーザーに耐える AI チャット UI を shadcn/ui と Vercel AI SDK で作る方法",
-  "How to build an address form that works in every country, in React": "どの国でも使える住所フォームを React で作る方法",
   "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens, checkout and store admin UI, and registries for coding agents.": "HextaUI を作る中で得たメモ。shadcn/ui と Base UI、多くのインターフェースが省く状態、AI チャット画面、チェックアウトとストア管理画面の UI、コーディングエージェント向けのレジストリ。",
-  "Product variant picker UX in React: sold-out sizes, missing combinations and back-in-stock": "React で作る商品バリアントピッカーの UX: 売り切れのサイズ、存在しない組み合わせ、再入荷通知",
-  "Shopping cart UX in React: optimistic updates, undo and money in minor units": "React のショッピングカート UX: 楽観的更新、元に戻す、補助単位で扱うお金",
-  "The states shadcn/ui leaves to you: loading, success, error, empty and reduced motion": "shadcn/ui があなたに委ねる状態: ローディング、成功、エラー、空、そして reduced motion",
-  "Vercel's AI Elements is being deprecated. Here are the alternatives for shadcn/ui AI chat UI": "Vercel の AI Elements が非推奨になります。shadcn/ui の AI チャット UI の代替はこちら",
-  "shadcn/ui switched to Base UI. Here is what actually changes in your code": "shadcn/ui が Base UI に切り替わりました。コードで実際に変わることはこれです"
+  "The hard parts, written down": "難しい部分を、書き残す"
 }

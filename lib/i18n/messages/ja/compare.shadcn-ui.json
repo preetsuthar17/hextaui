@@ -1,6 +1,5 @@
 {
   "9 hooks and 5 utilities you can install on their own, like <0>useButtonFeedback</0> and <1>useDelayedLoading</1>.": "<0>useButtonFeedback</0> や <1>useDelayedLoading</1> など、単独でインストールできる 9 個のフックと 5 個のユーティリティ。",
-  "<0>25 blocks</0> for AI products, such as a chat thread, tool calls and voice mode. These are part of HextaUI Pro, which is paid, and <1>Prompt Input</1> is free.": "チャットスレッド、ツール呼び出し、音声モードなど、AI プロダクト向けの<0> 25 個のブロック</0>。これらは有料の HextaUI Pro に含まれ、<1>Prompt Input</1> は無料です。",
   "Adding a component looks like this:": "コンポーネントの追加は次のようになります。",
   "Because the names and tokens match, you can replace one component at a time. Run the add command with `--overwrite` to swap a shadcn/ui component for the HextaUI version, then review the diff in git before you keep it. Components you don’t replace keep working. HextaUI has 65 components, and <0>Installation</0> covers the theme tokens they expect.": "名前とトークンが一致しているため、コンポーネントを 1 つずつ置き換えられます。add コマンドを `--overwrite` 付きで実行すると shadcn/ui のコンポーネントを HextaUI 版に差し替えられるので、採用する前に git で差分を確認してください。置き換えないコンポーネントはそのまま動作します。HextaUI には 65 個のコンポーネントがあり、<0>インストール</0>では各コンポーネントが前提とするテーマトークンを説明しています。",
   "Component by component": "コンポーネントごと",

@@ -19,7 +19,12 @@ export const metadata: Metadata = pageMetadata({
 
 export default function Page() {
   return (
-    <LegalPage href="/legal/license" title="Pro License" updated="2026-10-08">
+    <LegalPage
+      href="/legal/license"
+      title="Pro License"
+      description={String(metadata.description)}
+      updated="2026-10-08"
+    >
       <DocsParagraph>
         This license covers the code of HextaUI Pro blocks. It applies when you
         buy HextaUI Pro, and lasts as long as you follow it. The free components

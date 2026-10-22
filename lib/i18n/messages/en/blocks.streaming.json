@@ -10,6 +10,7 @@
   "Streaming Text for AI responses in React & shadcn/ui",
   "StreamingText",
   "Text that isn’t streaming renders in full on the first frame, so history and server renders never animate. StreamingText adds a soft fade on the newest words and a caret while it writes. useSmoothText gives you the pacing alone, to put in front of any renderer, including Markdown.",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.",
   "The caret is decorative and hidden from assistive technology.",
   "The full text received so far.",
   "The pacing on its own. Returns the text to show right now and whether it is still catching up.",

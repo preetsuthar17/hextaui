@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { DocsBreadcrumbs } from "@/components/docs/docs-breadcrumbs"
 import { DocsRelated } from "@/components/docs/docs-related"
 import { CatalogGrid } from "@/components/site/catalog-card"
+import { CatalogBody, CatalogHeader } from "@/components/site/catalog-header"
 import { ComponentCard } from "@/components/site/component-card"
 import { JsonLd } from "@/components/site/json-ld"
 import {
@@ -57,7 +58,7 @@ export default async function Page({
   ]
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-16">
+    <main className="flex flex-1 flex-col">
       <JsonLd
         data={pageJsonLd({
           path,
@@ -72,56 +73,51 @@ export default async function Page({
           })),
         })}
       />
-      <header className="flex flex-col gap-3">
-        <DocsBreadcrumbs crumbs={crumbs} />
-        <h1 className="text-xl font-semibold tracking-tight">
-          {t(category.name)}
-        </h1>
-        {category.intro.map((paragraph) => (
-          <p
-            key={paragraph}
-            className="max-w-2xl text-sm/6 text-pretty text-muted-foreground"
-          >
-            {t(paragraph)}
-          </p>
+      <CatalogHeader
+        breadcrumbs={<DocsBreadcrumbs crumbs={crumbs} />}
+        title={t(category.name)}
+        lede={category.intro.map((paragraph) => (
+          <p key={paragraph}>{t(paragraph)}</p>
         ))}
-      </header>
-      <CatalogGrid className="mt-10">
-        {components.map((component) => (
-          <ComponentCard
-            key={component.slug}
-            slug={component.slug}
-            name={component.name}
-          />
-        ))}
-      </CatalogGrid>
-      <div className="max-w-3xl">
-        <DocsRelated
-          title="What each one does"
-          links={components.map((component) => ({
-            href: `/docs/${component.slug}`,
-            title: component.name,
-            description: component.description,
-          }))}
-        />
-        <DocsRelated
-          title="Built into Pro blocks"
-          description="Blocks for AI products that are built from these components."
-          links={blocks}
-          event={{ name: "Pro link clicked", from: "component-category" }}
-        />
-        <DocsRelated
-          title="Other categories"
-          variant="names"
-          links={componentCategories
-            .filter((item) => item.slug !== category.slug)
-            .map((item) => ({
-              href: getComponentCategoryHref(item.slug),
-              title: t(item.name),
-              description: item.description,
+      />
+      <CatalogBody>
+        <CatalogGrid>
+          {components.map((component) => (
+            <ComponentCard
+              key={component.slug}
+              slug={component.slug}
+              name={component.name}
+            />
+          ))}
+        </CatalogGrid>
+        <div className="max-w-3xl">
+          <DocsRelated
+            title="What each one does"
+            links={components.map((component) => ({
+              href: `/docs/${component.slug}`,
+              title: component.name,
+              description: component.description,
             }))}
-        />
-      </div>
+          />
+          <DocsRelated
+            title="Built into Pro blocks"
+            description="Blocks for AI products that are built from these components."
+            links={blocks}
+            event={{ name: "Pro link clicked", from: "component-category" }}
+          />
+          <DocsRelated
+            title="Other categories"
+            variant="names"
+            links={componentCategories
+              .filter((item) => item.slug !== category.slug)
+              .map((item) => ({
+                href: getComponentCategoryHref(item.slug),
+                title: t(item.name),
+                description: item.description,
+              }))}
+          />
+        </div>
+      </CatalogBody>
     </main>
   )
 }

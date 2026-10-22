@@ -8,11 +8,11 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable } from "@/components/site/compare"
 import type { BlogBlock, InlineNode } from "@/lib/blog-markdown"
 import { getDocsSlug } from "@/lib/docs"
-import { translateItems } from "@/lib/i18n/rich"
+import { t, translateItems } from "@/lib/i18n/rich"
 import { siteUrl } from "@/lib/site"
 
 type Section = { title?: string; blocks: BlogBlock[] }
@@ -94,6 +94,31 @@ function Block({ block, caption }: { block: BlogBlock; caption: string }) {
   }
 }
 
+function BlogSection({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  const id = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+
+  return (
+    <section aria-labelledby={id} className="mt-14">
+      <h2
+        id={id}
+        className="scroll-mt-20 font-display text-2xl/tight font-semibold tracking-tight text-balance"
+      >
+        {t(title)}
+      </h2>
+      {children}
+    </section>
+  )
+}
+
 function groupSections(blocks: BlogBlock[]) {
   const sections: Section[] = []
   for (const block of blocks) {
@@ -114,9 +139,9 @@ function BlogBody({ blocks }: { blocks: BlogBlock[] }) {
       <Block key={position} block={block} caption={section.title ?? "Table"} />
     ))
     return section.title ? (
-      <LegalSection key={index} title={section.title}>
+      <BlogSection key={index} title={section.title}>
         {content}
-      </LegalSection>
+      </BlogSection>
     ) : (
       <React.Fragment key={index}>{content}</React.Fragment>
     )

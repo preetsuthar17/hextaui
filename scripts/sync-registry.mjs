@@ -134,6 +134,13 @@ function keyframes(body) {
   )
 }
 
+const siteOnly =
+  /^(brand(-|$)|color-brand|frame-x$|font-display$|ease-hero$|ease-in-out-quad$)/
+
+function isSiteOnly(name) {
+  return siteOnly.test(name)
+}
+
 function readTheme() {
   const source = fs
     .readFileSync(path.join(root, "app/globals.css"), "utf8")
@@ -154,13 +161,17 @@ function readTheme() {
       for (const child of parseCss(body)) {
         if (child.prop) {
           const name = child.prop.slice(2)
-          if (!isStockTheme(name)) theme[name] = child.value
+          if (!isStockTheme(name) && !isSiteOnly(name)) {
+            theme[name] = child.value
+          }
         } else if (child.prelude.startsWith("@keyframes ")) {
           frames[child.prelude] = keyframes(child.body)
         }
       }
     } else if (prelude.startsWith("@keyframes ")) {
-      frames[prelude] = keyframes(body)
+      if (!prelude.startsWith("@keyframes hero-")) {
+        frames[prelude] = keyframes(body)
+      }
     } else if (prelude.startsWith("@utility ")) {
       utilities[prelude] = declarations(body)
     } else if (prelude.startsWith("@property ")) {
@@ -169,6 +180,7 @@ function readTheme() {
       for (const child of parseCss(body)) {
         if (child.prop) {
           const name = child.prop.slice(2)
+          if (isSiteOnly(name)) continue
           if (prelude === ".dark") dark[name] = child.value
           else light[name] = child.value
         } else if (child.prelude.startsWith("@media ")) {

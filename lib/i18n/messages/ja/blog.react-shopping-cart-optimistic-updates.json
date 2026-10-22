@@ -27,7 +27,6 @@
   "React shopping cart UX: optimistic updates and undo": "React のショッピングカート UX: 楽観的更新と元に戻す",
   "Refusing to add two currencies is not paranoia. It catches the bug where a cart in EUR receives a shipping rate in USD.": "2 つの通貨を足すのを拒否するのは心配しすぎではありません。EUR のカートに USD の送料が入ってくるバグを捕まえてくれます。",
   "Send the absolute quantity, never \"plus one\". An absolute value is safe to retry and safe to receive late. If two requests for the same line do overlap, ignore any response that is older than the latest one you sent.": "「プラス 1」ではなく、常に絶対的な数量を送ります。絶対値なら再試行しても遅れて届いても安全です。同じ行への 2 つのリクエストが重なった場合は、最後に送ったものより古いレスポンスを無視します。",
-  "Shopping cart UX in React: optimistic updates, undo and money in minor units": "React のショッピングカート UX: 楽観的更新、元に戻す、補助単位で扱うお金",
   "Small things the shopper sees on every product page:": "買い物客がすべての商品ページで目にする小さなこと:",
   "Someone who wants five of something presses plus four times in a second. Sending four requests creates four chances to fail and four responses that can arrive out of order. Send one request with the final quantity instead.": "何かを 5 個欲しい人は、1 秒のうちにプラスを 4 回押します。リクエストを 4 回送ると、失敗の機会が 4 回生まれ、順不同で届きうるレスポンスが 4 つ返ってきます。代わりに最終的な数量で 1 回だけリクエストを送ります。",
   "Stale prices and sold-out lines flagged on the line, blocking checkout when needed.": "古い価格や売り切れの行は行に表示し、必要ならチェックアウトをブロックする。",

@@ -6,9 +6,9 @@ import {
   DocsList,
   DocsParagraph,
 } from "@/components/docs/docs-content"
-import { LegalLink, LegalSection } from "@/components/legal/legal-page"
+import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
-import { InfoPage } from "@/components/site/info-page"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { pageMetadata } from "@/lib/metadata"
 
 const path = "/compare/shadcn-ai-chat-templates"
@@ -23,6 +23,7 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
   return (
     <InfoPage
+      eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
         {
@@ -33,7 +34,7 @@ export default function Page() {
       title="shadcn/ui AI chat templates"
       lead="A shadcn/ui AI chat template is chat UI built from shadcn/ui components that you copy into your own project. Some give you pieces, some give you a whole app. This page compares seven options as of October 2026, and lists what a chat has to handle before you ship it."
     >
-      <LegalSection title="What a chat template has to handle">
+      <InfoSection title="What a chat template has to handle">
         <DocsParagraph>
           The message list and the composer take an afternoon. The states around
           them take weeks. Check a template against this list before you choose
@@ -73,9 +74,9 @@ export default function Page() {
             phone with the keyboard open.
           </li>
         </DocsList>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="The options at a glance">
+      <InfoSection title="The options at a glance" wide>
         <CompareTable
           caption="shadcn/ui AI chat templates and kits"
           columns={["What you get", "License", "Backend"]}
@@ -126,9 +127,9 @@ export default function Page() {
             },
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="HextaUI">
+      <InfoSection title="HextaUI">
         <DocsParagraph>
           HextaUI is a component library for shadcn/ui with Pro blocks for AI
           products. <LegalLink href="/blocks/hexta-ai">HextaAI</LegalLink> is
@@ -153,9 +154,9 @@ export default function Page() {
             "https://hextaui.com/r/pro/prompt-input.json",
           ]}
         />
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="Vercel Chatbot">
+      <InfoSection title="Vercel Chatbot">
         <DocsParagraph>
           <LegalLink href="https://github.com/vercel/chatbot">
             Vercel Chatbot
@@ -165,9 +166,9 @@ export default function Page() {
           want a working product to deploy today and are happy with its design
           and its stack.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="AI Elements">
+      <InfoSection title="AI Elements">
         <DocsParagraph>
           <LegalLink href="https://ui.shadcn.com/docs/ai-elements">
             AI Elements from shadcn/ui
@@ -185,9 +186,9 @@ export default function Page() {
           </LegalLink>{" "}
           for a piece-by-piece comparison.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="assistant-ui">
+      <InfoSection title="assistant-ui">
         <DocsParagraph>
           <LegalLink href="https://github.com/assistant-ui/assistant-ui">
             assistant-ui
@@ -197,9 +198,9 @@ export default function Page() {
           LangGraph or your own backend. Choose it when the hard part is state
           rather than the interface, for example an agent on LangGraph.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="prompt-kit and shadcn-chatbot-kit">
+      <InfoSection title="prompt-kit and shadcn-chatbot-kit">
         <DocsParagraph>
           <LegalLink href="https://github.com/ibelick/prompt-kit">
             prompt-kit
@@ -212,9 +213,9 @@ export default function Page() {
           good fit for a small chat inside a larger app, where you need a
           message list, a prompt box and Markdown, and little else.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
-      <LegalSection title="How to choose">
+      <InfoSection title="How to choose">
         <DocsList>
           <li>
             You want a deployable app this week and its stack suits you: Vercel
@@ -240,7 +241,7 @@ export default function Page() {
           backend and swap its composer for Prompt Input, which reads the same{" "}
           <DocsCode>useChat</DocsCode> status.
         </DocsParagraph>
-      </LegalSection>
+      </InfoSection>
 
       <MoreComparisons current={path} />
     </InfoPage>

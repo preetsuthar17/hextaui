@@ -47,6 +47,7 @@
   "Sign out one session. Remove it from sessions when it resolves and the row folds away.": "1つのセッションをサインアウトします。resolveされたらsessionsから削除すると、行が折りたたまれます。",
   "Sign-outs, added and removed passkeys and the password strength are announced politely. Errors from your callbacks are announced as alerts and stay next to the field or button they belong to.": "サインアウト、パスキーの追加と削除、パスワードの強度は、politeに読み上げられます。コールバックからのエラーはalertとして読み上げられ、関連するフィールドやボタンの近くに表示されたままになります。",
   "Submits the password form from any field, and deletes the account from the phrase field once it matches.": "どのフィールドからでもパスワードフォームを送信し、フレーズのフィールドが一致するとそこからアカウントを削除します。",
+  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "AI 製品の設定にある「セキュリティ」セクション。セッション、リカバリーコード付きの二要素認証、入力確認を経た削除に対応します。",
   "The account’s email. Used in the delete phrase, the password manager hint and the recovery codes file.": "アカウントのメールアドレス。削除フレーズ、パスワードマネージャーのヒント、リカバリーコードのファイルに使われます。",
   "The confirmation phrase is delete followed by this.": "確認フレーズは、deleteに続けてこの値を付けたものです。",
   "The group heading.": "グループの見出し。",

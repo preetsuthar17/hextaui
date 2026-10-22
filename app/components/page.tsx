@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import Link from "@/components/site/link"
 import { CatalogGrid, CatalogList } from "@/components/site/catalog-card"
+import { CatalogBody, CatalogHeader } from "@/components/site/catalog-header"
 import { CatalogViewToggle } from "@/components/site/catalog-view"
 import { ComponentCard } from "@/components/site/component-card"
 import { JsonLd } from "@/components/site/json-ld"
@@ -25,11 +26,11 @@ export const metadata: Metadata = pageMetadata({
 })
 
 const categoryLinkClassName =
-  "inline-flex rounded-md border px-2.5 py-1 text-sm transition-colors duration-150 ease-out-cubic outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+  "inline-flex h-8 items-center rounded-full px-3 text-sm font-medium whitespace-nowrap text-muted-foreground inset-ring-(length:--hairline) inset-ring-border transition-colors duration-150 ease-out-cubic outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none forced-colors:border"
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-16">
+    <main className="flex flex-1 flex-col">
       <JsonLd
         data={pageJsonLd({
           path: "/components",
@@ -43,51 +44,53 @@ export default function Page() {
           })),
         })}
       />
-      <header className="flex items-end justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-xl font-semibold tracking-tight">
-            {t("Components")}
-          </h1>
-          <p className="text-sm text-muted-foreground">
+      <CatalogHeader
+        eyebrow={t("Open source")}
+        title={t("Components")}
+        lede={
+          <p>
             <T>
               {components.length} components. Open one to see every state live.
             </T>
           </p>
-        </div>
-        <CatalogViewToggle />
-      </header>
-      <nav aria-labelledby="component-categories" className="-mt-4">
-        <h2 id="component-categories" className="sr-only">
-          {t("Browse by category")}
-        </h2>
-        <ul className="flex flex-wrap gap-2">
-          {componentCategories.map((category) => (
-            <li key={category.slug}>
-              <Link
-                href={getComponentCategoryHref(category.slug)}
-                className={categoryLinkClassName}
-              >
-                {t(category.name)}
-              </Link>
-            </li>
+        }
+        action={<CatalogViewToggle />}
+      >
+        <nav aria-labelledby="component-categories" className="mt-8">
+          <h2 id="component-categories" className="sr-only">
+            {t("Browse by category")}
+          </h2>
+          <ul className="flex flex-wrap gap-2">
+            {componentCategories.map((category) => (
+              <li key={category.slug}>
+                <Link
+                  href={getComponentCategoryHref(category.slug)}
+                  className={categoryLinkClassName}
+                >
+                  {t(category.name)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </CatalogHeader>
+      <CatalogBody className="flex flex-col gap-10">
+        <CatalogGrid className="in-data-[catalog-view=single]:mx-auto in-data-[catalog-view=single]:w-full in-data-[catalog-view=single]:max-w-3xl">
+          {components.map((component) => (
+            <ComponentCard
+              key={component.slug}
+              slug={component.slug}
+              name={component.name}
+            />
           ))}
-        </ul>
-      </nav>
-      <CatalogGrid className="in-data-[catalog-view=single]:mx-auto in-data-[catalog-view=single]:w-full in-data-[catalog-view=single]:max-w-3xl">
-        {components.map((component) => (
-          <ComponentCard
-            key={component.slug}
-            slug={component.slug}
-            name={component.name}
-          />
-        ))}
-      </CatalogGrid>
-      <CatalogList
-        items={components.map((component) => ({
-          href: `/docs/${component.slug}`,
-          title: component.name,
-        }))}
-      />
+        </CatalogGrid>
+        <CatalogList
+          items={components.map((component) => ({
+            href: `/docs/${component.slug}`,
+            title: component.name,
+          }))}
+        />
+      </CatalogBody>
     </main>
   )
 }

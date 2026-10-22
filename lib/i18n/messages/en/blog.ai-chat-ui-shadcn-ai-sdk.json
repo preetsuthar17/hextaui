@@ -18,7 +18,6 @@
   "Code blocks need the same care. Highlight incrementally and never re-highlight the whole block on every token.",
   "Every icon-only button has `aria-label`.",
   "Follow new tokens when the user is at the bottom. The moment they scroll up, stop following, and show a \"jump to latest\" button with a count of what they missed. When they jump, follow again.",
-  "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users",
   "I have built this screen more times than I would like, most recently as the blocks behind <0>HextaUI</0>. This is the checklist of what a chat UI has to handle before it is done, with the shadcn/ui and AI SDK specifics for each.",
   "If the user sends a message, scroll so their message pins to the top of the viewport and the reply streams below it. That is how the two big chat apps behave now and users expect it.",
   "If you want the pieces, shadcn/ui shipped AI Elements in October 2026: 21 patterns you copy into your project and compose yourself, including Chat, Prompt Input, Reasoning and Tool. Vercel's earlier AI Elements library is being deprecated at the end of November 2026 in favor of them.",

@@ -2,7 +2,6 @@
   "\"expanded\" or \"collapsed\".": "\"expanded\" veya \"collapsed\".",
   "A <l0/> and its <l1/> items. Set `gap=\"none\"` for dense lists like chat history, where rows sit flush.": "Bir <l0/> ve <l1/> öğeleri. Satırların bitişik durduğu sohbet geçmişi gibi yoğun listeler için `gap=\"none\"` ayarlayın.",
   "A <l0/> that takes the rest of the width. Next to an `inset` sidebar it becomes a rounded card.": "Kalan genişliği alan bir <l0/>. Bir `inset` kenar çubuğunun yanında yuvarlak köşeli bir karta dönüşür.",
-  "A count at the end of the item.": "Öğenin sonunda bir sayı.",
   "A ghost icon `Button` that calls `toggleSidebar`. Call `event.preventDefault()` in `onClick` to stop it. Pass children to replace the icon.": "`toggleSidebar` çağıran, ghost simgeli bir `Button`. Durdurmak için `onClick` içinde `event.preventDefault()` çağırın. Simgeyi değiştirmek için alt öğe verin.",
   "A nested link.": "İç içe bir bağlantı.",
   "A nested list with a line on its leading edge. It folds away when the sidebar collapses to icons.": "Ön kenarında çizgi bulunan iç içe bir liste. Kenar çubuğu simgelere daraldığında katlanır.",

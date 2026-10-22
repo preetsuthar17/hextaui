@@ -97,6 +97,7 @@
   "Starts dictation, and inserts the transcript when pressed again.": "Dikteyi başlatır ve yeniden basıldığında transkripti ekler.",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "Akan bir yanıtı durdurur, bir menüyü kapatır ya da bir kaydı iptal eder.",
   "Switch label.": "Anahtar etiketi.",
+  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Bir modelden sabit hızda akan metin. Düzensiz parçalar yumuşatılır, yeni sözcükler solarak belirir ve yazarken bir imleç görünür.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "İmleç menüsü aria-activedescendant içeren bir combobox'tur; böylece içinde gezinirken odak metinden asla ayrılmaz.",
   "The character that opens it, such as @ or /.": "Onu açan karakter, örneğin @ veya /.",
   "The choices. Descriptions show under each label.": "Seçenekler. Açıklamalar her etiketin altında görünür.",

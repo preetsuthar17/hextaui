@@ -80,21 +80,25 @@ function BlockTile({
   name,
   title,
   free,
+  className,
+  panelClassName = "aspect-square",
 }: {
   name: string
   title: string
   free: boolean
+  className?: string
+  panelClassName?: string
 }) {
   const [ref, inView] = useInViewOnce<HTMLLIElement>()
   const [granted, done] = useLoadSlot(inView)
   const [loaded, setLoaded] = React.useState(false)
 
   return (
-    <li ref={ref} className="preview-tile col-span-2">
-      <div inert className="preview-panel aspect-square">
+    <li ref={ref} className={cn("preview-tile col-span-2", className)}>
+      <div inert className={cn("preview-panel", panelClassName)}>
         {granted ? (
           <iframe
-            src={`/preview/blocks/${name}`}
+            src={`/preview/blocks/${name}?tile`}
             title={`${title} preview`}
             tabIndex={-1}
             aria-hidden
@@ -145,13 +149,13 @@ function DemoTile({
   )
 }
 
-function HomePreview({
+function HomeBlocks({
   blocks,
 }: {
   blocks: { name: string; title: string; free: boolean }[]
 }) {
   return (
-    <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-2 lg:grid-cols-4">
       {blocks.map((block) => (
         <BlockTile
           key={block.name}
@@ -160,6 +164,13 @@ function HomePreview({
           free={block.free}
         />
       ))}
+    </ul>
+  )
+}
+
+function HomeDemos() {
+  return (
+    <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {tiles.map((tile) => (
         <DemoTile key={tile.slug} {...tile} />
       ))}
@@ -167,4 +178,25 @@ function HomePreview({
   )
 }
 
-export { HomePreview }
+function HomeBlockStage({
+  name,
+  title,
+  free,
+}: {
+  name: string
+  title: string
+  free: boolean
+}) {
+  return (
+    <ul className="grid grid-cols-2">
+      <BlockTile
+        name={name}
+        title={title}
+        free={free}
+        panelClassName="aspect-square sm:aspect-[16/10]"
+      />
+    </ul>
+  )
+}
+
+export { HomeBlocks, HomeBlockStage, HomeDemos }
