@@ -37,6 +37,7 @@ const categoryTitles: Record<string, string> = {
   marketing: "Marketing",
   application: "Application",
   settings: "Settings",
+  ecommerce: "E-commerce",
 }
 
 const proBlocks = catalog as ProBlock[]
@@ -80,6 +81,7 @@ export {
   blockSections,
   blocksNav,
   blocksNavItems,
+  categoryTitle,
   getProBlock,
   proBlockParams,
   proBlocks,

@@ -24,6 +24,7 @@ import {
   IconLink,
   IconMarkdown,
   IconMoon,
+  IconPuzzle,
   IconSearch,
   IconSun,
   IconTerminal2,
@@ -36,6 +37,7 @@ import { useTheme } from "next-themes"
 
 import { getPackageCommand } from "@/components/docs/docs-command"
 import { copyMarkdown } from "@/components/docs/docs-page-actions"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -61,10 +63,13 @@ import {
   docsUtilities,
 } from "@/lib/docs"
 import {
+  blockPageSlug,
   createDocsSearch,
   docsPageHref,
   queryTokens,
+  searchPageHref,
   unpackDocsSearchIndex,
+  type DocsSearchBlock,
   type DocsSearchDocument,
   type DocsSearchKind,
   type DocsSearchRecord,
@@ -78,7 +83,7 @@ import { useChrome } from "@/lib/i18n/chrome"
 
 type PageKind = Extract<
   DocsSearchKind,
-  "guide" | "component" | "hook" | "utility"
+  "guide" | "component" | "hook" | "utility" | "block"
 >
 
 type PageEntry = DocsSearchDocument & {
@@ -86,6 +91,8 @@ type PageEntry = DocsSearchDocument & {
   slug: string
   href: string
   description: string
+  category?: string
+  free?: boolean
 }
 
 type RecordEntry = DocsSearchDocument & {
@@ -118,13 +125,14 @@ type RecentEntry = {
 }
 
 type LoadedIndex = {
+  blocks: PageEntry[]
   records: RecordEntry[]
   bySlug: Map<string, RecordEntry[]>
   installable: Set<string>
 }
 
 type ResultGroup = {
-  key: "pages" | "sections" | "api" | "actions"
+  key: "pages" | "blocks" | "sections" | "api" | "actions"
   heading: string
   results: DocsSearchResult<Entry>[]
   limit: number
@@ -135,6 +143,7 @@ const kindIcons: Record<DocsSearchKind, Icon> = {
   component: IconComponents,
   hook: IconFishHook,
   utility: IconTool,
+  block: IconPuzzle,
   section: IconHash,
   example: IconEye,
   api: IconBraces,
@@ -154,6 +163,7 @@ const sectionIcons: Record<string, Icon> = {
 
 const groupLimits: Record<ResultGroup["key"], number> = {
   pages: 6,
+  blocks: 6,
   sections: 8,
   api: 6,
   actions: 4,
@@ -164,6 +174,7 @@ const pageGroups: { heading: string; kind: PageKind }[] = [
   { heading: "Components", kind: "component" },
   { heading: "Hooks", kind: "hook" },
   { heading: "Utilities", kind: "utility" },
+  { heading: "Blocks", kind: "block" },
 ]
 
 function toPageEntry(
@@ -199,8 +210,22 @@ const pageEntries: PageEntry[] = [
   ),
 ]
 
-const pageBySlug = new Map(pageEntries.map((entry) => [entry.slug, entry]))
-const pageById = new Map(pageEntries.map((entry) => [entry.id, entry]))
+function toBlockEntry(block: DocsSearchBlock): PageEntry {
+  const slug = blockPageSlug(block.name)
+  return {
+    id: `page:${slug}`,
+    slug,
+    title: block.title,
+    kind: "block",
+    href: searchPageHref(slug),
+    description: block.description,
+    text: block.text ? `${block.description} ${block.text}` : block.description,
+    keywords: block.keywords,
+    category: block.category,
+    ...(block.free ? { free: true } : {}),
+  }
+}
+
 const pageByHref = new Map(pageEntries.map((entry) => [entry.href, entry]))
 
 function isPage(entry: Entry | undefined): entry is PageEntry {
@@ -232,6 +257,10 @@ let indexRequest: Promise<LoadedIndex> | null = null
 
 function buildIndex(packed: PackedDocsSearchIndex): LoadedIndex {
   const index = unpackDocsSearchIndex(packed)
+  const blocks = (index.blocks ?? []).map(toBlockEntry)
+  const titles = new Map(
+    [...pageEntries, ...blocks].map((entry) => [entry.slug, entry.title])
+  )
   const seen = new Set<string>()
   const records: RecordEntry[] = []
   const bySlug = new Map<string, RecordEntry[]>()
@@ -246,7 +275,7 @@ function buildIndex(packed: PackedDocsSearchIndex): LoadedIndex {
       id,
       title: record.title,
       kind: record.kind,
-      page: pageBySlug.get(record.page)?.title ?? record.page,
+      page: titles.get(record.page) ?? record.page,
       trail: record.trail,
       text: record.text,
       detail: record.type,
@@ -262,7 +291,7 @@ function buildIndex(packed: PackedDocsSearchIndex): LoadedIndex {
     }
   }
 
-  return { records, bySlug, installable: new Set(index.installable) }
+  return { blocks, records, bySlug, installable: new Set(index.installable) }
 }
 
 function loadIndex() {
@@ -450,30 +479,7 @@ function usePageActions(
             },
           ]
         : []),
-      {
-        id: `page-action:copy-markdown:${page.slug}`,
-        title: "Copy page as Markdown",
-        kind: "action",
-        icon: IconMarkdown,
-        description: `The whole ${page.title} page, ready to paste into an AI assistant.`,
-        keywords: ["md", "llm", "ai", "copy"],
-        copy: true,
-        run: () =>
-          notify(
-            () => copyMarkdown(markdownHref(page.slug)),
-            "Copied page as Markdown"
-          ),
-      },
-      {
-        id: `page-action:view-markdown:${page.slug}`,
-        title: "View as Markdown",
-        kind: "action",
-        icon: IconFileText,
-        description: markdownHref(page.slug),
-        keywords: ["md", "raw", "source"],
-        href: markdownHref(page.slug),
-        external: true,
-      },
+      ...(page.kind === "block" ? [] : pageMarkdownActions(page)),
       {
         id: `page-action:copy-link:${page.slug}`,
         title: "Copy link",
@@ -487,6 +493,35 @@ function usePageActions(
       },
     ]
   }, [installable, page])
+}
+
+function pageMarkdownActions(page: PageEntry): ActionEntry[] {
+  return [
+    {
+      id: `page-action:copy-markdown:${page.slug}`,
+      title: "Copy page as Markdown",
+      kind: "action",
+      icon: IconMarkdown,
+      description: `The whole ${page.title} page, ready to paste into an AI assistant.`,
+      keywords: ["md", "llm", "ai", "copy"],
+      copy: true,
+      run: () =>
+        notify(
+          () => copyMarkdown(markdownHref(page.slug)),
+          "Copied page as Markdown"
+        ),
+    },
+    {
+      id: `page-action:view-markdown:${page.slug}`,
+      title: "View as Markdown",
+      kind: "action",
+      icon: IconFileText,
+      description: markdownHref(page.slug),
+      keywords: ["md", "raw", "source"],
+      href: markdownHref(page.slug),
+      external: true,
+    },
+  ]
 }
 
 function useGlobalActions(): ActionEntry[] {
@@ -714,6 +749,16 @@ function EntryRow({
           <Highlight text={crumb} tokens={tokens} />
         </span>
       ) : null}
+      {"category" in entry && entry.category ? (
+        <span className="max-w-1/2 min-w-0 shrink truncate text-xs text-muted-foreground">
+          <Highlight text={entry.category} tokens={tokens} />
+        </span>
+      ) : null}
+      {entry.kind === "block" && !("free" in entry && entry.free) ? (
+        <Badge size="sm" appearance="outline">
+          Pro
+        </Badge>
+      ) : null}
       {checked ? (
         <>
           <IconCheck aria-hidden="true" className="ms-auto size-4" />
@@ -845,7 +890,13 @@ function DocsSearchBody({
   const { index, failed } = useSearchIndex(open)
   const recent = useRecent()
   const globalActions = useGlobalActions()
-  const subpage = pages.page ? pageById.get(pages.page) : undefined
+  const allPages = React.useMemo(
+    () => [...pageEntries, ...(index?.blocks ?? [])],
+    [index]
+  )
+  const subpage = pages.page
+    ? allPages.find((entry) => entry.id === pages.page)
+    : undefined
   const pageActions = usePageActions(
     subpage,
     subpage ? (index?.installable.has(subpage.slug) ?? false) : false
@@ -859,8 +910,8 @@ function DocsSearchBody({
   const tokens = React.useMemo(() => queryTokens(query), [query])
 
   const searchDocs = React.useMemo(
-    () => createDocsSearch<Entry>([...pageEntries, ...(index?.records ?? [])]),
-    [index]
+    () => createDocsSearch<Entry>([...allPages, ...(index?.records ?? [])]),
+    [allPages, index]
   )
   const searchActions = React.useMemo(
     () => createDocsSearch<Entry>(globalActions),
@@ -878,7 +929,7 @@ function DocsSearchBody({
   const lookup = React.useMemo(() => {
     const map = new Map<string, Entry>()
     for (const entry of [
-      ...pageEntries,
+      ...allPages,
       ...(index?.records ?? []),
       ...globalActions,
       ...pageActions,
@@ -886,7 +937,7 @@ function DocsSearchBody({
       map.set(entry.id, entry)
     }
     return map
-  }, [globalActions, index, pageActions])
+  }, [allPages, globalActions, index, pageActions])
 
   const resolve = (id: string) =>
     lookup.get(id.startsWith("recent:") ? id.slice(7) : id)
@@ -1017,7 +1068,18 @@ function DocsSearchBody({
       {
         key: "pages" as const,
         heading: "Pages",
-        results: results.filter((result) => isPage(result.document)),
+        results: results.filter(
+          (result) =>
+            isPage(result.document) && result.document.kind !== "block"
+        ),
+      },
+      {
+        key: "blocks" as const,
+        heading: "Blocks",
+        results: results.filter(
+          (result) =>
+            isPage(result.document) && result.document.kind === "block"
+        ),
       },
       {
         key: "sections" as const,
@@ -1072,11 +1134,11 @@ function DocsSearchBody({
             ))}
           </CommandGroup>
         ) : null}
-        {pageGroups.map((group) => (
-          <CommandGroup key={group.kind} heading={group.heading}>
-            {pageEntries
-              .filter((entry) => entry.kind === group.kind)
-              .map((entry) => (
+        {pageGroups.map((group) => {
+          const entries = allPages.filter((entry) => entry.kind === group.kind)
+          return entries.length > 0 ? (
+            <CommandGroup key={group.kind} heading={group.heading}>
+              {entries.map((entry) => (
                 <EntryItem
                   key={entry.id}
                   entry={entry}
@@ -1084,8 +1146,9 @@ function DocsSearchBody({
                   onChoose={choose}
                 />
               ))}
-          </CommandGroup>
-        ))}
+            </CommandGroup>
+          ) : null
+        })}
         <CommandGroup heading="Actions">
           {globalActions.map((entry) => (
             <EntryItem
@@ -1108,7 +1171,7 @@ function DocsSearchBody({
             placeholder={
               subpage
                 ? `Search ${subpage.title}…`
-                : "Search components, hooks, props…"
+                : "Search components, blocks, props…"
             }
             onKeyDown={(event) => {
               if (event.key !== "Tab" || event.nativeEvent.isComposing) {
@@ -1197,7 +1260,7 @@ function DocsSearchProvider({ children }: { children: React.ReactNode }) {
         open={open}
         onOpenChange={setOpen}
         title="Search documentation"
-        description="Search components, hooks, utilities, sections and props."
+        description="Search components, hooks, utilities, blocks, sections and props."
         preserveSearch
       >
         <Command

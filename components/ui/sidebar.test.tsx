@@ -8,6 +8,7 @@ import { isApplePlatform } from "@/lib/hotkey"
 
 import {
   Sidebar,
+  SidebarCard,
   SidebarContent,
   SidebarGroup,
   SidebarGroupAction,
@@ -16,6 +17,11 @@ import {
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuButton,
+  SidebarMenuCollapsible,
+  SidebarMenuCollapsibleContent,
+  SidebarMenuCollapsibleTrigger,
+  SidebarMenuFlyout,
+  SidebarMenuFlyoutItem,
   SidebarMenuItem,
   SidebarMenuSkeleton,
   SidebarMenuSub,
@@ -490,5 +496,126 @@ describe("Sidebar", () => {
           ?.getAttribute("data-mobile-layout")
       ).toBe("fullscreen")
     )
+  })
+
+  it("shows a count badge capped at max with a screen reader label", () => {
+    mockViewport(false)
+    render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Orders</SidebarMenuButton>
+              <SidebarMenuBadge count={120} label="unfulfilled" />
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Inbox</SidebarMenuButton>
+              <SidebarMenuBadge count={0} label="unread" />
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Wholesale</SidebarMenuButton>
+              <SidebarMenuBadge dot tone="warning" label="Sync failed" />
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const badges = document.querySelectorAll("[data-slot=sidebar-menu-badge]")
+    expect(badges.length).toBe(2)
+    expect(badges[0].textContent).toBe("99+120 unfulfilled")
+    expect(badges[0].getAttribute("data-count")).toBe("120")
+    expect(badges[1].getAttribute("data-tone")).toBe("warning")
+    expect(badges[1].textContent).toBe("Sync failed")
+  })
+
+  it("collapses and expands a menu item with its own trigger", async () => {
+    mockViewport(false)
+    const onOpenChange = vi.fn()
+    render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarMenu>
+            <SidebarMenuCollapsible defaultOpen onOpenChange={onOpenChange}>
+              <SidebarMenuButton render={<a href="#orders" />}>Orders</SidebarMenuButton>
+              <SidebarMenuCollapsibleTrigger aria-label="Orders pages" />
+              <SidebarMenuCollapsibleContent>
+                <SidebarMenuSub>
+                  <SidebarMenuSubItem>
+                    <SidebarMenuSubButton href="#drafts">Drafts</SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                </SidebarMenuSub>
+              </SidebarMenuCollapsibleContent>
+            </SidebarMenuCollapsible>
+          </SidebarMenu>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const trigger = document.querySelector<HTMLElement>('[aria-label="Orders pages"]')!
+    expect(trigger.getAttribute("aria-expanded")).toBe("true")
+    expect(trigger.getAttribute("data-sidebar")).toBe("menu-collapsible-trigger")
+    expect(trigger.closest("li")?.getAttribute("data-slot")).toBe("sidebar-menu-collapsible")
+    fireEvent.click(trigger)
+    expect(trigger.getAttribute("aria-expanded")).toBe("false")
+    expect(onOpenChange).toHaveBeenLastCalledWith(false, expect.anything())
+    fireEvent.click(trigger)
+    expect(trigger.getAttribute("aria-expanded")).toBe("true")
+  })
+
+  it("renders the flyout trigger only while collapsed to icons", () => {
+    mockViewport(false)
+    function Flyout() {
+      return (
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuFlyout
+              label="Products"
+              content={
+                <SidebarMenuFlyoutItem isActive render={<a href="#inventory" />}>
+                  Inventory
+                </SidebarMenuFlyoutItem>
+              }
+            >
+              <SidebarMenuButton>Products</SidebarMenuButton>
+            </SidebarMenuFlyout>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      )
+    }
+    const { rerender } = render(
+      <SidebarProvider>
+        <Sidebar collapsible="icon">
+          <Flyout />
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const button = () => document.querySelector("[data-sidebar=menu-button]")!
+    expect(button().getAttribute("data-slot")).toBe("sidebar-menu-button")
+    rerender(
+      <SidebarProvider open={false}>
+        <Sidebar collapsible="icon">
+          <Flyout />
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(button().getAttribute("data-slot")).toBe("dropdown-menu-trigger")
+  })
+
+  it("dismisses a card after its exit and hides it in icon mode", async () => {
+    mockViewport(false)
+    const onDismiss = vi.fn()
+    render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarCard aria-label="Setup" onDismiss={onDismiss} dismissLabel="Dismiss setup">
+            Set up your store
+          </SidebarCard>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const frame = document.querySelector("[data-slot=sidebar-card-frame]")!
+    expect(frame.className).toContain("group-data-[collapsible=icon]:hidden")
+    fireEvent.click(document.querySelector('[aria-label="Dismiss setup"]')!)
+    expect(frame.hasAttribute("data-closing")).toBe(true)
+    await vi.waitFor(() => expect(onDismiss).toHaveBeenCalledTimes(1))
   })
 })

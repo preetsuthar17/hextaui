@@ -4,7 +4,12 @@ import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 import { useRender } from "@base-ui/react/use-render"
-import { IconLayoutSidebar } from "@tabler/icons-react"
+import {
+  IconCheck,
+  IconChevronRight,
+  IconLayoutSidebar,
+  IconX,
+} from "@tabler/icons-react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
@@ -12,7 +17,21 @@ import { useComposedRef } from "@/hooks/use-composed-ref"
 import { matchesHotkey } from "@/lib/hotkey"
 
 import { Button } from "@/components/ui/button"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { NumberFlow } from "@/components/ui/number-flow"
 import {
   Sheet,
   SheetContent,
@@ -284,7 +303,7 @@ function SidebarTooltips({
   const [handle] = React.useState(() => createTooltipHandle<React.ReactNode>())
 
   return (
-    <TooltipProvider closeDelay={100}>
+    <TooltipProvider delay={0} closeDelay={100}>
       <SidebarTooltipContext.Provider value={handle}>
         {children}
       </SidebarTooltipContext.Provider>
@@ -858,9 +877,11 @@ function SidebarMenuAction({
   className,
   render,
   showOnHover = false,
+  replacesBadge = false,
   ...props
 }: useRender.ComponentProps<"button"> & {
   showOnHover?: boolean
+  replacesBadge?: boolean
 }) {
   return useRender({
     defaultTagName: "button",
@@ -875,6 +896,9 @@ function SidebarMenuAction({
           className
         ),
       },
+      replacesBadge
+        ? ({ "data-replaces-badge": "" } as React.ComponentProps<"button">)
+        : {},
       props
     ),
     render,
@@ -887,19 +911,75 @@ function SidebarMenuAction({
 
 function SidebarMenuBadge({
   className,
+  count,
+  max = 99,
+  label,
+  locale,
+  dot = false,
+  tone = "default",
+  children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & {
+  count?: number
+  max?: number
+  label?: string
+  locale?: Intl.LocalesArgument
+  dot?: boolean
+  tone?: "default" | "success" | "warning" | "destructive"
+}) {
+  const counted = count !== undefined
+  if (counted && count <= 0 && children === undefined) {
+    return null
+  }
+  const capped = counted && count > max
+
   return (
     <div
       data-slot="sidebar-menu-badge"
       data-sidebar="menu-badge"
+      data-count={counted ? count : undefined}
+      data-dot={dot ? "" : undefined}
+      data-tone={tone}
       className={cn(
-        "pointer-events-none absolute end-1 top-1.5 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-sidebar-foreground tabular-nums select-none peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-3.5 peer-data-[size=sm]/menu-button:top-1 peer-data-active/menu-button:text-sidebar-accent-foreground pointer-coarse:peer-data-[size=default]/menu-button:top-2.5 pointer-coarse:peer-data-[size=sm]/menu-button:top-2",
-        iconCollapseFade,
+        "pointer-events-none absolute end-1 top-1.5 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-sidebar-foreground tabular-nums select-none peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-3.5 peer-data-[size=sm]/menu-button:top-1 peer-data-active/menu-button:text-sidebar-accent-foreground group-has-data-[sidebar=menu-collapsible-trigger]/menu-item:end-7 pointer-coarse:peer-data-[size=default]/menu-button:top-2.5 pointer-coarse:peer-data-[size=sm]/menu-button:top-2",
+        "data-[tone=destructive]:text-destructive data-[tone=success]:text-success data-[tone=warning]:text-warning",
+        "transition-opacity duration-100 pointer-fine:group-focus-within/menu-item:group-has-data-replaces-badge/menu-item:opacity-0 pointer-fine:group-hover/menu-item:group-has-data-replaces-badge/menu-item:opacity-0 motion-reduce:transition-none",
+        dot
+          ? "group-data-[collapsible=icon]:end-1.5 group-data-[collapsible=icon]:top-1.5 group-data-[collapsible=icon]:size-1.5 group-data-[collapsible=icon]:min-w-0 group-data-[collapsible=icon]:p-0"
+          : counted
+          ? "group-data-[collapsible=icon]:end-1.5 group-data-[collapsible=icon]:top-1.5 group-data-[collapsible=icon]:size-1.5 group-data-[collapsible=icon]:min-w-0 group-data-[collapsible=icon]:overflow-hidden group-data-[collapsible=icon]:rounded-full group-data-[collapsible=icon]:bg-sidebar-foreground group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:text-transparent forced-colors:group-data-[collapsible=icon]:bg-canvas-text"
+          : iconCollapseFade,
         className
       )}
       {...props}
-    />
+    >
+      {dot ? (
+        <>
+          <span
+            aria-hidden
+            className="size-1.5 shrink-0 rounded-full bg-current forced-colors:bg-canvas-text"
+          />
+          {label ? <span className="sr-only">{label}</span> : null}
+        </>
+      ) : counted ? (
+        <>
+          <span aria-hidden className="group-data-[collapsible=icon]:hidden">
+            {capped ? (
+              `${new Intl.NumberFormat(locale).format(max)}+`
+            ) : (
+              <NumberFlow value={count} locales={locale} />
+            )}
+          </span>
+          {label ? (
+            <span className="sr-only">
+              {new Intl.NumberFormat(locale).format(count)} {label}
+            </span>
+          ) : null}
+        </>
+      ) : (
+        children
+      )}
+    </div>
   )
 }
 
@@ -1018,8 +1098,179 @@ function SidebarMenuSubButton({
   })
 }
 
+function SidebarMenuCollapsible({
+  render,
+  ...props
+}: React.ComponentProps<typeof Collapsible>) {
+  return (
+    <Collapsible
+      data-slot="sidebar-menu-collapsible"
+      render={render ?? <SidebarMenuItem />}
+      {...props}
+    />
+  )
+}
+
+function SidebarMenuCollapsibleTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof CollapsibleTrigger>) {
+  return (
+    <CollapsibleTrigger
+      data-sidebar="menu-collapsible-trigger"
+      render={<SidebarMenuAction />}
+      className={mergeClassName(
+        "group/menu-collapsible-trigger",
+        className
+      )}
+      {...props}
+    >
+      {children ?? (
+        <IconChevronRight className="transition-transform duration-150 ease-out-quint group-data-panel-open/menu-collapsible-trigger:rotate-90 motion-reduce:transition-none rtl:-scale-x-100 rtl:group-data-panel-open/menu-collapsible-trigger:-rotate-90" />
+      )}
+    </CollapsibleTrigger>
+  )
+}
+
+function SidebarMenuCollapsibleContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof CollapsibleContent>) {
+  return (
+    <CollapsibleContent
+      data-sidebar="menu-collapsible-content"
+      className={cn("group-data-[collapsible=icon]:hidden", className)}
+      {...props}
+    />
+  )
+}
+
+function SidebarMenuFlyout({
+  label,
+  content,
+  children,
+  side,
+}: {
+  label: React.ReactNode
+  content: React.ReactNode
+  children: React.ReactElement
+  side?: "left" | "right"
+}) {
+  const { state, isMobile } = useSidebar()
+
+  if (state !== "collapsed" || isMobile) {
+    return children
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger openOnHover delay={150} render={children} />
+      <DropdownMenuContent
+        data-slot="sidebar-menu-flyout"
+        side={side ?? "right"}
+        align="start"
+        sideOffset={8}
+        className="min-w-48"
+      >
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>{label}</DropdownMenuLabel>
+          {content}
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+function SidebarMenuFlyoutItem({
+  isActive = false,
+  children,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuItem> & { isActive?: boolean }) {
+  return (
+    <DropdownMenuItem
+      data-sidebar="menu-flyout-item"
+      data-active={isActive ? "" : undefined}
+      aria-current={isActive ? "page" : undefined}
+      {...props}
+    >
+      <span className="min-w-0 flex-1 truncate">{children}</span>
+      {isActive ? <IconCheck aria-hidden /> : null}
+    </DropdownMenuItem>
+  )
+}
+
+function SidebarCard({
+  className,
+  children,
+  onDismiss,
+  dismissLabel = "Dismiss",
+  ...props
+}: React.ComponentProps<"section"> & {
+  onDismiss?: () => void
+  dismissLabel?: string
+}) {
+  const [closing, setClosing] = React.useState(false)
+  const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  React.useEffect(
+    () => () => {
+      if (timer.current) {
+        clearTimeout(timer.current)
+      }
+    },
+    []
+  )
+
+  const dismiss = () => {
+    if (closing) {
+      return
+    }
+    setClosing(true)
+    const reduce =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    timer.current = setTimeout(() => onDismiss?.(), reduce ? 0 : 200)
+  }
+
+  return (
+    <div
+      data-slot="sidebar-card-frame"
+      data-closing={closing ? "" : undefined}
+      className="grid grid-rows-[1fr] transition-[grid-template-rows,opacity] duration-200 ease-out-quint group-data-[collapsible=icon]:hidden data-closing:grid-rows-[0fr] data-closing:opacity-0 motion-reduce:transition-none [@media(max-height:40rem)]:hidden"
+    >
+      <div className="min-h-0 overflow-hidden">
+        <section
+          data-slot="sidebar-card"
+          data-sidebar="card"
+          className={cn(
+            "relative flex flex-col gap-2 rounded-lg bg-background p-1.5 text-sm ring-(length:--hairline) ring-sidebar-border forced-colors:border motion-safe:animate-in motion-safe:fade-in-0 motion-safe:animation-duration-200",
+            className
+          )}
+          {...props}
+        >
+          {children}
+          {onDismiss ? (
+            <Button
+              data-slot="sidebar-card-dismiss"
+              variant="ghost"
+              size="icon-xs"
+              aria-label={dismissLabel}
+              className="absolute end-1.5 top-1.5"
+              onClick={dismiss}
+            >
+              <IconX />
+            </Button>
+          ) : null}
+        </section>
+      </div>
+    </div>
+  )
+}
+
 export {
   Sidebar,
+  SidebarCard,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
@@ -1033,6 +1284,11 @@ export {
   SidebarMenuAction,
   SidebarMenuBadge,
   SidebarMenuButton,
+  SidebarMenuCollapsible,
+  SidebarMenuCollapsibleContent,
+  SidebarMenuCollapsibleTrigger,
+  SidebarMenuFlyout,
+  SidebarMenuFlyoutItem,
   SidebarMenuItem,
   SidebarMenuSkeleton,
   SidebarMenuSub,

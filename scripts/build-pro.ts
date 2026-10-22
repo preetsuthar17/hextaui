@@ -82,19 +82,27 @@ function withoutTemplates(source: string) {
   return source.replace(/`(?:\\[\s\S]|[^`\\])*`/g, "``")
 }
 
-const blockImport = /from "\.\.\/([a-z0-9-]+)\/([a-z0-9-]+)"/g
+const blockImport = /from "\.\.\/([a-z0-9_-]+)\/([a-z0-9-]+)"/g
 const localImport = /from "\.\/([a-z0-9-]+)"/g
 
 function withoutBlockImports(source: string) {
   return source.replace(/from "\.\.\/[^"]+"/g, 'from "./borrowed"')
 }
 
-function borrowedFiles(name: string, sources: string[]) {
+function isInternal(block: string) {
+  return block.startsWith("_")
+}
+
+function borrowedFiles(
+  name: string,
+  sources: string[],
+  include: (block: string) => boolean = () => true
+) {
   const borrowed = new Map<string, string>()
   const queue = sources.flatMap((source) =>
-    [...withoutTemplates(source).matchAll(blockImport)].map(
-      ([, block, file]) => [block, file] as const
-    )
+    [...withoutTemplates(source).matchAll(blockImport)]
+      .map(([, block, file]) => [block, file] as const)
+      .filter(([block]) => include(block))
   )
   for (let next = queue.shift(); next; next = queue.shift()) {
     const [block, file] = next
@@ -129,8 +137,8 @@ function registryDependencies(sources: string[]) {
       if (kind === "lib" && name === "utils") continue
       deps.add(`${registryBase}/${name}.json`)
     }
-    for (const [, block] of source.matchAll(/from "\.\.\/([a-z0-9-]+)\//g)) {
-      deps.add(`@hextaui-pro/${block}`)
+    for (const [, block] of source.matchAll(/from "\.\.\/([a-z0-9_-]+)\//g)) {
+      if (!isInternal(block)) deps.add(`@hextaui-pro/${block}`)
     }
   }
   if (
@@ -186,7 +194,7 @@ async function main() {
   const names = fs.existsSync(blocksDir)
     ? fs
         .readdirSync(blocksDir, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory())
+        .filter((entry) => entry.isDirectory() && !isInternal(entry.name))
         .map((entry) => entry.name)
         .sort()
     : []
@@ -218,7 +226,9 @@ async function main() {
       throw new Error(`pro: ${name} needs an entry file ${entryFile}`)
     }
     const free = isFreeBlock(name)
-    const borrowed = free ? borrowedFiles(name, sources) : []
+    const borrowed = free
+      ? borrowedFiles(name, sources)
+      : borrowedFiles(name, sources, isInternal)
     const itemFiles = [
       ...files.map((file, index) => ({
         path: `components/blocks/${name}/${file}`,

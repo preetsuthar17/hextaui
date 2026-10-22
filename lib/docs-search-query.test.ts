@@ -6,6 +6,7 @@ import {
   docsKeywords,
   docsUtilities,
 } from "@/lib/docs"
+import { blockKeywords } from "@/lib/pro/keywords"
 import {
   createDocsSearch,
   packDocsSearchIndex,
@@ -52,7 +53,76 @@ const records: DocsSearchDocument[] = [
   },
 ]
 
-const search = createDocsSearch([...pages, ...records])
+const blocks: DocsSearchDocument[] = [
+  [
+    "cart",
+    "Cart",
+    "E-commerce",
+    "Add to bag button, bag icon and cart drawer.",
+  ],
+  ["checkout", "Checkout", "E-commerce", "In progress."],
+  ["payment", "Payment", "E-commerce", "The payment step of a checkout."],
+  [
+    "orders-table",
+    "Orders Table",
+    "E-commerce",
+    "The merchant’s orders index.",
+  ],
+  [
+    "order-detail",
+    "Order Detail",
+    "E-commerce",
+    "The merchant’s page for one order.",
+  ],
+  ["refund", "Refund", "E-commerce", "A refund sheet for an order."],
+  [
+    "variant-picker",
+    "Variant Picker",
+    "E-commerce",
+    "Color swatches and sizes.",
+  ],
+  ["product-card", "Product Card", "E-commerce", "The product tile for grids."],
+  ["discount-builder", "Discount Builder", "E-commerce", "Create discounts."],
+  ["save-bar", "Save Bar", "Settings", "A floating save bar."],
+  [
+    "agent-todos",
+    "Agent Todos",
+    "AI",
+    "The plan an agent keeps while it works.",
+  ],
+  ["billing", "Billing", "Settings", "The plan and usage page."],
+].map(([name, title, category, text]) => ({
+  id: `blocks/${name}`,
+  title,
+  kind: "block" as const,
+  keywords: [category, ...(blockKeywords[name] ?? [])],
+  text,
+}))
+
+const blockRecords: DocsSearchDocument[] = [
+  {
+    id: "blocks/cart#cartdrawer:freeShippingThreshold",
+    title: "freeShippingThreshold",
+    kind: "prop",
+    page: "Cart",
+    trail: ["CartDrawer"],
+    detail: "number",
+    text: "Subtotal that unlocks free shipping.",
+  },
+  {
+    id: "blocks/cart#cartdrawer",
+    title: "CartDrawer",
+    kind: "api",
+    page: "Cart",
+  },
+]
+
+const search = createDocsSearch([
+  ...pages,
+  ...records,
+  ...blocks,
+  ...blockRecords,
+])
 
 function top(query: string) {
   return search(query)[0]?.document.id
@@ -107,6 +177,35 @@ describe("createDocsSearch", () => {
     expect(search("accordion zzzz")).toEqual([])
   })
 
+  it("ranks blocks by name", () => {
+    expect(top("cart")).toBe("blocks/cart")
+    expect(top("checkout")).toBe("blocks/checkout")
+    expect(top("orders")).toBe("blocks/orders-table")
+    expect(top("refund")).toBe("blocks/refund")
+    expect(top("agent todos")).toBe("blocks/agent-todos")
+    expect(top("billing")).toBe("blocks/billing")
+    expect(top("discount")).toBe("blocks/discount-builder")
+  })
+
+  it("finds blocks by synonym", () => {
+    expect(top("unsaved changes")).toBe("blocks/save-bar")
+    expect(top("dynamic island")).toBe("blocks/save-bar")
+    expect(top("coupon")).toBe("blocks/discount-builder")
+    expect(top("basket")).toBe("blocks/cart")
+    expect(top("order list")).toBe("blocks/orders-table")
+    const purchase = search("purchase").map((result) => result.document.id)
+    expect(purchase[0]).toBe("blocks/checkout")
+  })
+
+  it("finds block props by name and block", () => {
+    expect(top("freeShipping")).toBe(
+      "blocks/cart#cartdrawer:freeShippingThreshold"
+    )
+    expect(top("cart free shipping")).toBe(
+      "blocks/cart#cartdrawer:freeShippingThreshold"
+    )
+  })
+
   it("searches section text", () => {
     expect(search("arrowright").map((result) => result.document.id)).toContain(
       "tabs#keyboard"
@@ -143,6 +242,40 @@ describe("packDocsSearchIndex", () => {
           kind: "attribute",
           trail: ["AccordionItem"],
         },
+        {
+          href: "/blocks/cart#cartdrawer",
+          page: "blocks/cart",
+          title: "freeShippingThreshold",
+          kind: "prop",
+          trail: ["CartDrawer"],
+          type: "number",
+          text: "Subtotal that unlocks free shipping.",
+        },
+        {
+          href: "/blocks/cart#with-a-page",
+          page: "blocks/cart",
+          title: "With a page",
+          kind: "example",
+          trail: ["Usage"],
+        },
+      ],
+      blocks: [
+        {
+          name: "cart",
+          title: "Cart",
+          description: "Add to bag button and cart drawer.",
+          category: "E-commerce",
+          keywords: ["E-commerce", "bag"],
+          text: "Cart is the add-to-bag flow of a store.",
+        },
+        {
+          name: "prompt-input",
+          title: "Prompt Input",
+          description: "A chat composer.",
+          category: "AI",
+          keywords: [],
+          free: true,
+        },
       ],
     }
     expect(
@@ -150,5 +283,23 @@ describe("packDocsSearchIndex", () => {
         JSON.parse(JSON.stringify(packDocsSearchIndex(index)))
       )
     ).toEqual(index)
+  })
+
+  it("stores block anchors relative to the block page", () => {
+    const packed = packDocsSearchIndex({
+      installable: [],
+      records: [
+        {
+          href: "/blocks/refund#refundsheet",
+          page: "blocks/refund",
+          title: "RefundSheet",
+          kind: "api",
+          trail: [],
+        },
+      ],
+    })
+    expect(packed.pages).toEqual(["blocks/refund"])
+    expect(packed.records[0]?.[3]).toBe("refundsheet")
+    expect(packed.blocks).toBeUndefined()
   })
 })

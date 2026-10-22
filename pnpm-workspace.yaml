@@ -42,13 +42,22 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/typescript-estree@8.71.1'
   - '@typescript-eslint/visitor-keys@8.71.1'
   - dodopayments@2.53.0 || 2.54.0
-  - '@ai-sdk/gateway@4.0.104 || 4.0.106'
-  - '@ai-sdk/mcp@2.0.67 || 2.0.69'
-  - '@ai-sdk/provider-utils@5.0.54 || 5.0.56'
+  - '@ai-sdk/gateway@4.0.104 || 4.0.106 || 4.0.121'
+  - '@ai-sdk/mcp@2.0.67 || 2.0.69 || 2.0.81'
+  - '@ai-sdk/provider-utils@5.0.54 || 5.0.56 || 5.0.65'
   - '@ai-sdk/provider@4.0.22 || 4.0.24'
-  - '@ai-sdk/react@4.0.131 || 4.0.133'
-  - ai@7.0.128 || 7.0.130
-  - '@cloudflare/workers-types@5.20261007.1'
+  - '@ai-sdk/react@4.0.131 || 4.0.133 || 4.0.152'
+  - ai@7.0.128 || 7.0.130 || 7.0.148
+  - '@cloudflare/workers-types@5.20261007.1 || 5.20261021.1'
   - '@next/third-parties@16.4.0'
-  - miniflare@5.20261006.0-alpha
-  - wrangler@4.148.0
+  - miniflare@5.20261006.0-alpha || 5.20261019.1-beta
+  - wrangler@4.148.0 || 4.151.3
+  - '@better-auth/core@1.7.12'
+  - '@better-auth/drizzle-adapter@1.7.12'
+  - '@better-auth/kysely-adapter@1.7.12'
+  - '@better-auth/memory-adapter@1.7.12'
+  - '@better-auth/mongo-adapter@1.7.12'
+  - '@better-auth/prisma-adapter@1.7.12'
+  - '@better-auth/telemetry@1.7.12'
+  - better-auth@1.7.12
+  - react-resizable-panels@4.14.8

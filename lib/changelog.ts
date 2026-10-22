@@ -15,6 +15,26 @@ const changelogGroups = [
 
 const changelog: ChangelogEntry[] = [
   {
+    date: "2026-10-21",
+    title: "E-commerce blocks",
+    body: [
+      "23 new Pro blocks for online stores, from the product page to the merchant admin, plus a complete Storefront and Commerce Dashboard built from them. Every demo now keeps its scenarios and test data in a floating panel instead of the page.",
+    ],
+    added: [
+      "Storefront blocks: Price, Variant Picker, Product Gallery, Product Card, Product Filters, Product Search and Reviews, sharing one product model with per-combination stock, sold-out sizes that still take back-in-stock emails, and prices for any currency.",
+      "Checkout blocks: Cart with undo and rollback, Order Summary with stacked discount codes, an Address Form that adapts to 16 countries, Shipping Methods with delivery dates, Payment with card checks and bank verification, a one-page Checkout and Order Status with tracking and returns.",
+      "Admin blocks: Orders Table, Order Detail with a clear timeline, Refund with exact line-item math, Product Editor with a variant grid, Inventory with adjust-by edits, Discount Builder with a live checkout preview, and Sales Overview.",
+      "Storefront and Commerce Dashboard: complete store and admin templates with routing and shared state, built only from the blocks above.",
+      "Save Bar: a floating unsaved-changes bar that morphs between dirty, saving, saved and error like a Dynamic Island. Settings, Product Editor, Inventory and Discount Builder use it.",
+      "Pro blocks are now in the ⌘K search, down to their parts, props and usage examples.",
+    ],
+    changed: [
+      "Sidebar: collapsible menu groups, icon-mode flyouts, badges with counts and a dismissible footer card.",
+      "Table: sticky headers stay above pinned columns while scrolling.",
+      "Block docs keep the sidebar's scroll position when you switch blocks, and translated block pages now have the sidebar.",
+    ],
+  },
+  {
     date: "2026-10-15",
     title: "Stack Trace, Test Results and Subagents",
     body: [

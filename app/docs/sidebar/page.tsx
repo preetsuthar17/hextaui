@@ -13,6 +13,7 @@ import {
   DocsKeyboardTable,
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
+import { SidebarAppShell } from "@/components/examples/sidebar/app-shell"
 import { SidebarCollapsible } from "@/components/examples/sidebar/collapsible"
 import { SidebarControlled } from "@/components/examples/sidebar/controlled"
 import { SidebarDemo } from "@/components/examples/sidebar/demo"
@@ -253,6 +254,24 @@ export default function Page() {
           }
         >
           <SidebarSubmenus />
+        </DocsExample>
+        <DocsExample
+          file="sidebar/app-shell"
+          title="App shell"
+          previewClassName={preview}
+          description={
+            <>
+              A store admin sidebar. <DocsCode>SidebarMenuCollapsible</DocsCode>{" "}
+              keeps the row a link and opens its pages from a separate chevron,{" "}
+              <DocsCode>SidebarMenuBadge</DocsCode> takes a{" "}
+              <DocsCode>count</DocsCode> that becomes a dot in icon mode,{" "}
+              <DocsCode>SidebarMenuFlyout</DocsCode> opens the pages beside the
+              icon rail, and <DocsCode>SidebarCard</DocsCode> holds a
+              dismissible card that hides in icon mode and on short screens.
+            </>
+          }
+        >
+          <SidebarAppShell />
         </DocsExample>
         <DocsExample
           file="sidebar/right"
@@ -720,6 +739,12 @@ export default function Page() {
                 description:
                   "Shows it only while the item is hovered or focused, or its menu is open. Always visible on touch screens.",
               },
+              {
+                name: "replacesBadge",
+                type: "boolean",
+                default: "false",
+                description: "Hides the item's badge while the item is hovered or focused, so the action takes its place.",
+              },
               { name: "render", type: renderType, default: "<button>" },
             ]}
           />
@@ -733,11 +758,77 @@ export default function Page() {
           />
         </DocsSection>
         <DocsSection title="SidebarMenuBadge" level={3}>
+          <DocsPropsTable
+            props={[
+              {
+                name: "count",
+                type: "number",
+                description:
+                  "A number that rolls when it changes. Zero hides the badge, and in icon mode it becomes a dot.",
+              },
+              { name: "max", type: "number", default: "99", description: "Larger counts show as 99+." },
+              { name: "label", type: "string", description: "Read after the count, like 12 unfulfilled." },
+              { name: "dot", type: "boolean", default: "false", description: "Shows a status dot instead of text. label names it." },
+              {
+                name: "tone",
+                type: '"default" | "success" | "warning" | "destructive"',
+                default: '"default"',
+                description: "The dot or text color.",
+              },
+            ]}
+          />
           <DocsAttributesTable
             attributes={[
               {
                 name: 'data-slot="sidebar-menu-badge"',
-                description: "A count at the end of the item.",
+                description: "A count or status at the end of the item. A SidebarMenuAction with replacesBadge takes its place on hover.",
+              },
+            ]}
+          />
+        </DocsSection>
+        <DocsSection
+          title="SidebarMenuCollapsible, SidebarMenuCollapsibleTrigger, SidebarMenuCollapsibleContent"
+          level={3}
+        >
+          <DocsParagraph>
+            A menu item whose pages open below it. The row stays a link, and the
+            chevron is its own button with <DocsCode>aria-expanded</DocsCode>.
+            Takes the Collapsible props: <DocsCode>open</DocsCode>,{" "}
+            <DocsCode>defaultOpen</DocsCode> and{" "}
+            <DocsCode>onOpenChange</DocsCode>. The content animates its height
+            and hides in icon mode.
+          </DocsParagraph>
+          <DocsAttributesTable
+            attributes={[
+              {
+                name: 'data-sidebar="menu-collapsible-trigger"',
+                description: "Needs an accessible label. data-panel-open is set while open.",
+              },
+            ]}
+          />
+        </DocsSection>
+        <DocsSection title="SidebarMenuFlyout, SidebarMenuFlyoutItem" level={3}>
+          <DocsPropsTable
+            props={[
+              { name: "label", type: "ReactNode", description: "The heading of the flyout menu." },
+              { name: "content", type: "ReactNode", description: "SidebarMenuFlyoutItem elements." },
+              { name: "children", type: "ReactElement", description: "The SidebarMenuButton. It opens the flyout on hover or click while the sidebar is collapsed to icons, and renders unchanged otherwise." },
+              { name: "isActive", type: "boolean", default: "false", description: "On SidebarMenuFlyoutItem: marks the current page with a check and aria-current." },
+            ]}
+          />
+        </DocsSection>
+        <DocsSection title="SidebarCard" level={3}>
+          <DocsPropsTable
+            props={[
+              { name: "onDismiss", type: "() => void", description: "Shows a dismiss button. Called after the card collapses." },
+              { name: "dismissLabel", type: "string", default: '"Dismiss"', description: "The dismiss button's label." },
+            ]}
+          />
+          <DocsAttributesTable
+            attributes={[
+              {
+                name: 'data-slot="sidebar-card"',
+                description: "A card for the footer. Hidden in icon mode and when the screen is shorter than 40rem.",
               },
             ]}
           />

@@ -3,6 +3,7 @@ type DocsSearchKind =
   | "component"
   | "hook"
   | "utility"
+  | "block"
   | "section"
   | "example"
   | "api"
@@ -25,9 +26,20 @@ type DocsSearchRecord = {
   default?: string
 }
 
+type DocsSearchBlock = {
+  name: string
+  title: string
+  description: string
+  category: string
+  keywords: string[]
+  text?: string
+  free?: boolean
+}
+
 type DocsSearchIndex = {
   records: DocsSearchRecord[]
   installable: string[]
+  blocks?: DocsSearchBlock[]
 }
 
 type PackedDocsSearchRecord = [
@@ -41,15 +53,71 @@ type PackedDocsSearchRecord = [
   fallback?: string,
 ]
 
+type PackedDocsSearchBlock = [
+  name: string,
+  title: string,
+  description: string,
+  category: string,
+  keywords: string[],
+  text?: string,
+  free?: 1,
+]
+
 type PackedDocsSearchIndex = {
   pages: string[]
   trails: string[][]
   installable: string[]
   records: PackedDocsSearchRecord[]
+  blocks?: PackedDocsSearchBlock[]
 }
 
 function docsPageHref(slug: string) {
   return slug === "" ? "/docs" : `/docs/${slug}`
+}
+
+function blockPageSlug(name: string) {
+  return `blocks/${name}`
+}
+
+function searchPageHref(page: string) {
+  return page.startsWith("blocks/") ? `/${page}` : docsPageHref(page)
+}
+
+function packBlock(block: DocsSearchBlock): PackedDocsSearchBlock {
+  const packed: PackedDocsSearchBlock = [
+    block.name,
+    block.title,
+    block.description,
+    block.category,
+    block.keywords,
+  ]
+  if (block.text || block.free) {
+    packed.push(block.text ?? "")
+  }
+  if (block.free) {
+    packed.push(1)
+  }
+  return packed
+}
+
+function unpackBlock([
+  name,
+  title,
+  description,
+  category,
+  keywords,
+  text,
+  free,
+]: PackedDocsSearchBlock): DocsSearchBlock {
+  return {
+    name,
+    title,
+    description,
+    category,
+    keywords,
+    ...(text ? { text } : {}),
+    ...(free ? { free: true } : {}),
+  }
 }
 
 function packDocsSearchIndex(index: DocsSearchIndex): PackedDocsSearchIndex {
@@ -66,8 +134,8 @@ function packDocsSearchIndex(index: DocsSearchIndex): PackedDocsSearchIndex {
       recordKinds.indexOf(record.kind),
       lookup(pages, record.page),
       record.title,
-      record.href.startsWith(`${docsPageHref(record.page)}/`)
-        ? record.href.slice(docsPageHref(record.page).length)
+      record.href.startsWith(`${searchPageHref(record.page)}/`)
+        ? record.href.slice(searchPageHref(record.page).length)
         : record.href.slice(record.href.indexOf("#") + 1),
       (() => {
         const key = record.trail.join("\u0000")
@@ -85,19 +153,28 @@ function packDocsSearchIndex(index: DocsSearchIndex): PackedDocsSearchIndex {
     return packed
   })
 
-  return { pages, trails, installable: index.installable, records }
+  return {
+    pages,
+    trails,
+    installable: index.installable,
+    records,
+    ...(index.blocks?.length ? { blocks: index.blocks.map(packBlock) } : {}),
+  }
 }
 
 function unpackDocsSearchIndex(packed: PackedDocsSearchIndex): DocsSearchIndex {
   return {
     installable: packed.installable,
+    ...(packed.blocks?.length
+      ? { blocks: packed.blocks.map(unpackBlock) }
+      : {}),
     records: packed.records.map(
       ([kind, page, title, anchor, trail, text, type, fallback]) => {
         const slug = packed.pages[page] ?? ""
         return {
           href: anchor.startsWith("/")
-            ? `${docsPageHref(slug)}${anchor}`
-            : `${docsPageHref(slug)}#${anchor}`,
+            ? `${searchPageHref(slug)}${anchor}`
+            : `${searchPageHref(slug)}#${anchor}`,
           page: slug,
           title,
           kind: recordKinds[kind] ?? "section",
@@ -143,6 +220,7 @@ const kindBoost: Record<DocsSearchKind, number> = {
   component: 0.45,
   hook: 0.45,
   utility: 0.45,
+  block: 0.45,
   guide: 0.45,
   action: 0.35,
   section: 0.1,
@@ -203,12 +281,20 @@ function prepareDocument<Document extends DocsSearchDocument>(
   }
 }
 
+function wordBoundaries(words: string[]) {
+  let at = 0
+  return words.map((word) => (at += word.length))
+}
+
 function matchField(token: string, field: Field) {
   if (field.compact === token) {
     return 1
   }
   if (field.compact.startsWith(token)) {
-    return 0.9
+    return field.words.some((word) => word.startsWith(token)) ||
+      wordBoundaries(field.words).includes(token.length)
+      ? 0.9
+      : 0.88
   }
   if (field.words.includes(token)) {
     return 0.85
@@ -378,14 +464,17 @@ function createDocsSearch<Document extends DocsSearchDocument>(
 }
 
 export {
+  blockPageSlug,
   createDocsSearch,
   docsPageHref,
   packDocsSearchIndex,
   queryTokens,
+  searchPageHref,
   splitWords,
   unpackDocsSearchIndex,
 }
 export type {
+  DocsSearchBlock,
   DocsSearchDocument,
   DocsSearchIndex,
   DocsSearchKind,

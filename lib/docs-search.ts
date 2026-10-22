@@ -26,11 +26,16 @@ import {
   toArray,
 } from "@/lib/docs-markdown"
 import {
+  blockPageSlug,
   docsPageHref,
   packDocsSearchIndex,
+  searchPageHref,
+  type DocsSearchBlock,
   type DocsSearchRecord,
 } from "@/lib/docs-search-query"
 import { readDocsSource } from "@/lib/docs-source"
+import { categoryTitle, proBlocks, type ProBlock } from "@/lib/pro/catalog"
+import { blockKeywords } from "@/lib/pro/keywords"
 
 type WalkContext = {
   slug: string
@@ -42,6 +47,8 @@ type WalkContext = {
 
 const textLimit = 320
 const detailLimit = 160
+const blockTextLimit = 480
+const blockPropLimit = 120
 
 function clip(value: string, limit: number) {
   return value.length > limit
@@ -240,6 +247,126 @@ function walk(node: React.ReactNode, context: WalkContext) {
   }
 }
 
+function firstSentence(value: string) {
+  return value.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? value
+}
+
+function indexBlock(block: ProBlock) {
+  const { overview, anatomy, api, keyboard, accessibility } = block.docs
+  const page = blockPageSlug(block.name)
+  const href = (id: string) => `${searchPageHref(page)}#${id}`
+  const records: DocsSearchRecord[] = []
+  const add = (record: Omit<DocsSearchRecord, "page">) => {
+    records.push({ page, ...record })
+  }
+
+  for (const example of block.usage) {
+    add({
+      href: href(getDocsSlug(example.title)),
+      title: example.title,
+      kind: "example",
+      trail: ["Usage"],
+      ...(example.description
+        ? { text: clip(example.description, detailLimit) }
+        : {}),
+    })
+  }
+
+  if (anatomy?.length) {
+    add({
+      href: href("anatomy"),
+      title: "Anatomy",
+      kind: "section",
+      trail: [],
+    })
+    for (const part of anatomy) {
+      add({
+        href: href("anatomy"),
+        title: part.name,
+        kind: "attribute",
+        trail: ["Anatomy"],
+        type: "Part",
+        text: clip(part.description, detailLimit),
+      })
+    }
+  }
+
+  for (const entry of api ?? []) {
+    const anchor = href(getDocsSlug(entry.component))
+    add({
+      href: anchor,
+      title: entry.component,
+      kind: "api",
+      trail: [],
+      ...(entry.description
+        ? { text: clip(entry.description, detailLimit) }
+        : {}),
+    })
+    for (const prop of entry.props) {
+      add({
+        href: anchor,
+        title: prop.name,
+        kind: "prop",
+        trail: [entry.component],
+        ...(prop.type ? { type: prop.type } : {}),
+        ...(prop.default ? { default: prop.default } : {}),
+        ...(prop.description
+          ? { text: clip(prop.description, blockPropLimit) }
+          : {}),
+      })
+    }
+  }
+
+  if (keyboard?.length) {
+    add({
+      href: href("keyboard"),
+      title: "Keyboard",
+      kind: "section",
+      trail: [],
+      text: clip(
+        keyboard
+          .map((row) => `${row.keys.join(" ")} ${row.description}`)
+          .join(". "),
+        textLimit
+      ),
+    })
+  }
+
+  if (accessibility?.length) {
+    add({
+      href: href("accessibility"),
+      title: "Accessibility",
+      kind: "section",
+      trail: [],
+      text: clip(accessibility.join(" "), textLimit),
+    })
+  }
+
+  const category = categoryTitle(block.category)
+  const summary: DocsSearchBlock = {
+    name: block.name,
+    title: block.title,
+    description: block.description,
+    category,
+    keywords: [
+      ...new Set([
+        category,
+        ...(blockKeywords[block.name] ?? []),
+        ...(overview?.length ? [firstSentence(overview[0])] : []),
+      ]),
+    ],
+    text: [
+      overview?.length ? clip(overview.join(" "), blockTextLimit) : "",
+      ...(anatomy ?? []).map((part) => part.name),
+    ]
+      .filter(Boolean)
+      .join(" "),
+    ...(block.free ? { free: true } : {}),
+  }
+
+  return { summary, records }
+}
+
 async function readInstallable() {
   const registry = JSON.parse(await readDocsSource("registry.json")) as {
     items: { name: string; type: string }[]
@@ -265,9 +392,12 @@ async function getDocsSearchIndex() {
     })
   )
 
+  const blocks = proBlocks.map(indexBlock)
+
   return packDocsSearchIndex({
-    records: pages.flat(),
+    records: [...pages.flat(), ...blocks.flatMap((block) => block.records)],
     installable: await readInstallable(),
+    blocks: blocks.map((block) => block.summary),
   })
 }
 

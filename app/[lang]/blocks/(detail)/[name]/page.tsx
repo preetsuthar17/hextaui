@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import BlockPage, {
   generateMetadata as generateSourceMetadata,
-} from "@/app/blocks/[name]/page"
+} from "@/app/blocks/(detail)/[name]/page"
 import { isTranslatedLocale } from "@/lib/i18n/config"
 import { localizeMetadata } from "@/lib/i18n/metadata"
 import { setRequestLocale } from "@/lib/i18n/request"

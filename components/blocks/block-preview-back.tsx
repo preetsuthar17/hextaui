@@ -27,13 +27,15 @@ function BlockPreviewBack({
 }) {
   const standalone = useStandalone()
 
-  if (!standalone) return null
+  if (!standalone && !docked) return null
 
   return (
     <div
+      data-slot="block-preview-back"
+      data-docked={docked ? "" : undefined}
       className={
         docked
-          ? "flex h-12 shrink-0 items-center border-b px-3"
+          ? "h-12 shrink-0 items-center border-b px-3"
           : "fixed start-3 top-3 z-50 motion-safe:animate-in motion-safe:animation-duration-300 motion-safe:fade-in-0"
       }
     >

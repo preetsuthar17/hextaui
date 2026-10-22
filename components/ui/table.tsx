@@ -234,9 +234,9 @@ function TableHead({
       data-pinned-edge={pinnedEdge ? "" : undefined}
       className={cn(
         cellClasses(pinned, pinnedEdge),
-        "h-(--table-head-h) bg-(--table-head-bg,var(--table-bg)) px-(--table-cell-px) text-start font-medium text-muted-foreground group-data-wrap/table:align-middle in-data-scrolled-top:shadow-[inset_0_calc(var(--hairline)*-1)_0_var(--border)] in-data-sticky-header:sticky in-data-sticky-header:top-0 in-data-sticky-header:z-2 in-[tbody]:h-auto in-[tbody]:bg-transparent in-[tbody]:py-(--table-cell-py) in-[tbody]:text-foreground in-[tbody]:shadow-none in-[tbody]:group-data-wrap/table:align-top",
+        "h-(--table-head-h) bg-(--table-head-bg,var(--table-bg)) px-(--table-cell-px) text-start font-medium text-muted-foreground group-data-wrap/table:align-middle in-data-scrolled-top:shadow-[inset_0_calc(var(--hairline)*-1)_0_var(--border)] in-data-sticky-header:sticky in-data-sticky-header:top-0 in-data-sticky-header:z-2 in-[thead]:in-data-sticky-header:z-5! in-[tbody]:h-auto in-[tbody]:bg-transparent in-[tbody]:py-(--table-cell-py) in-[tbody]:text-foreground in-[tbody]:shadow-none in-[tbody]:group-data-wrap/table:align-top",
         pinned &&
-          "data-pinned:bg-(--table-head-bg,var(--table-bg)) in-data-sticky-header:data-pinned:z-3 in-[tbody]:data-pinned:bg-(--table-bg) in-[tbody]:group-hover/table-row:data-pinned:bg-(--table-hover) in-[tbody]:group-data-[state=selected]/table-row:data-pinned:bg-muted",
+          "data-pinned:bg-(--table-head-bg,var(--table-bg)) in-data-sticky-header:data-pinned:z-3 in-[thead]:in-data-sticky-header:data-pinned:z-6! in-[tbody]:data-pinned:bg-(--table-bg) in-[tbody]:group-hover/table-row:data-pinned:bg-(--table-hover) in-[tbody]:group-data-[state=selected]/table-row:data-pinned:bg-muted",
         "[&:has([role=checkbox])]:pe-0",
         className
       )}
