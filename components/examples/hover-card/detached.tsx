@@ -1,5 +1,8 @@
 "use client"
 
+import * as React from "react"
+import { cn } from "cn"
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   createHoverCardHandle,
@@ -18,6 +21,18 @@ const team: Person[] = [
 
 const profileCard = createHoverCardHandle<Person>()
 
+function NameLink({ className, ...props }: React.ComponentProps<"a">) {
+  return (
+    <a
+      className={cn(
+        "font-medium underline decoration-border underline-offset-4 hover:decoration-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export function HoverCardDetached() {
   return (
     <div className="flex flex-col items-center gap-3">
@@ -29,9 +44,7 @@ export function HoverCardDetached() {
               payload={person}
               href="#"
               delay={300}
-              render={
-                <a className="font-medium underline decoration-border underline-offset-4 hover:decoration-foreground" />
-              }
+              render={<NameLink />}
             >
               {person.name}
             </HoverCardTrigger>

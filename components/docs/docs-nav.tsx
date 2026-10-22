@@ -39,7 +39,7 @@ function DocsNav({
       ref={navRef}
       aria-label="Docs"
       className={cn(
-        "relative isolate [&_[data-sidebar=menu-button]]:bg-transparent! [&_[data-sidebar=menu-button][data-active]]:font-medium",
+        "relative isolate [&_[data-sidebar=menu-button]]:bg-transparent! [&_[data-sidebar=menu-button]]:transition-none [&_[data-sidebar=menu-button][data-active]]:font-medium",
         className
       )}
       {...handlers}
@@ -57,7 +57,6 @@ function DocsNav({
               {section.items.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
-                    className="transition-none"
                     isActive={pathname === item.href}
                     render={<Link href={item.href} onNavigate={onNavigate} />}
                   >

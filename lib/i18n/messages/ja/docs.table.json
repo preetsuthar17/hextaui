@@ -4,6 +4,7 @@
   "Cell padding. Set by size.": "セルのパディング。size によって設定されます。",
   "Cells stay on one line by default, which suits data. `wrap` lets them wrap and aligns rows to the top, for prose like glossaries or API references. Pair it with `table-fixed` and column widths.": "セルはデフォルトで1行に収まり、データ向きです。`wrap` はセルの折り返しを許可して行を上揃えにし、用語集や API リファレンスのような文章向けです。`table-fixed` と列幅を組み合わせます。",
   "Classes for the scroll container.": "スクロールコンテナー用のクラス。",
+  "Color swatches and size buttons for a product page. Handles sold-out sizes, combinations that don’t exist, a missing size on add to bag and back-in-stock emails.": "商品ページ用のカラースウォッチとサイズボタン。売り切れのサイズ、存在しない組み合わせ、バッグに追加する際のサイズ未選択、再入荷お知らせメールに対応します。",
   "Compact": "コンパクト",
   "Draw a soft shadow on the inner edge of the last pinned column while content is hidden behind it.": "固定された最後の列の裏にコンテンツが隠れている間、その内側の端に柔らかい影を描画します。",
   "Every part renders its native element and accepts its attributes.": "すべてのパーツはネイティブ要素を描画し、その属性を受け付けます。",

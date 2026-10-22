@@ -3791,7 +3791,8 @@
       "title": "Bubble: Show more",
       "description": "The Show more example from the Bubble docs.",
       "dependencies": [
-        "@tabler/icons-react"
+        "@tabler/icons-react",
+        "cn"
       ],
       "registryDependencies": [
         "https://hextaui.com/r/bubble.json",
@@ -7597,6 +7598,9 @@
       "type": "registry:example",
       "title": "Hover card: Loading content",
       "description": "The Loading content example from the Hover card docs.",
+      "dependencies": [
+        "cn"
+      ],
       "registryDependencies": [
         "https://hextaui.com/r/hover-card.json",
         "https://hextaui.com/r/skeleton.json"
@@ -7646,7 +7650,8 @@
       "title": "Hover card demo",
       "description": "The main Hover card demo from the docs.",
       "dependencies": [
-        "@tabler/icons-react"
+        "@tabler/icons-react",
+        "cn"
       ],
       "registryDependencies": [
         "https://hextaui.com/r/avatar.json",
@@ -7664,6 +7669,9 @@
       "type": "registry:example",
       "title": "Hover card: Shared card",
       "description": "The Shared card example from the Hover card docs.",
+      "dependencies": [
+        "cn"
+      ],
       "registryDependencies": [
         "https://hextaui.com/r/avatar.json",
         "https://hextaui.com/r/hover-card.json"
@@ -7680,6 +7688,9 @@
       "type": "registry:example",
       "title": "Hover card: Inline link",
       "description": "The Inline link example from the Hover card docs.",
+      "dependencies": [
+        "cn"
+      ],
       "registryDependencies": [
         "https://hextaui.com/r/hover-card.json"
       ],
@@ -12842,6 +12853,9 @@
       "type": "registry:example",
       "title": "Tooltip: One tooltip, many triggers",
       "description": "The One tooltip, many triggers example from the Tooltip docs.",
+      "dependencies": [
+        "cn"
+      ],
       "registryDependencies": [
         "https://hextaui.com/r/avatar.json",
         "https://hextaui.com/r/tooltip.json"

@@ -1,4 +1,8 @@
+"use client"
+
+import * as React from "react"
 import { IconChevronDown } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import {
@@ -6,6 +10,19 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+
+function ToggleButton({ className, ...props }: React.ComponentProps<"button">) {
+  return (
+    <button
+      type="button"
+      className={cn(
+        "mt-1 inline-flex cursor-pointer items-center gap-1 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
 export function BubbleShowMore() {
   return (
@@ -23,14 +40,7 @@ export function BubbleShowMore() {
               A follow-up will add a canary stage for pool configuration.
             </p>
           </CollapsibleContent>
-          <CollapsibleTrigger
-            render={
-              <button
-                type="button"
-                className="mt-1 inline-flex cursor-pointer items-center gap-1 rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden"
-              />
-            }
-          >
+          <CollapsibleTrigger render={<ToggleButton />}>
             <span className="group-data-panel-open/collapsible-trigger:hidden">
               Show more
             </span>

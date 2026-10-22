@@ -3,6 +3,7 @@
   "Cards": "カード",
   "Cards can sit in a row or any grid. The ring follows them wherever they are.": "カードは横並びでも任意のグリッドでも置けます。リングはどこにあっても追従します。",
   "Classes for the radio inside the card.": "カード内のラジオ用のクラス。",
+  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "チェックアウト用の配送オプションと、商品ページ用のお届け日。注文の締め切り時刻、店舗受け取り、住所によって変わる料金に対応します。",
   "Disable a single option, or make the whole group `readOnly` to show a value that can't change.": "個別の選択肢を無効にするか、グループ全体を `readOnly` にして変更できない値を表示します。",
   "Disabled and read-only": "無効と読み取り専用",
   "Each radio has a 36px hit area, and 44px on touch screens, while staying 16px on screen.": "各ラジオは36pxのヒット領域を持ち(タッチスクリーンでは44px)、画面上の表示は16pxのままです。",

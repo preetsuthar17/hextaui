@@ -1,6 +1,8 @@
 "use client"
 
+import * as React from "react"
 import { IconMapPin } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -44,6 +46,18 @@ const people: Record<string, Person> = {
 
 const profile = createHoverCardHandle<Person>()
 
+function MentionLink({ className, ...props }: React.ComponentProps<"a">) {
+  return (
+    <a
+      className={cn(
+        "font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 function Mention({ person }: { person: Person }) {
   return (
     <HoverCardTrigger
@@ -51,9 +65,7 @@ function Mention({ person }: { person: Person }) {
       payload={person}
       href="#"
       delay={250}
-      render={
-        <a className="font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground" />
-      }
+      render={<MentionLink />}
     >
       @{person.handle}
     </HoverCardTrigger>

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "cn"
 
 import {
   HoverCard,
@@ -10,6 +11,18 @@ import {
 import { Skeleton, SkeletonText } from "@/components/ui/skeleton"
 
 type Repo = { name: string; description: string; stars: number }
+
+function RepoLink({ className, ...props }: React.ComponentProps<"a">) {
+  return (
+    <a
+      className={cn(
+        "text-sm font-medium underline decoration-border underline-offset-4 hover:decoration-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
 function fetchRepo(): Promise<Repo> {
   return new Promise((resolve) =>
@@ -38,13 +51,7 @@ export function HoverCardAsync() {
         }
       }}
     >
-      <HoverCardTrigger
-        href="#"
-        delay={200}
-        render={
-          <a className="text-sm font-medium underline decoration-border underline-offset-4 hover:decoration-foreground" />
-        }
-      >
+      <HoverCardTrigger href="#" delay={200} render={<RepoLink />}>
         hextaui/hextaui
       </HoverCardTrigger>
       <HoverCardContent className="w-72" aria-busy={!repo}>

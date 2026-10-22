@@ -42,6 +42,7 @@
   "The close button is labelled “Close”. The handle on the inner edge shows the sheet can be dragged and is hidden from assistive tech.": "Le bouton de fermeture a le label « Close ». La poignée sur le bord intérieur montre que la sheet peut être tirée et est masquée aux technologies d'assistance.",
   "The direction that dismisses it.": "La direction qui la ferme.",
   "The drag handle on the inner edge.": "La poignée de glissement sur le bord intérieur.",
+  "The product tile for collection grids and rails, with swatches, quick add and a wishlist heart. Handles sold-out sizes, price ranges and failed adds.": "La vignette produit pour les grilles et carrousels de collection, avec pastilles, ajout rapide et cœur de liste d’envies. Gère les tailles épuisées, les fourchettes de prix et les ajouts échoués.",
   "The sheet is a modal dialog. <l0/> labels it and <l1/> describes it, so always include a title.": "La sheet est un dialog modal. <l0/> la nomme et <l1/> la décrit : incluez donc toujours un titre.",
   "The sheet panel.": "Le panneau de la sheet.",
   "The side it opens from.": "Le côté depuis lequel elle s'ouvre.",

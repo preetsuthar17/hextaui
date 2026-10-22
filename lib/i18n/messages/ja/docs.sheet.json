@@ -42,6 +42,7 @@
   "The close button is labelled “Close”. The handle on the inner edge shows the sheet can be dragged and is hidden from assistive tech.": "閉じるボタンには「Close」というラベルが付きます。内側の端にあるハンドルは sheet をドラッグできることを示し、支援技術からは隠されます。",
   "The direction that dismisses it.": "閉じる方向。",
   "The drag handle on the inner edge.": "内側の端にあるドラッグハンドル。",
+  "The product tile for collection grids and rails, with swatches, quick add and a wishlist heart. Handles sold-out sizes, price ranges and failed adds.": "スウォッチ、クイック追加、ウィッシュリストのハートを備えた、コレクションのグリッドやレール向けの商品タイル。売り切れのサイズ、価格帯、追加の失敗に対応します。",
   "The sheet is a modal dialog. <l0/> labels it and <l1/> describes it, so always include a title.": "sheet はモーダルダイアログです。<l0/> がラベルを、<l1/> が説明を提供するので、必ずタイトルを含めてください。",
   "The sheet panel.": "sheet のパネル。",
   "The side it opens from.": "開く側。",

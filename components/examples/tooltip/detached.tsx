@@ -1,5 +1,8 @@
 "use client"
 
+import * as React from "react"
+import { cn } from "cn"
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   createTooltipHandle,
@@ -19,6 +22,18 @@ const people: Person[] = [
 
 const presence = createTooltipHandle<Person>()
 
+function AvatarButton({ className, ...props }: React.ComponentProps<"button">) {
+  return (
+    <button
+      className={cn(
+        "rounded-full outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export function TooltipDetached() {
   return (
     <TooltipProvider>
@@ -29,9 +44,7 @@ export function TooltipDetached() {
             handle={presence}
             payload={person}
             aria-label={person.name}
-            render={
-              <button className="rounded-full outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden" />
-            }
+            render={<AvatarButton />}
           >
             <Avatar>
               <AvatarFallback>{person.initials}</AvatarFallback>

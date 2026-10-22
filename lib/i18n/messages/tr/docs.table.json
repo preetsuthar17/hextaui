@@ -4,6 +4,7 @@
   "Cell padding. Set by size.": "Hücre dolgusu. size ile belirlenir.",
   "Cells stay on one line by default, which suits data. `wrap` lets them wrap and aligns rows to the top, for prose like glossaries or API references. Pair it with `table-fixed` and column widths.": "Hücreler varsayılan olarak tek satırda kalır; bu veriye uygundur. `wrap` sarmalarına izin verir ve satırları üste hizalar; sözlükler veya API başvuruları gibi düz yazı için. `table-fixed` ve sütun genişlikleriyle birlikte kullanın.",
   "Classes for the scroll container.": "Kaydırma kapsayıcısı için sınıflar.",
+  "Color swatches and size buttons for a product page. Handles sold-out sizes, combinations that don’t exist, a missing size on add to bag and back-in-stock emails.": "Bir ürün sayfası için renk örnekleri ve beden düğmeleri. Tükenmiş bedenleri, var olmayan kombinasyonları, sepete eklerken seçilmemiş bedeni ve stoğa geri gelince gönderilen e-postaları ele alır.",
   "Compact": "Kompakt",
   "Draw a soft shadow on the inner edge of the last pinned column while content is hidden behind it.": "İçerik arkasında gizliyken son sabitlenmiş sütunun iç kenarına yumuşak bir gölge çizer.",
   "Every part renders its native element and accepts its attributes.": "Her parça kendi yerel öğesini işler ve niteliklerini kabul eder.",

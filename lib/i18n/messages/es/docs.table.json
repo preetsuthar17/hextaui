@@ -4,6 +4,7 @@
   "Cell padding. Set by size.": "Relleno de las celdas. Definido por size.",
   "Cells stay on one line by default, which suits data. `wrap` lets them wrap and aligns rows to the top, for prose like glossaries or API references. Pair it with `table-fixed` and column widths.": "Las celdas permanecen en una sola línea por defecto, lo que encaja con los datos. `wrap` permite que se ajusten y alinea las filas arriba, para prosa como glosarios o referencias de API. Combínalo con `table-fixed` y anchos de columna.",
   "Classes for the scroll container.": "Clases para el contenedor de scroll.",
+  "Color swatches and size buttons for a product page. Handles sold-out sizes, combinations that don’t exist, a missing size on add to bag and back-in-stock emails.": "Muestras de color y botones de talla para una página de producto. Gestiona tallas agotadas, combinaciones que no existen, la falta de talla al añadir a la bolsa y los avisos por email de reposición.",
   "Compact": "Compacto",
   "Draw a soft shadow on the inner edge of the last pinned column while content is hidden behind it.": "Dibuja una sombra suave en el borde interior de la última columna fijada mientras hay contenido oculto detrás.",
   "Every part renders its native element and accepts its attributes.": "Cada parte renderiza su elemento nativo y acepta sus atributos.",
