@@ -29,7 +29,7 @@ function PageHead({
 }) {
   return (
     <header className="flex max-w-2xl flex-col items-start">
-      <p className="text-sm font-medium text-brand">{eyebrow}</p>
+      <p className="text-sm font-medium text-brand-strong">{eyebrow}</p>
       <h1 id={id} className="marketing-heading mt-3 text-balance">
         {title}
       </h1>
@@ -55,7 +55,7 @@ function SectionHead({
 }) {
   return (
     <div className={cn("flex max-w-2xl flex-col items-start", className)}>
-      <p className="text-sm font-medium text-brand">{eyebrow}</p>
+      <p className="text-sm font-medium text-brand-strong">{eyebrow}</p>
       <h2 id={id} className="marketing-heading mt-3 text-balance">
         {title}
       </h2>

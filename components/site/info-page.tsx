@@ -83,7 +83,7 @@ function InfoPage({
       <header className="mx-auto flex w-full max-w-5xl flex-col items-start px-4 pt-20 pb-16 sm:pt-28 sm:pb-20">
         {nav ? <div className="mb-8">{nav}</div> : null}
         {typeof eyebrow === "string" ? (
-          <p className="text-sm font-medium text-brand">{t(eyebrow)}</p>
+          <p className="text-sm font-medium text-brand-strong">{t(eyebrow)}</p>
         ) : (
           eyebrow
         )}

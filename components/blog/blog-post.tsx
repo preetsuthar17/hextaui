@@ -16,7 +16,7 @@ import { t } from "@/lib/i18n/rich"
 import { blogPostingJsonLd } from "@/lib/structured-data"
 
 const backLinkClassName =
-  "rounded-sm text-sm font-medium text-brand outline-none hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-focus-ring"
+  "rounded-sm text-sm font-medium text-brand-strong outline-none hover:underline hover:underline-offset-4 focus-visible:ring-3 focus-visible:ring-focus-ring"
 
 async function BlogPost({ slug }: { slug: string }) {
   const { post, blocks, words, minutes } = await getBlogArticle(slug)

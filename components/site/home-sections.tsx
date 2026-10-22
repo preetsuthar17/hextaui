@@ -113,7 +113,7 @@ function SectionHead({
 }) {
   return (
     <div className={cn("flex max-w-2xl flex-col items-start", className)}>
-      <p className="text-sm font-medium text-brand">{t(eyebrow)}</p>
+      <p className="text-sm font-medium text-brand-strong">{t(eyebrow)}</p>
       <h2 id={id} className="marketing-heading mt-3 text-balance">
         {t(title)}
       </h2>

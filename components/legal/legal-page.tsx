@@ -93,7 +93,7 @@ function LegalPage({
         })}
       />
       <header className="mx-auto flex w-full max-w-252 flex-col items-start px-4 pt-16 pb-14 sm:pt-24 sm:pb-20">
-        <p className="text-sm font-medium text-brand">{t("Legal")}</p>
+        <p className="text-sm font-medium text-brand-strong">{t("Legal")}</p>
         <h1 className="marketing-heading mt-3 text-balance">{title}</h1>
         <p className="marketing-lede mt-4 max-w-xl text-pretty text-muted-foreground">
           {description}

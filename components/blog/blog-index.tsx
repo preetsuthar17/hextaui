@@ -35,7 +35,7 @@ async function BlogIndex() {
         )}
       />
       <header className="mx-auto flex w-full max-w-252 flex-col items-start px-4 pt-20 pb-16 sm:pt-28 sm:pb-20">
-        <p className="text-sm font-medium text-brand">{t(blogTitle)}</p>
+        <p className="text-sm font-medium text-brand-strong">{t(blogTitle)}</p>
         <h1 className="marketing-heading mt-3 text-balance">
           {t("The hard parts, written down")}
         </h1>

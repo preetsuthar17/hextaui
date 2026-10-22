@@ -86,7 +86,7 @@ export default function Page() {
         })}
       />
       <header className="mx-auto flex w-full max-w-252 flex-col items-start px-4 pt-16 pb-14 sm:pt-24 sm:pb-20">
-        <p className="text-sm font-medium text-brand">Releases</p>
+        <p className="text-sm font-medium text-brand-strong">Releases</p>
         <h1 className="marketing-heading mt-3 text-balance">Changelog</h1>
         <p className="marketing-lede mt-4 max-w-xl text-pretty text-muted-foreground">
           What shipped in HextaUI and HextaUI Pro.

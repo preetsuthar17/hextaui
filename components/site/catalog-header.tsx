@@ -38,7 +38,7 @@ function CatalogHeader({
       <header className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex max-w-2xl flex-col items-start">
           {eyebrow ? (
-            <div className="text-sm font-medium text-brand">{eyebrow}</div>
+            <div className="text-sm font-medium text-brand-strong">{eyebrow}</div>
           ) : null}
           <h1
             className={cn(
