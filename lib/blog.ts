@@ -14,9 +14,9 @@ type BlogPost = {
 
 const blogTitle = "Blog"
 const blogDescription =
-  "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces and registries that AI coding agents can use."
+  "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces, e-commerce UI and registries that AI coding agents can use."
 const blogLead =
-  "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens and making a registry work for coding agents."
+  "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens, checkout and store admin UI, and registries for coding agents."
 const blogAuthor = {
   name: siteAuthor,
   url: "https://twitter.com/preetsuthar17",
@@ -24,6 +24,55 @@ const blogAuthor = {
 const wordsPerMinute = 220
 
 const blogPosts: BlogPost[] = [
+  {
+    slug: "one-page-checkout-react-nextjs",
+    title:
+      "How to build a one-page checkout in React and Next.js that survives declines and changed prices",
+    seoTitle: "One-page checkout in React and Next.js, done right",
+    description:
+      "A checkout form is easy. Declines, 3-D Secure, prices that change before Pay and payments that never answer are not. A one-page checkout in React and Next.js.",
+    tags: ["React", "Next.js", "E-commerce", "Payments"],
+    published: "2026-10-22",
+  },
+  {
+    slug: "product-variant-picker-react",
+    title:
+      "Product variant picker UX in React: sold-out sizes, missing combinations and back-in-stock",
+    seoTitle: "Product variant picker UX in React: sizes and stock",
+    description:
+      "Colors and sizes look simple until stock lives on each combination. A React variant picker for sold-out sizes, missing combinations, photos, prices and the URL.",
+    tags: ["React", "E-commerce", "UX", "Accessibility"],
+    published: "2026-10-22",
+  },
+  {
+    slug: "react-shopping-cart-optimistic-updates",
+    title:
+      "Shopping cart UX in React: optimistic updates, undo and money in minor units",
+    seoTitle: "React shopping cart UX: optimistic updates and undo",
+    description:
+      "A React cart that feels instant and stays correct: money in minor units, optimistic quantities with rollback, merged requests, undo and free shipping progress.",
+    tags: ["React", "Next.js", "E-commerce", "UX"],
+    published: "2026-10-22",
+  },
+  {
+    slug: "international-address-form-react",
+    title: "How to build an address form that works in every country, in React",
+    seoTitle: "International address form in React: a practical guide",
+    description:
+      "A US address form with a country dropdown is not international. Per-country fields, postal codes, autofill tokens, address search and errors in React.",
+    tags: ["React", "Forms", "E-commerce", "Accessibility"],
+    published: "2026-10-22",
+  },
+  {
+    slug: "ecommerce-admin-dashboard-nextjs",
+    title:
+      "Building an e-commerce admin dashboard in Next.js: orders, refunds and inventory",
+    seoTitle: "E-commerce admin dashboard in Next.js: the hard parts",
+    description:
+      "The hard parts of a Next.js store admin: two order statuses, partial bulk failures, refund math that adds up to the cent, inventory adjustments and discounts.",
+    tags: ["Next.js", "React", "E-commerce", "Dashboard"],
+    published: "2026-10-22",
+  },
   {
     slug: "shadcn-base-ui-vs-radix",
     title:
