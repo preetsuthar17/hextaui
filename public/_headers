@@ -8,10 +8,12 @@
 /opengraph-image
   Content-Type: image/png
   Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
 
 /og/*
   Content-Type: image/png
   Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
 
 /r/*
   Access-Control-Allow-Origin: *
@@ -42,10 +44,12 @@
 /blog/opengraph-image
   Content-Type: image/png
   Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
 
 /blog/:slug/opengraph-image
   Content-Type: image/png
   Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
 
 /404.md
   X-Robots-Tag: noindex

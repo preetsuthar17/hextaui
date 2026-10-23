@@ -4,21 +4,14 @@ import path from "node:path"
 
 import type { MetadataRoute } from "next"
 
-import {
-  isLocalizedPath,
-  languageAlternates,
-  localizeHref,
-  translatedLocales,
-} from "@/lib/i18n/config"
 import { blogContentFile } from "@/lib/blog-content"
 import { isBlogSlug } from "@/lib/blog"
 import { componentCategories } from "@/lib/component-categories"
-import { docsEntries, getDocsExampleHref } from "@/lib/docs"
-import { getAllDocsExamples } from "@/lib/docs-examples"
+import { docsEntries } from "@/lib/docs"
 import { ogImagePath } from "@/lib/metadata"
 import { proBlocks } from "@/lib/pro/catalog"
 import { getShadcnComparisons } from "@/lib/shadcn-compare"
-import { absoluteUrl, isNoindexPath } from "@/lib/site"
+import { absoluteUrl, isNoindexPath, isUnlistedPath } from "@/lib/site"
 
 export const dynamic = "force-static"
 
@@ -34,8 +27,6 @@ const dynamicRoutes: Record<string, string[]> = {
   ),
 }
 
-const examplePattern = /^\/docs\/([^/]+)\/examples\/([^/]+)$/
-
 function ogImage(route: string) {
   const docs = /^\/docs\/([^/]+)/.exec(route)?.[1]
   const compare = /^\/compare\/shadcn-ui\/([^/]+)$/.exec(route)?.[1]
@@ -48,17 +39,6 @@ function ogImage(route: string) {
         ? ogImagePath("docs", docs)
         : "/opengraph-image"
   return [absoluteUrl(path)]
-}
-
-function languages(route: string) {
-  const alternates = languageAlternates(route)
-  if (!alternates) return undefined
-  return Object.fromEntries(
-    Object.entries(alternates).map(([locale, href]) => [
-      locale,
-      absoluteUrl(href),
-    ])
-  )
 }
 
 const priorities: [string, number][] = [
@@ -135,15 +115,6 @@ const proDir = path.join(process.cwd(), "pro")
 function sourcesFor(route: string, file: string) {
   const post = /^\/blog\/([^/]+)$/.exec(route)?.[1]
   if (post && isBlogSlug(post)) return [file, blogContentFile(post)]
-
-  const example = examplePattern.exec(route)
-  if (example) {
-    return [
-      file,
-      `app/docs/${example[1]}/page.tsx`,
-      `components/examples/${example[1]}/${example[2]}.tsx`,
-    ].filter((source) => existsSync(path.resolve(process.cwd(), source)))
-  }
   const compared = /^\/compare\/shadcn-ui\/([^/]+)$/.exec(route)?.[1]
   if (compared) {
     return [file, `components/ui/${compared}.tsx`, "lib/shadcn-snapshot.json"]
@@ -212,9 +183,6 @@ function priority(route: string) {
   if (route === "/") {
     return 1
   }
-  if (examplePattern.test(route)) {
-    return 0.4
-  }
 
   const match = priorities.find(
     ([prefix]) => route === prefix || route.startsWith(`${prefix}/`)
@@ -222,12 +190,12 @@ function priority(route: string) {
   return match?.[1] ?? 0.5
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  dynamicRoutes["/docs/[file]/examples/[example]"] = (
-    await getAllDocsExamples()
-  ).map((example) => getDocsExampleHref(example.file))
+export default function sitemap(): MetadataRoute.Sitemap {
   const pages = findPages(appDir).filter(
-    (page) => !isNoindexPath(page.route) && !page.route.startsWith("/[lang]")
+    (page) =>
+      !isNoindexPath(page.route) &&
+      !isUnlistedPath(page.route) &&
+      !page.route.startsWith("/[lang]")
   )
   const ignored = ignoredFiles(pages.map((page) => page.file))
   const history = hasHistory()
@@ -235,23 +203,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return pages
     .filter((page) => !ignored.has(page.file))
     .flatMap((page) =>
-      expand(page.route).flatMap((route) => {
-        const entry = {
-          lastModified: lastModified(route, page.file, history),
-          priority: priority(route),
-          alternates: { languages: languages(route) },
-          images: ogImage(route),
-        }
-        const locales = isLocalizedPath(route) ? translatedLocales : []
-        return [
-          { url: absoluteUrl(route), ...entry },
-          ...locales.map((locale) => ({
-            url: absoluteUrl(localizeHref(route, locale)),
-            ...entry,
-            priority: Math.round(entry.priority * 80) / 100,
-          })),
-        ]
-      })
+      expand(page.route).map((route) => ({
+        url: absoluteUrl(route),
+        lastModified: lastModified(route, page.file, history),
+        priority: priority(route),
+        images: ogImage(route),
+      }))
     )
     .sort((a, b) => b.priority - a.priority || a.url.localeCompare(b.url))
 }

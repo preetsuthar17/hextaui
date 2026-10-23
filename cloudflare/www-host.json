@@ -1,0 +1,13 @@
+[
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/",
+      "target_url": "https://hextaui.com/",
+      "subpath_matching": true,
+      "preserve_path_suffix": true
+    }
+  }
+]

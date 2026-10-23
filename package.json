@@ -22,7 +22,8 @@
     "email": "node --env-file-if-exists=.dev.vars --experimental-strip-types --no-warnings scripts/email.ts",
     "i18n:sync": "node --experimental-strip-types --no-warnings scripts/i18n-sync.ts",
     "shadcn:snapshot": "node --experimental-strip-types --no-warnings scripts/shadcn-snapshot.ts",
-    "pro:build": "node --experimental-strip-types --no-warnings scripts/build-pro.ts"
+    "pro:build": "node --experimental-strip-types --no-warnings scripts/build-pro.ts",
+    "redirects:www": "node --experimental-strip-types --no-warnings scripts/www-redirects.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

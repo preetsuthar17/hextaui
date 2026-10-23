@@ -23,9 +23,12 @@ const noindexPaths = [
 
 const embeddedOnlyPaths = ["/preview/"]
 
-const crawlDisallowPaths = noindexPaths.filter(
-  (path) => !embeddedOnlyPaths.includes(path)
-)
+const crawlDisallowPaths = [
+  ...noindexPaths.filter((path) => !embeddedOnlyPaths.includes(path)),
+  "/r/",
+]
+
+const crawlAllowPaths = ["/", "/r/registry.json"]
 
 function isNoindexPath(route: string) {
   return noindexPaths.some((prefix) =>
@@ -35,14 +38,22 @@ function isNoindexPath(route: string) {
   )
 }
 
+const unlistedPaths = [/^\/docs\/[^/]+\/examples\//]
+
+function isUnlistedPath(route: string) {
+  return unlistedPaths.some((pattern) => pattern.test(route))
+}
+
 function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString()
 }
 
 export {
   absoluteUrl,
+  crawlAllowPaths,
   crawlDisallowPaths,
   isNoindexPath,
+  isUnlistedPath,
   noindexPaths,
   siteAlternateNames,
   siteAuthor,

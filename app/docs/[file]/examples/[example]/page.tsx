@@ -66,14 +66,17 @@ export async function generateMetadata({
   const { component, example } = found
   const href = getDocsExampleHref(example.file)
 
-  return pageMetadata({
-    title: getExampleTitle(component.name, example.title),
-    description: getExampleDescription(component.name, example),
-    path: href,
-    markdown: `${href}.md`,
-    image: ogImagePath("docs", component.slug),
-    type: "article",
-  })
+  return {
+    ...pageMetadata({
+      title: getExampleTitle(component.name, example.title),
+      description: getExampleDescription(component.name, example),
+      path: href,
+      markdown: `${href}.md`,
+      image: ogImagePath("docs", component.slug),
+      type: "article",
+    }),
+    robots: { index: false, follow: true },
+  }
 }
 
 export default async function Page({

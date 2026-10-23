@@ -4,20 +4,19 @@ import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import { proBlocks } from "@/lib/pro/catalog"
+import {
+  bulkRedirectsCsv,
+  isStaticRule,
+  parseRedirects,
+  resolveRedirect,
+  wwwRedirects,
+} from "@/lib/redirects"
+import { siteUrl } from "@/lib/site"
 
 const root = process.cwd()
-const rules = readFileSync(path.join(root, "public/_redirects"), "utf8")
-  .split("\n")
-  .map((line) => line.trim())
-  .filter((line) => line && !line.startsWith("#"))
-  .map((line) => {
-    const [source, target, status] = line.split(/\s+/)
-    return { source, target, status }
-  })
-
-const staticRules = rules.filter(
-  (rule) => !rule.source.includes(":") && !rule.source.includes("*")
-)
+const redirectsFile = readFileSync(path.join(root, "public/_redirects"), "utf8")
+const rules = parseRedirects(redirectsFile)
+const staticRules = rules.filter(isStaticRule)
 
 function hasPage(route: string) {
   if (route.startsWith("/blocks/")) {
@@ -51,9 +50,9 @@ describe("public/_redirects", () => {
   })
 
   it("never chains one redirect into another", () => {
-    const sources = new Set(staticRules.map((rule) => rule.source))
-    for (const rule of staticRules) {
-      expect(sources.has(rule.target), rule.target).toBe(false)
+    for (const rule of rules) {
+      const next = resolveRedirect(rules, rule.target)
+      expect(next?.source, `${rule.source} → ${rule.target}`).toBeUndefined()
     }
   })
 
@@ -68,5 +67,51 @@ describe("public/_redirects", () => {
   it("stays within the Cloudflare Pages limits", () => {
     expect(staticRules.length).toBeLessThanOrEqual(2000)
     expect(rules.length - staticRules.length).toBeLessThanOrEqual(100)
+  })
+})
+
+describe("resolveRedirect", () => {
+  it("follows static, placeholder and splat sources", () => {
+    const chain = parseRedirects(
+      ["/a /b 301", "/b /c 301", "/p/:slug /c/:slug 301", "/s/* /c 301"].join(
+        "\n"
+      )
+    )
+    expect(resolveRedirect(chain, "/b")?.target).toBe("/c")
+    expect(resolveRedirect(chain, "/p/x")?.target).toBe("/c/:slug")
+    expect(resolveRedirect(chain, "/p/x/y")).toBeUndefined()
+    expect(resolveRedirect(chain, "/s/x/y")?.target).toBe("/c")
+    expect(resolveRedirect(chain, "/c")).toBeUndefined()
+  })
+})
+
+describe("www bulk redirects", () => {
+  const lists = wwwRedirects(rules, "www.hextaui.com", siteUrl)
+
+  it("sends every legacy www URL to its final page in one hop", () => {
+    expect(lists.legacy).toHaveLength(staticRules.length)
+    for (const redirect of lists.legacy) {
+      const target = new URL(redirect.target_url)
+      expect(target.origin).toBe(siteUrl)
+      expect(resolveRedirect(rules, target.pathname)).toBeUndefined()
+    }
+  })
+
+  it("matches the generated Cloudflare lists", () => {
+    for (const [name, redirects] of Object.entries(lists)) {
+      const file = path.join(root, "cloudflare", `www-${name}`)
+      const json = JSON.parse(readFileSync(`${file}.json`, "utf8"))
+      const csv = readFileSync(`${file}.csv`, "utf8")
+      expect(json, `run pnpm redirects:www`).toEqual(
+        redirects.map((redirect) => ({ redirect }))
+      )
+      expect(csv, `run pnpm redirects:www`).toBe(
+        `${bulkRedirectsCsv(redirects)}\n`
+      )
+    }
+  })
+
+  it("stays within the Cloudflare free plan", () => {
+    expect(lists.legacy.length + lists.host.length).toBeLessThanOrEqual(10000)
   })
 })
