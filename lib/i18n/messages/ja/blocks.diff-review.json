@@ -2,6 +2,7 @@
   "A card for the chat: “Edited 4 files” with counts, each file with accept and reject, and bulk actions.": "チャット向けのカード: 件数つきの「Edited 4 files」、承認と却下を備えた各ファイル、一括アクション。",
   "A read-only diff": "読み取り専用の差分",
   "A read-only diff of one file, for showing changes between versions.": "バージョン間の変更を示す、1つのファイルの読み取り専用の差分。",
+  "A review of an agent’s file edits before they land. Handles accept or reject per change, comments back to the agent and edits still streaming.": "エージェントのファイル編集を適用前にレビューする画面。変更ごとの承認と却下、エージェントへ返すコメント、ストリーミング中の編集に対応します。",
   "A unified diff of this file. Hunk headers without line numbers, CRLF and “No newline at end of file” are fine.": "このファイルの統合差分。行番号のないハンクヘッダー、CRLF、「No newline at end of file」にも対応します。",
   "A unified diff, instead of before and after.": "変更前と変更後の代わりに渡す統合差分。",
   "AI Code Diff Review block for React & shadcn/ui": "React & shadcn/ui向けのAIコード差分レビューブロック",

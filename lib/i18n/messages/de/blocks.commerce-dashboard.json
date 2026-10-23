@@ -1,4 +1,5 @@
 {
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.": "Ein kompletter Shop-Admin aus den Commerce-Blocks von HextaUI. Deckt Erstattungen, Fulfillment und Bestandsänderungen ab, die jede Seite gleichzeitig aktualisieren.",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.": "Ein winziger externer Store mit Bestellungen, Produkten und Rabatten, gelesen mit useSyncExternalStore.",
   "Also takes div props for the root.": "Nimmt außerdem div-Props für das Root-Element an.",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.": "Apps und welche davon angeheftet sind. Angeheftete Apps lassen sich über ihr ⋯-Menü umsortieren oder lösen.",
@@ -25,10 +26,10 @@
   "Live view data for Home. Leave out to hide the card.": "Live-View-Daten für Home. Weglassen, um die Karte auszublenden.",
   "Load orders, products and discounts once, put them in a store with createCommerceStore, and pass api functions that call your server. Each one runs before the store changes, and anything it throws shows where the action happened.": "Lade Bestellungen, Produkte und Rabatte einmal, lege sie mit createCommerceStore in einen Store und übergib api-Funktionen, die deinen Server aufrufen. Jede läuft, bevor sich der Store ändert, und alles, was sie wirft, erscheint dort, wo die Aktion stattfand.",
   "Loaders for Home and Analytics, passed to Sales Overview.": "Loader für Home und Analytics, die an Sales Overview übergeben werden.",
-  "Locale for money, numbers and dates.": "Locale für Geldbeträge, Zahlen und Datumsangaben.",
+  "Locale for money, numbers and dates.": "Locale für Geldbeträge, Zahlen und Datumswerte.",
   "Map each api call to a Shopify Admin GraphQL mutation: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities and productUpdate. userErrors become the message people see.": "Ordne jeden api-Aufruf einer Shopify-Admin-GraphQL-Mutation zu: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities und productUpdate. userErrors werden zur Meldung, die Nutzer sehen.",
   "Move stock at a location by a delta. itemId is a variant id, or the product id for products without options.": "Verschiebt den Bestand an einem Standort um ein Delta. itemId ist eine Varianten-id oder bei Produkten ohne Optionen die Produkt-id.",
-  "Next.js App Router routes": "Next.js-App-Router-Routen",
+  "Next.js App Router routes": "Routen im Next.js App Router",
   "On a section's chevron, shows or hides its pages without leaving the page.": "Auf dem Chevron eines Abschnitts: blendet seine Seiten ein oder aus, ohne die Seite zu verlassen.",
   "On an order, opens the next or previous order, from Order Detail.": "Öffnet auf einer Bestellung die nächste oder vorherige Bestellung, aus Order Detail.",
   "Opens search. Ctrl+K on Windows and Linux.": "Öffnet die Suche. Ctrl+K unter Windows und Linux.",

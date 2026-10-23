@@ -3,7 +3,6 @@
   "Cards": "Cartes",
   "Cards can sit in a row or any grid. The ring follows them wherever they are.": "Les cartes peuvent former une ligne ou n'importe quelle grille. L'anneau les suit où qu'elles soient.",
   "Classes for the radio inside the card.": "Classes pour le radio à l'intérieur de la carte.",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Des options de livraison pour le checkout et des dates de livraison pour les pages produit. Gère les heures limites de commande, le retrait en magasin et les tarifs qui changent selon l’adresse.",
   "Disable a single option, or make the whole group `readOnly` to show a value that can't change.": "Désactivez une seule option, ou passez tout le groupe en `readOnly` pour montrer une valeur non modifiable.",
   "Disabled and read-only": "Désactivé et en lecture seule",
   "Each radio has a 36px hit area, and 44px on touch screens, while staying 16px on screen.": "Chaque radio a une zone de clic de 36px, et de 44px sur écran tactile, tout en restant à 16px à l'écran.",

@@ -1,5 +1,6 @@
 {
   "A caret menu for one trigger character.": "Um menu no cursor para um caractere de gatilho.",
+  "A chat composer that grows as you type. Handles file uploads, @ and / menus at the caret and messages typed while a reply streams.": "Um compositor de chat que cresce enquanto você digita. Cobre envio de arquivos, menus @ e / no cursor e mensagens digitadas enquanto uma resposta faz streaming.",
   "A compact picker for modes, run location, folders or repositories.": "Um seletor compacto para modos, local de execução, pastas ou repositórios.",
   "A muted shell around the body that holds a footer row, for agent harnesses.": "Uma casca discreta ao redor do corpo que abriga uma linha de rodapé, para harnesses de agentes.",
   "A ring that fills as the context window does. Hover, click or press Enter to see the breakdown.": "Um anel que se enche junto com a janela de contexto. Passe o mouse, clique ou pressione Enter para ver o detalhamento.",
@@ -97,7 +98,6 @@
   "Starts dictation, and inserts the transcript when pressed again.": "Inicia o ditado e insere a transcrição quando pressionado de novo.",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "Interrompe uma resposta em streaming, fecha um menu ou cancela uma gravação.",
   "Switch label.": "Rótulo do switch.",
-  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Texto que faz streaming de um modelo em ritmo constante. Pedaços irregulares são suavizados, com um fade nas palavras novas e um cursor enquanto escreve.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "O menu no cursor é um combobox com aria-activedescendant, então o foco nunca sai do texto enquanto você o percorre.",
   "The character that opens it, such as @ or /.": "O caractere que o abre, como @ ou /.",
   "The choices. Descriptions show under each label.": "As opções. As descrições aparecem sob cada rótulo.",

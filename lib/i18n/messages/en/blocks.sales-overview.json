@@ -60,6 +60,7 @@
   "The comparison value. Leave out when not comparing.",
   "The current instant as ISO. Decides today, the incomplete point and future hours.",
   "The definition shown in the info tooltip.",
+  "The home analytics page of a store admin. Handles stores with no sales yet, today’s unfinished numbers and reports that fail or come back incomplete.",
   "The main chart with a metric switcher, comparison line, crosshair tooltip and table view.",
   "The metric name.",
   "The page heading, like a greeting.",

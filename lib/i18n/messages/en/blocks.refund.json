@@ -1,5 +1,6 @@
 [
   "A manual total. The result reports the difference from the calculated amount.",
+  "A refund sheet for issuing full or partial refunds on an order. Handles prorated discounts, restocking, shipping, split payments and failed or pending refunds.",
   "A server action that creates one Stripe refund per transaction in minor units, with an idempotency key so a retry never refunds twice. Stripe’s failure_reason turns into a message the merchant can act on.",
   "Also takes form props.",
   "An element that opens the sheet, such as a Refund button.",

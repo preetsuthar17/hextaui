@@ -45,6 +45,7 @@
   "The chat stopped, so unfinished calls read Cancelled instead of spinning.": "Sohbet durdu; bu yüzden tamamlanmamış çağrılar dönmek yerine Cancelled olarak görünür.",
   "The choices.": "Seçenekler.",
   "The chosen value, once answered.": "Yanıtlandıktan sonra seçilen değer.",
+  "The list of what an agent does, one line per step. Reads fold into a summary, edits and errors stay in view, and approvals ask before a tool runs.": "Bir ajanın yaptıklarının listesi, her adım için bir satır. Okumalar bir özete katlanır, düzenlemeler ve hatalar görünür kalır ve onaylar araç çalışmadan önce sorar.",
   "The list. Groups quiet runs and shares timing between steps.": "Liste. Sessiz çalışmaları gruplar ve adımlar arasında zamanlamayı paylaştırır.",
   "The matches.": "Eşleşmeler.",
   "The part from message.parts.": "message.parts içindeki parça.",

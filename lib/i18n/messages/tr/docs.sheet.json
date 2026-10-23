@@ -42,7 +42,6 @@
   "The close button is labelled “Close”. The handle on the inner edge shows the sheet can be dragged and is hidden from assistive tech.": "Kapatma düğmesi “Close” olarak etiketlenmiştir. İç kenardaki tutamaç sheet'in sürüklenebildiğini gösterir ve yardımcı teknolojilerden gizlidir.",
   "The direction that dismisses it.": "Onu kapatan yön.",
   "The drag handle on the inner edge.": "İç kenardaki sürükleme tutamacı.",
-  "The product tile for collection grids and rails, with swatches, quick add and a wishlist heart. Handles sold-out sizes, price ranges and failed adds.": "Koleksiyon ızgaraları ve şeritleri için renk örnekleri, hızlı ekleme ve istek listesi kalbi içeren ürün kartı. Tükenmiş bedenleri, fiyat aralıklarını ve başarısız eklemeleri ele alır.",
   "The sheet is a modal dialog. <l0/> labels it and <l1/> describes it, so always include a title.": "Sheet modal bir dialog'dur. <l0/> onu etiketler ve <l1/> tanımlar, bu yüzden her zaman bir başlık ekleyin.",
   "The sheet panel.": "Sheet paneli.",
   "The side it opens from.": "Açıldığı kenar.",

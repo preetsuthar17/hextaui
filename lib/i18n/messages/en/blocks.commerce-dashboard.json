@@ -1,4 +1,5 @@
 [
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.",
   "Also takes div props for the root.",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.",

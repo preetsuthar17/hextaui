@@ -1,4 +1,5 @@
 {
+  "A crash shown the way a developer reads it. Your code comes first, framework frames fold away and every cause is listed in order.": "Uma falha mostrada do jeito que um desenvolvedor a lê. Seu código vem primeiro, frames do framework se recolhem e cada causa aparece em ordem.",
   "A stack, a traceback or raw log output around one.": "Uma stack, um traceback ou a saída de log bruta em volta dele.",
   "A tool that throws ends in the output-error state with errorText. Render it as a compact StackTrace inside the failed ToolCall, so the step reads as one line until someone opens it.": "Uma ferramenta que lança um erro termina no estado output-error com errorText. Mostre-o como um StackTrace compacto dentro do ToolCall que falhou, para que a etapa fique em uma linha até alguém abri-la.",
   "AI Stack Trace and error view for React & shadcn/ui": "AI Stack Trace e visualização de erros para React e shadcn/ui",

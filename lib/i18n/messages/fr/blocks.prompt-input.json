@@ -1,5 +1,6 @@
 {
   "A caret menu for one trigger character.": "Un menu au curseur pour un caractère déclencheur.",
+  "A chat composer that grows as you type. Handles file uploads, @ and / menus at the caret and messages typed while a reply streams.": "Un compositeur de chat qui grandit à la saisie. Gère l’envoi de fichiers, les menus @ et / au curseur et les messages tapés pendant qu’une réponse streame.",
   "A compact picker for modes, run location, folders or repositories.": "Un sélecteur compact pour les modes, le lieu d’exécution, les dossiers ou les dépôts.",
   "A muted shell around the body that holds a footer row, for agent harnesses.": "Une coque discrète autour du corps qui contient une rangée de pied de page, pour les harnais d’agents.",
   "A ring that fills as the context window does. Hover, click or press Enter to see the breakdown.": "Un anneau qui se remplit avec la fenêtre de contexte. Survolez, cliquez ou appuyez sur Entrée pour voir le détail.",
@@ -97,7 +98,6 @@
   "Starts dictation, and inserts the transcript when pressed again.": "Démarre la dictée, et insère la transcription à la deuxième pression.",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "Arrête une réponse en streaming, ferme un menu ou annule un enregistrement.",
   "Switch label.": "Libellé du switch.",
-  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Du texte qui streame depuis un modèle à un rythme régulier. Les morceaux irréguliers sont lissés, avec un fondu sur les nouveaux mots et un curseur pendant l’écriture.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "Le menu au curseur est une combobox avec aria-activedescendant, donc le focus ne quitte jamais le texte pendant que vous le parcourez.",
   "The character that opens it, such as @ or /.": "Le caractère qui l’ouvre, comme @ ou /.",
   "The choices. Descriptions show under each label.": "Les choix. Les descriptions s’affichent sous chaque libellé.",

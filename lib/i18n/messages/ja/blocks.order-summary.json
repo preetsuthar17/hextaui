@@ -40,6 +40,7 @@
   "Start with the field shown instead of the link.": "リンクではなく入力欄を表示した状態で始めます。",
   "Stripe promotion codes": "Stripe のプロモーションコード",
   "Taxes. estimated defaults to true. included shows “Including $X in taxes” under the total instead of adding it.": "税。estimated のデフォルトは true です。included を指定すると、税を加算せずに合計の下に “Including $X in taxes” と表示します。",
+  "The checkout sidebar with line items, discount codes and totals. Handles estimated taxes, unknown shipping and prices that changed since the cart was built.": "明細、割引コード、合計を表示するチェックアウトのサイドバー。概算の税額、未確定の送料、カート作成後に変わった価格に対応します。",
   "The discount code link, field, error message and code chips. Works on its own in a cart drawer.": "割引コードのリンク、入力欄、エラーメッセージ、コードのチップ。カートのドロワー内でも単体で動作します。",
   "The math behind the totals: discounts, shipping, tax, total and savings in minor units.": "合計の計算。割引、送料、税、合計、節約額を最小通貨単位で扱います。",
   "The mobile bar is a button with aria-expanded and aria-controls whose name includes the total. Collapsed content is hidden from screen readers and the tab order.": "モバイルのバーは aria-expanded と aria-controls を持つボタンで、その名前には合計が含まれます。折りたたまれた内容はスクリーンリーダーとタブ順序から隠されます。",

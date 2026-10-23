@@ -4,6 +4,7 @@
   "Accessible name of the region.": "リージョンのアクセシブルな名前。",
   "Adapters from reporter output to a run.": "レポーターの出力を実行に変換するアダプター。",
   "Also accepts every section prop except children.": "children 以外のすべての section の props も受け付けます。",
+  "An agent’s test run, shown as it happens. Tests stream in and fold into a summary, with every failure left open and its diff in view.": "エージェントのテスト実行をリアルタイムに表示します。テストはストリーミングで届いて要約に折りたたまれ、失敗したものは差分とともに開いたままになります。",
   "Both sides of the comparison, read from the error, a diff or the message.": "比較の両側。エラー、diff、またはメッセージから読み取ります。",
   "Called when a frame is clicked.": "フレームがクリックされたときに呼ばれます。",
   "Enclosing describe blocks, outermost first.": "外側から順に並んだ、囲んでいる describe ブロック。",

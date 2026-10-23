@@ -1,5 +1,6 @@
 {
   "A failed removal, shown under its line.": "Kalemin altında gösterilen başarısız bir kaldırma.",
+  "A one-page checkout with contact, delivery and payment beside a live order summary. Handles changed totals, sold-out items and unknown outcomes.": "İletişim, teslimat ve ödemenin canlı bir sipariş özetinin yanında durduğu tek sayfalık bir ödeme akışı. Değişen toplamları, tükenen ürünleri ve belirsiz sonuçları ele alır.",
   "Adds a Got it button.": "Bir Got it düğmesi ekler.",
   "Asked every pollInterval once onPlaceOrder has been silent for timeout. The attempt carries the idempotency key and how many checks have run.": "onPlaceOrder timeout süresince sessiz kaldıktan sonra her pollInterval’da sorulur. Deneme, idempotency anahtarını ve kaç kontrolün yapıldığını taşır.",
   "Called after the success check has held. Navigate to your confirmation page here.": "Başarı işareti bir süre gösterildikten sonra çağrılır. Onay sayfanıza burada yönlendirin.",

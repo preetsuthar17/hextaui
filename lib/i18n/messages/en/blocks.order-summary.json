@@ -40,6 +40,7 @@
   "Start with the field shown instead of the link.",
   "Stripe promotion codes",
   "Taxes. estimated defaults to true. included shows “Including $X in taxes” under the total instead of adding it.",
+  "The checkout sidebar with line items, discount codes and totals. Handles estimated taxes, unknown shipping and prices that changed since the cart was built.",
   "The discount code link, field, error message and code chips. Works on its own in a cart drawer.",
   "The math behind the totals: discounts, shipping, tax, total and savings in minor units.",
   "The mobile bar is a button with aria-expanded and aria-controls whose name includes the total. Collapsed content is hidden from screen readers and the tab order.",

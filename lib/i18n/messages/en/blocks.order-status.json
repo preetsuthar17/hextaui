@@ -7,6 +7,7 @@
   "Buttons beside the heading, such as Start a return.",
   "Copying a tracking or order number and changing the return selection are announced in a polite live region. Errors use role=\"alert\". Every animation, including the check draw and confetti, is skipped with reduced motion.",
   "Create the return. Resolve with an id, code, carrier, dropOffBy, labelUrl or qrCodeUrl. Throw to show the message.",
+  "Customer order confirmation, package tracking and returns. Handles split shipments, delayed or failed deliveries, final-sale items and pending payments.",
   "Days after delivery that an item can be returned.",
   "Each progress bar is an ordered list. The current step has aria-current=\"step\", and every step says whether it’s completed, current or upcoming, with its date.",
   "Each with quantity, price, fulfilledQuantity, refundedQuantity and returnable.",

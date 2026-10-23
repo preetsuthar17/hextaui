@@ -1,4 +1,5 @@
 {
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.": "HextaUIのコマースブロックで作られた完全なストア管理画面。すべてのページを一度に更新する返金、フルフィルメント、在庫の編集に対応します。",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.": "注文、商品、ディスカウントを保持する小さな外部ストア。useSyncExternalStore で読み取ります。",
   "Also takes div props for the root.": "ルートには div のプロップも渡せます。",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.": "アプリと、そのうちピン留めされたもの。ピン留めしたアプリは ⋯ メニューから並べ替えやピン留めの解除ができます。",
@@ -25,7 +26,7 @@
   "Live view data for Home. Leave out to hide the card.": "Home 用のライブビューのデータ。省略するとカードは非表示になります。",
   "Load orders, products and discounts once, put them in a store with createCommerceStore, and pass api functions that call your server. Each one runs before the store changes, and anything it throws shows where the action happened.": "注文、商品、ディスカウントを一度読み込み、createCommerceStore でストアに入れ、サーバーを呼び出す api 関数を渡します。それぞれはストアが変わる前に実行され、投げたエラーは操作が行われた場所に表示されます。",
   "Loaders for Home and Analytics, passed to Sales Overview.": "Home と Analytics 用のローダー。Sales Overview に渡されます。",
-  "Locale for money, numbers and dates.": "金額、数値、日付のロケール。",
+  "Locale for money, numbers and dates.": "金額、数値、日付に使うロケール。",
   "Map each api call to a Shopify Admin GraphQL mutation: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities and productUpdate. userErrors become the message people see.": "各 api 呼び出しを Shopify Admin GraphQL のミューテーションに対応付けます。fulfillmentCreate、refundCreate、orderCapture、orderUpdate、inventoryAdjustQuantities、productUpdate です。userErrors はユーザーに表示されるメッセージになります。",
   "Move stock at a location by a delta. itemId is a variant id, or the product id for products without options.": "ロケーションの在庫を差分だけ移動します。itemId はバリエーションの id、オプションのない商品では商品の id です。",
   "Next.js App Router routes": "Next.js App Router のルート",

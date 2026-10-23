@@ -1,5 +1,6 @@
 [
   "A failed removal, shown under its line.",
+  "A one-page checkout with contact, delivery and payment beside a live order summary. Handles changed totals, sold-out items and unknown outcomes.",
   "Adds a Got it button.",
   "Asked every pollInterval once onPlaceOrder has been silent for timeout. The attempt carries the idempotency key and how many checks have run.",
   "Called after the success check has held. Navigate to your confirmation page here.",

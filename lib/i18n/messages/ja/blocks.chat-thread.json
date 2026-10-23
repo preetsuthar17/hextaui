@@ -51,6 +51,7 @@
   "Stable id.": "安定したid。",
   "Stable id. Keep it the same across versions so the view doesn’t jump.": "安定したid。ビューが跳ねないよう、バージョンをまたいで同じ値にしてください。",
   "The conversation is a labelled region holding a log, so new messages are announced as they arrive and the region is marked busy while a reply streams.": "会話は、logを保持するラベル付きのリージョンです。新しいメッセージは届くたびに読み上げられ、返信のストリーミング中はリージョンがビジー状態として示されます。",
+  "The conversation view of an AI chat. Handles replies that stream, edit and retry, and versions of a reply you can switch between.": "AI チャットの会話ビュー。ストリーミング、編集、再試行される返信と、切り替えられる返信のバージョンに対応します。",
   "The current rating.": "現在の評価。",
   "The editor focuses itself with the caret at the end and returns to the message on Cancel. Enter waits while an input method is composing.": "エディターは自動でフォーカスし、カーソルは末尾に置かれ、Cancelでメッセージに戻ります。入力メソッドで変換中は、Enterが待機します。",
   "The frame: scroller, checkpoints, empty state and composer slot.": "フレーム。スクローラー、チェックポイント、空の状態、コンポーザーのスロット。",

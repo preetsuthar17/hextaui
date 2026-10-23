@@ -60,7 +60,8 @@ function DocsComponentPage({
         description={t("Blocks that build on {name}.", {
           name: component.name,
         })}
-        links={getRelatedBlocks(component.slug)}
+        links={getRelatedBlocks(component.slug).slice(0, 4)}
+        variant="previews"
         event={{ name: "Pro link clicked", from: "component-related" }}
       >
         <p className="text-sm text-pretty text-muted-foreground">

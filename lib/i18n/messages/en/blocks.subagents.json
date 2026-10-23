@@ -45,6 +45,7 @@
   "The line once done. Defaults to the task in the past tense when its first word is a known verb.",
   "The report is still arriving.",
   "The run keeps working while the chat goes on. It shows a Background badge and stays folded.",
+  "The runs an agent hands to other agents, one line per run. Handles parallel runs, stop and retry, and a summary once each run is done.",
   "The run’s steps, rendered with Tool Calls.",
   "The status mark on its own: an orb while running, then a check, alert or stop icon.",
   "The subagent’s tool part. Its output is a UI message whose parts hold reasoning, tool calls and text.",

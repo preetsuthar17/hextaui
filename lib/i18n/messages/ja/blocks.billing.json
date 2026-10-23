@@ -29,6 +29,7 @@
   "The daily chart is a figure named “Daily usage this cycle”, described by a summary with the total, the recent daily average, the busiest day and the even pace. A visually hidden table lists every day, with projected days marked as estimates.": "日別チャートは「Daily usage this cycle」という名前のfigureで、合計、最近の1日平均、最も利用が多かった日、均等なペースを含む要約で説明されます。視覚的に非表示のテーブルがすべての日を一覧し、予測された日は推定値として示されます。",
   "The day your server considers today. Used for proration, projections and card expiry, so server and browser agree.": "サーバーが今日とみなす日。日割り計算、予測、カードの有効期限に使われ、サーバーとブラウザーで結果が一致します。",
   "The name at the top of generated invoices.": "生成された請求書の上部に表示される名前。",
+  "The plan and usage page of an AI product. Handles credits running out mid-cycle, plan changes with proration and card errors.": "AI 製品のプランと使用量のページ。サイクル途中でのクレジット切れ、日割り計算付きのプラン変更、カードエラーに対応します。",
   "The projection behind the meter and the run-out note.": "メーターの背後にある予測と、使い切りのメモ。",
   "The proration math behind the upgrade dialog, for your server or tests.": "アップグレードダイアログの背後にある日割り計算。サーバーやテストで使えます。",
   "The section content: plan summary, usage meters and the daily Chart, limits, plans, payment, invoices and cancel, with their dialogs.": "セクションの内容。プランの概要、使用量メーターと日別Chart、上限、プラン、支払い、請求書、キャンセルと、それぞれのダイアログです。",

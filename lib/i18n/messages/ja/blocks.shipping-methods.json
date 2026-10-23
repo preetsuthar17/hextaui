@@ -12,7 +12,7 @@
   "Closes the ZIP code popover and returns focus to Change.": "郵便番号のポップオーバーを閉じ、Change にフォーカスを戻します。",
   "Days nothing ships or arrives on.": "発送も配達も行われない日。",
   "Delivery dates as YYYY-MM-DD, or business days counted from the ship day.": "YYYY-MM-DD 形式のお届け日、または発送日から数えた営業日数。",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "チェックアウト用の配送の選択肢と、商品ページ用のお届け日。注文の締め切り、店舗受け取り、住所によって変わる料金に対応します。",
+  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "チェックアウト用の配送オプションと、商品ページ用のお届け日。注文の締め切り時刻、店舗受け取り、住所によって変わる料金に対応します。",
   "DeliveryEstimate": "DeliveryEstimate",
   "Every visible and announced string, including the cutoff and ready sentences.": "締め切りと準備完了の文を含む、表示および読み上げられるすべての文字列。",
   "ISO time of the order cutoff for this estimate. After it, the estimate moves one business day.": "このお届け予定の注文締め切りの ISO 時刻。それを過ぎると、お届け予定は 1 営業日後ろにずれます。",

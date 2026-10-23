@@ -1,5 +1,6 @@
 {
   "A billing section": "Bir fatura bölümü",
+  "A shipping or billing address form that changes with the country. Handles address search, postal codes, saved addresses and error summaries.": "Ülkeye göre değişen bir teslimat veya fatura adresi formu. Adres aramayı, posta kodlarını, kayıtlı adresleri ve hata özetlerini ele alır.",
   "Add the country name.": "Ülke adını ekler.",
   "Address Form asks for an address the way the shopper’s country writes it. A US address gets City, State and ZIP code on one row, the UK gets Town or city and Postcode with no state, Germany puts the postal code before the city, and Japan starts with the postal code and prefecture. Sixteen countries have their own format with labels, required fields, region lists and postal rules, and every other country gets a plain fallback.": "Address Form, adresi alışverişçinin ülkesinin yazdığı şekilde ister. ABD adresinde City, State ve ZIP code tek satırda yer alır, Birleşik Krallık’ta eyalet olmadan Town or city ve Postcode bulunur, Almanya posta kodunu şehirden önce koyar, Japonya ise posta kodu ve vilayetle başlar. On altı ülkenin etiketleri, zorunlu alanları, bölge listeleri ve posta kuralları olan kendi biçimi vardır; diğer her ülke sade bir yedek biçim alır.",
   "Address Form that adapts per country for React": "React için ülkeye göre uyarlanan Adres Formu",

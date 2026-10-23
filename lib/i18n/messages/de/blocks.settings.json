@@ -92,6 +92,7 @@
   "The row's title.": "Der Titel der Zeile.",
   "The save bar and any hidden panel are inert, so they're out of the tab order and hidden from screen readers.": "Die Speicherleiste und jedes verborgene Panel sind inert, sodass sie aus der Tab-Reihenfolge und vor Screenreadern verborgen sind.",
   "The section open at first.": "Der zuerst geöffnete Bereich.",
+  "The settings page of an AI product. Handles a save bar that appears only when something changed, field errors and loading states.": "Die Einstellungsseite eines KI-Produkts. Deckt eine Speicherleiste, die nur bei Änderungen erscheint, Feldfehler und Ladezustände ab.",
   "The shape on the right of each row.": "Die Form rechts in jeder Zeile.",
   "What to show while status is loading.": "Was angezeigt wird, solange status loading ist.",
   "What's saved now. When it changes and there are no edits, the draft follows it.": "Das jetzt Gespeicherte. Ändert es sich und gibt es keine Änderungen, folgt der Entwurf ihm.",

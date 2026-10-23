@@ -51,7 +51,6 @@
   "The trigger’s width.": "トリガーの幅。",
   "Unbroken text wraps inside the popup. When the content is taller than the space available, the popup scrolls inside instead of running off screen.": "区切りのないテキストはポップアップ内で折り返されます。コンテンツが利用可能な空間より高い場合は、画面からはみ出さず、ポップアップ内でスクロールします。",
   "Use `className=\"w-auto p-0\"` to fit content that brings its own padding. The popup follows the calendar as it changes months.": "独自のパディングを持つコンテンツに合わせるには、`className=\"w-auto p-0\"` を使います。ポップアップは、月が変わるたびにカレンダーに追従します。",
-  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.": "AI アシスタントとの音声会話。全画面のセッションでもチャット内の音声ピルでも、聞き取り、割り込み、字幕に対応します。",
   "When the content grows or shrinks, the popup animates its height instead of jumping. Continuous changes, like typing, follow the content directly so nothing lags behind.": "コンテンツが増減すると、ポップアップはジャンプせず高さをアニメーションさせます。入力のような連続的な変化は、遅れが出ないようコンテンツに直接追従します。",
   "Where focus goes when the popover closes.": "popover が閉じたときにフォーカスが移る先。",
   "Where focus goes when the popover opens.": "popover が開いたときにフォーカスが移る先。",

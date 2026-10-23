@@ -1,4 +1,5 @@
 [
+  "A crash shown the way a developer reads it. Your code comes first, framework frames fold away and every cause is listed in order.",
   "A stack, a traceback or raw log output around one.",
   "A tool that throws ends in the output-error state with errorText. Render it as a compact StackTrace inside the failed ToolCall, so the step reads as one line until someone opens it.",
   "AI Stack Trace and error view for React & shadcn/ui",

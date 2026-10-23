@@ -1,4 +1,5 @@
 {
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.": "Une administration de boutique complète construite à partir des blocks e-commerce de HextaUI. Gère les remboursements, les expéditions et les modifications de stock qui mettent à jour toutes les pages à la fois.",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.": "Un petit store externe contenant les commandes, les produits et les remises, lu avec useSyncExternalStore.",
   "Also takes div props for the root.": "Accepte aussi les props de div pour la racine.",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.": "Les apps et celles qui sont épinglées. Les apps épinglées peuvent être réordonnées ou désépinglées depuis leur menu ⋯.",
@@ -65,5 +66,5 @@
   "Your own data and API": "Vos propres données et API",
   "{ id, name, domain, logo?, role?, testMode? }. More than five adds a search field to the switcher. A test-mode store shows a banner above the page.": "{ id, name, domain, logo?, role?, testMode? }. Au-delà de cinq, un champ de recherche s’ajoute au sélecteur. Une boutique en mode test affiche une bannière au-dessus de la page.",
   "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Locations drive inventory, fulfillment and restocking.": "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Les emplacements pilotent l’inventaire, le traitement des commandes et le réapprovisionnement.",
-  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Remplace le routeur par hash intégré."
+  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Remplace le routeur à hash intégré."
 }

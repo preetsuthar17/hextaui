@@ -1,6 +1,7 @@
 {
   "A polite live region announces each change kept in the draft, selection counts and “Saved 3 changes”. Save failures go to an alert region, and the failed row links to its message.": "polite なライブリージョンが、下書きに保持された各変更、選択数、“Saved 3 changes” を通知します。保存の失敗は alert の領域に表示され、失敗した行はそのメッセージに関連付けられます。",
   "A side sheet listing who changed a row, when, why, by how much and the resulting quantity.": "行を誰が、いつ、なぜ、どれだけ変更したか、そして変更後の数量を一覧表示するサイドシート。",
+  "A stock table where merchants edit quantities in place and save adjustments. Handles live orders, edits from another device and oversold or untracked stock.": "販売者がその場で数量を編集し、調整を保存できる在庫の表。リアルタイムの注文、別のデバイスからの編集、販売超過や追跡対象外の在庫に対応します。",
   "Apply the batch, update items, then resolve. Return { failed } to keep those rows in the draft with a message, or throw to fail the whole batch.": "バッチを適用し、items を更新してから resolve してください。{ failed } を返すとその行をメッセージ付きで下書きに残し、エラーを投げるとバッチ全体が失敗します。",
   "Available at or below this counts as low stock.": "Available がこの値以下の場合、在庫僅少とみなします。",
   "Called when unsaved changes appear or clear, for navigation guards.": "未保存の変更が発生またはクリアされたときに呼ばれます。ナビゲーションガードに使います。",

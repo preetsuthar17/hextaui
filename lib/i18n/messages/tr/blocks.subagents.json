@@ -45,6 +45,7 @@
   "The line once done. Defaults to the task in the past tense when its first word is a known verb.": "Bitince gösterilen satır. İlk sözcüğü bilinen bir fiilse varsayılan olarak görevin geçmiş zaman hali.",
   "The report is still arriving.": "Rapor hâlâ geliyor.",
   "The run keeps working while the chat goes on. It shows a Background badge and stays folded.": "Sohbet devam ederken çalıştırma çalışmayı sürdürür. Background rozeti gösterir ve katlı kalır.",
+  "The runs an agent hands to other agents, one line per run. Handles parallel runs, stop and retry, and a summary once each run is done.": "Bir ajanın diğer ajanlara devrettiği çalıştırmalar, her biri için bir satır. Paralel çalıştırmaları, durdurup yeniden denemeyi ve her çalıştırma bitince bir özeti ele alır.",
   "The run’s steps, rendered with Tool Calls.": "Çalıştırmanın Tool Calls ile gösterilen adımları.",
   "The status mark on its own: an orb while running, then a check, alert or stop icon.": "Tek başına durum işareti: çalışırken bir küre, ardından onay, uyarı veya durdurma simgesi.",
   "The subagent’s tool part. Its output is a UI message whose parts hold reasoning, tool calls and text.": "Alt ajanın araç parçası. Çıktısı, parçaları akıl yürütme, araç çağrıları ve metin içeren bir arayüz mesajıdır.",

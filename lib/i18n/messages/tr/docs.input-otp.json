@@ -49,7 +49,6 @@
   "Separate": "Ayrı",
   "Slots fill from the right and the arrow keys follow what you see. Give slots after the first a translated `aria-label`. Set `dir=\"ltr\"` on the field to keep a code left to right in a right-to-left page.": "Slotlar sağdan dolar ve ok tuşları gördüğünüzü izler. İlkinden sonraki slotlara çevrilmiş bir `aria-label` verin. Sağdan sola bir sayfada kodu soldan sağa tutmak için alanda `dir=\"ltr\"` ayarlayın.",
   "Target the separator in CSS.": "CSS'te ayırıcıyı hedefleyin.",
-  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "Bir yapay zeka ürününün ayarlarındaki Güvenlik bölümü. Oturumları, kurtarma kodlu iki aşamalı doğrulamayı ve yazılı onay gerektiren silmeyi ele alır.",
   "The box.": "Kutu.",
   "The class names behind a slot and a group (`inputOTPGroupVariants`). Call them with `{ variant, size }`.": "Bir slotun ve bir grubun arkasındaki sınıf adları (`inputOTPGroupVariants`). Bunları `{ variant, size }` ile çağırın.",
   "The default look. Each <l0/> joins its slots into one strip with shared edges.": "Varsayılan görünüm. Her <l0/> slotlarını paylaşılan kenarlarla tek bir şeritte birleştirir.",

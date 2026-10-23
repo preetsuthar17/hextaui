@@ -47,6 +47,7 @@
   "The date expiry checks use. The browser’s date by default.": "有効期限のチェックに使う日付。デフォルトはブラウザーの日付です。",
   "The first usable saved card, or the first method.": "最初に使える保存済みのカード、または最初の支払い方法。",
   "The full-width pay button. Its label follows the method and it shows processing, waiting and paid.": "全幅の支払いボタン。ラベルは支払い方法に従い、処理中、待機中、支払い済みの状態を表示します。",
+  "The payment step of a checkout, with wallets, cards, PayPal and Pay in 4. Handles card validation, declines, 3-D Secure and slow banks.": "ウォレット、カード、PayPal、Pay in 4を備えたチェックアウトの支払いステップ。カードのバリデーション、拒否、3-D Secure、応答の遅い銀行に対応します。",
   "The selected method, controlled. Saved cards use \"saved:<id>\".": "選択された支払い方法(制御)。保存済みのカードは\"saved:<id>\"を使います。",
   "The starting value of the billing checkbox.": "請求先のチェックボックスの初期値。",
   "The total.": "合計。",

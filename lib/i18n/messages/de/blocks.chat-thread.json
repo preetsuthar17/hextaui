@@ -51,6 +51,7 @@
   "Stable id.": "Stabile ID.",
   "Stable id. Keep it the same across versions so the view doesn’t jump.": "Stabile ID. Behalte sie über Versionen hinweg bei, damit die Ansicht nicht springt.",
   "The conversation is a labelled region holding a log, so new messages are announced as they arrive and the region is marked busy while a reply streams.": "Die Unterhaltung ist eine beschriftete Region mit einem Log, sodass neue Nachrichten beim Eintreffen angesagt werden und die Region als beschäftigt markiert ist, während eine Antwort streamt.",
+  "The conversation view of an AI chat. Handles replies that stream, edit and retry, and versions of a reply you can switch between.": "Die Konversationsansicht eines KI-Chats. Deckt Antworten, die streamen, bearbeitet und wiederholt werden, sowie Versionen einer Antwort zum Umschalten ab.",
   "The current rating.": "Die aktuelle Bewertung.",
   "The editor focuses itself with the caret at the end and returns to the message on Cancel. Enter waits while an input method is composing.": "Der Editor fokussiert sich selbst mit dem Cursor am Ende und kehrt bei Cancel zur Nachricht zurück. Enter wartet, solange eine Eingabemethode komponiert.",
   "The frame: scroller, checkpoints, empty state and composer slot.": "Der Rahmen: Scroller, Checkpoints, Leerzustand und Composer-Slot.",

@@ -43,6 +43,7 @@
   "The editable plan shown before the agent starts.": "Ajan başlamadan önce gösterilen düzenlenebilir plan.",
   "The full list with its header, progress bar, explanation and plan-change note.": "Başlığı, ilerleme çubuğu, açıklaması ve plan değişikliği notuyla tam liste.",
   "The list is a labelled region with an ordered list, and each step’s name includes its stage, such as “Running the tests, In progress”.": "Liste, sıralı bir liste içeren etiketli bir bölgedir ve her adımın adı aşamasını da içerir, örneğin “Testler çalıştırılıyor, Devam ediyor”.",
+  "The plan an agent keeps while it works, one line per step. Handles steps in progress, failed steps and plan changes mid-run.": "Bir ajanın çalışırken tuttuğu plan, her adım için bir satır. Devam eden adımları, başarısız adımları ve çalışma sırasındaki plan değişikliklerini ele alır.",
   "The proposed plan.": "Önerilen plan.",
   "The same list. Renders nothing when empty.": "Aynı liste. Boşken hiçbir şey render etmez.",
   "The stage. pending reads as To do.": "Aşama. pending, Yapılacak olarak okunur.",

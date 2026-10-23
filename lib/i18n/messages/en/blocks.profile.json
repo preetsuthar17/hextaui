@@ -45,6 +45,7 @@
   "Sends the code. Return a message to refuse.",
   "Shown in the intro and refused as the new address.",
   "Shows Verified, or Not verified with Resend link.",
+  "The Profile section of an AI product’s settings. Handles photo cropping, a username checked as you type and email changes confirmed by code.",
   "The crop area is focusable and works with arrow keys and plus and minus, and the zoom slider says its value as a percentage.",
   "The image to crop. Open while set.",
   "The live preview of the public profile, with Copy link. Usable on its own.",

@@ -43,6 +43,7 @@
   "The editable plan shown before the agent starts.",
   "The full list with its header, progress bar, explanation and plan-change note.",
   "The list is a labelled region with an ordered list, and each step’s name includes its stage, such as “Running the tests, In progress”.",
+  "The plan an agent keeps while it works, one line per step. Handles steps in progress, failed steps and plan changes mid-run.",
   "The proposed plan.",
   "The same list. Renders nothing when empty.",
   "The stage. pending reads as To do.",

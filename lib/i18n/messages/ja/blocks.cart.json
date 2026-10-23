@@ -1,5 +1,6 @@
 {
   "Actions that update the view at once and call your handlers.": "表示をすぐに更新し、ハンドラーを呼び出すアクション。",
+  "Add to bag button, bag icon with a live count and a cart drawer or page. Handles optimistic quantities with rollback, undo on remove and free shipping progress.": "Add to bagボタン、リアルタイムの件数付きのバッグアイコン、カートのドロワーまたはページ。ロールバック付きの楽観的な数量更新、削除の取り消し、送料無料までの進捗に対応します。",
   "AddToCartButton": "AddToCartButton",
   "Adds a recommended product. Its line appears at once as pending.": "おすすめの商品を追加します。その行はすぐに保留中として表示されます。",
   "Adds the item. Return a promise to show progress, throw to show the error under the button, or return false to cancel quietly, for example when a size is missing.": "商品を追加します。promise を返すと進行状況を表示し、エラーを投げるとボタンの下にエラーを表示し、false を返すと静かにキャンセルします。たとえばサイズが選ばれていない場合です。",

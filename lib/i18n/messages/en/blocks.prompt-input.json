@@ -1,5 +1,6 @@
 [
   "A caret menu for one trigger character.",
+  "A chat composer that grows as you type. Handles file uploads, @ and / menus at the caret and messages typed while a reply streams.",
   "A compact picker for modes, run location, folders or repositories.",
   "A muted shell around the body that holds a footer row, for agent harnesses.",
   "A ring that fills as the context window does. Hover, click or press Enter to see the breakdown.",
@@ -97,7 +98,6 @@
   "Starts dictation, and inserts the transcript when pressed again.",
   "Stops a streaming reply, closes a menu, or cancels a recording.",
   "Switch label.",
-  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.",
   "The character that opens it, such as @ or /.",
   "The choices. Descriptions show under each label.",

@@ -1,4 +1,5 @@
 {
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.": "Un panel de tienda completo con los bloques de comercio de HextaUI. Cubre reembolsos, preparación de pedidos y cambios de stock que actualizan cada página.",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.": "Un pequeño store externo que guarda pedidos, productos y descuentos, y se lee con useSyncExternalStore.",
   "Also takes div props for the root.": "También acepta props de div para la raíz.",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.": "Las apps y cuáles están fijadas. Las apps fijadas se pueden reordenar o desfijar desde su menú ⋯.",
@@ -28,7 +29,7 @@
   "Locale for money, numbers and dates.": "Locale para importes, números y fechas.",
   "Map each api call to a Shopify Admin GraphQL mutation: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities and productUpdate. userErrors become the message people see.": "Asigna cada llamada de api a una mutación de Shopify Admin GraphQL: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities y productUpdate. Los userErrors se convierten en el mensaje que ve la gente.",
   "Move stock at a location by a delta. itemId is a variant id, or the product id for products without options.": "Mueve el stock de una ubicación según un delta. itemId es el id de una variante, o el id del producto para productos sin opciones.",
-  "Next.js App Router routes": "Rutas de Next.js App Router",
+  "Next.js App Router routes": "Rutas con el App Router de Next.js",
   "On a section's chevron, shows or hides its pages without leaving the page.": "Sobre el chevron de una sección, muestra u oculta sus páginas sin salir de la página.",
   "On an order, opens the next or previous order, from Order Detail.": "En un pedido, abre el pedido siguiente o el anterior, desde Order Detail.",
   "Opens search. Ctrl+K on Windows and Linux.": "Abre la búsqueda. Ctrl+K en Windows y Linux.",
@@ -65,5 +66,5 @@
   "Your own data and API": "Tus propios datos y API",
   "{ id, name, domain, logo?, role?, testMode? }. More than five adds a search field to the switcher. A test-mode store shows a banner above the page.": "{ id, name, domain, logo?, role?, testMode? }. Más de cinco añaden un campo de búsqueda al selector. Una tienda en modo de prueba muestra un banner sobre la página.",
   "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Locations drive inventory, fulfillment and restocking.": "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Las ubicaciones determinan el inventario, la preparación de pedidos y la reposición.",
-  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Reemplaza el router por hash integrado."
+  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Sustituye el router de hash integrado."
 }

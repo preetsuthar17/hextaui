@@ -1,4 +1,5 @@
 {
+  "A discount builder where the offer is one editable sentence, with a live checkout preview. Handles code checks, drafts and schedules.": "Un creador de descuentos donde la oferta es una frase editable, con vista previa del checkout en vivo. Cubre comprobación de códigos, borradores y programación.",
   "A live discount becomes a Stripe coupon plus a promotion code with its redemption limit, first-order rule and expiry. Stripe’s duplicate-code error comes back as a code field error.": "Un descuento activo se convierte en un cupón de Stripe más un código promocional con su límite de canjes, su regla de primer pedido y su caducidad. El error de código duplicado de Stripe vuelve como un error en el campo del código.",
   "Adds Duplicate and End now to the overflow menu of saved discounts.": "Añade Duplicate y End now al menú de desbordamiento de los descuentos guardados.",
   "Also takes div props. Fills its parent’s height; only the content scrolls.": "También acepta props de div. Ocupa la altura de su contenedor; solo se desplaza el contenido.",

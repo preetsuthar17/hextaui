@@ -35,6 +35,7 @@
   "Optional, so rating-only and photo-only reviews work.": "省略可能なので、評価のみや写真のみのレビューにも対応します。",
   "Prefill for signed-in shoppers or a rating picked from an email.": "サインイン済みの購入者や、メールから選ばれた評価のための初期入力。",
   "Product Reviews & ratings block for React": "React向けの商品レビュー & 評価ブロック",
+  "Product ratings, customer photos and reviews for a product page. Handles rating filters, helpful votes, review photos and products with no reviews yet.": "商品ページ向けの商品評価、顧客の写真、レビュー。評価のフィルター、参考になった投票、レビューの写真、まだレビューがない商品に対応します。",
   "RatingInput": "RatingInput",
   "RatingStars": "RatingStars",
   "Receives rating, title, body, fit, photos as File[], name and email.": "rating、title、body、fit、File[]としてのphotos、name、emailを受け取ります。",

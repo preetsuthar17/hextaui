@@ -6,6 +6,7 @@
   "Called from Accept or ⌘↵.": "Accept veya ⌘↵ ile çağrılır.",
   "Called from Reject or ⌘⌫.": "Reject veya ⌘⌫ ile çağrılır.",
   "Changed lines don’t rely on color. The + and − markers are visual only, and screen readers hear “added” or “removed” before each changed line instead.": "Değişen satırlar renge bağımlı değildir. + ve − işaretleri yalnızca görseldir; ekran okuyucular bunun yerine her değişen satırdan önce “added” veya “removed” duyar.",
+  "Code blocks for AI answers. Highlighting keeps up with streaming, diffs can be accepted or rejected, and commands run in a terminal.": "Yapay zeka yanıtları için kod blokları. Vurgulama akışa ayak uydurur, diff’ler kabul veya reddedilebilir ve komutlar bir terminalde çalışır.",
   "Code in an AI answer arrives a few characters at a time, often as a diff someone has to approve. Code Block highlights while it streams, follows new lines unless the reader has scrolled up, and keeps copy, download and wrap out of the way until the code is complete.": "Bir yapay zeka yanıtındaki kod birkaç karakter birkaç karakter gelir, çoğu zaman birinin onaylaması gereken bir fark olarak. Code Block akarken vurgular, okuyucu yukarı kaydırmadıysa yeni satırları izler ve kod tamamlanana kadar kopyalama, indirme ve satır kaydırmayı yoldan çekilmiş tutar.",
   "CodeBlock": "CodeBlock",
   "CodeBlockReview": "CodeBlockReview",

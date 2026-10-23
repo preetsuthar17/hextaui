@@ -1,4 +1,5 @@
 {
+  "A crash shown the way a developer reads it. Your code comes first, framework frames fold away and every cause is listed in order.": "開発者が読む順序でクラッシュを表示します。自分のコードが先に来て、フレームワークのフレームは折りたたまれ、原因はすべて順番に並びます。",
   "A stack, a traceback or raw log output around one.": "スタック、トレースバック、またはそれを含む生のログ出力。",
   "A tool that throws ends in the output-error state with errorText. Render it as a compact StackTrace inside the failed ToolCall, so the step reads as one line until someone opens it.": "例外を投げたツールは、errorTextを持つoutput-error状態で終わります。失敗したToolCallの中にコンパクトなStackTraceとして表示すれば、誰かが開くまでそのステップは1行のままです。",
   "AI Stack Trace and error view for React & shadcn/ui": "React & shadcn/ui向けのAI Stack Traceとエラービュー",

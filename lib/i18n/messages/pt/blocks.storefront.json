@@ -1,4 +1,5 @@
 {
+  "A complete store built from the HextaUI commerce blocks. Handles browsing, filters, the bag, checkout and order tracking on one shared store.": "Uma loja completa construída com os blocos de e-commerce da HextaUI. Cobre navegação, filtros, a sacola, checkout e rastreamento de pedidos sobre um único estado de loja compartilhado.",
   "A tiny external store holding the cart, wishlist, recently viewed products and placed orders, read with useSyncExternalStore.": "Um pequeno store externo que guarda o carrinho, a lista de desejos, os produtos vistos recentemente e os pedidos feitos, lido com useSyncExternalStore.",
   "Also takes div props for the root. Give it a height, such as h-svh, and it fills it.": "Também aceita props de div para a raiz. Dê uma altura a ele, como h-svh, e ele a preenche.",
   "Choose a color or size in the variant picker, and move between gallery images.": "Escolhe uma cor ou um tamanho no seletor de variantes e navega entre as imagens da galeria.",

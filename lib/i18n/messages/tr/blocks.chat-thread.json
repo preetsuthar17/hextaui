@@ -51,6 +51,7 @@
   "Stable id.": "Kararlı id.",
   "Stable id. Keep it the same across versions so the view doesn’t jump.": "Kararlı id. Görünüm zıplamasın diye sürümler arasında aynı tutun.",
   "The conversation is a labelled region holding a log, so new messages are announced as they arrive and the region is marked busy while a reply streams.": "Konuşma, bir log barındıran etiketli bir bölgedir; böylece yeni mesajlar geldikçe duyurulur ve yanıt akarken bölge meşgul olarak işaretlenir.",
+  "The conversation view of an AI chat. Handles replies that stream, edit and retry, and versions of a reply you can switch between.": "Bir yapay zeka sohbetinin konuşma görünümü. Akan, düzenlenen ve yeniden denenen yanıtları ve bir yanıtın geçiş yapılabilen sürümlerini ele alır.",
   "The current rating.": "Geçerli puanlama.",
   "The editor focuses itself with the caret at the end and returns to the message on Cancel. Enter waits while an input method is composing.": "Düzenleyici kendine odaklanır, imleç sonda olur ve Cancel'da mesaja döner. Bir giriş yöntemi yazım yaparken Enter bekler.",
   "The frame: scroller, checkpoints, empty state and composer slot.": "Çerçeve: kaydırıcı, kontrol noktaları, boş durum ve yazma alanı yuvası.",

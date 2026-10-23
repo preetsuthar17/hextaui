@@ -4,6 +4,7 @@
   "Accessible name of the region.": "Nome acessível da região.",
   "Adapters from reporter output to a run.": "Adaptadores que transformam a saída de um reporter em uma execução.",
   "Also accepts every section prop except children.": "Também aceita todas as props de section, exceto children.",
+  "An agent’s test run, shown as it happens. Tests stream in and fold into a summary, with every failure left open and its diff in view.": "A execução de testes de um agente, mostrada em tempo real. Os testes chegam em streaming e se recolhem em um resumo, com cada falha aberta e seu diff à vista.",
   "Both sides of the comparison, read from the error, a diff or the message.": "Os dois lados da comparação, lidos do erro, de um diff ou da mensagem.",
   "Called when a frame is clicked.": "Chamada quando um frame é clicado.",
   "Enclosing describe blocks, outermost first.": "Blocos describe que o envolvem, do mais externo para o mais interno.",

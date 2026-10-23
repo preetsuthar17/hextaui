@@ -1,5 +1,6 @@
 {
   "Actions that update the view at once and call your handlers.": "Des actions qui mettent à jour la vue immédiatement et appellent vos handlers.",
+  "Add to bag button, bag icon with a live count and a cart drawer or page. Handles optimistic quantities with rollback, undo on remove and free shipping progress.": "Bouton d’ajout au panier, icône de panier avec un compteur en direct et un tiroir ou une page de panier. Gère les quantités optimistes avec retour en arrière, l’annulation d’une suppression et la progression vers la livraison gratuite.",
   "AddToCartButton": "AddToCartButton",
   "Adds a recommended product. Its line appears at once as pending.": "Ajoute un produit recommandé. Sa ligne apparaît immédiatement en attente.",
   "Adds the item. Return a promise to show progress, throw to show the error under the button, or return false to cancel quietly, for example when a size is missing.": "Ajoute l’article. Renvoyez une promesse pour afficher la progression, levez une erreur pour l’afficher sous le bouton, ou renvoyez false pour annuler discrètement, par exemple quand une taille manque.",

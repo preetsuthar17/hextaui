@@ -35,6 +35,7 @@
   "Optional, so rating-only and photo-only reviews work.": "Optional, damit Bewertungen nur mit Sternen oder nur mit Fotos funktionieren.",
   "Prefill for signed-in shoppers or a rating picked from an email.": "Vorbelegung für angemeldete Käufer oder eine aus einer E-Mail gewählte Bewertung.",
   "Product Reviews & ratings block for React": "Produktbewertungs- & Rating-Block für React",
+  "Product ratings, customer photos and reviews for a product page. Handles rating filters, helpful votes, review photos and products with no reviews yet.": "Produktbewertungen, Kundenfotos und Rezensionen für eine Produktseite. Deckt Bewertungsfilter, Hilfreich-Stimmen, Bewertungsfotos und Produkte ohne bisherige Bewertungen ab.",
   "RatingInput": "RatingInput",
   "RatingStars": "RatingStars",
   "Receives rating, title, body, fit, photos as File[], name and email.": "Erhält rating, title, body, fit, photos als File[], name und email.",

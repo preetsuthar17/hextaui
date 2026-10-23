@@ -1,4 +1,5 @@
 {
+  "A complete store admin built from the HextaUI commerce blocks. Handles refunds, fulfillment and stock edits that update every page at once.": "HextaUI e-ticaret bloklarından kurulmuş eksiksiz bir mağaza yönetim paneli. İadeleri, sipariş karşılamayı ve her sayfayı aynı anda güncelleyen stok düzenlemelerini ele alır.",
   "A tiny external store holding orders, products and discounts, read with useSyncExternalStore.": "Siparişleri, ürünleri ve indirimleri tutan, useSyncExternalStore ile okunan küçük bir harici store.",
   "Also takes div props for the root.": "Kök için div prop'larını da alır.",
   "Apps and which are pinned. Pinned apps can be reordered or unpinned from their ⋯ menu.": "Uygulamalar ve hangilerinin sabitlendiği. Sabitlenmiş uygulamalar ⋯ menülerinden yeniden sıralanabilir veya sabitlemeden çıkarılabilir.",
@@ -25,7 +26,7 @@
   "Live view data for Home. Leave out to hide the card.": "Home için canlı görünüm verisi. Kartı gizlemek için vermeyin.",
   "Load orders, products and discounts once, put them in a store with createCommerceStore, and pass api functions that call your server. Each one runs before the store changes, and anything it throws shows where the action happened.": "Siparişleri, ürünleri ve indirimleri bir kez yükleyin, createCommerceStore ile bir store'a koyun ve sunucunuzu çağıran api fonksiyonlarını iletin. Her biri store değişmeden önce çalışır ve fırlattığı her hata, eylemin gerçekleştiği yerde görünür.",
   "Loaders for Home and Analytics, passed to Sales Overview.": "Home ve Analytics için Sales Overview'a iletilen yükleyiciler.",
-  "Locale for money, numbers and dates.": "Para, sayı ve tarihler için locale.",
+  "Locale for money, numbers and dates.": "Para, sayılar ve tarihler için yerel ayar.",
   "Map each api call to a Shopify Admin GraphQL mutation: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities and productUpdate. userErrors become the message people see.": "Her api çağrısını bir Shopify Admin GraphQL mutation'ına eşleyin: fulfillmentCreate, refundCreate, orderCapture, orderUpdate, inventoryAdjustQuantities ve productUpdate. userErrors, insanların gördüğü mesaja dönüşür.",
   "Move stock at a location by a delta. itemId is a variant id, or the product id for products without options.": "Bir konumdaki stoğu bir fark (delta) kadar değiştirir. itemId bir varyant id'sidir veya seçeneği olmayan ürünler için ürün id'sidir.",
   "Next.js App Router routes": "Next.js App Router rotaları",
@@ -65,5 +66,5 @@
   "Your own data and API": "Kendi veriniz ve API'niz",
   "{ id, name, domain, logo?, role?, testMode? }. More than five adds a search field to the switcher. A test-mode store shows a banner above the page.": "{ id, name, domain, logo?, role?, testMode? }. Beşten fazlası değiştiriciye bir arama alanı ekler. Test modundaki bir mağaza sayfanın üstünde bir banner gösterir.",
   "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Locations drive inventory, fulfillment and restocking.": "{ name, domain, currencyCode, timeZone?, logo?, locations, fulfillmentLocationId?, channels, collections, settingsHref? }. Konumlar envanteri, gönderimi ve yeniden stoklamayı yönetir.",
-  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Yerleşik hash router'ın yerini alır."
+  "{ route, navigate, href }. Replaces the built-in hash router.": "{ route, navigate, href }. Yerleşik hash yönlendiricisinin yerini alır."
 }

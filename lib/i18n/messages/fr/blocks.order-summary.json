@@ -40,6 +40,7 @@
   "Start with the field shown instead of the link.": "Démarre avec le champ affiché au lieu du lien.",
   "Stripe promotion codes": "Codes promotionnels Stripe",
   "Taxes. estimated defaults to true. included shows “Including $X in taxes” under the total instead of adding it.": "Taxes. estimated vaut true par défaut. included affiche « Including $X in taxes » sous le total au lieu de l’y ajouter.",
+  "The checkout sidebar with line items, discount codes and totals. Handles estimated taxes, unknown shipping and prices that changed since the cart was built.": "La colonne latérale du checkout avec les lignes de commande, les codes de réduction et les totaux. Gère les taxes estimées, la livraison inconnue et les prix qui ont changé depuis la création du panier.",
   "The discount code link, field, error message and code chips. Works on its own in a cart drawer.": "Le lien de code de réduction, le champ, le message d’erreur et les chips de code. Fonctionne seul dans un tiroir de panier.",
   "The math behind the totals: discounts, shipping, tax, total and savings in minor units.": "Les calculs derrière les totaux : remises, livraison, taxes, total et économies en unités mineures.",
   "The mobile bar is a button with aria-expanded and aria-controls whose name includes the total. Collapsed content is hidden from screen readers and the tab order.": "La barre mobile est un bouton avec aria-expanded et aria-controls dont le nom inclut le total. Le contenu replié est masqué aux lecteurs d’écran et retiré de l’ordre de tabulation.",

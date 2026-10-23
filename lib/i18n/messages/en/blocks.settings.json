@@ -92,6 +92,7 @@
   "The row's title.",
   "The save bar and any hidden panel are inert, so they're out of the tab order and hidden from screen readers.",
   "The section open at first.",
+  "The settings page of an AI product. Handles a save bar that appears only when something changed, field errors and loading states.",
   "The shape on the right of each row.",
   "What to show while status is loading.",
   "What's saved now. When it changes and there are no edits, the draft follows it.",

@@ -1,5 +1,6 @@
 {
   "A manual total. The result reports the difference from the calculated amount.": "Un total manuel. Le résultat indique l’écart avec le montant calculé.",
+  "A refund sheet for issuing full or partial refunds on an order. Handles prorated discounts, restocking, shipping, split payments and failed or pending refunds.": "Un panneau de remboursement pour émettre des remboursements complets ou partiels sur une commande. Gère les réductions au prorata, la remise en stock, la livraison, les paiements fractionnés et les remboursements échoués ou en attente.",
   "A server action that creates one Stripe refund per transaction in minor units, with an idempotency key so a retry never refunds twice. Stripe’s failure_reason turns into a message the merchant can act on.": "Une server action qui crée un remboursement Stripe par transaction en unités mineures, avec une clé d’idempotence pour qu’une nouvelle tentative ne rembourse jamais deux fois. Le failure_reason de Stripe devient un message sur lequel le marchand peut agir.",
   "Also takes form props.": "Accepte aussi les props de form.",
   "An element that opens the sheet, such as a Refund button.": "Un élément qui ouvre le sheet, comme un bouton Refund.",

@@ -2,6 +2,7 @@
   "A card for the chat: “Edited 4 files” with counts, each file with accept and reject, and bulk actions.": "Una tarjeta para el chat: «Edited 4 files» con contadores, cada archivo con aceptar y rechazar, y acciones masivas.",
   "A read-only diff": "Un diff de solo lectura",
   "A read-only diff of one file, for showing changes between versions.": "Un diff de solo lectura de un archivo, para mostrar los cambios entre versiones.",
+  "A review of an agent’s file edits before they land. Handles accept or reject per change, comments back to the agent and edits still streaming.": "Una revisión de las ediciones de archivos de un agente antes de aplicarlas. Cubre aceptar o rechazar cada cambio, comentarios de vuelta al agente y ediciones aún en streaming.",
   "A unified diff of this file. Hunk headers without line numbers, CRLF and “No newline at end of file” are fine.": "Un diff unificado de este archivo. Los encabezados de hunk sin números de línea, CRLF y «No newline at end of file» son válidos.",
   "A unified diff, instead of before and after.": "Un diff unificado, en lugar de antes y después.",
   "AI Code Diff Review block for React & shadcn/ui": "Bloque de revisión de diff de código de IA para React y shadcn/ui",

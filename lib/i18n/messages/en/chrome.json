@@ -108,5 +108,14 @@
   "You’re in {app}’s in-app browser.",
   "You’re on the list. The next release lands in your inbox.",
   "llms.txt",
-  "shadcn AI chat templates"
+  "shadcn AI chat templates",
+  "Early-bird price until {date}, then {regular}.",
+  "Get Pro",
+  "Get the full block",
+  "Live blocks",
+  "One payment of {price} unlocks the source of this block and all {count} others, plus every block added later.",
+  "Open block",
+  "Refundable within {days} days.",
+  "Tap to try it",
+  "This preview is the real block, running live."
 ]

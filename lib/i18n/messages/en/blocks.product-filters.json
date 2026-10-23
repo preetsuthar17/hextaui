@@ -20,6 +20,7 @@
   "Expands or collapses a facet group, or toggles a value.",
   "Facet",
   "Facet ids that start expanded. Facets with an applied value always start expanded. All facets are expanded by default.",
+  "Faceted filters for a collection page, with chips, sort and load more. Handles zero results, slow counts, long value lists and price ranges in any currency.",
   "Filter items and recount every facet against the other facets.",
   "FilterSheet",
   "Filters in the URL with Next.js",

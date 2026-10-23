@@ -40,6 +40,7 @@
   "The collapsible status line and trail. Takes reasoning text, steps, or both.": "折りたたみ可能なステータス行とトレイル。推論テキスト、ステップ、またはその両方を受け取ります。",
   "The quote shown under the title.": "タイトルの下に表示される引用文。",
   "The status line is a button that announces its summary through a polite live region, so screen reader users hear “Searching the web”, then “Thought for 12s”, without every timer tick.": "ステータス行は、politeなライブリージョンを通じて要約を読み上げるボタンなので、スクリーンリーダーのユーザーは、タイマーの更新を毎回聞くことなく、「Searching the web」、続いて「Thought for 12s」と聞こえます。",
+  "The thinking view of an AI chat. A live label follows each step, searches and sources fold into a trail, and citations sit beside the answer.": "AI チャットの思考ビュー。ライブのラベルが各ステップを追い、検索とソースは履歴に折りたたまれ、引用は回答の横に並びます。",
   "The trail opens while the model works and collapses to “Thought for 12s” when it finishes, unless someone has opened or closed it themselves. The answer then cites its sources inline: CitedText turns [1] and [2][3] into compact chips with the title, domain and snippet on hover.": "トレイルはモデルの作業中は開き、完了すると「Thought for 12s」に折りたたまれます。ユーザー自身が開閉した場合は例外です。その後、回答は出典をインラインで引用します。CitedTextは [1] や [2][3] を、ホバーでタイトル、ドメイン、スニペットを表示するコンパクトなチップに変換します。",
   "ThinkingOrb": "ThinkingOrb",
   "Three hex colors for the shader.": "シェーダー用の3つの16進カラー。",

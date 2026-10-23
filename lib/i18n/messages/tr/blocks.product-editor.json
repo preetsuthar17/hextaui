@@ -51,6 +51,7 @@
   "Shows the stock column and summaries.": "Stok sütununu ve özetleri gösterir.",
   "Someone else’s newer version, for example from a live subscription. Without changes, the review dialog works them out from value.": "Başka birinin daha yeni sürümü, örneğin canlı bir abonelikten. changes olmadan inceleme penceresi bunları value’dan çıkarır.",
   "Stock locations for quantities.": "Miktarlar için stok konumları.",
+  "The add and edit product page for a store admin. Handles unsaved changes, SKU errors from the server and someone else editing at once.": "Bir mağaza yönetim paneli için ürün ekleme ve düzenleme sayfası. Kaydedilmemiş değişiklikleri, sunucudan gelen SKU hatalarını ve aynı anda başka birinin düzenlemesini ele alır.",
   "The breadcrumb link.": "Breadcrumb bağlantısı.",
   "The draft, or any object with these fields.": "Taslak ya da bu alanlara sahip herhangi bir nesne.",
   "The floating bar for unsaved changes, save progress, errors and conflicts.": "Kaydedilmemiş değişiklikler, kaydetme ilerlemesi, hatalar ve çakışmalar için yüzen çubuk.",
