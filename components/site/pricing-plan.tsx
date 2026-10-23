@@ -3,6 +3,7 @@
 import Link from "@/components/site/link"
 import { cn } from "cn"
 
+import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { startCheckout } from "@/lib/auth-client"
@@ -47,18 +48,23 @@ function EarlyBirdBadge() {
 }
 
 function PlanButton({ plan }: { plan: ProPlanId }) {
+  const { guard, dialog } = useInAppBrowserGate()
+
   return (
-    <Button
-      size="lg"
-      variant={plan === "solo" ? "default" : "outline"}
-      className="w-full"
-      feedback
-      successLabel="Redirecting…"
-      errorLabel="Try again"
-      onClick={() => startCheckout(plan)}
-    >
-      Get {proPlans[plan].name}
-    </Button>
+    <>
+      <Button
+        size="lg"
+        variant={plan === "solo" ? "default" : "outline"}
+        className="w-full"
+        feedback
+        successLabel="Redirecting…"
+        errorLabel="Try again"
+        onClick={() => guard("checkout", () => startCheckout(plan))}
+      >
+        Get {proPlans[plan].name}
+      </Button>
+      {dialog}
+    </>
   )
 }
 
