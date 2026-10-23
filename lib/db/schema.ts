@@ -132,6 +132,8 @@ export const purchase = sqliteTable(
     }).notNull(),
     amount: integer("amount").notNull(),
     currency: text("currency").notNull(),
+    claim: text("claim"),
+    reportedAt: integer("reported_at", { mode: "timestamp_ms" }),
     createdAt: integer("created_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
@@ -150,6 +152,29 @@ export const purchaseRelations = relations(purchase, ({ one, many }) => ({
   }),
   members: many(teamMember),
 }))
+
+export const guestPurchase = sqliteTable(
+  "guest_purchase",
+  {
+    id: text("id").primaryKey(),
+    email: text("email").notNull(),
+    name: text("name"),
+    claim: text("claim"),
+    productId: text("product_id").notNull(),
+    plan: text("plan", { enum: ["solo", "team", "unlimited"] }).notNull(),
+    customerId: text("customer_id").notNull(),
+    status: text("status", {
+      enum: ["paid", "refunded", "disputed"],
+    }).notNull(),
+    amount: integer("amount").notNull(),
+    currency: text("currency").notNull(),
+    reportedAt: integer("reported_at", { mode: "timestamp_ms" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+  },
+  (table) => [index("guest_purchase_email_idx").on(table.email)]
+)
 
 export const teamMember = sqliteTable(
   "team_member",

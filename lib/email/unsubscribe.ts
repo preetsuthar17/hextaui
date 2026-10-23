@@ -1,3 +1,4 @@
+import { fromBase64Url, toBase64Url } from "@/lib/base64url"
 import { siteUrl } from "@/lib/site"
 
 const encoder = new TextEncoder()
@@ -14,19 +15,6 @@ function importKey(secret: string) {
 
 function message(userId: string) {
   return encoder.encode(`unsubscribe:${userId}`)
-}
-
-function toBase64Url(bytes: Uint8Array) {
-  return btoa(String.fromCharCode(...bytes))
-    .replaceAll("+", "-")
-    .replaceAll("/", "_")
-    .replace(/=+$/, "")
-}
-
-function fromBase64Url(value: string) {
-  if (!/^[A-Za-z0-9_-]+$/.test(value)) return null
-  const base64 = value.replaceAll("-", "+").replaceAll("_", "/")
-  return Uint8Array.from(atob(base64), (char) => char.charCodeAt(0))
 }
 
 async function signUnsubscribe(secret: string, userId: string) {

@@ -1,12 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "@/components/site/link"
-import { IconCheck, IconCircleX, IconLock } from "@tabler/icons-react"
+import {
+  IconAlertTriangle,
+  IconCheck,
+  IconCircleCheck,
+  IconCircleX,
+  IconLock,
+} from "@tabler/icons-react"
 
 import { ProTokens, request } from "@/components/account/pro-tokens"
 import { TeamSeats } from "@/components/account/team-seats"
 import { SignInOptions } from "@/components/account/sign-in-options"
+import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -43,7 +50,17 @@ import {
   type ProPlanId,
 } from "@/lib/pro/pricing"
 import { useEarlyBird } from "@/lib/pro/use-early-bird"
+import { trackPurchaseCompleted } from "@/lib/purchase-tracking"
 import { siteContactEmail } from "@/lib/site"
+import {
+  claimHref,
+  postClaim,
+  takeCheckoutReturn,
+  writeStoredClaim,
+  type CheckoutReturn,
+  type ClaimResponse,
+  type StoredClaim,
+} from "@/lib/claim-client"
 
 type ProPlan = (typeof proPlans)[ProPlanId]
 
@@ -104,7 +121,79 @@ async function fetchPlan(paymentId: string | null) {
   return plan
 }
 
-function usePlan(enabled: boolean) {
+function useCheckoutReturn() {
+  const taken = useRef<CheckoutReturn | null>(null)
+  const [state, setState] = useState<CheckoutReturn | null>(null)
+
+  useEffect(() => {
+    taken.current ??= takeCheckoutReturn()
+    setState(taken.current)
+  }, [])
+
+  return state
+}
+
+type ClaimState = {
+  checking: boolean
+  settled: boolean
+  result: ClaimResponse | null
+}
+
+const claimAttempts = 15
+
+function settlesClaim(result: ClaimResponse, signedIn: boolean) {
+  if (result.status === "pending") return false
+  if (result.status !== "paid") return true
+  return signedIn ? true : result.account === "this"
+}
+
+function useClaim(
+  claim: StoredClaim | null,
+  ready: boolean,
+  signedIn: boolean
+) {
+  const [state, setState] = useState<ClaimState>({
+    checking: false,
+    settled: false,
+    result: null,
+  })
+
+  useEffect(() => {
+    if (!claim || !ready) return
+    let active = true
+    let timer: ReturnType<typeof setTimeout> | undefined
+    let attempts = claimAttempts
+    setState({ checking: true, settled: false, result: null })
+
+    const load = async () => {
+      const result = await postClaim(claim)
+      if (!active) return
+      if ((!result || result.status === "pending") && --attempts > 0) {
+        timer = setTimeout(load, 2000)
+        return
+      }
+      if (result && "report" in result && result.report) {
+        trackPurchaseCompleted(result)
+      }
+      if (result && settlesClaim(result, signedIn)) writeStoredClaim(null)
+      setState({ checking: false, settled: true, result })
+    }
+
+    load()
+    return () => {
+      active = false
+      clearTimeout(timer)
+    }
+  }, [claim, ready, signedIn])
+
+  return state
+}
+
+function usePlan(
+  enabled: boolean,
+  confirmPaymentId: string | null,
+  version: number
+) {
   const [plan, setPlan] = useState<Plan | null>(null)
   const [confirming, setConfirming] = useState(false)
 
@@ -112,13 +201,10 @@ function usePlan(enabled: boolean) {
     if (!enabled) return
     let active = true
     let timer: ReturnType<typeof setTimeout> | undefined
-    const params = new URLSearchParams(window.location.search)
-    const returning = params.get("checkout") === "done"
-    const paymentId = returning ? params.get("payment_id") : null
-    let attempts = returning ? 15 : 0
+    let attempts = confirmPaymentId ? 15 : 0
 
     const load = async () => {
-      const next = await fetchPlan(paymentId).catch(() => null)
+      const next = await fetchPlan(confirmPaymentId).catch(() => null)
       if (!active) return
       if (next) setPlan(next)
       if (next && !next.pro && attempts > 0) {
@@ -128,9 +214,6 @@ function usePlan(enabled: boolean) {
         return
       }
       setConfirming(false)
-      if (returning) {
-        window.history.replaceState(null, "", window.location.pathname)
-      }
     }
 
     load()
@@ -138,12 +221,14 @@ function usePlan(enabled: boolean) {
       active = false
       clearTimeout(timer)
     }
-  }, [enabled])
+  }, [enabled, confirmPaymentId, version])
 
   return { plan, confirming }
 }
 
 function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
+  const { guard, dialog } = useInAppBrowserGate()
+
   return (
     <div className="flex flex-col gap-4 rounded-xl border p-5">
       <div className="flex flex-col gap-1">
@@ -169,10 +254,11 @@ function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
         feedback
         successLabel="Redirecting…"
         errorLabel="Try again"
-        onClick={() => startCheckout(plan.id)}
+        onClick={() => guard("checkout", () => startCheckout(plan.id))}
       >
         Get {plan.name}
       </Button>
+      {dialog}
     </div>
   )
 }
@@ -317,10 +403,146 @@ function AccountView() {
   )
 }
 
+function ClaimNotice({
+  state,
+  signedIn,
+}: {
+  state: ClaimState
+  signedIn: boolean
+}) {
+  const { checking, result } = state
+
+  if (checking) {
+    return (
+      <Alert>
+        <Spinner />
+        <AlertTitle>Confirming your payment…</AlertTitle>
+        <AlertDescription>
+          This takes a few seconds. You can keep this page open.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  if (!result) return null
+
+  if (result.status === "pending") {
+    return (
+      <Alert variant="info">
+        <Spinner />
+        <AlertTitle>Your payment is still processing</AlertTitle>
+        <AlertDescription>
+          Some payment methods take a few minutes. Reload this page in a minute
+          and Pro unlocks once it clears. We also email you when it’s done.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  if (result.status === "failed") {
+    return (
+      <Alert variant="destructive">
+        <IconCircleX />
+        <AlertTitle>The payment didn’t go through</AlertTitle>
+        <AlertDescription>
+          Nothing was unlocked. You can try again with another payment method.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  if (result.status === "invalid") {
+    return (
+      <Alert variant="destructive">
+        <IconCircleX />
+        <AlertTitle>This link doesn’t match a payment</AlertTitle>
+        <AlertDescription>
+          Use the link from your purchase email, or email{" "}
+          <a
+            href={`mailto:${siteContactEmail}`}
+            className="underline underline-offset-4"
+          >
+            {siteContactEmail}
+          </a>{" "}
+          with your receipt and we’ll sort it out.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  if (result.status !== "paid") {
+    return (
+      <Alert variant="warning">
+        <IconAlertTriangle />
+        <AlertTitle>This payment was refunded</AlertTitle>
+        <AlertDescription>
+          A refunded payment doesn’t unlock Pro.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
+  const planName = proPlans[result.plan].name
+  if (result.account === "this") {
+    return (
+      <Alert variant="success">
+        <IconCircleCheck />
+        <AlertTitle>Thanks! Pro {planName} is on this account</AlertTitle>
+        <AlertDescription>
+          Every Pro block is unlocked. Create a token below to install them with
+          the shadcn CLI.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  if (result.account === "other") {
+    return (
+      <Alert variant="warning">
+        <IconAlertTriangle />
+        <AlertTitle>
+          {signedIn
+            ? "This purchase is on another HextaUI account"
+            : "Your purchase is on a HextaUI account"}
+        </AlertTitle>
+        <AlertDescription>
+          {signedIn
+            ? `Pro ${planName} belongs to the account${result.email ? ` that uses ${result.email}` : ""}. Sign out, then sign in with that account.`
+            : `Sign in with the account${result.email ? ` that uses ${result.email}` : ""} to use Pro ${planName}.`}
+        </AlertDescription>
+      </Alert>
+    )
+  }
+  return (
+    <Alert variant="success">
+      <IconCircleCheck />
+      <AlertTitle>Payment received. One step left</AlertTitle>
+      <AlertDescription>
+        Sign in with GitHub or Google to unlock Pro {planName}. Any account
+        works, even with a different email: the purchase moves to the account
+        you sign in with.
+        {result.email
+          ? ` We also emailed a sign-in link to ${result.email}.`
+          : ""}
+      </AlertDescription>
+    </Alert>
+  )
+}
+
 function AccountContent() {
   const { session, pending } = useSession()
-  const { plan, confirming } = usePlan(Boolean(session))
+  const checkoutReturn = useCheckoutReturn()
+  const claim = checkoutReturn?.claim ?? null
+  const claimState = useClaim(claim, !pending, Boolean(session))
+  const claimed =
+    claimState.result?.status === "paid" && claimState.result.account === "this"
+  const waitingForClaim = Boolean(claim) && !claimState.settled
+  const confirmPaymentId =
+    checkoutReturn?.checkoutDone && !claim ? checkoutReturn.paymentId : null
+  const { plan, confirming } = usePlan(
+    Boolean(session) && Boolean(checkoutReturn) && !waitingForClaim,
+    confirmPaymentId,
+    claimed ? 1 : 0
+  )
   const owned = plan?.via === "owner" ? plan.plan : null
+  const notice = <ClaimNotice state={claimState} signedIn={Boolean(session)} />
+  const unclaimed =
+    claimState.result?.status === "paid" && claimState.result.account === "none"
 
   if (pending) {
     return (
@@ -336,28 +558,35 @@ function AccountContent() {
 
   if (!session) {
     return (
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="stack">
-            <IconLock />
-          </EmptyMedia>
-          <EmptyTitle>Sign in to HextaUI</EmptyTitle>
-          <EmptyDescription>
-            Your account holds your Pro access and the tokens you use to install
-            Pro blocks.
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <SignInOptions />
-        </EmptyContent>
-      </Empty>
+      <div className="flex flex-col gap-10">
+        {notice}
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="stack">
+              <IconLock />
+            </EmptyMedia>
+            <EmptyTitle>
+              {unclaimed ? "Sign in to unlock Pro" : "Sign in to HextaUI"}
+            </EmptyTitle>
+            <EmptyDescription>
+              Your account holds your Pro access and the tokens you use to
+              install Pro blocks.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <SignInOptions openHref={claim ? claimHref(claim) : undefined} />
+          </EmptyContent>
+        </Empty>
+      </div>
     )
   }
 
   const { user } = session
+  const busy = confirming || waitingForClaim || claimState.checking
 
   return (
     <div className="flex flex-col gap-10">
+      {notice}
       <section className="flex items-center gap-4">
         <Avatar size="xl">
           {user.image ? <AvatarImage src={user.image} alt="" /> : null}
@@ -371,7 +600,7 @@ function AccountContent() {
       <dl className="grid grid-cols-[auto_1fr] items-center gap-x-8 gap-y-3 text-sm">
         <dt className="text-muted-foreground">Plan</dt>
         <dd>
-          <PlanStatus plan={plan} confirming={confirming} />
+          <PlanStatus plan={plan} confirming={busy} />
         </dd>
         {plan?.via === "member" ? (
           <>
@@ -397,7 +626,7 @@ function AccountContent() {
         <dt className="text-muted-foreground">Member since</dt>
         <dd>{dateFormat.format(new Date(user.createdAt))}</dd>
       </dl>
-      {plan && !plan.pro && !confirming ? <ProUpgrade /> : null}
+      {plan && !plan.pro && !busy ? <ProUpgrade /> : null}
       {owned && isTeamPlan(owned) ? <TeamSeats /> : null}
       {plan?.pro ? <ProTokens /> : null}
       {owned && owned !== "unlimited" ? <TeamUpgrade plan={owned} /> : null}

@@ -76,6 +76,11 @@ const pricingQuestions = [
       "No. Pro is a single payment, and every block released later is included.",
   },
   {
+    question: "Do I need an account to buy?",
+    answer:
+      "No. Pay first, then sign in with GitHub or Google to unlock Pro. Sign in with the email you paid with and it unlocks on its own; with any other account, the page you return to and your purchase email have a link that moves it there.",
+  },
+  {
     question: "When does the early-bird price end?",
     answer: `On ${earlyBirdLastDay}. After that, Solo is $${proPlans.solo.price} and Team is $${proPlans.team.price}. There are no other sales or discount codes.`,
   },

@@ -2,7 +2,12 @@ import { getAuth } from "@/lib/auth"
 import { eq } from "drizzle-orm"
 
 import { getDb, schema } from "@/lib/db"
-import { confirmPayment, findProAccess, type PaymentsEnv } from "@/lib/payments"
+import {
+  adoptGuestPurchases,
+  confirmPayment,
+  findProAccess,
+  type PaymentsEnv,
+} from "@/lib/payments"
 import { isSameOrigin } from "@/lib/origin"
 import { apiError, sameOriginError, signInError } from "@/lib/api-error"
 
@@ -21,6 +26,7 @@ export async function onRequestGet({ request, env }: Context) {
 
   const db = getDb(env.DB)
   const userId = session.user.id
+  await adoptGuestPurchases(db, session.user)
   let access = await findProAccess(db, userId)
 
   const paymentId = new URL(request.url).searchParams.get("payment_id")

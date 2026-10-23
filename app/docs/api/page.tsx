@@ -158,7 +158,12 @@ export default function Page() {
         </li>
         <li>
           <DocsCode>POST /api/checkout</DocsCode> starts a Solo, Team or
-          Unlimited checkout and returns its URL.
+          Unlimited checkout and returns its URL. No session is needed.
+        </li>
+        <li>
+          <DocsCode>POST /api/claim</DocsCode> confirms a payment from its
+          checkout return link and, when signed in, moves an unclaimed purchase
+          to the account.
         </li>
         <li>
           <DocsCode>GET /api/tokens</DocsCode> and{" "}

@@ -56,6 +56,31 @@ function purchaseContent(user: Person, plan: ProPlanId): EmailContent {
   }
 }
 
+function guestPurchaseContent(
+  buyer: Person,
+  plan: ProPlanId,
+  claimUrl: string | null
+): EmailContent {
+  const { name } = proPlans[plan]
+  return {
+    title: `Your ${siteName} Pro ${name} is paid for`,
+    paragraphs: [
+      `Thanks, ${firstName(buyer.name)}. One step left: sign in to ${siteName} with GitHub or Google so we can put Pro on your account.`,
+      claimUrl
+        ? `Sign in with ${buyer.email} and Pro unlocks on its own. Using a GitHub or Google account with a different email? Open the link below and sign in, and the purchase moves to that account. The link works once, so keep it to yourself.`
+        : `Sign in with ${buyer.email} and Pro unlocks on its own. Using a different email? Reply to this email and we’ll move it for you.`,
+      `Not what you expected? It’s refundable within ${refundDays} days, no questions asked. Email ${siteContactEmail}.`,
+    ],
+    links: [
+      { label: "Unlock Pro", href: claimUrl ?? `${siteUrl}/account` },
+      { label: "Browse blocks", href: `${siteUrl}/blocks` },
+    ],
+    footer: [
+      `You’re getting this because you bought ${siteName} Pro with ${buyer.email}. Your receipt comes separately from Dodo Payments.`,
+    ],
+  }
+}
+
 function teamInviteContent(owner: Person, email: string): EmailContent {
   return {
     title: `${owner.name} added you to ${siteName} Pro`,
@@ -110,6 +135,21 @@ function sendPurchaseEmail(env: MailerEnv, user: Person, plan: ProPlanId) {
   )
 }
 
+function sendGuestPurchaseEmail(
+  env: MailerEnv,
+  buyer: Person,
+  plan: ProPlanId,
+  claimUrl: string | null
+) {
+  return deliver(
+    env,
+    "guest purchase",
+    buyer.email,
+    `Unlock your ${siteName} Pro ${proPlans[plan].name}`,
+    guestPurchaseContent(buyer, plan, claimUrl)
+  )
+}
+
 function sendTeamInviteEmail(env: MailerEnv, owner: Person, email: string) {
   return deliver(
     env,
@@ -121,7 +161,9 @@ function sendTeamInviteEmail(env: MailerEnv, owner: Person, email: string) {
 }
 
 export {
+  guestPurchaseContent,
   purchaseContent,
+  sendGuestPurchaseEmail,
   sendPurchaseEmail,
   sendTeamInviteEmail,
   sendWelcomeEmail,

@@ -27,15 +27,9 @@ export async function onRequestPost({ request, env }: Context) {
   const db = getDb(env.DB)
 
   switch (event.type) {
-    case "payment.succeeded": {
-      const result = await recordPayment(db, event.data, env)
-      if (result === "unmatched") {
-        console.error("Pro payment without a matching user", {
-          paymentId: event.data.payment_id,
-        })
-      }
+    case "payment.succeeded":
+      await recordPayment(db, event.data, env)
       break
-    }
     case "refund.succeeded":
       if (!event.data.is_partial) {
         await revokePurchase(db, event.data.payment_id, "refunded")
