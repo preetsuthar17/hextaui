@@ -1,4 +1,5 @@
 {
+  "A complete AI chat app built from the HextaUI AI blocks. Handles streaming, tool approvals and plan review end to end on AI SDK message parts.": "Une app de chat IA complète construite à partir des blocs IA de HextaUI. Gère le streaming, les approbations d’outils et la revue de plan de bout en bout sur des parties de message AI SDK.",
   "Adds a tool call, optionally streaming one input field. The handle can approve, progress, finish or fail it.": "Ajoute un appel d’outil, avec éventuellement un champ d’entrée en streaming. Le handle peut l’approuver, le faire progresser, le terminer ou le faire échouer.",
   "Adds a user message and streams the reply. options: model, thinking and instant, which skips all waiting.": "Ajoute un message de l’utilisateur et diffuse la réponse en streaming. options : model, thinking et instant, qui supprime toute attente.",
   "An offline engine that streams AI SDK-shaped parts from scripts, with stop, regenerate, edit, approvals and plan review.": "Un moteur hors ligne qui diffuse en streaming des parts au format AI SDK à partir de scripts, avec arrêt, régénération, modification, approbations et relecture du plan.",

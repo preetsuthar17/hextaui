@@ -1,4 +1,5 @@
 {
+  "A complete store built from the HextaUI commerce blocks. Handles browsing, filters, the bag, checkout and order tracking on one shared store.": "HextaUIのコマースブロックで作られた完全なストア。1つの共有ストア上で、閲覧、フィルター、バッグ、チェックアウト、注文の追跡に対応します。",
   "A tiny external store holding the cart, wishlist, recently viewed products and placed orders, read with useSyncExternalStore.": "カート、ウィッシュリスト、最近見た商品、確定済みの注文を保持する小さな外部ストア。useSyncExternalStore で読み取ります。",
   "Also takes div props for the root. Give it a height, such as h-svh, and it fills it.": "ルート要素用に div のプロップも受け付けます。h-svh のように高さを指定すると、その高さいっぱいに広がります。",
   "Choose a color or size in the variant picker, and move between gallery images.": "バリアントピッカーで色やサイズを選び、ギャラリーの画像間を移動します。",

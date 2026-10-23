@@ -35,6 +35,7 @@
   "Optional, so rating-only and photo-only reviews work.",
   "Prefill for signed-in shoppers or a rating picked from an email.",
   "Product Reviews & ratings block for React",
+  "Product ratings, customer photos and reviews for a product page. Handles rating filters, helpful votes, review photos and products with no reviews yet.",
   "RatingInput",
   "RatingStars",
   "Receives rating, title, body, fit, photos as File[], name and email.",

@@ -4,6 +4,7 @@
   "Accessible name of the region.",
   "Adapters from reporter output to a run.",
   "Also accepts every section prop except children.",
+  "An agent’s test run, shown as it happens. Tests stream in and fold into a summary, with every failure left open and its diff in view.",
   "Both sides of the comparison, read from the error, a diff or the message.",
   "Called when a frame is clicked.",
   "Enclosing describe blocks, outermost first.",

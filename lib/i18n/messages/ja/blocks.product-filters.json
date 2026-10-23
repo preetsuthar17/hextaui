@@ -20,6 +20,7 @@
   "Expands or collapses a facet group, or toggles a value.": "ファセットグループを展開・折りたたむか、値を切り替えます。",
   "Facet": "Facet",
   "Facet ids that start expanded. Facets with an applied value always start expanded. All facets are expanded by default.": "最初から展開しておくファセットの id。値が適用されたファセットは常に展開された状態で始まります。デフォルトではすべてのファセットが展開されます。",
+  "Faceted filters for a collection page, with chips, sort and load more. Handles zero results, slow counts, long value lists and price ranges in any currency.": "チップ、並べ替え、さらに読み込む機能を備えた、コレクションページ向けのファセットフィルター。結果が0件の場合、件数の取得が遅い場合、長い値のリスト、あらゆる通貨での価格帯に対応します。",
   "Filter items and recount every facet against the other facets.": "アイテムを絞り込み、各ファセットの件数を他のファセットに対して再集計します。",
   "FilterSheet": "FilterSheet",
   "Filters in the URL with Next.js": "Next.js で URL にフィルターを保持する",

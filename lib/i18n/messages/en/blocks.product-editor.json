@@ -51,6 +51,7 @@
   "Shows the stock column and summaries.",
   "Someone else’s newer version, for example from a live subscription. Without changes, the review dialog works them out from value.",
   "Stock locations for quantities.",
+  "The add and edit product page for a store admin. Handles unsaved changes, SKU errors from the server and someone else editing at once.",
   "The breadcrumb link.",
   "The draft, or any object with these fields.",
   "The floating bar for unsaved changes, save progress, errors and conflicts.",

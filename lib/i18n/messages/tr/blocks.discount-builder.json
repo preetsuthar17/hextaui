@@ -1,4 +1,5 @@
 {
+  "A discount builder where the offer is one editable sentence, with a live checkout preview. Handles code checks, drafts and schedules.": "Teklifin düzenlenebilir tek bir cümle olduğu, canlı ödeme önizlemeli bir indirim oluşturucu. Kod kontrollerini, taslakları ve zamanlamaları ele alır.",
   "A live discount becomes a Stripe coupon plus a promotion code with its redemption limit, first-order rule and expiry. Stripe’s duplicate-code error comes back as a code field error.": "Canlı bir indirim, kullanım sınırı, ilk sipariş kuralı ve bitiş tarihiyle birlikte bir Stripe kuponu ve bir promosyon koduna dönüşür. Stripe'ın yinelenen kod hatası, kod alanı hatası olarak geri döner.",
   "Adds Duplicate and End now to the overflow menu of saved discounts.": "Kaydedilmiş indirimlerin taşma menüsüne Duplicate ve End now ekler.",
   "Also takes div props. Fills its parent’s height; only the content scrolls.": "div prop'larını da alır. Üst öğesinin yüksekliğini doldurur; yalnızca içerik kayar.",

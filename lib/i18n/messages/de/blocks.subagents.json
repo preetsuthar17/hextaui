@@ -45,6 +45,7 @@
   "The line once done. Defaults to the task in the past tense when its first word is a known verb.": "Die Zeile, wenn er fertig ist. Standardmäßig die Aufgabe in der Vergangenheit, wenn ihr erstes Wort ein bekanntes Verb ist.",
   "The report is still arriving.": "Der Bericht kommt noch an.",
   "The run keeps working while the chat goes on. It shows a Background badge and stays folded.": "Der Lauf arbeitet weiter, während der Chat weitergeht. Er zeigt ein Background-Badge und bleibt eingeklappt.",
+  "The runs an agent hands to other agents, one line per run. Handles parallel runs, stop and retry, and a summary once each run is done.": "Die Läufe, die ein Agent an andere Agenten übergibt, eine Zeile pro Lauf. Deckt parallele Läufe, Stoppen und Wiederholen sowie eine Zusammenfassung nach jedem Lauf ab.",
   "The run’s steps, rendered with Tool Calls.": "Die Schritte des Laufs, gerendert mit Tool Calls.",
   "The status mark on its own: an orb while running, then a check, alert or stop icon.": "Das Statuszeichen allein: ein Orb während des Laufs, danach ein Haken, eine Warnung oder ein Stopp-Symbol.",
   "The subagent’s tool part. Its output is a UI message whose parts hold reasoning, tool calls and text.": "Der Tool-Part des Subagenten. Seine Ausgabe ist eine UI-Nachricht, deren Parts Reasoning, Tool-Aufrufe und Text enthalten.",

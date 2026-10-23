@@ -45,6 +45,7 @@
   "The line once done. Defaults to the task in the past tense when its first word is a known verb.": "完了後の行。最初の単語が既知の動詞なら、既定ではタスクの過去形。",
   "The report is still arriving.": "レポートはまだ届いている途中です。",
   "The run keeps working while the chat goes on. It shows a Background badge and stays folded.": "チャットが進む間も実行は作業を続けます。Background バッジを表示し、折りたたまれたままです。",
+  "The runs an agent hands to other agents, one line per run. Handles parallel runs, stop and retry, and a summary once each run is done.": "エージェントがほかのエージェントに任せた実行を、1 実行 1 行で表示します。並列実行、停止と再試行、完了後の要約に対応します。",
   "The run’s steps, rendered with Tool Calls.": "Tool Calls で表示される実行のステップ。",
   "The status mark on its own: an orb while running, then a check, alert or stop icon.": "状態マーク単体：実行中はオーブ、その後はチェック、警告、停止アイコン。",
   "The subagent’s tool part. Its output is a UI message whose parts hold reasoning, tool calls and text.": "サブエージェントのツールパート。出力は、推論、ツール呼び出し、テキストのパートを持つ UI メッセージです。",

@@ -1,5 +1,6 @@
 {
   "A caret menu for one trigger character.": "1つのトリガー文字に対する、キャレット位置のメニュー。",
+  "A chat composer that grows as you type. Handles file uploads, @ and / menus at the caret and messages typed while a reply streams.": "入力に合わせて広がるチャット入力欄。ファイルのアップロード、キャレット位置の @ と / メニュー、返信のストリーミング中に入力したメッセージに対応します。",
   "A compact picker for modes, run location, folders or repositories.": "モード、実行場所、フォルダー、リポジトリ用のコンパクトなピッカー。",
   "A muted shell around the body that holds a footer row, for agent harnesses.": "エージェントハーネス向けに、フッター行を保持する、本体を囲む控えめなシェル。",
   "A ring that fills as the context window does. Hover, click or press Enter to see the breakdown.": "コンテキストウィンドウに合わせて満ちていくリング。ホバー、クリック、またはEnterで内訳を表示します。",
@@ -97,7 +98,6 @@
   "Starts dictation, and inserts the transcript when pressed again.": "音声入力を開始し、もう一度押すと文字起こしを挿入します。",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "ストリーミング中の返信を停止するか、メニューを閉じるか、録音をキャンセルします。",
   "Switch label.": "スイッチのラベル。",
-  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "モデルからのテキストを一定の速さで流します。ばらついたチャンクをならし、新しい語をフェードで表示し、書いている間はキャレットを示します。",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "キャレット位置のメニューはaria-activedescendantを持つコンボボックスなので、移動中もフォーカスがテキストから離れることはありません。",
   "The character that opens it, such as @ or /.": "開くための文字。@や/など。",
   "The choices. Descriptions show under each label.": "選択肢。説明は各ラベルの下に表示されます。",

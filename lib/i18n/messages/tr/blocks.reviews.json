@@ -35,6 +35,7 @@
   "Optional, so rating-only and photo-only reviews work.": "İsteğe bağlıdır; böylece yalnızca puan ve yalnızca fotoğraf içeren yorumlar çalışır.",
   "Prefill for signed-in shoppers or a rating picked from an email.": "Oturum açmış alışverişçiler veya bir e-postadan seçilen puan için ön doldurma.",
   "Product Reviews & ratings block for React": "React için Ürün Yorumları ve puanları bloğu",
+  "Product ratings, customer photos and reviews for a product page. Handles rating filters, helpful votes, review photos and products with no reviews yet.": "Bir ürün sayfası için ürün puanları, müşteri fotoğrafları ve yorumlar. Puan filtrelerini, faydalı oylarını, yorum fotoğraflarını ve henüz yorumu olmayan ürünleri ele alır.",
   "RatingInput": "RatingInput",
   "RatingStars": "RatingStars",
   "Receives rating, title, body, fit, photos as File[], name and email.": "rating, title, body, fit, File[] olarak photos, name ve email alır.",

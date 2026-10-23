@@ -1,6 +1,7 @@
 {
   "A polite live region announces each change kept in the draft, selection counts and “Saved 3 changes”. Save failures go to an alert region, and the failed row links to its message.": "Uma região live polite anuncia cada mudança mantida no rascunho, as contagens de seleção e “Saved 3 changes”. As falhas ao salvar vão para uma região alert, e a linha com falha é ligada à sua mensagem.",
   "A side sheet listing who changed a row, when, why, by how much and the resulting quantity.": "Um sheet lateral que lista quem alterou uma linha, quando, por quê, em quanto e a quantidade resultante.",
+  "A stock table where merchants edit quantities in place and save adjustments. Handles live orders, edits from another device and oversold or untracked stock.": "Uma tabela de estoque em que os lojistas editam quantidades no lugar e salvam ajustes. Cobre pedidos ao vivo, edições de outro dispositivo e estoque vendido além do disponível ou sem controle.",
   "Apply the batch, update items, then resolve. Return { failed } to keep those rows in the draft with a message, or throw to fail the whole batch.": "Aplique o lote, atualize items e então resolva. Retorne { failed } para manter essas linhas no rascunho com uma mensagem, ou lance um erro para falhar o lote inteiro.",
   "Available at or below this counts as low stock.": "Available igual ou abaixo disso conta como estoque baixo.",
   "Called when unsaved changes appear or clear, for navigation guards.": "Chamado quando alterações não salvas aparecem ou somem, para proteções de navegação.",

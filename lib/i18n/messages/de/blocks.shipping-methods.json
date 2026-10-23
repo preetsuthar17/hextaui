@@ -12,7 +12,7 @@
   "Closes the ZIP code popover and returns focus to Change.": "Schließt das Postleitzahl-Popover und gibt den Fokus an Change zurück.",
   "Days nothing ships or arrives on.": "Tage, an denen nichts versendet wird oder ankommt.",
   "Delivery dates as YYYY-MM-DD, or business days counted from the ship day.": "Lieferdaten als YYYY-MM-DD oder Werktage ab dem Versandtag.",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Lieferoptionen für den Checkout und Lieferdaten für Produktseiten. Unterstützt Bestellschlusszeiten, Abholung im Geschäft und Tarife, die sich mit der Adresse ändern.",
+  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Lieferoptionen für den Checkout und Liefertermine für Produktseiten. Behandelt Bestellschlusszeiten, Abholung im Geschäft und Tarife, die sich mit der Adresse ändern.",
   "DeliveryEstimate": "DeliveryEstimate",
   "Every visible and announced string, including the cutoff and ready sentences.": "Jeder sichtbare und angesagte Text, einschließlich der Sätze zu Bestellschluss und Abholbereitschaft.",
   "ISO time of the order cutoff for this estimate. After it, the estimate moves one business day.": "ISO-Zeit des Bestellschlusses für diese Schätzung. Danach rückt die Schätzung um einen Werktag.",

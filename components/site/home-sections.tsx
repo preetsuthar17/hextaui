@@ -7,8 +7,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { BlockBuyButton } from "@/components/blocks/block-buy"
 import { StartActions } from "@/components/site/hero-actions"
-import { HomeBlockStage, HomeDemos } from "@/components/site/home-preview"
+import { HomeBlocks, HomeDemos } from "@/components/site/home-preview"
 import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { getProBlock, proBlocks } from "@/lib/pro/catalog"
@@ -152,8 +153,17 @@ function Prose({ children }: { children: React.ReactNode }) {
   )
 }
 
+const moreBlockNames = ["chat-sidebar", "diff-review", "subagents", "storefront"]
+
 function HomeSections() {
-  const chatThread = getProBlock("chat-thread")
+  const moreBlocks = moreBlockNames
+    .map((name) => getProBlock(name))
+    .filter((block) => block !== undefined)
+    .map(({ name, title, free }) => ({
+      name,
+      title: t(title),
+      free: Boolean(free),
+    }))
 
   return (
     <>
@@ -192,13 +202,19 @@ function HomeSections() {
             "Stop a reply mid-sentence, approve a tool call before it runs, and keep the thread still while the model writes."
           )}
         </SectionHead>
-        {chatThread ? (
-          <HomeBlockStage
-            name={chatThread.name}
-            title={chatThread.title}
-            free={Boolean(chatThread.free)}
-          />
-        ) : null}
+        <HomeBlocks blocks={moreBlocks} />
+        <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <BlockBuyButton from="home-pro" pro />
+          <p className="max-w-xl text-sm text-pretty text-muted-foreground">
+            {t(
+              "One payment covers all {count} blocks and every block added later, with a {days}-day refund. Open any of them live before you buy.",
+              { count: proBlocks.length, days: refundDays }
+            )}{" "}
+            <Link href="/blocks" className={linkClassName}>
+              {t("See every block")}
+            </Link>
+          </p>
+        </div>
         <Prose>
           <p>
             <T>
@@ -221,12 +237,13 @@ function HomeSections() {
           </p>
           <p>
             <T>
-              The four previews at the top of this page are Pro blocks running
-              live. Thinking shows a model&apos;s reasoning and tool steps as
-              they stream in. Prompt input handles model and effort picks,
-              dictation, mentions, commands and file uploads. Chat thread
-              renders a full conversation, and Voice mode turns it into a spoken
-              one, through the browser&apos;s voice or a realtime voice API.
+              The previews at the top of this page are Pro blocks running live,
+              and you can use them right there. Thinking shows a model&apos;s
+              reasoning and tool steps as they stream in. Prompt input handles
+              model and effort picks, dictation, mentions, commands and file
+              uploads. Chat thread renders a full conversation, and Voice mode
+              turns it into a spoken one, through the browser&apos;s voice or a
+              realtime voice API.
             </T>
           </p>
           <p>

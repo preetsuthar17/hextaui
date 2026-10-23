@@ -45,6 +45,7 @@
   "The chat stopped, so unfinished calls read Cancelled instead of spinning.",
   "The choices.",
   "The chosen value, once answered.",
+  "The list of what an agent does, one line per step. Reads fold into a summary, edits and errors stay in view, and approvals ask before a tool runs.",
   "The list. Groups quiet runs and shares timing between steps.",
   "The matches.",
   "The part from message.parts.",

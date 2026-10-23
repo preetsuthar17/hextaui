@@ -3,7 +3,6 @@
   "Cards": "Kartlar",
   "Cards can sit in a row or any grid. The ring follows them wherever they are.": "Kartlar bir satırda veya herhangi bir ızgarada durabilir. Halka onları nerede olurlarsa olsunlar izler.",
   "Classes for the radio inside the card.": "Kartın içindeki radyo için sınıflar.",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Ödeme için teslimat seçenekleri ve ürün sayfaları için teslimat tarihleri. Sipariş son saatlerini, mağazadan teslim almayı ve adrese göre değişen ücretleri ele alır.",
   "Disable a single option, or make the whole group `readOnly` to show a value that can't change.": "Tek bir seçeneği devre dışı bırakın ya da değişemeyen bir değeri göstermek için tüm grubu `readOnly` yapın.",
   "Disabled and read-only": "Devre dışı ve salt okunur",
   "Each radio has a 36px hit area, and 44px on touch screens, while staying 16px on screen.": "Her radyonun 36px, dokunmatik ekranlarda 44px'lik bir tıklama alanı vardır; ekranda 16px kalır.",

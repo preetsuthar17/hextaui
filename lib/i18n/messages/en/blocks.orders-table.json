@@ -48,6 +48,7 @@
   "Status is never color alone: each pill has an empty, half or full glyph and its words, with a hidden Payment or Fulfillment prefix. High risk orders have a warning icon with a text label.",
   "The built-in views and helpers to apply one or tell whether the query has drifted from it.",
   "The bulk bar is a labelled toolbar. Disabled actions stay focusable and explain why in a tooltip. When an action finishes, focus returns to the select-all checkbox instead of being lost.",
+  "The merchant’s orders index with saved views, filters and bulk actions. Handles partial payment and fulfillment, live orders and partial bulk failures.",
   "The query the selection was made under.",
   "The selected view id.",
   "The shop time zone for Today and Yesterday.",

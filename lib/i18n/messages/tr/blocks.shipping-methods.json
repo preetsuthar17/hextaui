@@ -12,7 +12,7 @@
   "Closes the ZIP code popover and returns focus to Change.": "Posta kodu popover'ını kapatır ve odağı Change'e döndürür.",
   "Days nothing ships or arrives on.": "Hiçbir şeyin gönderilmediği veya ulaşmadığı günler.",
   "Delivery dates as YYYY-MM-DD, or business days counted from the ship day.": "YYYY-MM-DD biçiminde teslimat tarihleri veya gönderim gününden itibaren sayılan iş günleri.",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Ödeme için teslimat seçenekleri ve ürün sayfaları için teslimat tarihleri. Son sipariş saatlerini, mağazadan teslim almayı ve adresle değişen ücretleri ele alır.",
+  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.": "Ödeme için teslimat seçenekleri ve ürün sayfaları için teslimat tarihleri. Sipariş son saatlerini, mağazadan teslim almayı ve adrese göre değişen ücretleri ele alır.",
   "DeliveryEstimate": "DeliveryEstimate",
   "Every visible and announced string, including the cutoff and ready sentences.": "Son sipariş saati ve hazır olma cümleleri dahil görünen ve duyurulan tüm metinler.",
   "ISO time of the order cutoff for this estimate. After it, the estimate moves one business day.": "Bu tahmin için son sipariş saatinin ISO zamanı. Ondan sonra tahmin bir iş günü kayar.",

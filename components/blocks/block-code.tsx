@@ -2,7 +2,11 @@
 
 import * as React from "react"
 import Link from "@/components/site/link"
-import { IconLock } from "@tabler/icons-react"
+import {
+  IconBrandGithub,
+  IconBrandGoogle,
+  IconLock,
+} from "@tabler/icons-react"
 
 import { DocsCodePanel } from "@/components/docs/docs-code-panel"
 import { Button } from "@/components/ui/button"
@@ -15,10 +19,11 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { Skeleton } from "@/components/ui/skeleton"
-import { SignInOptions } from "@/components/account/sign-in-options"
-import { startCheckout, useSession } from "@/lib/auth-client"
-import { earlyBirdLastDay, proPlans, refundDays } from "@/lib/pro/pricing"
-import { useEarlyBird } from "@/lib/pro/use-early-bird"
+import { BlockBuyButton, BlockPriceNote } from "@/components/blocks/block-buy"
+import { signIn, startCheckout, useSession } from "@/lib/auth-client"
+import { useChrome } from "@/lib/i18n/chrome"
+import { useSoloPrice } from "@/lib/pro/use-early-bird"
+import { track } from "@/lib/track"
 
 type ProFile = { path: string; code: string; html: string }
 
@@ -62,9 +67,17 @@ function useBlockCode(name: string, free: boolean): CodeState {
   return state
 }
 
-function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
-  const early = useEarlyBird()
-  const { solo, team } = proPlans
+function LockedCode({
+  name,
+  count,
+  reason,
+}: {
+  name: string
+  count: number
+  reason: "signed-out" | "free"
+}) {
+  const c = useChrome()
+  const price = useSoloPrice()
 
   return (
     <Empty variant="outline">
@@ -72,33 +85,69 @@ function LockedCode({ reason }: { reason: "signed-out" | "free" }) {
         <EmptyMedia variant="stack">
           <IconLock />
         </EmptyMedia>
-        <EmptyTitle>The code is part of HextaUI Pro</EmptyTitle>
+        <EmptyTitle>{c("The code is part of HextaUI Pro")}</EmptyTitle>
         <EmptyDescription>
-          One payment of ${early ? solo.earlyPrice : solo.price}, or $
-          {early ? team.earlyPrice : team.price} for a team of {team.seats},
-          unlocks every block, including future ones.
-          {early ? ` Early-bird prices end on ${earlyBirdLastDay}.` : ""}{" "}
-          Refundable within {refundDays} days.
+          <BlockPriceNote count={count} />
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         {reason === "signed-out" ? (
-          <SignInOptions />
+          <>
+            <BlockBuyButton name={name} from="block-code" />
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-sm text-muted-foreground">
+                {c("Already have Pro? Sign in to see the code.")}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  feedback
+                  successLabel={c("Redirecting…")}
+                  errorLabel={c("Try again")}
+                  onClick={() => signIn("github")}
+                >
+                  <IconBrandGithub data-icon="inline-start" />
+                  GitHub
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  feedback
+                  successLabel={c("Redirecting…")}
+                  errorLabel={c("Try again")}
+                  onClick={() => signIn("google")}
+                >
+                  <IconBrandGoogle data-icon="inline-start" />
+                  Google
+                </Button>
+              </div>
+            </div>
+          </>
         ) : (
           <>
             <Button
               feedback
-              successLabel="Redirecting…"
-              errorLabel="Try again"
-              onClick={() => startCheckout("solo")}
+              successLabel={c("Redirecting…")}
+              errorLabel={c("Try again")}
+              onClick={() => {
+                track("Pro link clicked", {
+                  from: "block-code",
+                  to: "checkout",
+                  block: name,
+                })
+                return startCheckout("solo")
+              }}
             >
-              Get Pro Solo
+              {c("Get the full block")}
+              <span aria-hidden="true">—</span>
+              <span className="tabular-nums">${price}</span>
             </Button>
             <Link
-              href="/account"
+              href="/pricing"
               className="text-sm text-muted-foreground underline underline-offset-4"
             >
-              Buying for a team? See Team
+              {c("Buying for a team? Compare plans")}
             </Link>
           </>
         )}
@@ -111,19 +160,28 @@ function CodeFile({ file }: { file: ProFile }) {
   return <DocsCodePanel html={file.html} title={file.path} collapsible />
 }
 
-function BlockCode({ name, free = false }: { name: string; free?: boolean }) {
+function BlockCode({
+  name,
+  free = false,
+  count,
+}: {
+  name: string
+  free?: boolean
+  count: number
+}) {
   const state = useBlockCode(name, free)
+  const c = useChrome()
 
   if (state.status === "loading") {
     return <Skeleton className="h-56 w-full rounded-xl" />
   }
   if (state.status === "locked") {
-    return <LockedCode reason={state.reason} />
+    return <LockedCode name={name} count={count} reason={state.reason} />
   }
   if (state.status === "error") {
     return (
       <p className="text-sm text-muted-foreground">
-        The code didn’t load. Refresh the page to try again.
+        {c("The code didn’t load. Refresh the page to try again.")}
       </p>
     )
   }

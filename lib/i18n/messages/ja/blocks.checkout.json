@@ -1,5 +1,6 @@
 {
   "A failed removal, shown under its line.": "削除に失敗したことを、その行の下に表示します。",
+  "A one-page checkout with contact, delivery and payment beside a live order summary. Handles changed totals, sold-out items and unknown outcomes.": "連絡先、配送、支払いをリアルタイムの注文概要の横に並べた1ページのチェックアウト。合計の変更、売り切れの商品、結果が不明な場合に対応します。",
   "Adds a Got it button.": "Got itボタンを追加します。",
   "Asked every pollInterval once onPlaceOrder has been silent for timeout. The attempt carries the idempotency key and how many checks have run.": "onPlaceOrderがtimeoutの間応答しなかった後、pollIntervalごとに問い合わせます。attemptには冪等キーと、これまでに実行した確認の回数が含まれます。",
   "Called after the success check has held. Navigate to your confirmation page here.": "成功の確認が確定した後に呼ばれます。ここで確認ページに遷移してください。",

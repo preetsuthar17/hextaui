@@ -92,6 +92,7 @@
   "The row's title.": "Satırın başlığı.",
   "The save bar and any hidden panel are inert, so they're out of the tab order and hidden from screen readers.": "Kaydetme çubuğu ve gizli paneller etkisizdir; bu yüzden sekme sırasının dışındadır ve ekran okuyuculardan gizlenir.",
   "The section open at first.": "Başlangıçta açık olan bölüm.",
+  "The settings page of an AI product. Handles a save bar that appears only when something changed, field errors and loading states.": "Bir yapay zeka ürününün ayarlar sayfası. Yalnızca bir şey değiştiğinde görünen kaydetme çubuğunu, alan hatalarını ve yükleme durumlarını ele alır.",
   "The shape on the right of each row.": "Her satırın sağındaki şekil.",
   "What to show while status is loading.": "status loading iken ne gösterileceği.",
   "What's saved now. When it changes and there are no edits, the draft follows it.": "Şu an kayıtlı olan. Değiştiğinde ve düzenleme yoksa taslak onu izler.",

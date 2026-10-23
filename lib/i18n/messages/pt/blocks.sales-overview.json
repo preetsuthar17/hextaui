@@ -60,6 +60,7 @@
   "The comparison value. Leave out when not comparing.": "O valor de comparação. Omita quando não estiver comparando.",
   "The current instant as ISO. Decides today, the incomplete point and future hours.": "O instante atual em ISO. Define o dia de hoje, o ponto incompleto e as horas futuras.",
   "The definition shown in the info tooltip.": "A definição mostrada no tooltip de informação.",
+  "The home analytics page of a store admin. Handles stores with no sales yet, today’s unfinished numbers and reports that fail or come back incomplete.": "A página inicial de análises de um admin de loja. Cobre lojas ainda sem vendas, os números ainda incompletos de hoje e relatórios que falham ou voltam incompletos.",
   "The main chart with a metric switcher, comparison line, crosshair tooltip and table view.": "O gráfico principal com seletor de métrica, linha de comparação, tooltip com crosshair e visualização em tabela.",
   "The metric name.": "O nome da métrica.",
   "The page heading, like a greeting.": "O título da página, como uma saudação.",

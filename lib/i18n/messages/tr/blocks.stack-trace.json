@@ -1,4 +1,5 @@
 {
+  "A crash shown the way a developer reads it. Your code comes first, framework frames fold away and every cause is listed in order.": "Bir geliştiricinin okuduğu biçimde gösterilen çökme. Önce sizin kodunuz gelir, çerçeve kareleri katlanır ve her neden sırayla listelenir.",
   "A stack, a traceback or raw log output around one.": "Bir stack, bir traceback ya da onu çevreleyen ham log çıktısı.",
   "A tool that throws ends in the output-error state with errorText. Render it as a compact StackTrace inside the failed ToolCall, so the step reads as one line until someone opens it.": "Hata fırlatan bir araç, errorText ile output-error durumunda biter. Bunu başarısız ToolCall içinde kompakt bir StackTrace olarak gösterin; böylece adım biri açana kadar tek satır kalır.",
   "AI Stack Trace and error view for React & shadcn/ui": "React ve shadcn/ui için AI Stack Trace ve hata görünümü",

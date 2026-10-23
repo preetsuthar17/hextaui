@@ -42,7 +42,6 @@
   "The close button is labelled “Close”. The handle on the inner edge shows the sheet can be dragged and is hidden from assistive tech.",
   "The direction that dismisses it.",
   "The drag handle on the inner edge.",
-  "The product tile for collection grids and rails, with swatches, quick add and a wishlist heart. Handles sold-out sizes, price ranges and failed adds.",
   "The sheet is a modal dialog. <l0/> labels it and <l1/> describes it, so always include a title.",
   "The sheet panel.",
   "The side it opens from.",

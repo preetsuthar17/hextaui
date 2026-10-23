@@ -51,6 +51,7 @@
   "Shows the stock column and summaries.": "在庫列と概要を表示します。",
   "Someone else’s newer version, for example from a live subscription. Without changes, the review dialog works them out from value.": "ライブのサブスクリプションなどから得た、他の人による新しいバージョン。changesがない場合、確認ダイアログがvalueから算出します。",
   "Stock locations for quantities.": "数量に使う在庫ロケーション。",
+  "The add and edit product page for a store admin. Handles unsaved changes, SKU errors from the server and someone else editing at once.": "ストア管理画面で商品を追加・編集するページ。未保存の変更、サーバーからのSKUエラー、他の人による同時編集に対応します。",
   "The breadcrumb link.": "パンくずリストのリンク。",
   "The draft, or any object with these fields.": "下書き、またはこれらのフィールドを持つ任意のオブジェクト。",
   "The floating bar for unsaved changes, save progress, errors and conflicts.": "未保存の変更、保存の進捗、エラー、競合を示すフローティングバー。",

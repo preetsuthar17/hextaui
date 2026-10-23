@@ -40,6 +40,7 @@
   "Start with the field shown instead of the link.": "Bağlantı yerine alan gösterilerek başlar.",
   "Stripe promotion codes": "Stripe promosyon kodları",
   "Taxes. estimated defaults to true. included shows “Including $X in taxes” under the total instead of adding it.": "Vergiler. estimated varsayılan olarak true'dur. included, vergiyi eklemek yerine toplamın altında “Including $X in taxes” gösterir.",
+  "The checkout sidebar with line items, discount codes and totals. Handles estimated taxes, unknown shipping and prices that changed since the cart was built.": "Kalemler, indirim kodları ve toplamlarla ödeme kenar çubuğu. Tahmini vergileri, bilinmeyen kargoyu ve sepet oluşturulduğundan beri değişen fiyatları ele alır.",
   "The discount code link, field, error message and code chips. Works on its own in a cart drawer.": "İndirim kodu bağlantısı, alanı, hata mesajı ve kod çipleri. Bir sepet çekmecesinde tek başına çalışır.",
   "The math behind the totals: discounts, shipping, tax, total and savings in minor units.": "Toplamların arkasındaki hesap: küçük birimlerde indirimler, kargo, vergi, toplam ve tasarruf.",
   "The mobile bar is a button with aria-expanded and aria-controls whose name includes the total. Collapsed content is hidden from screen readers and the tab order.": "Mobil çubuk, adı toplamı içeren, aria-expanded ve aria-controls'lu bir düğmedir. Daraltılmış içerik ekran okuyuculardan ve sekme sırasından gizlenir.",

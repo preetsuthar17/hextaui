@@ -49,7 +49,6 @@
   "Separate": "Séparé",
   "Slots fill from the right and the arrow keys follow what you see. Give slots after the first a translated `aria-label`. Set `dir=\"ltr\"` on the field to keep a code left to right in a right-to-left page.": "Les emplacements se remplissent depuis la droite et les flèches suivent ce que vous voyez. Donnez aux emplacements après le premier un `aria-label` traduit. Définissez `dir=\"ltr\"` sur le champ pour garder un code de gauche à droite dans une page de droite à gauche.",
   "Target the separator in CSS.": "Ciblez le séparateur en CSS.",
-  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "La section Sécurité des réglages d’un produit IA. Gère les sessions, la double authentification avec codes de récupération et la suppression derrière une confirmation saisie.",
   "The box.": "La boîte.",
   "The class names behind a slot and a group (`inputOTPGroupVariants`). Call them with `{ variant, size }`.": "Les noms de classes derrière un emplacement et un groupe (`inputOTPGroupVariants`). Appelez-les avec `{ variant, size }`.",
   "The default look. Each <l0/> joins its slots into one strip with shared edges.": "L’apparence par défaut. Chaque <l0/> réunit ses emplacements en une seule bande aux bords partagés.",

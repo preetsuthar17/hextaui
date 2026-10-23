@@ -1,5 +1,6 @@
 {
   "A caret menu for one trigger character.": "Tek bir tetikleyici karakter için bir imleç menüsü.",
+  "A chat composer that grows as you type. Handles file uploads, @ and / menus at the caret and messages typed while a reply streams.": "Yazdıkça büyüyen bir sohbet yazma alanı. Dosya yüklemelerini, imleçteki @ ve / menülerini ve yanıt akarken yazılan mesajları ele alır.",
   "A compact picker for modes, run location, folders or repositories.": "Modlar, çalıştırma konumu, klasörler veya depolar için kompakt bir seçici.",
   "A muted shell around the body that holds a footer row, for agent harnesses.": "Gövdeyi saran, ajan harness'leri için bir alt satır tutan soluk bir kabuk.",
   "A ring that fills as the context window does. Hover, click or press Enter to see the breakdown.": "Bağlam penceresiyle birlikte dolan bir halka. Dökümü görmek için üzerine gelin, tıklayın ya da Enter'a basın.",
@@ -97,7 +98,6 @@
   "Starts dictation, and inserts the transcript when pressed again.": "Dikteyi başlatır ve yeniden basıldığında transkripti ekler.",
   "Stops a streaming reply, closes a menu, or cancels a recording.": "Akan bir yanıtı durdurur, bir menüyü kapatır ya da bir kaydı iptal eder.",
   "Switch label.": "Anahtar etiketi.",
-  "Text that streams from a model at a steady pace. Bursty chunks are smoothed out, with a fade on new words and a caret while it writes.": "Bir modelden sabit hızda akan metin. Düzensiz parçalar yumuşatılır, yeni sözcükler solarak belirir ve yazarken bir imleç görünür.",
   "The caret menu is a combobox with aria-activedescendant, so focus never leaves the text while moving through it.": "İmleç menüsü aria-activedescendant içeren bir combobox'tur; böylece içinde gezinirken odak metinden asla ayrılmaz.",
   "The character that opens it, such as @ or /.": "Onu açan karakter, örneğin @ veya /.",
   "The choices. Descriptions show under each label.": "Seçenekler. Açıklamalar her etiketin altında görünür.",

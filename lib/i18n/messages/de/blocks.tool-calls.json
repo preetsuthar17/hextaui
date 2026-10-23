@@ -45,6 +45,7 @@
   "The chat stopped, so unfinished calls read Cancelled instead of spinning.": "Der Chat wurde gestoppt, daher zeigen unfertige Aufrufe „Cancelled“ an, statt weiter zu drehen.",
   "The choices.": "Die Auswahlmöglichkeiten.",
   "The chosen value, once answered.": "Der gewählte Wert, sobald geantwortet wurde.",
+  "The list of what an agent does, one line per step. Reads fold into a summary, edits and errors stay in view, and approvals ask before a tool runs.": "Die Liste dessen, was ein Agent tut, eine Zeile pro Schritt. Lesezugriffe klappen zu einer Zusammenfassung zusammen, Änderungen und Fehler bleiben sichtbar und Freigaben fragen vor dem Ausführen.",
   "The list. Groups quiet runs and shares timing between steps.": "Die Liste. Gruppiert ruhige Durchläufe und teilt die Zeitmessung zwischen den Schritten.",
   "The matches.": "Die Treffer.",
   "The part from message.parts.": "Der Part aus message.parts.",

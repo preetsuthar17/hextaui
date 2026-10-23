@@ -1,4 +1,5 @@
 [
+  "A discount builder where the offer is one editable sentence, with a live checkout preview. Handles code checks, drafts and schedules.",
   "A live discount becomes a Stripe coupon plus a promotion code with its redemption limit, first-order rule and expiry. Stripe’s duplicate-code error comes back as a code field error.",
   "Adds Duplicate and End now to the overflow menu of saved discounts.",
   "Also takes div props. Fills its parent’s height; only the content scrolls.",

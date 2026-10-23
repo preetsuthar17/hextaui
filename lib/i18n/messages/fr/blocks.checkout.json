@@ -1,5 +1,6 @@
 {
   "A failed removal, shown under its line.": "Une suppression échouée, affichée sous sa ligne.",
+  "A one-page checkout with contact, delivery and payment beside a live order summary. Handles changed totals, sold-out items and unknown outcomes.": "Un checkout sur une page avec contact, livraison et paiement à côté d’un récapitulatif de commande en direct. Gère les totaux modifiés, les articles en rupture de stock et les issues inconnues.",
   "Adds a Got it button.": "Ajoute un bouton Got it.",
   "Asked every pollInterval once onPlaceOrder has been silent for timeout. The attempt carries the idempotency key and how many checks have run.": "Interrogé à chaque pollInterval une fois que onPlaceOrder est resté silencieux pendant timeout. La tentative contient la clé d’idempotence et le nombre de vérifications déjà effectuées.",
   "Called after the success check has held. Navigate to your confirmation page here.": "Appelé une fois la confirmation de succès établie. Naviguez ici vers votre page de confirmation.",

@@ -45,6 +45,7 @@
   "Sends the code. Return a message to refuse.": "Envía el código. Devuelve un mensaje para rechazar.",
   "Shown in the intro and refused as the new address.": "Se muestra en la introducción y se rechaza como nueva dirección.",
   "Shows Verified, or Not verified with Resend link.": "Muestra Verified, o Not verified con Resend link.",
+  "The Profile section of an AI product’s settings. Handles photo cropping, a username checked as you type and email changes confirmed by code.": "La sección Perfil de los ajustes de un producto de IA. Cubre el recorte de foto, un nombre de usuario comprobado mientras escribes y cambios de correo confirmados por código.",
   "The crop area is focusable and works with arrow keys and plus and minus, and the zoom slider says its value as a percentage.": "El área de recorte es enfocable y funciona con las teclas de flecha y más y menos, y el control deslizante de zoom indica su valor como porcentaje.",
   "The image to crop. Open while set.": "La imagen que recortar. Abierto mientras esté definida.",
   "The live preview of the public profile, with Copy link. Usable on its own.": "La vista previa en vivo del perfil público, con Copy link. Se puede usar por sí sola.",

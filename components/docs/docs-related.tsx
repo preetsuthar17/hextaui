@@ -3,6 +3,7 @@ import Link from "@/components/site/link"
 import { cn } from "cn"
 
 import { DocsSection } from "@/components/docs/docs-content"
+import { BlockPreviewGrid } from "@/components/site/block-preview-grid"
 import { TrackedLink } from "@/components/site/tracked-link"
 import type { RelatedLink } from "@/lib/docs-related"
 import { t } from "@/lib/i18n/rich"
@@ -102,7 +103,7 @@ function DocsRelated({
   title: string
   description?: string
   links: RelatedLink[]
-  variant?: "cards" | "names"
+  variant?: "cards" | "names" | "previews"
   event?: RelatedEvent
   children?: React.ReactNode
 }) {
@@ -114,6 +115,14 @@ function DocsRelated({
     <DocsSection id={id} title={title} description={description}>
       {variant === "names" ? (
         <DocsRelatedNames links={links} />
+      ) : variant === "previews" ? (
+        <BlockPreviewGrid
+          blocks={links.map((link) => ({
+            name: link.href.replace(/^\/blocks\//, ""),
+            title: link.title,
+          }))}
+          event={event}
+        />
       ) : (
         <DocsRelatedCards links={links} event={event} />
       )}

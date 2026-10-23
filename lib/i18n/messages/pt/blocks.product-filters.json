@@ -20,6 +20,7 @@
   "Expands or collapses a facet group, or toggles a value.": "Expande ou recolhe um grupo de facetas, ou alterna um valor.",
   "Facet": "Facet",
   "Facet ids that start expanded. Facets with an applied value always start expanded. All facets are expanded by default.": "Ids das facetas que começam expandidas. Facetas com um valor aplicado sempre começam expandidas. Todas as facetas são expandidas por padrão.",
+  "Faceted filters for a collection page, with chips, sort and load more. Handles zero results, slow counts, long value lists and price ranges in any currency.": "Filtros facetados para uma página de coleção, com chips, ordenação e carregar mais. Cobre zero resultados, contagens lentas, listas longas de valores e faixas de preço em qualquer moeda.",
   "Filter items and recount every facet against the other facets.": "Filtra os itens e reconta cada faceta em relação às outras facetas.",
   "FilterSheet": "FilterSheet",
   "Filters in the URL with Next.js": "Filtros na URL com Next.js",

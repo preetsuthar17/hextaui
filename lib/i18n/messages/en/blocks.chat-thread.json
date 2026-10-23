@@ -51,6 +51,7 @@
   "Stable id.",
   "Stable id. Keep it the same across versions so the view doesn’t jump.",
   "The conversation is a labelled region holding a log, so new messages are announced as they arrive and the region is marked busy while a reply streams.",
+  "The conversation view of an AI chat. Handles replies that stream, edit and retry, and versions of a reply you can switch between.",
   "The current rating.",
   "The editor focuses itself with the caret at the end and returns to the message on Cancel. Enter waits while an input method is composing.",
   "The frame: scroller, checkpoints, empty state and composer slot.",

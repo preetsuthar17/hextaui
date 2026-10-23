@@ -45,6 +45,7 @@
   "The chat stopped, so unfinished calls read Cancelled instead of spinning.": "チャットが停止したため、未完了の呼び出しはスピナーではなく「キャンセル済み」と表示されます。",
   "The choices.": "選択肢。",
   "The chosen value, once answered.": "回答済みの場合の選択された値。",
+  "The list of what an agent does, one line per step. Reads fold into a summary, edits and errors stay in view, and approvals ask before a tool runs.": "エージェントの操作を 1 ステップ 1 行で並べる一覧。読み取りは要約に折りたたまれ、編集とエラーは表示されたまま、承認はツール実行前に確認します。",
   "The list. Groups quiet runs and shares timing between steps.": "リスト。目立たない実行をグループ化し、ステップ間で所要時間を共有します。",
   "The matches.": "一致した項目。",
   "The part from message.parts.": "message.parts の part。",

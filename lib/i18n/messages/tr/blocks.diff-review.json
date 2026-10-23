@@ -2,6 +2,7 @@
   "A card for the chat: “Edited 4 files” with counts, each file with accept and reject, and bulk actions.": "Sohbet için bir kart: sayılarla “Edited 4 files”, kabul ve reddi olan her dosya ve toplu eylemler.",
   "A read-only diff": "Salt okunur bir fark",
   "A read-only diff of one file, for showing changes between versions.": "Sürümler arasındaki değişiklikleri göstermek için tek bir dosyanın salt okunur farkı.",
+  "A review of an agent’s file edits before they land. Handles accept or reject per change, comments back to the agent and edits still streaming.": "Bir ajanın dosya düzenlemelerini uygulanmadan önce inceleme. Değişiklik başına kabul veya ret, ajana geri gönderilen yorumlar ve hâlâ akan düzenlemeleri ele alır.",
   "A unified diff of this file. Hunk headers without line numbers, CRLF and “No newline at end of file” are fine.": "Bu dosyanın birleşik farkı. Satır numarası olmayan hunk başlıkları, CRLF ve “No newline at end of file” sorun değildir.",
   "A unified diff, instead of before and after.": "Önce ve sonra yerine birleşik bir fark.",
   "AI Code Diff Review block for React & shadcn/ui": "React ve shadcn/ui için AI Code Diff Review bloğu",

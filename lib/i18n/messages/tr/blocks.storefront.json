@@ -1,4 +1,5 @@
 {
+  "A complete store built from the HextaUI commerce blocks. Handles browsing, filters, the bag, checkout and order tracking on one shared store.": "HextaUI e-ticaret bloklarından kurulmuş eksiksiz bir mağaza. Gezinmeyi, filtreleri, sepeti, ödemeyi ve sipariş takibini tek bir ortak mağaza üzerinde ele alır.",
   "A tiny external store holding the cart, wishlist, recently viewed products and placed orders, read with useSyncExternalStore.": "Sepeti, istek listesini, son görüntülenen ürünleri ve verilen siparişleri tutan, useSyncExternalStore ile okunan küçük bir harici store.",
   "Also takes div props for the root. Give it a height, such as h-svh, and it fills it.": "Kök için div prop'larını da alır. Ona h-svh gibi bir yükseklik verin, o yüksekliği doldurur.",
   "Choose a color or size in the variant picker, and move between gallery images.": "Varyant seçicide bir renk veya beden seçin ve galeri görselleri arasında gezinin.",

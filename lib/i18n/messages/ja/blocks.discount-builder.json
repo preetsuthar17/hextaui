@@ -1,4 +1,5 @@
 {
+  "A discount builder where the offer is one editable sentence, with a live checkout preview. Handles code checks, drafts and schedules.": "特典内容を1つの編集可能な文で表し、チェックアウトのライブプレビューを備えた割引ビルダー。コードのチェック、下書き、スケジュールに対応します。",
   "A live discount becomes a Stripe coupon plus a promotion code with its redemption limit, first-order rule and expiry. Stripe’s duplicate-code error comes back as a code field error.": "有効なディスカウントは、Stripe のクーポンと、利用上限、初回注文ルール、有効期限を持つプロモーションコードになります。Stripe のコード重複エラーは、コードフィールドのエラーとして返されます。",
   "Adds Duplicate and End now to the overflow menu of saved discounts.": "保存済みディスカウントのオーバーフローメニューに Duplicate と End now を追加します。",
   "Also takes div props. Fills its parent’s height; only the content scrolls.": "div のプロップも渡せます。親の高さいっぱいに広がり、スクロールするのはコンテンツだけです。",

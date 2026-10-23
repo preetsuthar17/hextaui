@@ -47,6 +47,7 @@
   "The date expiry checks use. The browser’s date by default.": "La fecha que usan las comprobaciones de caducidad. Por defecto, la fecha del navegador.",
   "The first usable saved card, or the first method.": "La primera tarjeta guardada utilizable, o el primer método.",
   "The full-width pay button. Its label follows the method and it shows processing, waiting and paid.": "El botón de pago a ancho completo. Su etiqueta sigue al método y muestra los estados de procesamiento, espera y pagado.",
+  "The payment step of a checkout, with wallets, cards, PayPal and Pay in 4. Handles card validation, declines, 3-D Secure and slow banks.": "El paso de pago de un checkout, con wallets, tarjetas, PayPal y Pay in 4. Cubre validación de tarjetas, rechazos, 3-D Secure y bancos lentos.",
   "The selected method, controlled. Saved cards use \"saved:<id>\".": "El método seleccionado, controlado. Las tarjetas guardadas usan \"saved:<id>\".",
   "The starting value of the billing checkbox.": "El valor inicial de la casilla de facturación.",
   "The total.": "El total.",

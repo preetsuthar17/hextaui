@@ -1,5 +1,6 @@
 {
   "A billing section": "請求先のセクション",
+  "A shipping or billing address form that changes with the country. Handles address search, postal codes, saved addresses and error summaries.": "国に合わせて変わる配送先または請求先の住所フォーム。住所検索、郵便番号、保存済みの住所、エラーの概要に対応します。",
   "Add the country name.": "国名を追加します。",
   "Address Form asks for an address the way the shopper’s country writes it. A US address gets City, State and ZIP code on one row, the UK gets Town or city and Postcode with no state, Germany puts the postal code before the city, and Japan starts with the postal code and prefecture. Sixteen countries have their own format with labels, required fields, region lists and postal rules, and every other country gets a plain fallback.": "Address Formは、購入者の国での書き方に合わせて住所を尋ねます。米国の住所ではCity、State、ZIP codeが1行に並び、英国ではStateがなくTown or cityとPostcodeになり、ドイツでは郵便番号が都市の前に置かれ、日本は郵便番号と都道府県から始まります。16か国にはラベル、必須フィールド、地域のリスト、郵便番号のルールを備えた独自の形式があり、それ以外の国にはシンプルなフォールバックが使われます。",
   "Address Form that adapts per country for React": "React向けの国ごとに適応する住所フォーム",

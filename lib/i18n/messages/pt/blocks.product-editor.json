@@ -51,6 +51,7 @@
   "Shows the stock column and summaries.": "Mostra a coluna de estoque e os resumos.",
   "Someone else’s newer version, for example from a live subscription. Without changes, the review dialog works them out from value.": "A versão mais recente de outra pessoa, por exemplo de uma assinatura em tempo real. Sem changes, o diálogo de revisão as calcula a partir de value.",
   "Stock locations for quantities.": "Locais de estoque para as quantidades.",
+  "The add and edit product page for a store admin. Handles unsaved changes, SKU errors from the server and someone else editing at once.": "A página de adicionar e editar produto de um admin de loja. Cobre alterações não salvas, erros de SKU vindos do servidor e outra pessoa editando ao mesmo tempo.",
   "The breadcrumb link.": "O link do breadcrumb.",
   "The draft, or any object with these fields.": "O rascunho, ou qualquer objeto com estes campos.",
   "The floating bar for unsaved changes, save progress, errors and conflicts.": "A barra flutuante para alterações não salvas, progresso do salvamento, erros e conflitos.",

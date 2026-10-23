@@ -3,7 +3,6 @@
   "Cards",
   "Cards can sit in a row or any grid. The ring follows them wherever they are.",
   "Classes for the radio inside the card.",
-  "Delivery options for checkout and delivery dates for product pages. Handles order cutoffs, store pickup and rates that change with the address.",
   "Disable a single option, or make the whole group `readOnly` to show a value that can't change.",
   "Disabled and read-only",
   "Each radio has a 36px hit area, and 44px on touch screens, while staying 16px on screen.",

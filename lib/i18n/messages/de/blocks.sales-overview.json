@@ -60,6 +60,7 @@
   "The comparison value. Leave out when not comparing.": "Der Vergleichswert. Weglassen, wenn nicht verglichen wird.",
   "The current instant as ISO. Decides today, the incomplete point and future hours.": "Der aktuelle Zeitpunkt als ISO. Bestimmt heute, den unvollständigen Punkt und zukünftige Stunden.",
   "The definition shown in the info tooltip.": "Die Definition im Info-Tooltip.",
+  "The home analytics page of a store admin. Handles stores with no sales yet, today’s unfinished numbers and reports that fail or come back incomplete.": "Die Analytics-Startseite eines Shop-Admins. Deckt Shops ohne bisherige Verkäufe, die noch unfertigen Zahlen von heute und fehlgeschlagene oder unvollständige Berichte ab.",
   "The main chart with a metric switcher, comparison line, crosshair tooltip and table view.": "Das Haupt-Chart mit Metrik-Umschalter, Vergleichslinie, Fadenkreuz-Tooltip und Tabellenansicht.",
   "The metric name.": "Der Name der Metrik.",
   "The page heading, like a greeting.": "Die Seitenüberschrift, etwa eine Begrüßung.",

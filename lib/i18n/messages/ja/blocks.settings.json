@@ -92,6 +92,7 @@
   "The row's title.": "行のタイトル。",
   "The save bar and any hidden panel are inert, so they're out of the tab order and hidden from screen readers.": "保存バーと非表示のパネルはinertであるため、タブ順から外れ、スクリーンリーダーからも隠されます。",
   "The section open at first.": "最初に開いているセクション。",
+  "The settings page of an AI product. Handles a save bar that appears only when something changed, field errors and loading states.": "AI 製品の設定ページ。変更があったときだけ現れる保存バー、フィールドのエラー、読み込み中の状態に対応します。",
   "The shape on the right of each row.": "各行の右側に表示される形。",
   "What to show while status is loading.": "statusがloadingの間に表示する内容。",
   "What's saved now. When it changes and there are no edits, the draft follows it.": "現在保存されている内容。変更があり、編集がない場合、下書きはそれに追従します。",

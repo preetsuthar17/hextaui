@@ -43,6 +43,7 @@
   "The editable plan shown before the agent starts.": "Le plan modifiable affiché avant le démarrage de l’agent.",
   "The full list with its header, progress bar, explanation and plan-change note.": "La liste complète avec son en-tête, sa barre de progression, son explication et la note de changement de plan.",
   "The list is a labelled region with an ordered list, and each step’s name includes its stage, such as “Running the tests, In progress”.": "La liste est une région libellée contenant une liste ordonnée, et le nom de chaque étape inclut son stade, par exemple « Running the tests, In progress ».",
+  "The plan an agent keeps while it works, one line per step. Handles steps in progress, failed steps and plan changes mid-run.": "Le plan qu’un agent tient pendant qu’il travaille, une ligne par étape. Gère les étapes en cours, les étapes échouées et les changements de plan en pleine exécution.",
   "The proposed plan.": "Le plan proposé.",
   "The same list. Renders nothing when empty.": "La même liste. N’affiche rien lorsqu’elle est vide.",
   "The stage. pending reads as To do.": "Le stade. pending se lit « To do ».",

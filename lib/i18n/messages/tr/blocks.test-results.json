@@ -4,6 +4,7 @@
   "Accessible name of the region.": "Bölgenin erişilebilir adı.",
   "Adapters from reporter output to a run.": "Reporter çıktısını bir çalıştırmaya dönüştüren adaptörler.",
   "Also accepts every section prop except children.": "children dışındaki tüm section prop’larını da kabul eder.",
+  "An agent’s test run, shown as it happens. Tests stream in and fold into a summary, with every failure left open and its diff in view.": "Bir ajanın test çalıştırması, olduğu gibi gösterilir. Testler akarak gelir ve bir özete katlanır, her başarısızlık diff’iyle birlikte açık kalır.",
   "Both sides of the comparison, read from the error, a diff or the message.": "Karşılaştırmanın iki tarafı; hatadan, bir diff’ten ya da mesajdan okunur.",
   "Called when a frame is clicked.": "Bir frame’e tıklandığında çağrılır.",
   "Enclosing describe blocks, outermost first.": "Onu saran describe blokları, en dıştaki önce.",

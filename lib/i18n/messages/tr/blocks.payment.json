@@ -47,6 +47,7 @@
   "The date expiry checks use. The browser’s date by default.": "Son kullanma tarihi kontrollerinin kullandığı tarih. Varsayılan olarak tarayıcının tarihi.",
   "The first usable saved card, or the first method.": "İlk kullanılabilir kayıtlı kart ya da ilk yöntem.",
   "The full-width pay button. Its label follows the method and it shows processing, waiting and paid.": "Tam genişlikte ödeme düğmesi. Etiketi yöntemi izler ve işleniyor, bekleniyor ve ödendi durumlarını gösterir.",
+  "The payment step of a checkout, with wallets, cards, PayPal and Pay in 4. Handles card validation, declines, 3-D Secure and slow banks.": "Cüzdanlar, kartlar, PayPal ve Pay in 4 ile bir ödeme akışının ödeme adımı. Kart doğrulamayı, reddedilen ödemeleri, 3-D Secure'u ve yavaş bankaları ele alır.",
   "The selected method, controlled. Saved cards use \"saved:<id>\".": "Kontrollü seçili yöntem. Kayıtlı kartlar \"saved:<id>\" kullanır.",
   "The starting value of the billing checkbox.": "Fatura onay kutusunun başlangıç değeri.",
   "The total.": "Toplam.",

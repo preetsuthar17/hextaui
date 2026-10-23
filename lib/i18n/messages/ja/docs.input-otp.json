@@ -49,7 +49,6 @@
   "Separate": "分離",
   "Slots fill from the right and the arrow keys follow what you see. Give slots after the first a translated `aria-label`. Set `dir=\"ltr\"` on the field to keep a code left to right in a right-to-left page.": "スロットは右から埋まり、矢印キーは見た目に従います。最初以外のスロットには、翻訳した `aria-label` を付けてください。右から左のページでコードを左から右のままにするには、フィールドに `dir=\"ltr\"` を設定します。",
   "Target the separator in CSS.": "CSS でセパレーターを指定します。",
-  "The Security section of an AI product’s settings. Handles sessions, two-factor with recovery codes and deletion behind a typed confirmation.": "AI 製品の設定にある「セキュリティ」セクション。セッション、リカバリーコード付きの二要素認証、入力確認を経た削除に対応します。",
   "The box.": "ボックス。",
   "The class names behind a slot and a group (`inputOTPGroupVariants`). Call them with `{ variant, size }`.": "スロットとグループの背後にあるクラス名（`inputOTPGroupVariants`）。`{ variant, size }` を渡して呼び出します。",
   "The default look. Each <l0/> joins its slots into one strip with shared edges.": "デフォルトの見た目。各 <l0/> が、スロットを端を共有する 1 つの帯に連結します。",

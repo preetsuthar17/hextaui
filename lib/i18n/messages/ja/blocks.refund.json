@@ -1,5 +1,6 @@
 {
   "A manual total. The result reports the difference from the calculated amount.": "手動で入力した合計。結果には計算額との差が含まれます。",
+  "A refund sheet for issuing full or partial refunds on an order. Handles prorated discounts, restocking, shipping, split payments and failed or pending refunds.": "注文の全額または一部を返金するための返金シート。割引の按分、在庫の戻し、送料、分割払い、失敗または保留中の返金に対応します。",
   "A server action that creates one Stripe refund per transaction in minor units, with an idempotency key so a retry never refunds twice. Stripe’s failure_reason turns into a message the merchant can act on.": "取引ごとに Stripe の返金を最小通貨単位で 1 件作成するサーバーアクション。冪等キーを付けるため、再試行で二重に返金されることはありません。Stripe の failure_reason は、マーチャントが対応できるメッセージに変換されます。",
   "Also takes form props.": "form のプロップも受け付けます。",
   "An element that opens the sheet, such as a Refund button.": "Refund ボタンのように、シートを開く要素。",

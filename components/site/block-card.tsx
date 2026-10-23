@@ -89,11 +89,13 @@ function BlockCard({
   name,
   title,
   favorite,
+  tile = false,
   onFavoriteChange,
 }: {
   name: string
   title: string
   favorite?: boolean
+  tile?: boolean
   onFavoriteChange?: (favorite: boolean) => void
 }) {
   const [ref, inView] = useInViewOnce<HTMLLIElement>()
@@ -114,7 +116,7 @@ function BlockCard({
       >
         {granted ? (
           <iframe
-            src={`/preview/blocks/${name}`}
+            src={`/preview/blocks/${name}${tile ? "?tile" : ""}`}
             title={`${title} preview`}
             tabIndex={-1}
             aria-hidden

@@ -59,6 +59,7 @@ import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { formatStars } from "@/lib/github"
 import { useChrome } from "@/lib/i18n/chrome"
 import { useSitePathname } from "@/lib/i18n/client"
+import { useSoloPrice } from "@/lib/pro/use-early-bird"
 import { siteName, siteRepository } from "@/lib/site"
 
 type SiteSection =
@@ -423,6 +424,7 @@ function SiteHeader({
   const home = active === "home"
   const headerRef = React.useRef<HTMLElement>(null)
   const stars = useGithubStars(initialStars)
+  const soloPrice = useSoloPrice()
 
   React.useEffect(() => {
     const header = headerRef.current
@@ -495,6 +497,7 @@ function SiteHeader({
                   aria-current={active === "pricing" ? "page" : undefined}
                 >
                   {c(plainLinks[1].label)}
+                  <span className="site-nav-price">${soloPrice}</span>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>

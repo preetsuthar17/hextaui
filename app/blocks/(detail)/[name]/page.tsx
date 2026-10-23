@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "@/components/site/link"
 import { notFound } from "next/navigation"
 
+import { BlockBuyBar, BlockBuyButton } from "@/components/blocks/block-buy"
 import { BlockCode } from "@/components/blocks/block-code"
 import { BlockFrame } from "@/components/blocks/block-frame"
 import { UnlessPro } from "@/components/blocks/unless-pro"
@@ -18,7 +19,6 @@ import { DocsPage } from "@/components/docs/docs-page"
 import { DocsRelated } from "@/components/docs/docs-related"
 import { JsonLd } from "@/components/site/json-ld"
 import { TrackedLink } from "@/components/site/tracked-link"
-import { Button } from "@/components/ui/button"
 import {
   DocsAttributesTable,
   DocsKeyboardTable,
@@ -29,7 +29,12 @@ import { T, t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
 import { absoluteUrl } from "@/lib/site"
 import { docsArticleJsonLd } from "@/lib/structured-data"
-import { blocksNavItems, getProBlock, proBlockParams } from "@/lib/pro/catalog"
+import {
+  blocksNavItems,
+  getProBlock,
+  proBlockParams,
+  proBlocks,
+} from "@/lib/pro/catalog"
 import { getNextBlocks } from "@/lib/pro/free-blocks"
 import { proRegistryConfig } from "@/lib/pro/prompt"
 import { getProBlockTitle } from "@/lib/pro/titles"
@@ -70,23 +75,12 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       actions={
         block.free ? null : (
           <UnlessPro>
-            <Button
+            <BlockBuyButton
+              name={block.name}
+              from="block-header"
               size="sm"
-              nativeButton={false}
-              render={
-                <TrackedLink
-                  href="/pricing"
-                  event="Pro link clicked"
-                  eventProps={{
-                    from: "block-header",
-                    to: "/pricing",
-                    block: block.name,
-                  }}
-                />
-              }
-            >
-              {t("Get Pro")}
-            </Button>
+              short
+            />
           </UnlessPro>
         )
       }
@@ -111,6 +105,11 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       <div className="mt-8">
         <BlockFrame name={block.name} title={block.title} free={block.free} />
       </div>
+      {block.free ? null : (
+        <div className="mt-4">
+          <BlockBuyBar name={block.name} count={proBlocks.length} />
+        </div>
+      )}
 
       {overview?.length ? (
         <DocsSection title="Overview">
@@ -210,23 +209,17 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
             { title: block.title }
           )}
           links={nextBlocks}
+          variant="previews"
           event={{ name: "Pro link clicked", from: "next-step" }}
         >
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <UnlessPro>
-              <Button
+              <BlockBuyButton
+                name={block.name}
+                from="next-step"
                 size="sm"
-                nativeButton={false}
-                render={
-                  <TrackedLink
-                    href="/pricing"
-                    event="Pro link clicked"
-                    eventProps={{ from: "next-step", to: "/pricing" }}
-                  />
-                }
-              >
-                {t("Get Pro")}
-              </Button>
+                pro
+              />
             </UnlessPro>
             <p className="text-sm text-muted-foreground">
               <T>
@@ -323,7 +316,11 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
           }
         )}
       >
-        <BlockCode name={block.name} free={block.free} />
+        <BlockCode
+          name={block.name}
+          free={block.free}
+          count={proBlocks.length}
+        />
       </DocsSection>
     </DocsPage>
   )

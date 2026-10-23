@@ -40,6 +40,7 @@
   "The collapsible status line and trail. Takes reasoning text, steps, or both.",
   "The quote shown under the title.",
   "The status line is a button that announces its summary through a polite live region, so screen reader users hear “Searching the web”, then “Thought for 12s”, without every timer tick.",
+  "The thinking view of an AI chat. A live label follows each step, searches and sources fold into a trail, and citations sit beside the answer.",
   "The trail opens while the model works and collapses to “Thought for 12s” when it finishes, unless someone has opened or closed it themselves. The answer then cites its sources inline: CitedText turns [1] and [2][3] into compact chips with the title, domain and snippet on hover.",
   "ThinkingOrb",
   "Three hex colors for the shader.",

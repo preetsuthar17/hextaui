@@ -43,6 +43,7 @@
   "The editable plan shown before the agent starts.": "エージェントの開始前に表示される、編集可能なプラン。",
   "The full list with its header, progress bar, explanation and plan-change note.": "ヘッダー、プログレスバー、説明、プラン変更のメモを備えたリスト全体。",
   "The list is a labelled region with an ordered list, and each step’s name includes its stage, such as “Running the tests, In progress”.": "リストはラベル付きのリージョンで、順序付きリストを持ちます。各ステップの名前には「Running the tests, In progress」のようにステージが含まれます。",
+  "The plan an agent keeps while it works, one line per step. Handles steps in progress, failed steps and plan changes mid-run.": "エージェントが作業中に保持する計画を、1 ステップ 1 行で表示します。進行中のステップ、失敗したステップ、実行途中の計画変更に対応します。",
   "The proposed plan.": "提案されたプラン。",
   "The same list. Renders nothing when empty.": "同じリスト。空の場合は何も描画しません。",
   "The stage. pending reads as To do.": "ステージ。pendingはTo doとして読み上げられます。",

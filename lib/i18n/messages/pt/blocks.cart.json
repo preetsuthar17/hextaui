@@ -1,5 +1,6 @@
 {
   "Actions that update the view at once and call your handlers.": "Ações que atualizam a visualização na hora e chamam os seus handlers.",
+  "Add to bag button, bag icon with a live count and a cart drawer or page. Handles optimistic quantities with rollback, undo on remove and free shipping progress.": "Botão de adicionar à sacola, ícone da sacola com contagem ao vivo e uma gaveta ou página de carrinho. Cobre quantidades otimistas com reversão, desfazer ao remover e progresso até o frete grátis.",
   "AddToCartButton": "AddToCartButton",
   "Adds a recommended product. Its line appears at once as pending.": "Adiciona um produto recomendado. A linha dele aparece na hora como pendente.",
   "Adds the item. Return a promise to show progress, throw to show the error under the button, or return false to cancel quietly, for example when a size is missing.": "Adiciona o item. Retorne uma promise para mostrar o progresso, lance um erro para mostrá-lo sob o botão, ou retorne false para cancelar em silêncio, por exemplo quando falta um tamanho.",
@@ -51,7 +52,7 @@
   "Resolves once every pending change has settled.": "Resolve quando todas as mudanças pendentes forem concluídas.",
   "Set false to show $38 instead of $38.00 for whole amounts.": "Defina como false para mostrar $38 em vez de $38.00 em valores inteiros.",
   "Set true to skip the unlock moment, for example after it played once.": "Defina como true para pular o momento de desbloqueio, por exemplo depois que ele já tocou uma vez.",
-  "Shopify Storefront API": "Shopify Storefront API",
+  "Shopify Storefront API": "Storefront API do Shopify",
   "Shopping Cart drawer & add to bag for React": "Drawer de carrinho de compras e adicionar à sacola para React",
   "Show the recommendation row when the cart has items.": "Mostra a linha de recomendações quando o carrinho tem itens.",
   "Shows the free shipping bar and the amount left to reach it.": "Mostra a barra de frete grátis e o valor que falta para alcançá-lo.",

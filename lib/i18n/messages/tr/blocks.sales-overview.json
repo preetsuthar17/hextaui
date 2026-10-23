@@ -60,6 +60,7 @@
   "The comparison value. Leave out when not comparing.": "Karşılaştırma değeri. Karşılaştırma yapmıyorsanız vermeyin.",
   "The current instant as ISO. Decides today, the incomplete point and future hours.": "ISO biçiminde şu anki an. Bugünü, tamamlanmamış noktayı ve gelecek saatleri belirler.",
   "The definition shown in the info tooltip.": "Bilgi tooltip'inde gösterilen tanım.",
+  "The home analytics page of a store admin. Handles stores with no sales yet, today’s unfinished numbers and reports that fail or come back incomplete.": "Bir mağaza yönetim panelinin ana analiz sayfası. Henüz satışı olmayan mağazaları, bugünün tamamlanmamış rakamlarını ve başarısız olan ya da eksik dönen raporları ele alır.",
   "The main chart with a metric switcher, comparison line, crosshair tooltip and table view.": "Metrik değiştirici, karşılaştırma çizgisi, crosshair tooltip'i ve tablo görünümü içeren ana grafik.",
   "The metric name.": "Metrik adı.",
   "The page heading, like a greeting.": "Sayfa başlığı, örneğin bir selamlama.",

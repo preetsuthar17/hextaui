@@ -92,6 +92,7 @@
   "The row's title.": "Le titre de la ligne.",
   "The save bar and any hidden panel are inert, so they're out of the tab order and hidden from screen readers.": "La barre d’enregistrement et tout panneau masqué sont inertes, donc ils sortent de l’ordre de tabulation et sont cachés aux lecteurs d’écran.",
   "The section open at first.": "La section ouverte au départ.",
+  "The settings page of an AI product. Handles a save bar that appears only when something changed, field errors and loading states.": "La page des réglages d’un produit IA. Gère une barre d’enregistrement qui n’apparaît qu’en cas de changement, les erreurs de champ et les états de chargement.",
   "The shape on the right of each row.": "La forme à droite de chaque ligne.",
   "What to show while status is loading.": "Ce qu’il faut afficher tant que status vaut loading.",
   "What's saved now. When it changes and there are no edits, the draft follows it.": "Ce qui est enregistré actuellement. Quand cela change et qu’il n’y a pas de modifications, le brouillon le suit.",

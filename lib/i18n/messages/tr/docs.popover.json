@@ -51,7 +51,6 @@
   "The trigger’s width.": "Tetikleyicinin genişliği.",
   "Unbroken text wraps inside the popup. When the content is taller than the space available, the popup scrolls inside instead of running off screen.": "Bölünmeyen metin açılır pencerenin içinde sarar. İçerik mevcut alandan uzunsa açılır pencere ekran dışına taşmak yerine kendi içinde kayar.",
   "Use `className=\"w-auto p-0\"` to fit content that brings its own padding. The popup follows the calendar as it changes months.": "Kendi dolgusunu getiren içeriğe uymak için `className=\"w-auto p-0\"` kullanın. Açılır pencere, takvim ay değiştirdikçe onu izler.",
-  "Voice conversations with an AI assistant. Handles listening, interruptions and captions, in a full-screen session or an in-chat voice pill.": "Bir yapay zeka asistanıyla sesli konuşmalar. Dinlemeyi, kesintileri ve altyazıları tam ekran bir oturumda veya sohbet içi ses kapsülünde ele alır.",
   "When the content grows or shrinks, the popup animates its height instead of jumping. Continuous changes, like typing, follow the content directly so nothing lags behind.": "İçerik büyüdüğünde veya küçüldüğünde açılır pencere zıplamak yerine yüksekliğini animasyonla değiştirir. Yazma gibi sürekli değişimler içeriği doğrudan izler, böylece hiçbir şey geride kalmaz.",
   "Where focus goes when the popover closes.": "Popover kapandığında odağın gittiği yer.",
   "Where focus goes when the popover opens.": "Popover açıldığında odağın gittiği yer.",

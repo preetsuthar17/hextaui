@@ -21,7 +21,6 @@
   "The id of the control. Leave it out when the label wraps the control.",
   "The label dims and shows a not-allowed cursor while its control is disabled, and exposes `data-required`, `data-invalid` and `data-readonly` for your own styles. It keeps up when the control changes.",
   "The required or optional mark.",
-  "The team page of an AI product’s workspace settings. Handles seats running out, pending invites and ownership transfer with a typed confirmation.",
   "Wrap a checkbox so the whole label toggles it, or place the label beside it with htmlFor. A disabled checkbox dims its label either way.",
   "`indicator=\"optional\"` tags controls without `required`, and `indicator=\"required\"` adds an asterisk to controls with it. The mark is hidden from screen readers, which already announce required fields."
 ]
