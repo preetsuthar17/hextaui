@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/empty"
 import { Skeleton } from "@/components/ui/skeleton"
 import { BlockBuyButton, BlockPriceNote } from "@/components/blocks/block-buy"
+import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { signIn, startCheckout, useSession } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
 import { useSoloPrice } from "@/lib/pro/use-early-bird"
@@ -78,6 +79,7 @@ function LockedCode({
 }) {
   const c = useChrome()
   const price = useSoloPrice()
+  const { guard, dialog } = useInAppBrowserGate()
 
   return (
     <Empty variant="outline">
@@ -105,7 +107,7 @@ function LockedCode({
                   feedback
                   successLabel={c("Redirecting…")}
                   errorLabel={c("Try again")}
-                  onClick={() => signIn("github")}
+                  onClick={() => guard("sign-in", () => signIn("github"))}
                 >
                   <IconBrandGithub data-icon="inline-start" />
                   GitHub
@@ -116,7 +118,7 @@ function LockedCode({
                   feedback
                   successLabel={c("Redirecting…")}
                   errorLabel={c("Try again")}
-                  onClick={() => signIn("google")}
+                  onClick={() => guard("sign-in", () => signIn("google"))}
                 >
                   <IconBrandGoogle data-icon="inline-start" />
                   Google
@@ -136,7 +138,7 @@ function LockedCode({
                   to: "checkout",
                   block: name,
                 })
-                return startCheckout("solo")
+                return guard("checkout", () => startCheckout("solo"))
               }}
             >
               {c("Get the full block")}
@@ -151,6 +153,7 @@ function LockedCode({
             </Link>
           </>
         )}
+        {dialog}
       </EmptyContent>
     </Empty>
   )
