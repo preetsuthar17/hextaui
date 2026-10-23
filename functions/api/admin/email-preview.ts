@@ -1,5 +1,6 @@
 import { changelog } from "@/lib/changelog"
 import {
+  guestPurchaseContent,
   purchaseContent,
   teamInviteContent,
   welcomeContent,
@@ -24,6 +25,12 @@ const templates: Record<string, () => EmailContent> = {
   "purchase-solo": () => purchaseContent(sampleUser, "solo"),
   "purchase-team": () => purchaseContent(sampleUser, "team"),
   "purchase-unlimited": () => purchaseContent(sampleUser, "unlimited"),
+  "guest-purchase": () =>
+    guestPurchaseContent(
+      sampleUser,
+      "solo",
+      "https://hextaui.com/account?claim=sample&payment_id=pay_sample"
+    ),
   "team-invite": () => teamInviteContent(sampleOwner, sampleUser.email),
 }
 

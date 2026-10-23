@@ -26,7 +26,7 @@ export default function Page() {
       href="/legal/privacy"
       title="Privacy Policy"
       description={String(metadata.description)}
-      updated="2026-10-11"
+      updated="2026-10-23"
     >
       <DocsParagraph>
         HextaUI (hextaui.com) is run by Preet Suthar, an individual based in
@@ -121,6 +121,12 @@ export default function Page() {
           and issues the invoice, under its own privacy policy. From Dodo I
           receive and keep the payment ID, its customer ID for you, the product,
           amount, currency, status and date.
+        </DocsParagraph>
+        <DocsParagraph>
+          You can pay before you have an account. Until you sign in, I also keep
+          the name and email you gave at checkout, so I can email you a link to
+          unlock Pro and match the purchase when you sign in with that email.
+          Once the purchase is on your account, that copy is deleted.
         </DocsParagraph>
       </LegalSection>
 

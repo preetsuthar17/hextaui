@@ -335,8 +335,8 @@ function getOpenApiDocument() {
           tags: ["Account"],
           summary: "Start a HextaUI Pro checkout",
           description:
-            "Creates a Dodo Payments checkout for the Solo or Team plan and returns its URL. If the account already has that plan or a bigger one, returns `/account` instead. Only accepted from pages on hextaui.com.",
-          security: signedIn,
+            "Creates a Dodo Payments checkout for the Solo, Team or Unlimited plan and returns its URL. No account is needed: a signed-out buyer pays first and claims the purchase on `/account` afterwards, through the claim link Dodo returns them to. With a session, the checkout is tied to that account, and if the account already has that plan or a bigger one, returns `/account` instead. Only accepted from pages on hextaui.com.",
+          security: [{}, ...signedIn],
           requestBody: {
             required: false,
             content: {
@@ -360,7 +360,46 @@ function getOpenApiDocument() {
               description: "Where to send the user next.",
               content: { [json]: { schema: ref("CheckoutUrl") } },
             },
-            ...pick("400", "401", "403"),
+            ...pick("400", "403", "404"),
+          },
+        },
+      },
+      "/api/claim": {
+        post: {
+          operationId: "claimPurchase",
+          tags: ["Account"],
+          summary: "Confirm and claim a HextaUI Pro purchase",
+          description:
+            "Confirms a checkout with the `payment_id` and `claim` values from the checkout return link or the purchase email. Signed out, it reports the payment status. Signed in, it also moves an unclaimed purchase to the account, whatever its email. A purchase that is already on an account stays there, so the link only moves a purchase once. Only accepted from pages on hextaui.com.",
+          security: [{}, ...signedIn],
+          requestBody: {
+            required: true,
+            content: {
+              [json]: {
+                schema: {
+                  type: "object",
+                  required: ["paymentId", "token"],
+                  properties: {
+                    paymentId: {
+                      type: "string",
+                      pattern: "^pay_",
+                      description: "Dodo Payments payment id.",
+                    },
+                    token: {
+                      type: "string",
+                      description: "The `claim` value from the return link.",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            "200": {
+              description: "The payment and where the purchase sits.",
+              content: { [json]: { schema: ref("Claim") } },
+            },
+            ...pick("400", "403", "404"),
           },
         },
       },
@@ -915,7 +954,10 @@ function getOpenApiDocument() {
           ],
           properties: {
             pro: { type: "boolean" },
-            plan: { type: ["string", "null"], enum: ["solo", "team", "unlimited", null] },
+            plan: {
+              type: ["string", "null"],
+              enum: ["solo", "team", "unlimited", null],
+            },
             via: {
               type: ["string", "null"],
               enum: ["owner", "member", null],
@@ -934,6 +976,38 @@ function getOpenApiDocument() {
             emailUpdates: {
               type: "boolean",
               description: "Whether the account gets release emails.",
+            },
+          },
+        },
+        Claim: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "string",
+              enum: ["pending", "failed", "paid", "refunded", "disputed"],
+            },
+            paymentId: { type: "string" },
+            plan: { type: "string", enum: ["solo", "team", "unlimited"] },
+            amount: {
+              type: "integer",
+              description: "Amount paid, in the currency's smallest unit.",
+            },
+            currency: { type: "string", example: "USD" },
+            account: {
+              type: "string",
+              enum: ["this", "other", "none"],
+              description:
+                "`this`: on the signed-in account. `other`: on another account. `none`: not claimed yet.",
+            },
+            email: {
+              type: ["string", "null"],
+              description: "Masked email of the owning account or the buyer.",
+            },
+            report: {
+              type: "boolean",
+              description:
+                "True the first time a paid purchase is confirmed, for analytics.",
             },
           },
         },
@@ -977,7 +1051,8 @@ function getOpenApiDocument() {
             seats: {
               type: ["integer", "null"],
               example: 10,
-              description: "Seats on the plan, including the owner's. Null on Unlimited.",
+              description:
+                "Seats on the plan, including the owner's. Null on Unlimited.",
             },
             members: { type: "array", items: ref("TeamMember") },
           },

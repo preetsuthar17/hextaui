@@ -7,8 +7,9 @@ import {
   getPayments,
   type PaymentsEnv,
 } from "@/lib/payments"
+import { checkoutReturnUrl, createClaim } from "@/lib/purchase-claim"
 import { isProPlanId, planRank } from "@/lib/pro/pricing"
-import { apiError, sameOriginError, signInError } from "@/lib/api-error"
+import { apiError, sameOriginError } from "@/lib/api-error"
 
 type Context = {
   request: Request
@@ -18,13 +19,6 @@ type Context = {
 export async function onRequestPost({ request, env }: Context) {
   if (!isSameOrigin(request, env.BETTER_AUTH_URL)) {
     return sameOriginError()
-  }
-
-  const session = await getAuth(env).api.getSession({
-    headers: request.headers,
-  })
-  if (!session) {
-    return signInError()
   }
 
   const body = (await request.json().catch(() => ({}))) as { plan?: unknown }
@@ -38,10 +32,16 @@ export async function onRequestPost({ request, env }: Context) {
     })
   }
 
-  const { user } = session
-  const access = await findProAccess(getDb(env.DB), user.id)
-  if (access && planRank[access.plan] >= planRank[plan]) {
-    return Response.json({ url: "/account" })
+  const session = await getAuth(env).api.getSession({
+    headers: request.headers,
+  })
+  const user = session?.user ?? null
+
+  if (user) {
+    const access = await findProAccess(getDb(env.DB), user.id)
+    if (access && planRank[access.plan] >= planRank[plan]) {
+      return Response.json({ url: "/account" })
+    }
   }
 
   const productId = checkoutProduct(env, plan)
@@ -53,11 +53,14 @@ export async function onRequestPost({ request, env }: Context) {
     })
   }
 
+  const claim = await createClaim(env.BETTER_AUTH_SECRET)
   const checkout = await getPayments(env).checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
-    customer: { email: user.email, name: user.name },
-    metadata: { user_id: user.id, plan },
-    return_url: new URL("/account?checkout=done", env.BETTER_AUTH_URL).href,
+    ...(user ? { customer: { email: user.email, name: user.name } } : {}),
+    metadata: user
+      ? { user_id: user.id, plan, claim: claim.nonce }
+      : { plan, claim: claim.nonce },
+    return_url: checkoutReturnUrl(env.BETTER_AUTH_URL, claim.token),
   })
 
   return Response.json({ url: checkout.checkout_url })
