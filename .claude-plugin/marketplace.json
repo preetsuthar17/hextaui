@@ -1,0 +1,16 @@
+{
+  "name": "hextaui",
+  "description": "HextaUI plugins for Claude Code",
+  "owner": {
+    "name": "Preet Suthar",
+    "email": "hi@preetsuthar.me",
+    "url": "https://hextaui.com"
+  },
+  "plugins": [
+    {
+      "name": "hextaui",
+      "source": "./plugins/hextaui",
+      "description": "Find, read and install HextaUI components, with the hosted HextaUI MCP server."
+    }
+  ]
+}

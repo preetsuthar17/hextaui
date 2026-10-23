@@ -41,3 +41,30 @@ describe("Agent Plugin", () => {
     )
   })
 })
+
+describe("Claude Code plugin", () => {
+  it("lists the plugin in the marketplace under its manifest name", () => {
+    const marketplace = readJson(".claude-plugin/marketplace.json")
+    const manifest = readJson("plugins/hextaui/.claude-plugin/plugin.json")
+    expect(marketplace.plugins).toEqual([
+      expect.objectContaining({
+        name: manifest.name,
+        source: "./plugins/hextaui",
+      }),
+    ])
+  })
+
+  it("points the plugin at the hosted server", () => {
+    const manifest = readJson("plugins/hextaui/.claude-plugin/plugin.json")
+    expect(manifest.mcpServers.hextaui).toEqual({
+      type: "http",
+      url: "https://hextaui.com/mcp",
+    })
+  })
+
+  it("ships the same skill the site serves", async () => {
+    await expect(getSkillMarkdown()).toMatchFileSnapshot(
+      path.join(root, "plugins/hextaui/skills/hextaui/SKILL.md")
+    )
+  })
+})

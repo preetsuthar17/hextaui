@@ -35,3 +35,19 @@ To use the components in your app, import them as follows:
 ```tsx
 import { Button } from "@/components/ui/button"
 ```
+
+## Using HextaUI with AI agents
+
+Claude Code plugin, with the HextaUI skill and the hosted MCP server:
+
+```
+/plugin install hextaui --marketplace preetsuthar17/hextaui
+```
+
+Skill only, for any agent the [skills CLI](https://skills.sh) supports:
+
+```bash
+npx skills add preetsuthar17/hextaui
+```
+
+MCP server only, at `https://hextaui.com/mcp`. Setup for each client is at [hextaui.com/docs/mcp](https://hextaui.com/docs/mcp).

@@ -1,0 +1,32 @@
+{
+  "name": "hextaui",
+  "displayName": "HextaUI",
+  "version": "1.0.0",
+  "description": "Find, read and install HextaUI components: accessible shadcn/ui-compatible React components and blocks built for AI products, with the hosted HextaUI MCP server.",
+  "author": {
+    "name": "Preet Suthar",
+    "email": "hi@preetsuthar.me",
+    "url": "https://hextaui.com"
+  },
+  "homepage": "https://hextaui.com/docs/mcp",
+  "repository": "https://github.com/preetsuthar17/hextaui",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "shadcn-ui",
+    "tailwindcss",
+    "base-ui",
+    "components",
+    "ai-chat",
+    "mcp"
+  ],
+  "documentationUrl": "https://hextaui.com/docs",
+  "supportUrl": "https://github.com/preetsuthar17/hextaui/issues",
+  "privacyPolicyUrl": "https://hextaui.com/legal/privacy",
+  "mcpServers": {
+    "hextaui": {
+      "type": "http",
+      "url": "https://hextaui.com/mcp"
+    }
+  }
+}
