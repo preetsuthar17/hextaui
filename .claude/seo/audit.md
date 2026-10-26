@@ -40,6 +40,8 @@ Noindex, correctly excluded from the sitemap: `/404`, `/account`, `/docs/stress`
 
 ## Structured data
 
+> **Update 2026-10-26:** the gaps below are closed. Every page now emits the site graph (`siteJsonLd()`) plus one page `@graph`; see "Structured data" in `AGENTS.md` for the current rules.
+
 Every page carries the root graph from `app/layout.tsx`: WebSite, Organization and SoftwareSourceCode.
 
 | Page-level type | English pages | Where |
