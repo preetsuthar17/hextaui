@@ -72,7 +72,7 @@ export async function generateMetadata({
       description: getExampleDescription(component.name, example),
       path: href,
       markdown: `${href}.md`,
-      image: ogImagePath("docs", component.slug),
+      image: ogImagePath(`/docs/${component.slug}`),
       type: "article",
     }),
     robots: { index: false, follow: true },
@@ -138,7 +138,7 @@ export default async function Page({
           headline: heading,
           description: getExampleText(example) || heading,
           breadcrumbs: crumbs,
-          image: ogImagePath("docs", component.slug),
+          image: ogImagePath(`/docs/${component.slug}`),
           code: {
             name: `${component.name} ${example.title} example`,
             free: true,

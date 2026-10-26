@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { pageMetadata } from "@/lib/metadata"
+import { ogImagePath, pageMetadata } from "@/lib/metadata"
 import { absoluteUrl, siteAuthor, siteName } from "@/lib/site"
 
 type BlogPost = {
@@ -146,7 +146,7 @@ function getBlogMarkdownHref(slug: string) {
 }
 
 function getBlogImageHref(slug: string) {
-  return `/blog/${slug}/opengraph-image`
+  return ogImagePath(getBlogHref(slug))
 }
 
 function getRelatedBlogPosts(slug: string, max = 3) {
@@ -175,13 +175,8 @@ function blogPostMetadata(slug: string): Metadata {
     description: post.description,
     path,
     markdown: getBlogMarkdownHref(slug),
+    imageAlt: `${post.title} — ${siteName}`,
   })
-  const image = {
-    url: getBlogImageHref(slug),
-    width: 1200,
-    height: 630,
-    alt: `${post.title} — ${siteName}`,
-  }
 
   return {
     ...metadata,
@@ -194,9 +189,7 @@ function blogPostMetadata(slug: string): Metadata {
       modifiedTime: post.published,
       authors: [blogAuthor.url],
       tags: post.tags,
-      images: [image],
     },
-    twitter: { ...metadata.twitter, images: [image] },
   }
 }
 
@@ -209,10 +202,6 @@ const blogIndexMetadata: Metadata = {
   }),
 }
 
-function blogImageAlt(slug: string) {
-  return `${getBlogPost(slug).title} — ${siteName}`
-}
-
 function blogPostUrl(slug: string) {
   return absoluteUrl(getBlogHref(slug))
 }
@@ -220,7 +209,6 @@ function blogPostUrl(slug: string) {
 export {
   blogAuthor,
   blogDescription,
-  blogImageAlt,
   blogIndexMetadata,
   blogLead,
   blogPostMetadata,

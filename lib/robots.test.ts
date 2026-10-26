@@ -41,12 +41,7 @@ describe("robots.txt", () => {
   })
 
   it("keeps social images out of the index with a header instead", () => {
-    for (const source of [
-      "/og/*",
-      "/opengraph-image",
-      "/blog/opengraph-image",
-      "/blog/:slug/opengraph-image",
-    ]) {
+    for (const source of ["/og/*", "/opengraph-image"]) {
       expect(headerBlock(source), source).toContain("X-Robots-Tag: noindex")
     }
   })

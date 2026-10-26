@@ -42,7 +42,7 @@ function pageMetadata({
   title,
   description: fullDescription = siteMetaDescription,
   markdown,
-  image: imageUrl = "/opengraph-image",
+  image: imageUrl = ogImagePath(path),
   imageAlt,
   type = "website",
 }: PageMetadataOptions): Metadata {
@@ -82,8 +82,8 @@ function pageMetadata({
   }
 }
 
-function ogImagePath(group: string, slug: string) {
-  return `/og/${group}/${slug}.png`
+function ogImagePath(path: string) {
+  return `/og${path === "/" ? "/index" : path}.png`
 }
 
 export { clampDescription, ogImagePath, pageMetadata }

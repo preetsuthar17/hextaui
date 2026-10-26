@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { ogImagePath, pageMetadata } from "@/lib/metadata"
+import { pageMetadata } from "@/lib/metadata"
 
 type DocsNavItem = {
   title: string
@@ -842,7 +842,6 @@ function getDocsComponentMetadata(slug: string): Metadata {
     description: component.description,
     path: `/docs/${component.slug}`,
     markdown: `/docs/${component.slug}.md`,
-    image: ogImagePath("docs", component.slug),
     type: "article",
   })
 }

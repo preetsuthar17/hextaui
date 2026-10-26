@@ -7,8 +7,8 @@ import type { MetadataRoute } from "next"
 import { blogContentFile } from "@/lib/blog-content"
 import { isBlogSlug } from "@/lib/blog"
 import { componentCategories } from "@/lib/component-categories"
-import { docsEntries } from "@/lib/docs"
 import { ogImagePath } from "@/lib/metadata"
+import { getOgPages } from "@/lib/og-pages"
 import { proBlocks } from "@/lib/pro/catalog"
 import { getShadcnComparisons } from "@/lib/shadcn-compare"
 import { absoluteUrl, isNoindexPath, isUnlistedPath } from "@/lib/site"
@@ -27,18 +27,16 @@ const dynamicRoutes: Record<string, string[]> = {
   ),
 }
 
+const ogPaths = new Set(getOgPages().map((page) => page.path))
+
 function ogImage(route: string) {
-  const docs = /^\/docs\/([^/]+)/.exec(route)?.[1]
-  const compare = /^\/compare\/shadcn-ui\/([^/]+)$/.exec(route)?.[1]
-  const category = /^\/components\/([^/]+)$/.exec(route)?.[1]
-  const path = compare
-    ? ogImagePath("compare", compare)
-    : category
-      ? ogImagePath("components", category)
-      : docs && docsEntries.some((entry) => entry.slug === docs)
-        ? ogImagePath("docs", docs)
-        : "/opengraph-image"
-  return [absoluteUrl(path)]
+  const parent = /^\/docs\/[^/]+/.exec(route)?.[0]
+  const path = ogPaths.has(route)
+    ? route
+    : parent && ogPaths.has(parent)
+      ? parent
+      : null
+  return [absoluteUrl(path ? ogImagePath(path) : "/opengraph-image")]
 }
 
 const priorities: [string, number][] = [

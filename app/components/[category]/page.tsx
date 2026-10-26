@@ -34,7 +34,6 @@ export async function generateMetadata({
     title: category.title,
     description: category.description,
     path: getComponentCategoryHref(category.slug),
-    image: ogImagePath("components", category.slug),
   })
 }
 
@@ -66,7 +65,7 @@ export default async function Page({
           description: category.description,
           breadcrumbs: crumbs,
           type: "CollectionPage",
-          image: ogImagePath("components", category.slug),
+          image: ogImagePath(getComponentCategoryHref(category.slug)),
           items: components.map((component) => ({
             name: component.name,
             path: `/docs/${component.slug}`,

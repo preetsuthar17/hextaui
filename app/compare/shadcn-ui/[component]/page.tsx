@@ -65,7 +65,6 @@ export async function generateMetadata({
     title,
     description,
     path: getShadcnComparisonHref(comparison.slug),
-    image: ogImagePath("compare", comparison.slug),
   })
 }
 
@@ -131,7 +130,7 @@ export default async function Page({
           name: heading,
           description,
           breadcrumbs: crumbs,
-          image: ogImagePath("compare", slug),
+          image: ogImagePath(getShadcnComparisonHref(slug)),
         })}
       />
 

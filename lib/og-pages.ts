@@ -1,32 +1,159 @@
-import { componentCategories } from "@/lib/component-categories"
-import { docsComponents, docsEntries, docsHooks, titleCase } from "@/lib/docs"
-import type { OgImage } from "@/lib/opengraph-image"
-import { getShadcnComparisons } from "@/lib/shadcn-compare"
+import type { Metadata } from "next"
 
-type OgPage = { group: string; slug: string; image: OgImage }
+import { metadata as about } from "@/app/about/page"
+import { metadata as blocks } from "@/app/blocks/page"
+import { metadata as changelog } from "@/app/changelog/page"
+import { metadata as compareAiElements } from "@/app/compare/ai-elements/page"
+import { metadata as compareAssistantUi } from "@/app/compare/assistant-ui/page"
+import { metadata as compare } from "@/app/compare/page"
+import { metadata as comparePromptKit } from "@/app/compare/prompt-kit/page"
+import { metadata as compareChatTemplates } from "@/app/compare/shadcn-ai-chat-templates/page"
+import { metadata as compareShadcn } from "@/app/compare/shadcn-ui/page"
+import { metadata as components } from "@/app/components/page"
+import { metadata as contact } from "@/app/contact/page"
+import { metadata as docsApi } from "@/app/docs/api/page"
+import { metadata as docsInstallation } from "@/app/docs/installation/page"
+import { metadata as docsMcp } from "@/app/docs/mcp/page"
+import { metadata as docs } from "@/app/docs/page"
+import { metadata as license } from "@/app/legal/license/page"
+import { metadata as privacy } from "@/app/legal/privacy/page"
+import { metadata as refunds } from "@/app/legal/refunds/page"
+import { metadata as terms } from "@/app/legal/terms/page"
+import { metadata as home } from "@/app/page"
+import { metadata as pricing } from "@/app/pricing/page"
+import { metadata as sponsor } from "@/app/sponsor/page"
+import {
+  blogDescription,
+  blogPosts,
+  blogTitle,
+  getBlogHref,
+} from "@/lib/blog"
+import {
+  componentCategories,
+  getComponentCategoryHref,
+} from "@/lib/component-categories"
+import { docsComponents, docsEntries, titleCase } from "@/lib/docs"
+import type { OgImage } from "@/lib/opengraph-image"
+import { categoryTitle, proBlocks } from "@/lib/pro/catalog"
+import { siteName } from "@/lib/site"
+import {
+  getShadcnComparisonHref,
+  getShadcnComparisons,
+} from "@/lib/shadcn-compare"
+
+type OgPage = { path: string; image: OgImage }
+
+const heroSection = "Blocks for shadcn/ui"
 
 function plural(count: number, word: string) {
   return `${count} ${word}${count === 1 ? "" : "s"}`
 }
 
-function getOgPages(): OgPage[] {
-  const docs = docsEntries.map((entry) => ({
-    group: "docs",
-    slug: entry.slug,
+function fromMetadata(
+  path: string,
+  metadata: Metadata,
+  image: Omit<OgImage, "title" | "description"> & Partial<OgImage>
+): OgPage {
+  return {
+    path,
     image: {
-      eyebrow: docsComponents.includes(entry)
-        ? "Component"
-        : docsHooks.includes(entry)
-          ? "Hook"
-          : "Utility",
-      title: docsComponents.includes(entry)
-        ? titleCase(entry.name)
-        : entry.name,
-      subtitle: entry.description,
+      title: String(metadata.title ?? ""),
+      description: String(metadata.description ?? ""),
+      ...image,
+    },
+  }
+}
+
+function getOgPages(): OgPage[] {
+  const marketing = [
+    fromMetadata("/", home, {
+      variant: "hero",
+      section: `${docsComponents.length} free components`,
+      title: "The hard states, handled.",
+      accent: "Blocks for shadcn/ui.",
+    }),
+    fromMetadata("/pricing", pricing, { variant: "hero", section: "Free & Pro" }),
+    fromMetadata("/blocks", blocks, { variant: "hero", section: "HextaUI Pro" }),
+    fromMetadata("/about", about, { variant: "hero", section: heroSection }),
+    fromMetadata("/contact", contact, { variant: "hero", section: heroSection }),
+    fromMetadata("/sponsor", sponsor, { variant: "hero", section: heroSection }),
+  ]
+
+  const blockPages = proBlocks.map((block) => ({
+    path: `/blocks/${block.name}`,
+    image: {
+      variant: "hero" as const,
+      section: block.free ? "Free block" : "HextaUI Pro",
+      title: `${block.title}.`,
+      accent: `${categoryTitle(block.category)} block for shadcn/ui.`,
+      description: block.description,
     },
   }))
 
-  const compare = getShadcnComparisons().map((comparison) => {
+  const pages = [
+    fromMetadata("/docs", docs, { variant: "slab", section: "Docs" }),
+    fromMetadata("/docs/installation", docsInstallation, {
+      variant: "slab",
+      section: "Docs",
+    }),
+    fromMetadata("/docs/api", docsApi, { variant: "slab", section: "Docs" }),
+    fromMetadata("/docs/mcp", docsMcp, { variant: "slab", section: "Docs" }),
+    fromMetadata("/components", components, {
+      variant: "slab",
+      section: "Components",
+    }),
+    fromMetadata("/compare", compare, { variant: "slab", section: "Compare" }),
+    fromMetadata("/compare/ai-elements", compareAiElements, {
+      variant: "slab",
+      section: "Compare",
+    }),
+    fromMetadata("/compare/assistant-ui", compareAssistantUi, {
+      variant: "slab",
+      section: "Compare",
+    }),
+    fromMetadata("/compare/prompt-kit", comparePromptKit, {
+      variant: "slab",
+      section: "Compare",
+    }),
+    fromMetadata("/compare/shadcn-ai-chat-templates", compareChatTemplates, {
+      variant: "slab",
+      section: "Compare",
+    }),
+    fromMetadata("/compare/shadcn-ui", compareShadcn, {
+      variant: "slab",
+      section: "Compare",
+    }),
+    fromMetadata("/changelog", changelog, {
+      variant: "slab",
+      section: "Changelog",
+    }),
+    fromMetadata("/legal/license", license, { variant: "slab", section: "Legal" }),
+    fromMetadata("/legal/privacy", privacy, { variant: "slab", section: "Legal" }),
+    fromMetadata("/legal/refunds", refunds, { variant: "slab", section: "Legal" }),
+    fromMetadata("/legal/terms", terms, { variant: "slab", section: "Legal" }),
+  ]
+
+  const docsPages = docsEntries.map((entry) => ({
+    path: `/docs/${entry.slug}`,
+    image: {
+      variant: "slab" as const,
+      section: "Docs",
+      title: docsComponents.includes(entry) ? titleCase(entry.name) : entry.name,
+      description: entry.description,
+    },
+  }))
+
+  const categoryPages = componentCategories.map((category) => ({
+    path: getComponentCategoryHref(category.slug),
+    image: {
+      variant: "slab" as const,
+      section: "Components",
+      title: category.name,
+      description: category.description,
+    },
+  }))
+
+  const comparePages = getShadcnComparisons().map((comparison) => {
     const values = comparison.variants.reduce(
       (sum, row) => sum + row.hexta.length,
       0
@@ -41,27 +168,49 @@ function getOgPages(): OgPage[] {
       values > 0 ? plural(values, "extra variant value") : null,
     ].filter(Boolean)
     return {
-      group: "compare",
-      slug: comparison.slug,
+      path: getShadcnComparisonHref(comparison.slug),
       image: {
-        eyebrow: "HextaUI vs shadcn/ui",
-        title: titleCase(comparison.name),
-        subtitle: `${facts.join(", ")} in the HextaUI version, read from both sources.`,
+        variant: "slab" as const,
+        section: "Compare",
+        title: `${titleCase(comparison.name)}: HextaUI vs shadcn/ui`,
+        description:
+          facts.length > 0
+            ? `${facts.join(", ")} in the HextaUI version, read from both sources.`
+            : "The HextaUI and shadcn/ui versions side by side, read from both sources.",
       },
     }
   })
 
-  const categories = componentCategories.map((category) => ({
-    group: "components",
-    slug: category.slug,
-    image: {
-      eyebrow: "Components",
-      title: category.name,
-      subtitle: category.description,
+  const blogPages = [
+    {
+      path: "/blog",
+      image: {
+        variant: "slab" as const,
+        section: "Blog",
+        title: `The ${siteName} ${blogTitle.toLowerCase()}`,
+        description: blogDescription,
+      },
     },
-  }))
+    ...blogPosts.map((post) => ({
+      path: getBlogHref(post.slug),
+      image: {
+        variant: "slab" as const,
+        section: "Blog",
+        title: post.title,
+        description: post.description,
+      },
+    })),
+  ]
 
-  return [...docs, ...compare, ...categories]
+  return [
+    ...marketing,
+    ...blockPages,
+    ...pages,
+    ...docsPages,
+    ...categoryPages,
+    ...comparePages,
+    ...blogPages,
+  ]
 }
 
 export { getOgPages, type OgPage }
