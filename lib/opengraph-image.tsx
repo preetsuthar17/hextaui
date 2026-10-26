@@ -131,6 +131,7 @@ function Hero({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          width: "100%",
           marginTop: 30,
           fontSize: size,
           fontWeight: 600,
@@ -138,15 +139,37 @@ function Hero({
           lineHeight: 1.02,
         }}
       >
-        <span style={{ textWrap: "balance" }}>{title}</span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          {title}
+        </div>
         {image.accent ? (
-          <span style={{ color: colors.ice }}>{image.accent}</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              textAlign: "center",
+              color: colors.ice,
+            }}
+          >
+            {image.accent}
+          </div>
         ) : null}
       </div>
       <div
         style={{
-          marginTop: 26,
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
           maxWidth: 840,
+          marginTop: 26,
           fontSize: 27,
           fontWeight: 500,
           lineHeight: 1.35,
