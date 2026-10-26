@@ -26,7 +26,7 @@ export default function Page() {
       href="/legal/privacy"
       title="Privacy Policy"
       description={String(metadata.description)}
-      updated="2026-10-23"
+      updated="2026-10-26"
     >
       <DocsParagraph>
         HextaUI (hextaui.com) is run by Preet Suthar, an individual based in
@@ -38,7 +38,7 @@ export default function Page() {
         <DocsList>
           <li>
             You can read the docs and use every free component without an
-            account. Analytics cookies are only set if you allow them.
+            account. Google Analytics cookies are only set if you allow them.
           </li>
           <li>
             If you sign in, I keep your name, email and profile picture from
@@ -59,8 +59,8 @@ export default function Page() {
 
       <LegalSection title="When you browse">
         <DocsParagraph>
-          Reading the site needs no account. Two things happen on every visit,
-          and a third only if you agree to it:
+          Reading the site needs no account. Three things happen on every visit,
+          and a fourth only if you agree to it:
         </DocsParagraph>
         <DocsList>
           <li>
@@ -69,6 +69,19 @@ export default function Page() {
             the pages you view, how long you stay, and your device type,
             operating system, browser and country. It doesn’t collect personally
             identifiable data from browsing and sets no cookies.
+          </li>
+          <li>
+            <strong className="font-medium text-foreground">
+              First-party analytics.
+            </strong>{" "}
+            Minilytics, a small analytics tool I run myself on Cloudflare,
+            records the pages you view, the page you came from, how long the
+            page stays open, your screen width, and which buttons you click on
+            this site. It sets two cookies to tell visits apart. If you buy
+            something, those two IDs are attached to the payment so I can see
+            which page or post led to it. If you sign in, your visits are linked
+            to your account’s ID, name and email. Visit any page with{" "}
+            <DocsCode>?ml_ignore=true</DocsCode> to opt out in that browser.
           </li>
           <li>
             <strong className="font-medium text-foreground">
@@ -193,14 +206,20 @@ export default function Page() {
           <li>To email you when new components and blocks ship.</li>
           <li>To answer you when you email me.</li>
           <li>To understand, in aggregate, which pages are useful.</li>
+          <li>
+            To see which pages, posts and links lead to sign-ups and purchases.
+          </li>
         </DocsList>
       </LegalSection>
 
       <LegalSection title="Cookies and browser storage">
         <DocsParagraph>
-          Without your consent, the only cookies are the ones that make sign-in
-          work, set by the authentication system (their names start with{" "}
-          <DocsCode>better-auth</DocsCode>):
+          Without your consent, the only cookies are the two first-party
+          analytics cookies and the ones that make sign-in work. Minilytics sets{" "}
+          <DocsCode>ml_vid</DocsCode>, a random visitor ID that lasts a year,
+          and <DocsCode>ml_sid</DocsCode>, a random session ID that expires
+          after 30 minutes without activity. The authentication system sets
+          these (their names start with <DocsCode>better-auth</DocsCode>):
         </DocsParagraph>
         <DocsList>
           <li>A session cookie that keeps you signed in for up to 30 days.</li>
@@ -251,6 +270,12 @@ export default function Page() {
               OneDollarStats
             </strong>{" "}
             provides analytics, hosted in Finland.
+          </li>
+          <li>
+            <strong className="font-medium text-foreground">Minilytics</strong>{" "}
+            is my own analytics service. It runs on my Cloudflare account and
+            receives payment details from Dodo Payments so purchases can be
+            matched to visits.
           </li>
           <li>
             <strong className="font-medium text-foreground">Google</strong>{" "}

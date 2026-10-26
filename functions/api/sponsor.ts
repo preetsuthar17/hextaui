@@ -1,3 +1,4 @@
+import { attributionMetadata } from "@/lib/attribution"
 import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
 import { parseSponsorInput } from "@/lib/sponsor"
@@ -46,6 +47,11 @@ export async function onRequestPost({ request, env }: Context) {
     })
   }
 
-  const url = await startSponsorCheckout(env, db, parsed.input)
+  const url = await startSponsorCheckout(
+    env,
+    db,
+    parsed.input,
+    attributionMetadata(request)
+  )
   return Response.json({ url })
 }

@@ -29,7 +29,11 @@ function HeroActions() {
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
-      <Link href="/blocks" className="hero-cta">
+      <Link
+        href="/blocks"
+        className="hero-cta"
+        data-ml-goal="browse_blocks_click"
+      >
         {c("Browse blocks")}
       </Link>
       <ProPriceLink from="home-hero" className="hero-cta-secondary" />
@@ -42,7 +46,11 @@ function StartActions({ className }: { className?: string }) {
 
   return (
     <div className={cn("flex flex-wrap items-center gap-3", className)}>
-      <Link href="/docs/installation" className="cta-primary">
+      <Link
+        href="/docs/installation"
+        className="cta-primary"
+        data-ml-goal="get_started_click"
+      >
         {c("Get started")}
       </Link>
       <ProPriceLink from="home-start" className="cta-secondary" />

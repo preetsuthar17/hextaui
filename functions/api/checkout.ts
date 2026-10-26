@@ -1,3 +1,4 @@
+import { attributionMetadata } from "@/lib/attribution"
 import { getAuth } from "@/lib/auth"
 import { getDb } from "@/lib/db"
 import { isSameOrigin } from "@/lib/origin"
@@ -57,9 +58,12 @@ export async function onRequestPost({ request, env }: Context) {
   const checkout = await getPayments(env).checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
     ...(user ? { customer: { email: user.email, name: user.name } } : {}),
-    metadata: user
-      ? { user_id: user.id, plan, claim: claim.nonce }
-      : { plan, claim: claim.nonce },
+    metadata: {
+      ...(user
+        ? { user_id: user.id, plan, claim: claim.nonce }
+        : { plan, claim: claim.nonce }),
+      ...attributionMetadata(request),
+    },
     return_url: checkoutReturnUrl(env.BETTER_AUTH_URL, claim.token),
   })
 

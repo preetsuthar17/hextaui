@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { createAuthClient } from "better-auth/react"
 
+import { minilytics } from "@/lib/minilytics"
 import type { ProPlanId } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
@@ -62,6 +63,27 @@ function writeCachedPro(pro: boolean) {
   } catch {}
 }
 
+const signupKey = "hextaui-signup-tracked"
+const signupWindow = 1000 * 60 * 15
+
+function identify(user: Session["user"]) {
+  minilytics("identify", {
+    user_id: user.id,
+    email: user.email,
+    name: user.name,
+  })
+
+  const created = new Date(user.createdAt).getTime()
+  if (!(Date.now() - created < signupWindow)) return
+  try {
+    if (localStorage.getItem(signupKey) === user.id) return
+    localStorage.setItem(signupKey, user.id)
+  } catch {
+    return
+  }
+  track("Signup completed")
+}
+
 let sessionRequest: Promise<Session | null> | undefined
 let proRequest: Promise<boolean> | undefined
 
@@ -109,6 +131,7 @@ function loadSession() {
   sessionRequest ??= authClient.getSession().then(
     ({ data }) => {
       writeSignedIn(Boolean(data))
+      if (data) identify(data.user)
       writeCachedUser(
         data
           ? {

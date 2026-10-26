@@ -1,6 +1,7 @@
 import type { Subscription } from "dodopayments/resources/subscriptions"
 import { and, eq, inArray, isNull } from "drizzle-orm"
 
+import type { AttributionMetadata } from "@/lib/attribution"
 import { schema, type Db } from "@/lib/db"
 import {
   sendSponsorEndedEmail,
@@ -30,7 +31,8 @@ async function isSponsorSlotTaken(db: Db) {
 async function startSponsorCheckout(
   env: SponsorEnv,
   db: Db,
-  input: SponsorInput
+  input: SponsorInput,
+  attribution?: AttributionMetadata
 ) {
   const id = crypto.randomUUID()
   await db.insert(schema.sponsor).values({ id, ...input })
@@ -38,7 +40,7 @@ async function startSponsorCheckout(
   const checkout = await getPayments(env).checkoutSessions.create({
     product_cart: [{ product_id: env.DODO_SPONSOR_PRODUCT_ID, quantity: 1 }],
     customer: { email: input.email, name: input.name },
-    metadata: { sponsor_id: id },
+    metadata: { sponsor_id: id, ...attribution },
     return_url: new URL("/sponsor?checkout=done", siteUrl).href,
   })
   return checkout.checkout_url

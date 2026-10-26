@@ -20,6 +20,7 @@ import {
   type SponsorInput,
 } from "@/lib/sponsor"
 import { siteContactEmail } from "@/lib/site"
+import { track } from "@/lib/track"
 
 const examples: SponsorInput = {
   name: "Acme",
@@ -52,6 +53,7 @@ function useCheckoutDone() {
 }
 
 async function startSponsorCheckout(input: SponsorInput) {
+  track("Sponsor checkout started")
   const response = await fetch("/api/sponsor", {
     method: "POST",
     headers: { "content-type": "application/json" },

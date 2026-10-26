@@ -1,3 +1,5 @@
+import { goalName, minilytics } from "@/lib/minilytics"
+
 type TrackProps = Record<string, string>
 
 type Stonks = {
@@ -9,6 +11,7 @@ function track(name: string, props?: TrackProps) {
     const stonks = (window as unknown as { stonks?: Stonks }).stonks
     stonks?.event?.(name, window.location.pathname, props)
   } catch {}
+  minilytics("goal", goalName(name), props)
 }
 
 export { track, type TrackProps }

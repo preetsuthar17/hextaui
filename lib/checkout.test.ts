@@ -106,6 +106,33 @@ describe("POST /api/checkout", () => {
     expect(params.metadata.claim).toBeTruthy()
   })
 
+  it("attaches the Minilytics visitor and session to the payment", async () => {
+    mocks.getSession.mockResolvedValue({
+      user: { id: "u1", email: "ada@example.com", name: "Ada" },
+    })
+    const request = post({ plan: "solo" })
+    request.headers.set("cookie", "theme=dark; ml_vid=vid-1; ml_sid=sid-2")
+    await onRequestPost({ request, env: makeEnv() })
+
+    const params = mocks.create.mock.calls[0][0] as CheckoutParams
+    expect(params.metadata).toMatchObject({
+      user_id: "u1",
+      plan: "solo",
+      ml_visitor_id: "vid-1",
+      ml_session_id: "sid-2",
+    })
+    expect(params.metadata.claim).toBeTruthy()
+  })
+
+  it("sends empty attribution when the tracker is blocked", async () => {
+    mocks.getSession.mockResolvedValue(null)
+    await onRequestPost({ request: post({ plan: "solo" }), env: makeEnv() })
+
+    const params = mocks.create.mock.calls[0][0] as CheckoutParams
+    expect(params.metadata.ml_visitor_id).toBe("")
+    expect(params.metadata.ml_session_id).toBe("")
+  })
+
   it("skips checkout for a plan the account already has", async () => {
     const env = makeEnv()
     const db = getDb(env.DB)

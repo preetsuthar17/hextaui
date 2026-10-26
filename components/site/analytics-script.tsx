@@ -3,6 +3,12 @@
 import * as React from "react"
 import Script from "next/script"
 
+import {
+  minilyticsSettled,
+  minilyticsSrc,
+  minilyticsWebsiteId,
+} from "@/lib/minilytics"
+
 const noop = () => () => {}
 
 function AnalyticsScript() {
@@ -13,10 +19,20 @@ function AnalyticsScript() {
   )
 
   return topLevel ? (
-    <Script
-      src="https://assets.onedollarstats.com/stonks.js"
-      strategy="lazyOnload"
-    />
+    <>
+      <Script
+        defer
+        data-website-id={minilyticsWebsiteId}
+        src={minilyticsSrc}
+        strategy="afterInteractive"
+        onLoad={minilyticsSettled}
+        onError={minilyticsSettled}
+      />
+      <Script
+        src="https://assets.onedollarstats.com/stonks.js"
+        strategy="lazyOnload"
+      />
+    </>
   ) : null
 }
 

@@ -1,3 +1,4 @@
+import { whenMinilyticsSettled } from "@/lib/minilytics"
 import type { ProPlanId } from "@/lib/pro/pricing"
 
 type StoredClaim = {
@@ -73,9 +74,22 @@ function takeCheckoutReturn(): CheckoutReturn {
     writeStoredClaim(claim)
   }
 
-  if (returnParams.some((name) => params.has(name))) {
-    returnParams.forEach((name) => params.delete(name))
+  if (params.has("claim")) {
+    params.delete("claim")
     window.history.replaceState(null, "", url.pathname + url.search + url.hash)
+  }
+  if (returnParams.some((name) => params.has(name))) {
+    const path = url.pathname
+    whenMinilyticsSettled().then(() => {
+      const current = new URL(window.location.href)
+      if (current.pathname !== path) return
+      returnParams.forEach((name) => current.searchParams.delete(name))
+      window.history.replaceState(
+        window.history.state,
+        "",
+        current.pathname + current.search + current.hash
+      )
+    })
   }
 
   return { checkoutDone, paymentId: validPayment, claim }

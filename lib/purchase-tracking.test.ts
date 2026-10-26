@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { readStoredClaim, takeCheckoutReturn } from "@/lib/claim-client"
+import { minilyticsSettled } from "@/lib/minilytics"
 import { majorAmount, trackPurchaseCompleted } from "@/lib/purchase-tracking"
 
 type TestWindow = {
@@ -75,7 +76,7 @@ describe("majorAmount", () => {
 })
 
 describe("takeCheckoutReturn", () => {
-  it("stores the claim and strips it from the address bar", () => {
+  it("stores the claim and strips it from the address bar", async () => {
     window.history.replaceState(
       null,
       "",
@@ -86,7 +87,12 @@ describe("takeCheckoutReturn", () => {
     expect(result.checkoutDone).toBe(true)
     expect(result.claim).toMatchObject({ paymentId: "pay_9", token: "tok" })
     expect(readStoredClaim()).toMatchObject({ paymentId: "pay_9" })
-    expect(window.location.search).toBe("")
+    expect(window.location.search).toBe(
+      "?checkout=done&payment_id=pay_9&status=succeeded"
+    )
+
+    minilyticsSettled()
+    await vi.waitFor(() => expect(window.location.search).toBe(""))
   })
 
   it("keeps a stored claim across a sign-in redirect", () => {
