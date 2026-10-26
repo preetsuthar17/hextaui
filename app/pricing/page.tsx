@@ -16,12 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  EarlyBirdBadge,
-  FreePlanLink,
-  PlanButton,
-  PlanPrice,
-} from "@/components/site/pricing-plan"
+import { PricingRuler, type PricingPlan } from "@/components/site/pricing-ruler"
 import { JsonLd } from "@/components/site/json-ld"
 import {
   Band,
@@ -38,7 +33,7 @@ import {
   pricingQuestions,
   proSummary,
 } from "@/lib/pricing-info"
-import { proPlans, refundDays, type ProPlanId } from "@/lib/pro/pricing"
+import { proPlans, refundDays } from "@/lib/pro/pricing"
 import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
@@ -56,57 +51,47 @@ const libraryCount =
 const blocks = getPricingBlocks()
 const freeBlocks = blocks.filter((block) => block.free)
 
-const plans: {
-  id: "free" | ProPlanId
-  name: string
-  description: string
-  features: string[]
-}[] = [
+const plans: PricingPlan[] = [
   {
     id: "free",
     name: "Free",
-    description: "The open-source library, for anyone and any project.",
+    seats: "Anyone, any project",
     features: [
       `${libraryCount} components, hooks and utilities under MIT`,
       ...freeBlocks.map((block) => `The ${block.title} Pro block`),
       "Install with the shadcn CLI, no account",
-      "Markdown docs, llms.txt and the MCP server",
     ],
   },
   {
     id: "solo",
     name: proPlans.solo.name,
-    description: proPlans.solo.summary,
+    seats: "1 developer",
     features: [
       "Everything in Free",
-      `All ${blocks.length} Pro blocks, plus every future category`,
-      "An AI SDK example in every block",
+      `All ${blocks.length} Pro blocks and every future category`,
+      "A Vercel AI SDK example in every block",
       "Private registry and API tokens",
-      `${refundDays}-day refund, no questions asked`,
     ],
   },
   {
     id: "team",
     name: proPlans.team.name,
-    description: `For product teams and agencies shipping together.`,
+    seats: `Up to ${proPlans.team.seats} developers`,
     features: [
       "Everything in Solo",
       `Up to ${proPlans.team.seats} developers on one invoice`,
       "Add and remove teammates by email",
       "One shared token allowed in CI",
-      `${refundDays}-day refund, no questions asked`,
     ],
   },
   {
     id: "unlimited",
     name: proPlans.unlimited.name,
-    description: "For companies that don't want to count seats.",
+    seats: "Every developer",
     features: [
       "Everything in Team",
       "No seat limit, for one company",
-      "Add and remove teammates by email",
-      "One shared token allowed in CI",
-      `${refundDays}-day refund, no questions asked`,
+      "One invoice for the whole company",
     ],
   },
 ]
@@ -182,45 +167,6 @@ function CellValue({ value }: { value: Cell }) {
   return value
 }
 
-function PlanColumn({ plan }: { plan: (typeof plans)[number] }) {
-  return (
-    <li className="row-span-4 grid grid-rows-subgrid gap-6 bg-background p-6 sm:p-8">
-      <div className="flex flex-col gap-2">
-        <div className="flex min-h-6 items-center gap-2">
-          <h3 className="font-medium">{plan.name}</h3>
-          {plan.id === "free" ? null : <EarlyBirdBadge />}
-        </div>
-        <p className="text-sm text-pretty text-muted-foreground">
-          {plan.description}
-        </p>
-      </div>
-      {plan.id === "free" ? (
-        <div className="flex flex-col gap-1">
-          <p className="flex items-baseline gap-2 tabular-nums">
-            <span className="marketing-number">$0</span>
-            <span className="text-sm text-muted-foreground">forever</span>
-          </p>
-          <p className="text-sm text-muted-foreground">MIT License</p>
-        </div>
-      ) : (
-        <PlanPrice plan={plan.id} />
-      )}
-      {plan.id === "free" ? <FreePlanLink /> : <PlanButton plan={plan.id} />}
-      <ul className="flex flex-col gap-2.5 self-start border-t pt-6 text-sm">
-        {plan.features.map((feature) => (
-          <li key={feature} className="flex items-start gap-2">
-            <IconCheck
-              aria-hidden="true"
-              className="mt-0.5 size-4 shrink-0 text-muted-foreground"
-            />
-            {feature}
-          </li>
-        ))}
-      </ul>
-    </li>
-  )
-}
-
 export default function Page() {
   return (
     <main className="flex flex-1 flex-col">
@@ -253,12 +199,10 @@ export default function Page() {
             source.
           </PageHead>
           <h2 className="sr-only">Plans</h2>
-          <ul className="mt-12 grid gap-(--hairline) overflow-hidden rounded-2xl border bg-border sm:mt-16 sm:grid-cols-2 lg:grid-cols-4 forced-colors:gap-px">
-            {plans.map((plan) => (
-              <PlanColumn key={plan.id} plan={plan} />
-            ))}
-          </ul>
-          <p className="mt-6 text-sm text-pretty text-muted-foreground">
+          <div className="mt-12 sm:mt-16">
+            <PricingRuler plans={plans} />
+          </div>
+          <p className="mt-10 text-sm text-pretty text-muted-foreground">
             Prices in {pricingCurrency}, before any sales tax. Payments are
             handled by Dodo Payments. Pro is covered by the{" "}
             <Link href="/legal/license" className={linkClassName}>

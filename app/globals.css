@@ -1739,3 +1739,243 @@
     }
   }
 }
+
+.pricing-ruler-scale {
+  --ease-slide: cubic-bezier(0.22, 1, 0.36, 1);
+  --track-y: 3.5rem;
+  position: relative;
+  height: 5.25rem;
+  container-type: inline-size;
+}
+
+.pricing-ruler-track {
+  position: absolute;
+  inset-inline: 0;
+  top: var(--track-y);
+  height: 1rem;
+  translate: 0 -50%;
+  border-inline-end: 1px solid color-mix(in oklab, var(--color-foreground) 40%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 40%, transparent) 1px, transparent 1px) 0 0 / 20% 100% repeat-x,
+    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 16%, transparent) 1px, transparent 1px) 0 50% / 2% 50% repeat-x,
+    linear-gradient(color-mix(in oklab, var(--color-foreground) 18%, transparent), color-mix(in oklab, var(--color-foreground) 18%, transparent)) 0 50% / 100% 1px no-repeat;
+}
+
+.pricing-ruler-tick {
+  position: absolute;
+  top: calc(var(--track-y) + 0.75rem);
+  left: 0;
+  translate: calc(var(--p) / 500 * 100cqw - 50%) 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  color: var(--color-muted-foreground);
+  &[data-edge="start"] {
+    translate: 0 0;
+  }
+  &[data-edge="end"] {
+    translate: calc(100cqw - 100%) 0;
+  }
+  @media (max-width: 39.99rem) {
+    &:not([data-edge="end"]) {
+      display: none;
+    }
+  }
+}
+
+.pricing-ruler-pin,
+.pricing-ruler-ghost,
+.pricing-ruler-saving {
+  transition: opacity 200ms var(--ease-out-cubic);
+  &[data-dim] {
+    opacity: 0.3;
+  }
+}
+
+.pricing-ruler-pin {
+  position: absolute;
+  z-index: 2;
+  top: var(--track-y);
+  left: 0;
+  translate: calc(var(--p) / 500 * 100cqw) 0;
+  transition:
+    translate 1100ms var(--ease-slide) 200ms,
+    opacity 200ms var(--ease-out-cubic);
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0.875rem;
+    height: 0.875rem;
+    translate: -50% -50%;
+    border-radius: 999px;
+    background-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--color-background);
+    transition: scale 200ms var(--ease-out-cubic);
+  }
+  &[data-plan="free"]::before {
+    background-color: var(--color-foreground);
+  }
+  &[data-active]::before {
+    scale: 1.3;
+  }
+}
+
+.pricing-ruler-pin-label {
+  position: absolute;
+  bottom: 1.125rem;
+  left: 0;
+  display: flex;
+  gap: 0.375rem;
+  translate: -50% 0;
+  cursor: default;
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  white-space: nowrap;
+  [data-plan="free"] > & {
+    translate: -0.4375rem 0;
+  }
+  @media (max-width: 39.99rem) {
+    font-size: 0.75rem;
+    [data-plan="solo"] > & {
+      bottom: auto;
+      top: 1.125rem;
+    }
+  }
+}
+
+.pricing-ruler-saving {
+  position: absolute;
+  top: var(--track-y);
+  left: 0;
+  width: calc((var(--to) - var(--from)) / 500 * 100cqw);
+  height: 0.5rem;
+  translate: calc(var(--from) / 500 * 100cqw) -50%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklab, var(--brand) 60%, transparent) 0 2px,
+    transparent 2px 5px
+  );
+  clip-path: inset(0 0 0 100% round 999px);
+  transition:
+    clip-path 1100ms var(--ease-slide) 200ms,
+    opacity 200ms var(--ease-out-cubic);
+  [data-run] & {
+    clip-path: inset(0 0 0 0 round 999px);
+  }
+}
+
+.pricing-ruler-ghost {
+  position: absolute;
+  z-index: 1;
+  top: var(--track-y);
+  left: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  translate: calc(var(--p) / 500 * 100cqw - 50%) -50%;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in oklab, var(--brand) 75%, transparent);
+  background-color: var(--color-background);
+}
+
+.pricing-ruler-links {
+  width: 100%;
+  height: 4.5rem;
+  margin-top: 0.5rem;
+  overflow: visible;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 700ms var(--ease-out-cubic) 1100ms;
+  [data-run] > & {
+    clip-path: inset(0);
+  }
+}
+
+.pricing-ruler-link {
+  fill: none;
+  stroke: color-mix(in oklab, var(--color-foreground) 22%, transparent);
+  stroke-width: 1;
+  transition:
+    stroke 200ms var(--ease-out-cubic),
+    opacity 200ms var(--ease-out-cubic);
+  &[data-active] {
+    stroke: var(--brand);
+    stroke-width: 1.5;
+  }
+  &[data-dim] {
+    opacity: 0.3;
+  }
+}
+
+.pricing-ruler-plan {
+  position: relative;
+  transition: opacity 200ms var(--ease-out-cubic);
+  &[data-dim] {
+    opacity: 0.45;
+  }
+  @media (min-width: 64rem) {
+    padding: 1.75rem 1.5rem 0;
+    border-top: var(--hairline) solid var(--color-border);
+    & + & {
+      border-left: var(--hairline) solid var(--color-border);
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0.4375rem;
+      height: 0.4375rem;
+      translate: -50% -50%;
+      border-radius: 999px;
+      background-color: color-mix(in oklab, var(--color-foreground) 30%, var(--color-background));
+      transition:
+        background-color 200ms var(--ease-out-cubic),
+        scale 200ms var(--ease-out-cubic);
+    }
+    &[data-active]::before {
+      background-color: var(--brand);
+      scale: 1.4;
+    }
+  }
+}
+
+.pricing-ruler-key-dot,
+.pricing-ruler-key-ring,
+.pricing-ruler-key-stripe {
+  display: inline-block;
+  border-radius: 999px;
+}
+
+.pricing-ruler-key-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--brand);
+}
+
+.pricing-ruler-key-ring {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid color-mix(in oklab, var(--brand) 75%, transparent);
+}
+
+.pricing-ruler-key-stripe {
+  width: 1.25rem;
+  height: 0.375rem;
+  background: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklab, var(--brand) 60%, transparent) 0 2px,
+    transparent 2px 5px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-ruler-pin,
+  .pricing-ruler-saving,
+  .pricing-ruler-links,
+  .pricing-ruler-link,
+  .pricing-ruler-plan,
+  .pricing-ruler-pin::before,
+  .pricing-ruler-plan::before {
+    transition: none;
+  }
+}
