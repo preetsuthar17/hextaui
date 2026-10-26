@@ -101,6 +101,7 @@ describe("OpenAPI document", () => {
       "/api/admin/broadcast",
       "/api/admin/email-preview",
       "/api/email/unsubscribe",
+      "/stats/[[path]]",
     ]
     const routes = functionRoutes(path.join(process.cwd(), "functions"))
       .map((route) => route.replace(/\/index$/, ""))

@@ -59,8 +59,8 @@ export default function Page() {
 
       <LegalSection title="When you browse">
         <DocsParagraph>
-          Reading the site needs no account. Three things happen on every visit,
-          and a fourth only if you agree to it:
+          Reading the site needs no account. These things happen on every visit,
+          and Google Analytics only if you agree to it:
         </DocsParagraph>
         <DocsList>
           <li>
@@ -82,6 +82,21 @@ export default function Page() {
             which page or post led to it. If you sign in, your visits are linked
             to your account’s ID, name and email. Visit any page with{" "}
             <DocsCode>?ml_ignore=true</DocsCode> to opt out in that browser.
+          </li>
+          <li>
+            <strong className="font-medium text-foreground">
+              Bots and AI agents.
+            </strong>{" "}
+            When a crawler, AI assistant, coding agent or other automated tool
+            requests a page, or anyone requests a file meant for them (Markdown
+            pages, <DocsCode>llms.txt</DocsCode>,{" "}
+            <DocsCode>robots.txt</DocsCode> or the component registry), the
+            server sends a record of that request to Minilytics: the URL, the
+            response status, the user agent, the <DocsCode>Accept</DocsCode> and{" "}
+            <DocsCode>Signature-Agent</DocsCode> headers, the referring page,
+            the IP address and the country. It’s used to see which assistants
+            read and cite which pages. Ordinary page views in a browser aren’t
+            recorded this way, and no cookies are involved.
           </li>
           <li>
             <strong className="font-medium text-foreground">
@@ -207,6 +222,10 @@ export default function Page() {
           <li>To answer you when you email me.</li>
           <li>To understand, in aggregate, which pages are useful.</li>
           <li>
+            To see which AI assistants and agents read the docs and which pages
+            they cite.
+          </li>
+          <li>
             To see which pages, posts and links lead to sign-ups and purchases.
           </li>
         </DocsList>
@@ -273,9 +292,10 @@ export default function Page() {
           </li>
           <li>
             <strong className="font-medium text-foreground">Minilytics</strong>{" "}
-            is my own analytics service. It runs on my Cloudflare account and
-            receives payment details from Dodo Payments so purchases can be
-            matched to visits.
+            is my own analytics service. It runs on my Cloudflare account,
+            receives records of requests from bots and AI agents, and receives
+            payment details from Dodo Payments so purchases can be matched to
+            visits.
           </li>
           <li>
             <strong className="font-medium text-foreground">Google</strong>{" "}

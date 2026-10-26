@@ -1,6 +1,4 @@
-type OutEntry = { name: string; directory: boolean; children?: OutEntry[] }
-
-type FunctionRoutes = { files: string[]; directories: string[] }
+type OutEntry = { name: string; directory: boolean }
 
 const pagesConfigFiles = new Set([
   "_headers",
@@ -8,78 +6,40 @@ const pagesConfigFiles = new Set([
   "_routes.json",
   "_worker.js",
 ])
+const assetDirectories = new Set(["_next", "_not-found", "og", "preview"])
+const assetFiles = new Set(["opengraph-image"])
+const assetExtension = /\.(png|jpe?g|gif|webp|avif|svg|ico|webmanifest)$/
 const maxRules = 100
 
-function excludeEntries(
-  entries: OutEntry[],
-  prefix: string,
-  functions: FunctionRoutes,
-  exclude: Set<string>
-) {
-  for (const { name, directory, children } of entries) {
-    if (name.startsWith(".") && name !== ".well-known") continue
-    if (pagesConfigFiles.has(name)) continue
-    const route = `${prefix}/${name}`
+function isRscPayload(name: string, siblings: OutEntry[]) {
+  if (!name.endsWith(".txt")) return false
+  if (name.startsWith("__next.")) return true
+  const page = `${name.slice(0, -4)}.html`
+  return siblings.some((entry) => entry.name === page)
+}
 
+function excludeAssets(entries: OutEntry[], exclude: Set<string>) {
+  for (const { name, directory } of entries) {
+    if (name.startsWith(".") || pagesConfigFiles.has(name)) continue
+    const route = `/${name}`
     if (directory) {
-      if (functions.directories.includes(route)) continue
-      if (functions.files.includes(route)) {
-        excludeEntries(children ?? [], route, functions, exclude)
-        continue
-      }
-      exclude.add(`${route}/*`)
+      if (assetDirectories.has(name)) exclude.add(`${route}/*`)
       continue
     }
-    if (route === "/index.html") continue
-    exclude.add(route)
-    if (name.endsWith(".html")) exclude.add(route.slice(0, -5))
+    if (
+      assetFiles.has(name) ||
+      assetExtension.test(name) ||
+      isRscPayload(name, entries) ||
+      name === "_not-found.html"
+    ) {
+      exclude.add(route)
+    }
   }
 }
 
-function isExcluded(route: string, exclude: Set<string>) {
-  if (exclude.has(route)) return true
-  return [...exclude].some(
-    (rule) =>
-      rule.endsWith("/*") &&
-      (route === rule.slice(0, -2) || route.startsWith(rule.slice(0, -1)))
-  )
-}
-
-function servedByFunctions(route: string, functions: FunctionRoutes) {
-  return (
-    functions.files.includes(route) ||
-    functions.directories.some(
-      (directory) => route === directory || route.startsWith(`${directory}/`)
-    )
-  )
-}
-
-function getRedirectSources(redirects: string) {
-  return redirects
-    .split("\n")
-    .map((line) => line.trim().split(/\s+/)[0])
-    .filter(
-      (source): source is string =>
-        Boolean(source) &&
-        source.startsWith("/") &&
-        !source.includes(":") &&
-        !source.includes("*")
-    )
-}
-
-function getPagesRoutes(
-  entries: OutEntry[],
-  functions: FunctionRoutes,
-  redirectSources: string[] = []
-) {
+function getPagesRoutes(entries: OutEntry[]) {
   const exclude = new Set<string>()
-  excludeEntries(entries, "", functions, exclude)
-  for (const file of functions.files) exclude.delete(file)
-  for (const source of redirectSources) {
-    if (source === "/" || servedByFunctions(source, functions)) continue
-    if (!isExcluded(source, exclude)) exclude.add(source)
-  }
-
+  excludeAssets(entries, exclude)
   for (const rule of [...exclude]) {
     if (rule.endsWith("/*")) exclude.delete(rule.slice(0, -2))
   }
@@ -87,7 +47,7 @@ function getPagesRoutes(
   const routes = {
     version: 1,
     description:
-      "Functions run for /, /api/*, /mcp, /r/* and unknown paths. Static pages, assets and redirects never invoke them.",
+      "Functions run for pages, Markdown, llms.txt, the registry and the API so AI agents can be counted. Build assets, images and RSC payloads skip them; _redirects still applies through next().",
     include: ["/*"],
     exclude: [...exclude].sort(),
   }
@@ -106,9 +66,4 @@ function getPagesRoutes(
   return routes
 }
 
-export {
-  getPagesRoutes,
-  getRedirectSources,
-  type FunctionRoutes,
-  type OutEntry,
-}
+export { getPagesRoutes, type OutEntry }
