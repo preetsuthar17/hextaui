@@ -19,6 +19,16 @@ export default function nextConfig(phase: string): NextConfig {
         source: "/api/:path*",
         destination: "http://localhost:8788/api/:path*",
       },
+      {
+        source: "/stats/script.js",
+        destination:
+          "https://preet-datafast.preetsutharxd.workers.dev/js/script.js",
+      },
+      {
+        source: "/stats/event",
+        destination:
+          "https://preet-datafast.preetsutharxd.workers.dev/api/event",
+      },
     ],
   }
 }

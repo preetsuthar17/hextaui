@@ -20,8 +20,9 @@ declare global {
   }
 }
 
-const minilyticsSrc =
-  "https://preet-datafast.preetsutharxd.workers.dev/js/script.js"
+const minilyticsOrigin = "https://preet-datafast.preetsutharxd.workers.dev"
+const minilyticsSrc = "/stats/script.js"
+const minilyticsApi = "/stats/event"
 const minilyticsWebsiteId = "1p3k1z296v261w58"
 
 let markLoaded: () => void = () => {}
@@ -66,6 +67,8 @@ function goalName(name: string) {
 export {
   goalName,
   minilytics,
+  minilyticsApi,
+  minilyticsOrigin,
   minilyticsSettled,
   minilyticsSrc,
   minilyticsWebsiteId,

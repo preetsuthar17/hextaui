@@ -4,6 +4,7 @@ import * as React from "react"
 import Script from "next/script"
 
 import {
+  minilyticsApi,
   minilyticsSettled,
   minilyticsSrc,
   minilyticsWebsiteId,
@@ -23,6 +24,7 @@ function AnalyticsScript() {
       <Script
         defer
         data-website-id={minilyticsWebsiteId}
+        data-api={minilyticsApi}
         src={minilyticsSrc}
         strategy="afterInteractive"
         onLoad={minilyticsSettled}
