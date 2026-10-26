@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import { ogImagePath, pageMetadata } from "@/lib/metadata"
-import { absoluteUrl, siteAuthor, siteName } from "@/lib/site"
+import { absoluteUrl, siteAuthor, siteAuthorUrl, siteName } from "@/lib/site"
 
 type BlogPost = {
   slug: string
@@ -19,7 +19,7 @@ const blogLead =
   "Notes from building HextaUI: shadcn/ui and Base UI, the states most interfaces skip, AI chat screens, checkout and store admin UI, and registries for coding agents."
 const blogAuthor = {
   name: siteAuthor,
-  url: "https://twitter.com/preetsuthar17",
+  url: siteAuthorUrl,
 }
 const wordsPerMinute = 220
 

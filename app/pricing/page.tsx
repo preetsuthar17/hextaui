@@ -177,16 +177,11 @@ export default function Page() {
           description: String(metadata.description),
           breadcrumbs: [{ name: "Pricing", path: "/pricing" }],
           type: "WebPage",
-        })}
-      />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
+          extra: [
             getProProductJsonLd(),
             faqPageJsonLd("/pricing", pricingQuestions),
           ],
-        }}
+        })}
       />
       <section aria-labelledby="pricing-title">
         <PageColumn className="pt-20 pb-20 sm:pt-28 sm:pb-28">

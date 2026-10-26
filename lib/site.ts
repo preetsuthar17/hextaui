@@ -12,6 +12,7 @@ const siteTwitter = "@preetsuthar17"
 const siteRepository = "https://github.com/preetsuthar17/hextaui"
 const siteContactEmail = "hi@preetsuthar.me"
 const siteAuthor = "Preet Suthar"
+const siteAuthorUrl = "https://twitter.com/preetsuthar17"
 
 const noindexPaths = [
   "/docs/stress",
@@ -57,6 +58,7 @@ export {
   noindexPaths,
   siteAlternateNames,
   siteAuthor,
+  siteAuthorUrl,
   siteContactEmail,
   siteDescription,
   siteMetaDescription,

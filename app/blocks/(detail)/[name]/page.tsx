@@ -26,7 +26,7 @@ import {
 } from "@/components/docs/docs-props-table"
 import { getBlockComponents, getBlockLinks } from "@/lib/docs-related"
 import { T, t } from "@/lib/i18n/rich"
-import { pageMetadata } from "@/lib/metadata"
+import { ogImagePath, pageMetadata } from "@/lib/metadata"
 import { absoluteUrl } from "@/lib/site"
 import { docsArticleJsonLd } from "@/lib/structured-data"
 import {
@@ -91,6 +91,7 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
           path: `/blocks/${block.name}`,
           headline: block.title,
           description: block.description,
+          image: ogImagePath(`/blocks/${block.name}`),
           breadcrumbs: [
             { name: "Blocks", path: "/blocks" },
             { name: block.title, path: `/blocks/${block.name}` },

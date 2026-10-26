@@ -3,9 +3,13 @@ import { getRequestLocale } from "@/lib/i18n/request"
 import { t } from "@/lib/i18n/rich"
 import {
   absoluteUrl,
+  siteAlternateNames,
   siteAuthor,
+  siteAuthorUrl,
+  siteContactEmail,
   siteName,
   siteRepository,
+  siteSummary,
   siteUrl,
 } from "@/lib/site"
 
@@ -43,6 +47,72 @@ type PageGraph = {
 
 const websiteRef = { "@id": `${siteUrl}/#website` }
 const organizationRef = { "@id": `${siteUrl}/#organization` }
+const authorPerson = {
+  "@type": "Person",
+  "@id": `${siteUrl}/#author`,
+  name: siteAuthor,
+  url: siteAuthorUrl,
+}
+
+function siteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name: siteName,
+        alternateName: siteAlternateNames,
+        url: `${siteUrl}/`,
+        description: siteSummary,
+        publisher: organizationRef,
+        inLanguage: "en",
+      },
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: siteName,
+        alternateName: siteAlternateNames,
+        url: `${siteUrl}/`,
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl("/hextaui-logo.png"),
+          width: 1040,
+          height: 1040,
+        },
+        description: siteSummary,
+        email: siteContactEmail,
+        founder: authorPerson,
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "IN",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: siteContactEmail,
+          url: absoluteUrl("/contact"),
+          availableLanguage: ["en"],
+        },
+        sameAs: [siteRepository, siteAuthorUrl],
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": `${siteUrl}/#software`,
+        name: siteName,
+        description: siteSummary,
+        url: `${siteUrl}/`,
+        codeRepository: siteRepository,
+        programmingLanguage: ["TypeScript", "React"],
+        runtimePlatform: "React",
+        license: "https://opensource.org/licenses/MIT",
+        isAccessibleForFree: true,
+        documentation: absoluteUrl("/docs"),
+        publisher: organizationRef,
+      },
+    ],
+  }
+}
 
 function localUrl(path: string) {
   return absoluteUrl(localizeHref(path, getRequestLocale().locale))
@@ -98,7 +168,7 @@ function docsArticleJsonLd({
         inLanguage: getRequestLocale().locale,
         isPartOf: websiteRef,
         publisher: organizationRef,
-        author: { "@type": "Person", name: siteAuthor },
+        author: authorPerson,
         breadcrumb: { "@id": `${url}#breadcrumb` },
         ...imageObject(image),
         about: {
@@ -168,7 +238,7 @@ function blogPostingJsonLd({
         inLanguage: getRequestLocale().locale,
         isPartOf: blogRef(),
         publisher: organizationRef,
-        author: { "@type": "Person", name: author.name, url: author.url },
+        author: { ...authorPerson, name: author.name, url: author.url },
         keywords: tags,
         wordCount: words,
         timeRequired: `PT${minutes}M`,
@@ -179,8 +249,9 @@ function blogPostingJsonLd({
 }
 
 function blogJsonLd(
+  name: string,
   description: string,
-  posts: { path: string; headline: string; published: string }[]
+  posts: { path: string; headline: string }[]
 ) {
   const url = localUrl("/blog")
 
@@ -188,6 +259,24 @@ function blogJsonLd(
     "@context": "https://schema.org",
     "@graph": [
       breadcrumbList("/blog", blogCrumbs),
+      {
+        "@type": "CollectionPage",
+        "@id": `${url}#webpage`,
+        name: t(name),
+        description: t(description),
+        url,
+        inLanguage: getRequestLocale().locale,
+        isPartOf: websiteRef,
+        publisher: organizationRef,
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        about: blogRef(),
+        mainEntity: { "@id": `${url}#items` },
+      },
+      itemList(
+        "/blog",
+        name,
+        posts.map((post) => ({ name: post.headline, path: post.path }))
+      ),
       {
         "@type": "Blog",
         "@id": `${absoluteUrl("/blog")}#blog`,
@@ -198,11 +287,7 @@ function blogJsonLd(
         isPartOf: websiteRef,
         publisher: organizationRef,
         blogPost: posts.map((post) => ({
-          "@type": "BlogPosting",
           "@id": `${localUrl(post.path)}#article`,
-          headline: t(post.headline),
-          url: localUrl(post.path),
-          datePublished: post.published,
         })),
       },
     ],
@@ -272,6 +357,7 @@ function pageJsonLd({
 }
 
 export {
+  authorPerson,
   blogJsonLd,
   blogPostingJsonLd,
   breadcrumbList,
@@ -279,5 +365,6 @@ export {
   faqPageJsonLd,
   itemList,
   pageJsonLd,
+  siteJsonLd,
   type Crumb,
 }

@@ -26,11 +26,11 @@ async function BlogIndex() {
     <main className="flex flex-1 flex-col">
       <JsonLd
         data={blogJsonLd(
+          blogTitle,
           blogDescription,
           blogPosts.map((post) => ({
             path: getBlogHref(post.slug),
             headline: post.title,
-            published: post.published,
           }))
         )}
       />

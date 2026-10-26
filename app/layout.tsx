@@ -15,20 +15,17 @@ import { SiteHeader } from "@/components/site/site-header"
 import { WebMcp } from "@/components/site/web-mcp"
 import { ThemeProvider } from "@/components/theme-provider"
 import {
-  absoluteUrl,
-  siteAlternateNames,
   siteAuthor,
-  siteContactEmail,
+  siteAuthorUrl,
   siteName,
-  siteRepository,
   siteMetaDescription,
-  siteSummary,
   siteTitle,
   siteTwitter,
   siteUrl,
 } from "@/lib/site"
 import { catalogViewScript } from "@/lib/catalog-view"
 import { getGithubStars } from "@/lib/github"
+import { siteJsonLd } from "@/lib/structured-data"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toast"
 
@@ -53,7 +50,7 @@ export const metadata: Metadata = {
     "Next.js components",
     "copy and paste components",
   ],
-  authors: [{ name: "Preet Suthar", url: "https://twitter.com/preetsuthar17" }],
+  authors: [{ name: siteAuthor, url: siteAuthorUrl }],
   creator: siteName,
   openGraph: {
     title: siteTitle,
@@ -69,68 +66,6 @@ export const metadata: Metadata = {
     description: siteMetaDescription,
     creator: siteTwitter,
   },
-}
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      name: siteName,
-      alternateName: siteAlternateNames,
-      url: `${siteUrl}/`,
-      description: siteSummary,
-      publisher: { "@id": `${siteUrl}/#organization` },
-      inLanguage: "en",
-    },
-    {
-      "@type": "Organization",
-      "@id": `${siteUrl}/#organization`,
-      name: siteName,
-      alternateName: siteAlternateNames,
-      url: `${siteUrl}/`,
-      logo: {
-        "@type": "ImageObject",
-        url: absoluteUrl("/hextaui-logo.png"),
-        width: 1040,
-        height: 1040,
-      },
-      description: siteSummary,
-      email: siteContactEmail,
-      founder: {
-        "@type": "Person",
-        name: siteAuthor,
-        url: "https://twitter.com/preetsuthar17",
-      },
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "IN",
-      },
-      contactPoint: {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        email: siteContactEmail,
-        url: absoluteUrl("/contact"),
-        availableLanguage: ["en"],
-      },
-      sameAs: [siteRepository, "https://twitter.com/preetsuthar17"],
-    },
-    {
-      "@type": "SoftwareSourceCode",
-      "@id": `${siteUrl}/#software`,
-      name: siteName,
-      description: siteSummary,
-      url: `${siteUrl}/`,
-      codeRepository: siteRepository,
-      programmingLanguage: ["TypeScript", "React"],
-      runtimePlatform: "React",
-      license: "https://opensource.org/licenses/MIT",
-      isAccessibleForFree: true,
-      documentation: absoluteUrl("/docs"),
-      publisher: { "@id": `${siteUrl}/#organization` },
-    },
-  ],
 }
 
 const fontSans = Inter({
@@ -171,7 +106,7 @@ export default async function RootLayout({
     >
       <body>
         <InlineScript html={catalogViewScript} />
-        <JsonLd data={jsonLd} />
+        <JsonLd data={siteJsonLd()} />
         <ThemeProvider>
           <DocsSearchProvider>
             <div className="flex min-h-svh flex-col">

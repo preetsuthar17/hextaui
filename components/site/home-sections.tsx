@@ -372,13 +372,15 @@ function HomeSections() {
         <JsonLd
           data={{
             "@context": "https://schema.org",
-            ...faqPageJsonLd(
-              "/",
-              questions.map((item) => ({
-                question: t(item.question),
-                answer: t(item.answer),
-              }))
-            ),
+            "@graph": [
+              faqPageJsonLd(
+                "/",
+                questions.map((item) => ({
+                  question: t(item.question),
+                  answer: t(item.answer),
+                }))
+              ),
+            ],
           }}
         />
       </Band>

@@ -33,6 +33,10 @@ export default function Page() {
         { name: "Compare", path: "/compare" },
         { name: "HextaUI vs shadcn/ui", path: "/compare/shadcn-ui" },
       ]}
+      items={getShadcnComparisons().map((item) => ({
+        name: item.name,
+        path: getShadcnComparisonHref(item.slug),
+      }))}
       title="HextaUI and shadcn/ui"
       lead="HextaUI is not a replacement for shadcn/ui. It is a registry you add to a shadcn/ui project, with the same CLI, the same component names and the same theme tokens. This page explains what it adds and when you don’t need it."
     >

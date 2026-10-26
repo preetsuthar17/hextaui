@@ -8,7 +8,6 @@ import {
 import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
 import { InfoPage, InfoSection } from "@/components/site/info-page"
-import { JsonLd } from "@/components/site/json-ld"
 import { t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
 import { faqPageJsonLd } from "@/lib/structured-data"
@@ -48,6 +47,15 @@ const questions = [
 export default function Page() {
   return (
     <InfoPage
+      structuredData={[
+        faqPageJsonLd(
+          path,
+          questions.map((item) => ({
+            question: t(item.question),
+            answer: t(item.answer),
+          }))
+        ),
+      ]}
       eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
@@ -56,21 +64,6 @@ export default function Page() {
       title="HextaUI and AI Elements"
       lead="AI Elements gives you the pieces of an AI chat, such as a message, a prompt input and a tool call. HextaUI gives you the finished screens those pieces become, with the hard states already handled. This page compares them as of October 2026."
     >
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            faqPageJsonLd(
-              path,
-              questions.map((item) => ({
-                question: t(item.question),
-                answer: t(item.answer),
-              }))
-            ),
-          ],
-        }}
-      />
-
       <InfoSection title="Two things called AI Elements">
         <DocsParagraph>
           <LegalLink href="https://elements.ai-sdk.dev">AI Elements</LegalLink>{" "}

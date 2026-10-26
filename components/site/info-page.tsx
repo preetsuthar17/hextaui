@@ -57,6 +57,8 @@ function InfoPage({
   nav,
   breadcrumbs,
   pageType,
+  items,
+  structuredData,
   children,
 }: {
   title: string
@@ -65,6 +67,8 @@ function InfoPage({
   nav?: React.ReactNode
   breadcrumbs?: Crumb[]
   pageType?: "WebPage" | "AboutPage" | "ContactPage"
+  items?: Crumb[]
+  structuredData?: object[]
   children: React.ReactNode
 }) {
   return (
@@ -77,6 +81,8 @@ function InfoPage({
             description: lead,
             breadcrumbs,
             type: pageType,
+            items,
+            extra: structuredData,
           })}
         />
       ) : null}

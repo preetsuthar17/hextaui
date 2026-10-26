@@ -12,6 +12,7 @@ import {
   getRelatedDocs,
 } from "@/lib/docs-related"
 import { T, t } from "@/lib/i18n/rich"
+import { ogImagePath } from "@/lib/metadata"
 import { docsArticleJsonLd } from "@/lib/structured-data"
 
 function DocsComponentPage({
@@ -39,6 +40,7 @@ function DocsComponentPage({
           path,
           headline: component.name,
           description: component.description,
+          image: ogImagePath(path),
           breadcrumbs: [
             { name: "Docs", path: "/docs" },
             ...(isComponent

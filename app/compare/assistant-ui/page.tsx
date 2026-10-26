@@ -8,7 +8,6 @@ import {
 import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable, MoreComparisons } from "@/components/site/compare"
 import { InfoPage, InfoSection } from "@/components/site/info-page"
-import { JsonLd } from "@/components/site/json-ld"
 import { t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
 import { faqPageJsonLd } from "@/lib/structured-data"
@@ -48,6 +47,15 @@ const questions = [
 export default function Page() {
   return (
     <InfoPage
+      structuredData={[
+        faqPageJsonLd(
+          path,
+          questions.map((item) => ({
+            question: t(item.question),
+            answer: t(item.answer),
+          }))
+        ),
+      ]}
       eyebrow="Compare"
       breadcrumbs={[
         { name: "Compare", path: "/compare" },
@@ -56,21 +64,6 @@ export default function Page() {
       title="HextaUI and assistant-ui"
       lead="assistant-ui is a chat framework: a runtime that manages the conversation, with components that read from it. HextaUI gives you finished screens as plain components, and leaves the state where it already is. This page compares them as of October 2026."
     >
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            faqPageJsonLd(
-              path,
-              questions.map((item) => ({
-                question: t(item.question),
-                answer: t(item.answer),
-              }))
-            ),
-          ],
-        }}
-      />
-
       <InfoSection title="The short answer">
         <DocsParagraph>
           Use assistant-ui when you want a free, complete chat framework and are
