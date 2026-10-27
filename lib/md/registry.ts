@@ -52,6 +52,9 @@ import {
 } from "@/lib/shadcn-compare"
 import { absoluteUrl, siteName } from "@/lib/site"
 import {
+  getTestimonialWallMarkdown,
+} from "@/lib/testimonial-wall/content"
+import {
   themeEditorDescription,
   themeEditorFaq,
   themeEditorLead,
@@ -333,6 +336,7 @@ function getThemeEditorMarkdown() {
 
 const toolMarkdown: Record<string, () => string> = {
   "theme-editor": getThemeEditorMarkdown,
+  "testimonial-wall": getTestimonialWallMarkdown,
 }
 
 const renderers: MarkdownRenderer[] = [

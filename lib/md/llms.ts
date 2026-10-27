@@ -127,7 +127,7 @@ async function getLlmsTxt() {
     heading(2, "Blog"),
     lines(posts),
     ...(research.length > 0 ? [heading(2, "Research"), lines(research)] : []),
-    ...(tools.length > 0 ? [heading(2, "Tools"), lines(tools)] : []),
+    ...(tools.length > 0 ? [heading(2, "Free tools"), lines(tools)] : []),
     heading(2, "Component categories"),
     lines(categories),
     heading(2, "Comparisons"),

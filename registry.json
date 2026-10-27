@@ -308,6 +308,14 @@
             "background-position": "-100% 0"
           }
         },
+        "@keyframes testimonial-marquee": {
+          "from": {
+            "transform": "translateX(0)"
+          },
+          "to": {
+            "transform": "translateX(-50%)"
+          }
+        },
         "@utility text-hero": {
           "font-size": "min(calc((100vw - 1.5rem) / 15.75), 2.6875rem)",
           "line-height": "1.3"

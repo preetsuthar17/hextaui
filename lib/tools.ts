@@ -15,10 +15,10 @@ const tools: Tool[] = [
   },
   {
     slug: "testimonial-wall",
-    title: "Testimonial wall",
+    title: "Testimonial wall builder",
     description:
-      "Turn posts and quotes into a testimonial wall for your landing page.",
-    status: "soon",
+      "Turn customer quotes and X posts into a masonry, marquee, grid or carousel wall, then copy the React code, a PNG or a share link.",
+    status: "live",
   },
   {
     slug: "page-builder",

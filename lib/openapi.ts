@@ -106,6 +106,10 @@ function getOpenApiDocument() {
         description: "HextaUI Pro blocks, for accounts that bought Pro.",
       },
       {
+        name: "Tools",
+        description: "Helpers behind the free tools at /tools.",
+      },
+      {
         name: "Sponsor",
         description: "The sponsor card on every docs and blocks page.",
       },
@@ -561,6 +565,33 @@ function getOpenApiDocument() {
               content: { [json]: { schema: ref("Subscription") } },
             },
             ...pick("400", "403"),
+          },
+        },
+      },
+      "/api/tools/oembed": {
+        get: {
+          operationId: "importTweetTestimonial",
+          tags: ["Tools"],
+          summary: "Read a public X post as a testimonial",
+          description:
+            "Fetches the public oEmbed for an x.com or twitter.com post and returns its author, handle, text and date shaped as a testimonial for the testimonial wall builder. Only post links are accepted, replies are cached for a day, and no account or key is needed.",
+          security: [],
+          parameters: [
+            {
+              name: "url",
+              in: "query",
+              required: true,
+              description: "Link to the post, like https://x.com/<handle>/status/<id>.",
+              schema: { type: "string", format: "uri", maxLength: 500 },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "The post as a testimonial.",
+              content: { [json]: { schema: ref("TestimonialImport") } },
+            },
+            ...pick("400", "404"),
+            "502": { $ref: "#/components/responses/Error" },
           },
         },
       },
@@ -1135,6 +1166,24 @@ function getOpenApiDocument() {
           type: "object",
           required: ["url"],
           properties: { url: { type: "string" } },
+        },
+        TestimonialImport: {
+          type: "object",
+          required: ["testimonial"],
+          properties: {
+            testimonial: {
+              type: "object",
+              required: ["name", "body"],
+              properties: {
+                name: { type: "string" },
+                handle: { type: "string" },
+                body: { type: "string" },
+                source: { type: "string", enum: ["x"] },
+                url: { type: "string", format: "uri" },
+                date: { type: "string", format: "date" },
+              },
+            },
+          },
         },
         Subscription: {
           type: "object",
