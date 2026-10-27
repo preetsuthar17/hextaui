@@ -40,6 +40,10 @@ import { getStudies, getStudyHref } from "@/lib/research"
 import { researchDescription, researchTitle } from "@/lib/research/markdown"
 import { siteName } from "@/lib/site"
 import {
+  testimonialWallDescription,
+  testimonialWallPath,
+} from "@/lib/testimonial-wall/content"
+import {
   getShadcnComparisonHref,
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
@@ -221,6 +225,19 @@ function getOgPages(): OgPage[] {
     })),
   ]
 
+  const toolPages = [
+    {
+      path: testimonialWallPath,
+      image: {
+        variant: "hero" as const,
+        section: "Free tool",
+        title: "Testimonial wall builder.",
+        accent: "Free, and the code is yours.",
+        description: testimonialWallDescription,
+      },
+    },
+  ]
+
   return [
     ...marketing,
     ...blockPages,
@@ -230,6 +247,7 @@ function getOgPages(): OgPage[] {
     ...comparePages,
     ...blogPages,
     ...researchPages,
+    ...toolPages,
   ]
 }
 

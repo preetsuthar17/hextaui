@@ -12,6 +12,7 @@ const apiErrors = {
   seat_limit: { status: 400, title: "Seat limit reached" },
   team_required: { status: 403, title: "Team plan required" },
   sponsor_slot_taken: { status: 409, title: "Sponsor slot booked" },
+  upstream_error: { status: 502, title: "Upstream service failed" },
 } as const
 
 type ApiErrorCode = keyof typeof apiErrors

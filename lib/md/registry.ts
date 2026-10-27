@@ -51,6 +51,10 @@ import {
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
 import { absoluteUrl, siteName } from "@/lib/site"
+import {
+  getTestimonialWallMarkdown,
+  testimonialWallPath,
+} from "@/lib/testimonial-wall/content"
 
 type MarkdownSection = "core" | "docs" | "content" | "compare" | "legal"
 
@@ -494,6 +498,20 @@ const renderers: MarkdownRenderer[] = [
         ],
       }
     },
+  },
+  {
+    pattern: "/tools/testimonial-wall",
+    section: "content",
+    paths: () => [testimonialWallPath],
+    render: async () => ({
+      markdown: getTestimonialWallMarkdown(),
+      related: [
+        { title: "Card", href: "/docs/card" },
+        { title: "Avatar", href: "/docs/avatar" },
+        { title: "Carousel", href: "/docs/carousel" },
+        { title: "All components", href: "/components" },
+      ],
+    }),
   },
   {
     pattern: "/legal/:page",

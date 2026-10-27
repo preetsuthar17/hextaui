@@ -25,6 +25,7 @@ import {
   IconMarkdown,
   IconMoon,
   IconPuzzle,
+  IconQuote,
   IconSun,
   IconTerminal2,
   IconTool,
@@ -602,6 +603,24 @@ function useGlobalActions(): ActionEntry[] {
         description: "Every component on one page.",
         keywords: ["index", "list", "gallery", "overview"],
         href: "/components",
+      },
+      {
+        id: "action:testimonial-wall",
+        title: "Build a testimonial wall",
+        kind: "action",
+        icon: IconQuote,
+        description:
+          "Free tool: turn quotes and X posts into a wall, then copy the React code.",
+        keywords: [
+          "testimonials",
+          "social proof",
+          "reviews",
+          "wall of love",
+          "senja",
+          "marquee",
+          "tools",
+        ],
+        href: "/tools/testimonial-wall",
       },
       {
         id: "action:llms",
