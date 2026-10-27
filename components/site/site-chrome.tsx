@@ -1,10 +1,30 @@
 "use client"
 
 import { useSitePathname } from "@/lib/i18n/client"
+import { getSiteChromeMode, type SiteChromeMode } from "@/lib/site-chrome"
 
-function SiteChrome({ children }: { children: React.ReactNode }) {
-  const pathname = useSitePathname()
-  return pathname.startsWith("/preview/") ? null : children
+function useSiteChromeMode() {
+  return getSiteChromeMode(useSitePathname())
 }
 
-export { SiteChrome }
+function SiteChrome({
+  modes = ["site"],
+  children,
+}: {
+  modes?: SiteChromeMode[]
+  children: React.ReactNode
+}) {
+  const mode = useSiteChromeMode()
+  return modes.includes(mode) ? children : null
+}
+
+function SiteFrame({ children }: { children: React.ReactNode }) {
+  const mode = useSiteChromeMode()
+  return (
+    <div data-chrome={mode} className="flex min-h-svh flex-col">
+      {children}
+    </div>
+  )
+}
+
+export { SiteChrome, SiteFrame, useSiteChromeMode }

@@ -61,17 +61,16 @@ function ProPreview({
   if (!block) return null
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <div className="flex flex-wrap items-center gap-2 border-b px-3 py-2">
+    <div className="flex h-[max(30rem,calc(100svh-11rem))] w-full max-w-[80rem] flex-col overflow-hidden rounded-xl bg-background ring-(length:--hairline) ring-foreground/10 sm:h-[max(32rem,calc(100svh-13rem))] forced-colors:border">
+      <div className="flex items-center gap-2 border-b bg-muted/40 px-2 py-1.5">
         <ToggleGroup
-          variant="outline"
           size="sm"
           aria-label="Pro block"
           value={[block.name]}
           onValueChange={(value) => {
             if (value[0]) setActive(value[0])
           }}
-          className="max-w-full overflow-x-auto"
+          className="min-w-0 overflow-x-auto [scrollbar-width:none]"
         >
           {blocks.map((item) => (
             <ToggleGroupItem key={item.name} value={item.name}>
@@ -79,17 +78,18 @@ function ProPreview({
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        <div className="ms-auto flex items-center gap-1">
+        <div className="ms-auto flex shrink-0 items-center gap-1">
           <Button
             variant="ghost"
             size="sm"
             nativeButton={false}
             render={<Link href={`/blocks/${block.name}`} />}
+            className="max-md:hidden"
           >
             About this block
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             nativeButton={false}
             render={<Link href="/pricing" />}
@@ -105,7 +105,7 @@ function ProPreview({
         src={`/preview/blocks/${block.name}`}
         title={`${block.title} block with your theme`}
         onLoad={onLoad}
-        className="block min-h-[36rem] w-full flex-1 bg-background"
+        className="block min-h-0 w-full flex-1 bg-background"
       />
     </div>
   )

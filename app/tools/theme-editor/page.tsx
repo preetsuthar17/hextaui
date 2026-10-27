@@ -5,6 +5,7 @@ import { factLinkClassName } from "@/components/site/fact-list"
 import { InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
 import Link from "@/components/site/link"
+import { ToolBelowFold } from "@/components/tools/shell/tool-app"
 import { ThemeEditor } from "@/components/tools/theme-editor/theme-editor"
 import { pageMetadata } from "@/lib/metadata"
 import { getProBlock } from "@/lib/pro/catalog"
@@ -12,7 +13,6 @@ import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 import {
   themeEditorDescription,
   themeEditorFaq,
-  themeEditorLead,
   themeEditorSteps,
   themeEditorTitle,
 } from "@/lib/theme-editor/content"
@@ -51,26 +51,8 @@ export default function Page() {
           extra: [faqPageJsonLd(path, themeEditorFaq)],
         })}
       />
-      <header className="frame-width flex flex-col items-start pt-10 pb-6 sm:px-8 sm:pt-14">
-        <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
-          <Link href="/tools" className="hover:text-foreground">
-            Tools
-          </Link>
-        </nav>
-        <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-          {themeEditorTitle}
-        </h1>
-        <p className="mt-2 max-w-2xl text-base/7 text-pretty text-muted-foreground">
-          {themeEditorLead}
-        </p>
-      </header>
-      <section
-        aria-label="Theme editor"
-        className="frame-width pb-16 sm:px-8"
-      >
-        <ThemeEditor blocks={previewBlocks()} />
-      </section>
-      <div className="flex flex-col pb-8">
+      <ThemeEditor title={themeEditorTitle} blocks={previewBlocks()} />
+      <ToolBelowFold>
         <InfoSection title="How it works">
           <ol className="flex flex-col divide-y border-y">
             {themeEditorSteps.map((step, index) => (
@@ -97,8 +79,8 @@ export default function Page() {
             <Link href="/blocks" className={factLinkClassName}>
               HextaUI Pro blocks
             </Link>
-            : open the On Pro blocks tab to see your theme on a chat thread,
-            settings pages and a commerce dashboard before you buy.
+            : switch the preview to Pro blocks to see your theme on a chat
+            thread, settings pages and a commerce dashboard before you buy.
           </DocsParagraph>
         </InfoSection>
         <InfoSection title="Questions">
@@ -111,7 +93,7 @@ export default function Page() {
             ))}
           </dl>
         </InfoSection>
-      </div>
+      </ToolBelowFold>
     </main>
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import { useSiteChromeMode } from "@/components/site/site-chrome"
 import { useSitePathname } from "@/lib/i18n/client"
 
 const framelessPrefixes = [
@@ -12,6 +13,8 @@ const framelessPrefixes = [
 
 function FrameLines() {
   const pathname = useSitePathname()
+  const mode = useSiteChromeMode()
+  if (mode !== "site") return null
   if (framelessPrefixes.some((prefix) => pathname.startsWith(prefix))) {
     return null
   }

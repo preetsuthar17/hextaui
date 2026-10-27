@@ -18,13 +18,29 @@ import { parseThemeCss, themeToCss, themeToJson } from "@/lib/theme-editor/css"
 import { themeInstallCommand } from "@/lib/theme-editor/registry"
 import type { Theme } from "@/lib/theme-editor/theme"
 
-function CodePanel({ value, label }: { value: string; label: string }) {
+function CodePanel({
+  value,
+  label,
+  prompt,
+}: {
+  value: string
+  label: string
+  prompt?: boolean
+}) {
   return (
-    <div className="flex min-w-0 items-start rounded-lg bg-muted/60 inset-ring-(length:--hairline) inset-ring-border">
-      <pre className="max-h-[min(24rem,50svh)] min-w-0 flex-1 overflow-auto py-3 ps-3 font-mono text-xs/5 whitespace-pre text-foreground">
+    <div className="flex min-w-0 items-start rounded-lg bg-muted/50 inset-ring-(length:--hairline) inset-ring-border dark:bg-muted/30">
+      <pre
+        data-prompt={prompt ? "" : undefined}
+        className="max-h-[min(22rem,45svh)] min-w-0 flex-1 overflow-auto py-2.5 ps-3 font-mono text-xs/5 whitespace-pre text-foreground data-prompt:max-h-none data-prompt:py-2"
+      >
+        {prompt ? (
+          <span aria-hidden="true" className="text-muted-foreground select-none">
+            ${" "}
+          </span>
+        ) : null}
         <code>{value}</code>
       </pre>
-      <div className="shrink-0 p-1.5">
+      <div className="shrink-0 p-1">
         <DocsCopyButton
           value={value}
           label={label}
@@ -57,28 +73,34 @@ function ExportDialog({
         <DialogHeader>
           <DialogTitle>Export theme</DialogTitle>
           <DialogDescription>
-            Install it with the shadcn CLI, or paste the CSS into your global
-            stylesheet.
+            One command writes both modes into your CSS. Or copy the code.
           </DialogDescription>
         </DialogHeader>
         <DialogBody>
-          <div className="flex min-w-0 flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <p className="text-sm font-medium">shadcn CLI</p>
-            <CodePanel value={command} label="Copy install command" />
-          </div>
-          <Tabs defaultValue="css">
-            <TabsList>
-              <TabsTrigger value="css">CSS</TabsTrigger>
-              <TabsTrigger value="json">JSON</TabsTrigger>
-            </TabsList>
-            <TabsContent value="css">
-              <CodePanel value={css} label="Copy CSS" />
-            </TabsContent>
-            <TabsContent value="json">
-              <CodePanel value={json} label="Copy JSON" />
-            </TabsContent>
-          </Tabs>
+          <div className="flex min-w-0 flex-col gap-5">
+            <section className="flex flex-col gap-2">
+              <h3 className="text-xs font-medium text-muted-foreground">
+                Install with the shadcn CLI
+              </h3>
+              <CodePanel value={command} label="Copy install command" prompt />
+            </section>
+            <Tabs defaultValue="css">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-xs font-medium text-muted-foreground">
+                  Or copy the code
+                </h3>
+                <TabsList>
+                  <TabsTrigger value="css">CSS</TabsTrigger>
+                  <TabsTrigger value="json">JSON</TabsTrigger>
+                </TabsList>
+              </div>
+              <TabsContent value="css">
+                <CodePanel value={css} label="Copy CSS" />
+              </TabsContent>
+              <TabsContent value="json">
+                <CodePanel value={json} label="Copy JSON" />
+              </TabsContent>
+            </Tabs>
           </div>
         </DialogBody>
       </DialogContent>

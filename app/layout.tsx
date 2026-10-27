@@ -11,7 +11,7 @@ import { CookieConsent } from "@/components/site/cookie-consent"
 import { InlineScript } from "@/components/site/inline-script"
 import { JsonLd } from "@/components/site/json-ld"
 import { LazyToaster } from "@/components/site/lazy-toaster"
-import { SiteChrome } from "@/components/site/site-chrome"
+import { SiteChrome, SiteFrame } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
 import { WebMcp } from "@/components/site/web-mcp"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -122,7 +122,7 @@ export default async function RootLayout({
         <JsonLd data={siteJsonLd()} />
         <ThemeProvider>
           <DocsSearchProvider>
-            <div className="flex min-h-svh flex-col">
+            <SiteFrame>
               <SiteChrome>
                 <SiteHeader
                   stars={stars}
@@ -131,14 +131,14 @@ export default async function RootLayout({
                 />
               </SiteChrome>
               <div className="flex flex-1 flex-col">{children}</div>
-              <SiteChrome>
+              <SiteChrome modes={["site", "app"]}>
                 <SiteFooter />
               </SiteChrome>
-            </div>
+            </SiteFrame>
           </DocsSearchProvider>
           <FrameLines />
           <LazyToaster />
-          <SiteChrome>
+          <SiteChrome modes={["site", "app"]}>
             <CookieConsent />
           </SiteChrome>
         </ThemeProvider>

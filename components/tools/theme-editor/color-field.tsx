@@ -50,7 +50,7 @@ function Swatch({
     >
       <span
         aria-hidden="true"
-        className="col-start-1 row-start-1 bg-(--swatch)"
+        className="col-start-1 row-start-1 rounded-md bg-(--swatch) inset-ring-(length:--hairline) inset-ring-foreground/15"
         style={{ "--swatch": formatOklch(color) } as React.CSSProperties}
       />
       <input
