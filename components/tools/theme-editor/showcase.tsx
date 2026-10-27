@@ -63,6 +63,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { PortalContainer } from "@/components/tools/theme-editor/preview-frame"
 import { useToday } from "@/hooks/use-today"
 
 const ShowcaseChart = dynamic(
@@ -70,9 +71,6 @@ const ShowcaseChart = dynamic(
   { ssr: false, loading: () => <Skeleton className="h-28 w-full" /> }
 )
 
-const PortalContainer = React.createContext<
-  React.RefObject<HTMLElement | null> | undefined
->(undefined)
 
 function AssistantCard() {
   const [draft, setDraft] = React.useState("")

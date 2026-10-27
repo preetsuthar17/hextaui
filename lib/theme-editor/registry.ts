@@ -1,5 +1,10 @@
 import { siteUrl } from "@/lib/site"
 import { formatOklch } from "@/lib/theme-editor/color"
+import {
+  hasCustomTracking,
+  themeExtras,
+  themeInlineExtras,
+} from "@/lib/theme-editor/css"
 import { decodeTheme, maxEncodedLength } from "@/lib/theme-editor/encode"
 import type { Theme, ThemeMode } from "@/lib/theme-editor/theme"
 import { tokenNames } from "@/lib/theme-editor/tokens"
@@ -26,6 +31,7 @@ function modeVars(theme: Theme, mode: ThemeMode): Record<string, string> {
     ...Object.fromEntries(
       tokenNames.map((name) => [name, formatOklch(theme[mode][name])])
     ),
+    ...(mode === "light" ? themeExtras(theme) : {}),
   }
 }
 
@@ -37,15 +43,21 @@ function themeRegistryItem(theme: Theme, id: string) {
     title: "HextaUI theme",
     description: `A shadcn/ui theme made with the HextaUI theme editor. Edit it at ${themeShareUrl(id)}`,
     cssVars: {
-      theme: Object.fromEntries(
-        statusTokens.flatMap((token) => [
-          [`color-${token}`, `var(--${token})`],
-          [`color-${token}-foreground`, `var(--${token}-foreground)`],
-        ])
-      ),
+      theme: {
+        ...Object.fromEntries(
+          statusTokens.flatMap((token) => [
+            [`color-${token}`, `var(--${token})`],
+            [`color-${token}-foreground`, `var(--${token}-foreground)`],
+          ])
+        ),
+        ...themeInlineExtras(theme),
+      } as Record<string, string>,
       light: modeVars(theme, "light"),
       dark: modeVars(theme, "dark"),
     },
+    ...(hasCustomTracking(theme)
+      ? { css: { body: { "letter-spacing": "var(--tracking-normal)" } } }
+      : {}),
   }
 }
 

@@ -233,6 +233,38 @@ function toHex(color: Oklch, withAlpha = false) {
     .join("")}`
 }
 
+function toHsl(color: Oklch) {
+  const { r, g, b, a } = oklchToRgb(color)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const l = (max + min) / 2
+  const d = max - min
+  let h = 0
+  let s = 0
+  if (d > 1e-6) {
+    s = d / (1 - Math.abs(2 * l - 1))
+    if (max === r) h = ((g - b) / d) % 6
+    else if (max === g) h = (b - r) / d + 2
+    else h = (r - g) / d + 4
+    h = normalizeHue(h * 60)
+  }
+  return { h, s, l, a }
+}
+
+function formatHslChannels(color: Oklch) {
+  const { h, s, l, a } = toHsl(color)
+  const alpha = a < 1 ? ` / ${round(a * 100, 0)}%` : ""
+  return `${round(h, 1)} ${round(s * 100, 1)}% ${round(l * 100, 1)}%${alpha}`
+}
+
+function formatRgb(color: Oklch) {
+  const { r, g, b, a } = oklchToRgb(color)
+  const channels = [r, g, b].map((channel) => Math.round(channel * 255))
+  return a < 1
+    ? `rgba(${channels.join(", ")}, ${round(a, 2)})`
+    : `rgb(${channels.join(", ")})`
+}
+
 function relativeLuminance({ r, g, b }: Rgb) {
   return (
     0.2126 * srgbToLinear(r) +
@@ -293,7 +325,9 @@ export {
   apcaContrast,
   clamp,
   contrastRatio,
+  formatHslChannels,
   formatOklch,
+  formatRgb,
   inGamut,
   normalizeHue,
   oklchToRgb,
@@ -303,6 +337,7 @@ export {
   sameColor,
   toGamut,
   toHex,
+  toHsl,
   type Oklch,
   type Rgb,
 }

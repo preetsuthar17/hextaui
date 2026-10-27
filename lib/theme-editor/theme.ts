@@ -5,6 +5,13 @@ import {
   parseColor,
   type Oklch,
 } from "@/lib/theme-editor/color"
+import { fontStack, systemFont } from "@/lib/theme-editor/fonts"
+import {
+  defaultShadow,
+  sameShadow,
+  shadowScale,
+  type ThemeShadow,
+} from "@/lib/theme-editor/shadow"
 import {
   contrastPairs,
   tokenNames,
@@ -16,12 +23,55 @@ type ThemeMode = "light" | "dark"
 
 type ThemeColors = Record<TokenName, Oklch>
 
-type Theme = { light: ThemeColors; dark: ThemeColors; radius: number }
+type ThemeFonts = { sans: string; serif: string; mono: string }
+
+type Theme = {
+  light: ThemeColors
+  dark: ThemeColors
+  radius: number
+  fonts: ThemeFonts
+  tracking: number
+  textBase: number
+  shadow: ThemeShadow
+}
 
 const themeModes: ThemeMode[] = ["light", "dark"]
 
 const minRadius = 0
 const maxRadius = 2
+
+const defaultFonts: ThemeFonts = {
+  sans: systemFont,
+  serif: systemFont,
+  mono: systemFont,
+}
+
+const defaultTracking = 0
+const minTracking = -0.05
+const maxTracking = 0.1
+
+const defaultTextBase = 16
+const minTextBase = 12
+const maxTextBase = 20
+
+const textScale = [
+  ["xs", 0.75],
+  ["sm", 0.875],
+  ["base", 1],
+  ["lg", 1.125],
+  ["xl", 1.25],
+  ["2xl", 1.5],
+  ["3xl", 1.875],
+  ["4xl", 2.25],
+] as const
+
+const trackingScale = [
+  ["tighter", -0.05],
+  ["tight", -0.025],
+  ["wide", 0.025],
+  ["wider", 0.05],
+  ["widest", 0.1],
+] as const
 
 function colors(values: Record<TokenName, string>): ThemeColors {
   return Object.fromEntries(
@@ -35,6 +85,10 @@ function colors(values: Record<TokenName, string>): ThemeColors {
 
 const defaultTheme: Theme = {
   radius: 0.8,
+  fonts: defaultFonts,
+  tracking: defaultTracking,
+  textBase: defaultTextBase,
+  shadow: defaultShadow,
   light: colors({
     background: "oklch(1 0 0)",
     foreground: "oklch(0.145 0 0)",
@@ -125,6 +179,49 @@ function themeVars(theme: Theme, mode: ThemeMode) {
   return vars
 }
 
+function hasCustomFonts(theme: Theme) {
+  return (
+    theme.fonts.sans !== systemFont ||
+    theme.fonts.serif !== systemFont ||
+    theme.fonts.mono !== systemFont
+  )
+}
+
+function hasCustomShadow(theme: Theme) {
+  return !sameShadow(theme.shadow, defaultShadow)
+}
+
+function trackingValue(value: number) {
+  return `${Math.round(value * 1000) / 1000}em`
+}
+
+function textSize(theme: Theme, factor: number) {
+  return `${Math.round((theme.textBase * factor) / 16 * 10000) / 10000}rem`
+}
+
+function previewVars(theme: Theme, mode: ThemeMode) {
+  const vars: Record<string, string> = { "--radius": `${theme.radius}rem` }
+  for (const name of tokenNames) {
+    const value = formatOklch(theme[mode][name])
+    vars[`--${name}`] = value
+    vars[`--color-${name}`] = value
+  }
+  vars["--font-sans"] = fontStack(theme.fonts.sans, "sans")
+  vars["--font-serif"] = fontStack(theme.fonts.serif, "serif")
+  vars["--font-mono"] = fontStack(theme.fonts.mono, "mono")
+  vars["--tracking-normal"] = trackingValue(theme.tracking)
+  for (const [name, offset] of trackingScale) {
+    vars[`--tracking-${name}`] = trackingValue(theme.tracking + offset)
+  }
+  for (const [name, factor] of textScale) {
+    vars[`--text-${name}`] = textSize(theme, factor)
+  }
+  for (const [size, value] of Object.entries(shadowScale(theme.shadow))) {
+    vars[`--shadow-${size}`] = value
+  }
+  return vars
+}
+
 type ContrastResult = ContrastPair & {
   mode: ThemeMode
   ratio: number
@@ -132,9 +229,13 @@ type ContrastResult = ContrastPair & {
   passes: boolean
 }
 
-function checkContrast(theme: Theme, mode: ThemeMode): ContrastResult[] {
+function checkContrast(
+  theme: Theme,
+  mode: ThemeMode,
+  pairs: ContrastPair[] = contrastPairs
+): ContrastResult[] {
   const palette = theme[mode]
-  return contrastPairs.map((pair) => {
+  return pairs.map((pair) => {
     const ratio = contrastRatio(
       palette[pair.foreground],
       palette[pair.background],
@@ -156,22 +257,39 @@ function checkContrast(theme: Theme, mode: ThemeMode): ContrastResult[] {
 
 function cloneTheme(theme: Theme): Theme {
   return {
-    radius: theme.radius,
+    ...theme,
     light: { ...theme.light },
     dark: { ...theme.dark },
+    fonts: { ...theme.fonts },
+    shadow: { ...theme.shadow, color: { ...theme.shadow.color } },
   }
 }
 
 export {
   checkContrast,
   cloneTheme,
+  defaultFonts,
+  defaultTextBase,
   defaultTheme,
+  defaultTracking,
+  hasCustomFonts,
+  hasCustomShadow,
   maxRadius,
+  maxTextBase,
+  maxTracking,
   minRadius,
+  minTextBase,
+  minTracking,
+  previewVars,
+  textScale,
+  textSize,
   themeModes,
   themeVars,
+  trackingScale,
+  trackingValue,
   type ContrastResult,
   type Theme,
   type ThemeColors,
+  type ThemeFonts,
   type ThemeMode,
 }

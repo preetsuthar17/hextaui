@@ -105,6 +105,7 @@ type ContrastPair = {
   foreground: TokenName
   background: TokenName
   minimum: number
+  kind?: "text" | "ui"
 }
 
 const contrastPairs: ContrastPair[] = [
@@ -141,6 +142,26 @@ const contrastPairs: ContrastPair[] = [
   },
 ]
 
+const reportPairs: ContrastPair[] = [
+  ...contrastPairs,
+  { foreground: "foreground", background: "card", minimum: 4.5 },
+  { foreground: "foreground", background: "muted", minimum: 4.5 },
+  { foreground: "muted-foreground", background: "card", minimum: 4.5 },
+  { foreground: "muted-foreground", background: "secondary", minimum: 4.5 },
+  { foreground: "destructive", background: "background", minimum: 4.5 },
+  { foreground: "success", background: "background", minimum: 4.5 },
+  { foreground: "info", background: "background", minimum: 4.5 },
+  { foreground: "warning", background: "background", minimum: 4.5 },
+  { foreground: "primary", background: "background", minimum: 3, kind: "ui" },
+  { foreground: "ring", background: "background", minimum: 3, kind: "ui" },
+  { foreground: "sidebar-primary", background: "sidebar", minimum: 3, kind: "ui" },
+  { foreground: "chart-1", background: "card", minimum: 3, kind: "ui" },
+  { foreground: "chart-2", background: "card", minimum: 3, kind: "ui" },
+  { foreground: "chart-3", background: "card", minimum: 3, kind: "ui" },
+  { foreground: "chart-4", background: "card", minimum: 3, kind: "ui" },
+  { foreground: "chart-5", background: "card", minimum: 3, kind: "ui" },
+]
+
 function tokenLabel(name: TokenName) {
   const label = name.replace(/-/g, " ")
   return label.charAt(0).toUpperCase() + label.slice(1)
@@ -148,6 +169,7 @@ function tokenLabel(name: TokenName) {
 
 export {
   contrastPairs,
+  reportPairs,
   tokenGroups,
   tokenLabel,
   tokenNames,

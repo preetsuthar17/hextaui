@@ -203,7 +203,12 @@ function generateTheme(input: Oklch, options: GenerateOptions = {}): Theme {
     "sidebar-ring": darkRing,
   }
 
-  return { light, dark, radius: options.radius ?? defaultTheme.radius }
+  return {
+    ...defaultTheme,
+    light,
+    dark,
+    radius: options.radius ?? defaultTheme.radius,
+  }
 }
 
 export { ensureContrast, generateTheme, minimumContrast, type GenerateOptions }
