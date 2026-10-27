@@ -8,13 +8,13 @@ import { CatalogBody, CatalogHeader } from "@/components/site/catalog-header"
 import { CatalogViewToggle } from "@/components/site/catalog-view"
 import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import { T, t } from "@/lib/i18n/rich"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "React blocks for AI products, built on shadcn/ui",
   description:
-    "Practical blocks built for AI products, with the hard states handled: streaming, tool calls, reasoning, voice and the screens around them. Part of HextaUI Pro, with Prompt Input free.",
+    "Drop-in shadcn/ui blocks that ship your AI app’s chat UI in days, with streaming, tool calls, reasoning and voice done. Part of HextaUI Pro, Prompt Input free.",
   path: "/blocks",
 })
 
@@ -24,7 +24,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/blocks",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [{ name: "Blocks", path: "/blocks" }],
           type: "CollectionPage",

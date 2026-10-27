@@ -29,6 +29,7 @@ const groups = [
     pages: [
       { href: "/blog", title: "Blog" },
       { href: "/compare", title: "Compare" },
+      { href: "/research", title: "Research" },
       { href: "/docs/mcp", title: "MCP server" },
       { href: "/sponsor", title: "Sponsor" },
     ],
@@ -72,9 +73,7 @@ function SiteFooter({ className }: { className?: string }) {
               {siteName}
             </Link>
             <p className="marketing-small text-sm/[1.375rem] font-medium text-foreground/75">
-              <Chrome>The hard states, handled.</Chrome>
-              <br />
-              <Chrome>Blocks for shadcn/ui.</Chrome>
+              <Chrome>Ship your AI app’s chat UI in days, not weeks.</Chrome>
             </p>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 sm:gap-x-18 lg:w-188">

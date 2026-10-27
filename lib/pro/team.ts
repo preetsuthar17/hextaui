@@ -2,14 +2,14 @@ import { and, asc, count, eq } from "drizzle-orm"
 
 import { schema, type Db } from "@/lib/db"
 import { findOwnPurchase, type Purchase } from "@/lib/payments"
-import { isTeamPlan, proPlans, type TeamPlanId } from "@/lib/pro/pricing"
+import { allProPlans, isTeamPlan, type TeamPlanId } from "@/lib/pro/pricing"
 
 type Team = Purchase & { plan: TeamPlanId }
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function seatCount(plan: TeamPlanId) {
-  return proPlans[plan].seats
+  return allProPlans[plan].seats
 }
 
 function memberLimit(plan: TeamPlanId) {

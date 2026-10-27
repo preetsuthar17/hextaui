@@ -9,10 +9,10 @@ import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { NumberFlow } from "@/components/ui/number-flow"
 import { startCheckout } from "@/lib/auth-client"
-import { earlyBirdLastDay, proPlans, type ProPlanId } from "@/lib/pro/pricing"
+import { earlyBirdLastDay, proPlans, type SalePlanId } from "@/lib/pro/pricing"
 import { useEarlyBird } from "@/lib/pro/use-early-bird"
 
-type PricingPlanId = "free" | ProPlanId
+type PricingPlanId = "free" | SalePlanId
 
 type PricingPlan = {
   id: PricingPlanId
@@ -21,8 +21,8 @@ type PricingPlan = {
   features: string[]
 }
 
-const rulerMax = 500
-const rulerTicks = [0, 100, 200, 300, 400, 500]
+const rulerMax = 300
+const rulerTicks = [0, 100, 200, 300]
 
 function planPrices(id: PricingPlanId, early: boolean) {
   if (id === "free") return { now: 0, was: null }
@@ -65,7 +65,7 @@ function useInView<T extends HTMLElement>() {
   return [ref, seen] as const
 }
 
-function PlanButton({ plan }: { plan: ProPlanId }) {
+function PlanButton({ plan }: { plan: SalePlanId }) {
   const { guard, dialog } = useInAppBrowserGate()
 
   return (
@@ -199,7 +199,7 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
       >
         {rows.map(({ plan, index, now }) => {
           const from = (now / rulerMax) * 100
-          const to = index * 25 + 12.5
+          const to = ((index + 0.5) / rows.length) * 100
           return (
             <path
               key={plan.id}
@@ -211,7 +211,7 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
           )
         })}
       </svg>
-      <ul className="mt-10 grid gap-y-12 sm:grid-cols-2 sm:gap-x-8 lg:mt-0 lg:grid-cols-4 lg:gap-x-0">
+      <ul className="mt-10 grid gap-y-12 sm:grid-cols-3 sm:gap-x-8 lg:mt-0 lg:gap-x-0">
         {rows.map(({ plan, now, was }) => (
           <li
             key={plan.id}

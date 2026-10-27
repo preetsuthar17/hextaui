@@ -13,7 +13,7 @@ import {
 import { DocsPage } from "@/components/docs/docs-page"
 import { apiErrors } from "@/lib/api-error"
 import type { DocsTocItem } from "@/lib/docs"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 import { absoluteUrl } from "@/lib/site"
 
@@ -78,7 +78,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/docs/api",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [
             { name: "Docs", path: "/docs" },
@@ -164,8 +164,8 @@ export default function Page() {
           Pro, on which plan, and which providers are linked.
         </li>
         <li>
-          <DocsCode>POST /api/checkout</DocsCode> starts a Solo, Team or
-          Unlimited checkout and returns its URL. No session is needed.
+          <DocsCode>POST /api/checkout</DocsCode> starts a Solo or Team checkout
+          and returns its URL. No session is needed.
         </li>
         <li>
           <DocsCode>POST /api/claim</DocsCode> confirms a payment from its

@@ -57,7 +57,7 @@ function getHomeMarkdown() {
     }),
     `# ${siteName}: ready-to-use blocks and components built on top of shadcn/ui`,
     `> ${siteSummary}`,
-    `${siteName} has ${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for React, built on Base UI and Tailwind CSS v4. You add them with the shadcn CLI, the source lands in your project and it is yours to change. ${siteName} Pro adds practical blocks built for AI products, with the hard states handled: today the chat, tool call, reasoning and voice screens, next the account, settings and dashboard screens around them.`,
+    `${siteName} has ${docsComponents.length} components, ${docsHooks.length} hooks and ${docsUtilities.length} utilities for React, built on Base UI and Tailwind CSS v4. You add them with the shadcn CLI, the source lands in your project and it is yours to change. ${siteName} Pro gets your AI app’s chat UI shipped in days instead of weeks: drop-in blocks for chat, tool calls, reasoning and voice with every state already worked out, and next the account, settings and dashboard screens around them.`,
     getAgentGuideMarkdown(2),
     "## Conventions",
     bullets(agentNotes),

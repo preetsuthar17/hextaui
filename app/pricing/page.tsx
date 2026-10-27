@@ -25,7 +25,7 @@ import {
   SectionHead,
 } from "@/components/site/pricing-sections"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import {
   getPricingBlocks,
   getProProductJsonLd,
@@ -38,7 +38,7 @@ import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "Pricing",
-  description: `HextaUI components are free and MIT licensed. HextaUI Pro blocks for AI products are one payment: Solo from $${proPlans.solo.earlyPrice}, a team of ${proPlans.team.seats} from $${proPlans.team.earlyPrice}, unlimited seats from $${proPlans.unlimited.earlyPrice}.`,
+  description: `HextaUI components are free under MIT. Pro blocks for AI products are one payment: Solo from $${proPlans.solo.earlyPrice}, or a team of ${proPlans.team.seats} from $${proPlans.team.earlyPrice}.`,
   path: "/pricing",
   markdown: "/pricing.md",
 })
@@ -84,25 +84,14 @@ const plans: PricingPlan[] = [
       "One shared token allowed in CI",
     ],
   },
-  {
-    id: "unlimited",
-    name: proPlans.unlimited.name,
-    seats: "Every developer",
-    features: [
-      "Everything in Team",
-      "No seat limit, for one company",
-      "One invoice for the whole company",
-    ],
-  },
 ]
 
 type Cell = boolean | string
 
-const comparison: { label: string; values: [Cell, Cell, Cell, Cell] }[] = [
+const comparison: { label: string; values: [Cell, Cell, Cell] }[] = [
   {
     label: "Components, hooks and utilities",
     values: [
-      `All ${libraryCount}`,
       `All ${libraryCount}`,
       `All ${libraryCount}`,
       `All ${libraryCount}`,
@@ -116,31 +105,25 @@ const comparison: { label: string; values: [Cell, Cell, Cell, Cell] }[] = [
         : false,
       `All ${blocks.length}`,
       `All ${blocks.length}`,
-      `All ${blocks.length}`,
     ],
   },
-  { label: "Future block categories", values: [false, true, true, true] },
+  { label: "Future block categories", values: [false, true, true] },
   {
     label: "Developers",
-    values: ["Anyone", "1", `Up to ${proPlans.team.seats}`, "Unlimited"],
+    values: ["Anyone", "1", `Up to ${proPlans.team.seats}`],
   },
-  { label: "Shared token in CI", values: [false, false, true, true] },
+  { label: "Shared token in CI", values: [false, false, true] },
   {
     label: "Commercial use and client work",
-    values: [true, true, true, true],
+    values: [true, true, true],
   },
   {
     label: "Billing",
-    values: ["None", "One payment", "One payment", "One payment"],
+    values: ["None", "One payment", "One payment"],
   },
   {
     label: "Refund",
-    values: [
-      false,
-      `${refundDays} days`,
-      `${refundDays} days`,
-      `${refundDays} days`,
-    ],
+    values: [false, `${refundDays} days`, `${refundDays} days`],
   },
 ]
 
@@ -173,7 +156,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/pricing",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [{ name: "Pricing", path: "/pricing" }],
           type: "WebPage",
@@ -188,7 +171,7 @@ export default function Page() {
           <PageHead
             id="pricing-title"
             eyebrow="Pricing"
-            title="Pay once, keep every block"
+            title="Pay once, ship your AI app faster"
           >
             {proSummary} The component library underneath stays free and open
             source.

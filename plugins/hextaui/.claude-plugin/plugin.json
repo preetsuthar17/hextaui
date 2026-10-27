@@ -2,7 +2,7 @@
   "name": "hextaui",
   "displayName": "HextaUI",
   "version": "1.0.0",
-  "description": "Find, read and install HextaUI components: accessible shadcn/ui-compatible React components and blocks built for AI products, with the hosted HextaUI MCP server.",
+  "description": "Find, read and install HextaUI components: accessible shadcn/ui-compatible React components and drop-in blocks that ship your AI app’s chat UI faster, with the hosted HextaUI MCP server.",
   "author": {
     "name": "Preet Suthar",
     "email": "hi@preetsuthar.me",

@@ -16,20 +16,23 @@ const proPlans = {
     summary:
       "Up to 10 developers on one invoice, with one shared token allowed in CI.",
   },
+} as const
+
+const legacyPlans = {
   unlimited: {
     id: "unlimited",
     name: "Unlimited",
-    earlyPrice: 299,
-    price: 449,
     seats: null,
-    summary:
-      "Every developer at one company on one invoice, with no seat limit and one shared token allowed in CI.",
   },
 } as const
 
-type ProPlanId = keyof typeof proPlans
+const allProPlans = { ...proPlans, ...legacyPlans }
 
-const proPlanIds = Object.keys(proPlans) as ProPlanId[]
+type ProPlanId = keyof typeof allProPlans
+
+type SalePlanId = keyof typeof proPlans
+
+const salePlanIds = Object.keys(proPlans) as SalePlanId[]
 
 const teamPlanIds = ["team", "unlimited"] as const satisfies ProPlanId[]
 
@@ -46,11 +49,15 @@ function isEarlyBird(now = new Date()) {
   return now < earlyBirdEnd
 }
 
-function planPrice(plan: ProPlanId, now = new Date()) {
+function planPrice(plan: SalePlanId, now = new Date()) {
   return isEarlyBird(now) ? proPlans[plan].earlyPrice : proPlans[plan].price
 }
 
 function isProPlanId(value: unknown): value is ProPlanId {
+  return typeof value === "string" && Object.hasOwn(allProPlans, value)
+}
+
+function isSalePlanId(value: unknown): value is SalePlanId {
   return typeof value === "string" && Object.hasOwn(proPlans, value)
 }
 
@@ -62,20 +69,23 @@ const proPrice = proPlans.solo.earlyPrice
 const proRegularPrice = proPlans.solo.price
 
 export {
+  allProPlans,
   earlyBirdEnd,
   earlyBirdLastDay,
   earlyBirdLastDayIso,
   isEarlyBird,
   isProPlanId,
+  isSalePlanId,
   isTeamPlan,
   planPrice,
   planRank,
-  proPlanIds,
   proPlans,
   proPrice,
   proRegularPrice,
   refundDays,
+  salePlanIds,
   teamPlanIds,
   type ProPlanId,
+  type SalePlanId,
   type TeamPlanId,
 }

@@ -424,7 +424,7 @@ function getOpenApiDocument() {
           tags: ["Account"],
           summary: "Start a HextaUI Pro checkout",
           description:
-            "Creates a Dodo Payments checkout for the Solo, Team or Unlimited plan and returns its URL. No account is needed: a signed-out buyer pays first and claims the purchase on `/account` afterwards, through the claim link Dodo returns them to. With a session, the checkout is tied to that account, and if the account already has that plan or a bigger one, returns `/account` instead. Only accepted from pages on hextaui.com.",
+            "Creates a Dodo Payments checkout for the Solo or Team plan and returns its URL. No account is needed: a signed-out buyer pays first and claims the purchase on `/account` afterwards, through the claim link Dodo returns them to. With a session, the checkout is tied to that account, and if the account already has that plan or a bigger one, returns `/account` instead. Only accepted from pages on hextaui.com.",
           security: [{}, ...signedIn],
           requestBody: {
             required: false,
@@ -435,7 +435,7 @@ function getOpenApiDocument() {
                   properties: {
                     plan: {
                       type: "string",
-                      enum: ["solo", "team", "unlimited"],
+                      enum: ["solo", "team"],
                       default: "solo",
                       description: "Which plan to buy.",
                     },
@@ -698,7 +698,7 @@ function getOpenApiDocument() {
           tags: ["Account"],
           summary: "Give a teammate a seat",
           description:
-            "Adds a teammate by email to the signed-in owner's Team plan. They get Pro as soon as they sign in with that verified email. A Team plan has 10 seats including the owner's; Unlimited has no seat limit. Only accepted from pages on hextaui.com.",
+            "Adds a teammate by email to the signed-in owner's Team plan. They get Pro as soon as they sign in with that verified email. A Team plan has 10 seats including the owner's; a legacy Unlimited plan has no seat limit. Only accepted from pages on hextaui.com.",
           security: signedIn,
           requestBody: {
             required: true,
@@ -1141,7 +1141,7 @@ function getOpenApiDocument() {
               type: ["integer", "null"],
               example: 10,
               description:
-                "Seats on the plan, including the owner's. Null on Unlimited.",
+                "Seats on the plan, including the owner's. Null on a legacy Unlimited plan.",
             },
             members: { type: "array", items: ref("TeamMember") },
           },

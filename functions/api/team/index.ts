@@ -21,10 +21,9 @@ const noStore = { "cache-control": "no-store" }
 
 function teamRequired() {
   return apiError("team_required", {
-    error: "Only a Team or Unlimited owner can manage seats",
-    detail: "This account doesn't own a HextaUI Pro Team or Unlimited plan.",
-    resolution:
-      "Buy Team or Unlimited at https://hextaui.com/account to add teammates.",
+    error: "Only a Team owner can manage seats",
+    detail: "This account doesn't own a HextaUI Pro Team plan.",
+    resolution: "Buy Team at https://hextaui.com/account to add teammates.",
   })
 }
 

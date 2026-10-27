@@ -42,12 +42,14 @@ import {
   writeCachedPro,
 } from "@/lib/auth-client"
 import {
+  allProPlans,
   earlyBirdLastDay,
   isTeamPlan,
-  proPlanIds,
   proPlans,
   refundDays,
+  salePlanIds,
   type ProPlanId,
+  type SalePlanId,
 } from "@/lib/pro/pricing"
 import { useEarlyBird } from "@/lib/pro/use-early-bird"
 import { trackPurchaseCompleted } from "@/lib/purchase-tracking"
@@ -62,7 +64,7 @@ import {
   type StoredClaim,
 } from "@/lib/claim-client"
 
-type ProPlan = (typeof proPlans)[ProPlanId]
+type ProPlan = (typeof proPlans)[SalePlanId]
 
 type Plan = {
   pro: boolean
@@ -292,8 +294,8 @@ function ProUpgrade() {
           </li>
         ))}
       </ul>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {proPlanIds.map((id) => (
+      <div className="grid gap-3 sm:grid-cols-2">
+        {salePlanIds.map((id) => (
           <PlanCard key={id} plan={proPlans[id]} early={early} />
         ))}
       </div>
@@ -316,23 +318,20 @@ function ProUpgrade() {
   )
 }
 
-function TeamUpgrade({ plan }: { plan: "solo" | "team" }) {
-  const target = plan === "solo" ? "Team or Unlimited" : "Unlimited"
+function TeamUpgrade() {
   return (
     <section className="flex flex-col gap-1">
-      <h2 className="font-medium">
-        {plan === "solo" ? "Need seats for your team?" : "Need more seats?"}
-      </h2>
+      <h2 className="font-medium">Need seats for your team?</h2>
       <p className="text-sm text-pretty text-muted-foreground">
         Email{" "}
         <a
-          href={`mailto:${siteContactEmail}?subject=Upgrade%20HextaUI%20Pro%20to%20${plan === "solo" ? "Team" : "Unlimited"}`}
+          href={`mailto:${siteContactEmail}?subject=Upgrade%20HextaUI%20Pro%20to%20Team`}
           className="text-foreground underline underline-offset-4"
         >
           {siteContactEmail}
         </a>{" "}
-        from this account’s email to move to {target}. You only pay the
-        difference.
+        from this account’s email to move to Team, with up to{" "}
+        {proPlans.team.seats} developers. You only pay the difference.
       </p>
     </section>
   )
@@ -383,7 +382,7 @@ function PlanStatus({
   }
   if (!plan) return <Skeleton className="h-5 w-12" />
   if (!plan.pro || !plan.plan) return <Badge>Free</Badge>
-  return <Badge variant="success">Pro {proPlans[plan.plan].name}</Badge>
+  return <Badge variant="success">Pro {allProPlans[plan.plan].name}</Badge>
 }
 
 function AccountView() {
@@ -478,7 +477,7 @@ function ClaimNotice({
     )
   }
 
-  const planName = proPlans[result.plan].name
+  const planName = allProPlans[result.plan].name
   if (result.account === "this") {
     return (
       <Alert variant="success">
@@ -629,7 +628,7 @@ function AccountContent() {
       {plan && !plan.pro && !busy ? <ProUpgrade /> : null}
       {owned && isTeamPlan(owned) ? <TeamSeats /> : null}
       {plan?.pro ? <ProTokens /> : null}
-      {owned && owned !== "unlimited" ? <TeamUpgrade plan={owned} /> : null}
+      {owned === "solo" ? <TeamUpgrade /> : null}
       {plan ? <EmailSettings subscribed={plan.emailUpdates} /> : null}
       <div>
         <Button variant="outline" size="sm" onClick={() => signOut()}>

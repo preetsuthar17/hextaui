@@ -1,14 +1,16 @@
 const siteName = "HextaUI"
 const siteUrl = "https://hextaui.com"
 const siteDescription =
-  "Practical shadcn/ui blocks built for AI products, with the hard states handled."
+  "Ship your AI app’s chat UI faster with shadcn/ui blocks that already handle streaming, tool calls, voice and agent states."
 const siteTitle = "HextaUI — React components and blocks for shadcn/ui"
 const siteSummary =
-  "HextaUI is practical shadcn/ui blocks built for AI products, with streaming, tool calls and every other hard state handled, on a free, open-source React component library."
+  "HextaUI gets your AI app’s chat UI shipped in days, not weeks: shadcn/ui blocks with streaming, tool calls, voice and agent states already handled, on a free, open-source React component library."
 const siteMetaDescription =
-  "Free, open-source React components for shadcn/ui on Base UI, plus practical blocks for AI products with streaming, tool calls and every hard state handled."
+  "Ship your AI app’s chat UI in days, not weeks, with shadcn/ui blocks for streaming, tool calls, voice and agent states, on free, open-source React components."
 const siteAlternateNames = ["Hexta UI", "Hexta", "hextaui"]
 const siteTwitter = "@preetsuthar17"
+const siteDefaultImage = "/opengraph-image"
+const siteThemeColor = { light: "#ffffff", dark: "#0a0a0a" }
 const siteRepository = "https://github.com/preetsuthar17/hextaui"
 const siteContactEmail = "hi@preetsuthar.me"
 const siteAuthor = "Preet Suthar"
@@ -60,11 +62,13 @@ export {
   siteAuthor,
   siteAuthorUrl,
   siteContactEmail,
+  siteDefaultImage,
   siteDescription,
   siteMetaDescription,
   siteName,
   siteRepository,
   siteSummary,
+  siteThemeColor,
   siteTitle,
   siteTwitter,
   siteUrl,

@@ -24,19 +24,30 @@ function ProPriceLink({ from, className }: { from: string; className: string }) 
   )
 }
 
-function HeroActions() {
-  const c = useChrome()
+function HeroActions({
+  label,
+  payment,
+  refund,
+}: {
+  label: string
+  payment: string
+  refund: string
+}) {
+  const price = useSoloPrice()
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
-      <Link
-        href="/blocks"
+    <div className="flex flex-col items-center gap-3">
+      <TrackedLink
+        href="/pricing"
+        event="Pro link clicked"
+        eventProps={{ from: "home-hero", to: "/pricing" }}
         className="hero-cta"
-        data-ml-goal="browse_blocks_click"
       >
-        {c("Browse blocks")}
-      </Link>
-      <ProPriceLink from="home-hero" className="hero-cta-secondary" />
+        {label}
+      </TrackedLink>
+      <p className="text-sm text-white/75">
+        {payment} · <span className="tabular-nums">${price}</span> · {refund}
+      </p>
     </div>
   )
 }

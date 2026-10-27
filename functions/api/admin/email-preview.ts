@@ -24,7 +24,6 @@ const templates: Record<string, () => EmailContent> = {
   welcome: () => welcomeContent(sampleUser),
   "purchase-solo": () => purchaseContent(sampleUser, "solo"),
   "purchase-team": () => purchaseContent(sampleUser, "team"),
-  "purchase-unlimited": () => purchaseContent(sampleUser, "unlimited"),
   "guest-purchase": () =>
     guestPurchaseContent(
       sampleUser,

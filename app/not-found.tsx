@@ -4,12 +4,15 @@ import { DocsList, DocsParagraph } from "@/components/docs/docs-content"
 import { LegalLink } from "@/components/legal/legal-page"
 import { InfoPage, InfoSection } from "@/components/site/info-page"
 import { docsComponents } from "@/lib/docs"
+import { pageMetadata } from "@/lib/metadata"
 import { proBlocks } from "@/lib/pro/catalog"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Page not found",
-  robots: { index: false, follow: true },
-}
+  description:
+    "This page moved or no longer exists. HextaUI was rebuilt on Base UI, so some older links point to components that were renamed or retired.",
+  noindex: true,
+})
 
 export default function NotFound() {
   return (
@@ -29,7 +32,8 @@ export default function NotFound() {
           </li>
           <li>
             <LegalLink href="/blocks">Blocks</LegalLink>: {proBlocks.length}{" "}
-            practical blocks for AI products, with Prompt Input free.
+            drop-in blocks to ship your AI app’s chat UI faster, with Prompt
+            Input free.
           </li>
           <li>
             <LegalLink href="/docs">Docs</LegalLink>: installation, hooks,

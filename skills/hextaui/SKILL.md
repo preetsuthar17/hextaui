@@ -5,7 +5,7 @@ description: "Build React interfaces with HextaUI, accessible shadcn/ui-compatib
 
 # HextaUI
 
-HextaUI is practical shadcn/ui blocks built for AI products, with streaming, tool calls and every other hard state handled, on a free, open-source React component library. Maintained by Preet Suthar (hi@preetsuthar.me).
+HextaUI gets your AI app’s chat UI shipped in days, not weeks: shadcn/ui blocks with streaming, tool calls, voice and agent states already handled, on a free, open-source React component library. Maintained by Preet Suthar (hi@preetsuthar.me).
 
 ## When to use HextaUI
 

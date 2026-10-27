@@ -33,8 +33,11 @@ import {
   getComponentCategoryHref,
 } from "@/lib/component-categories"
 import { docsComponents, docsEntries, titleCase } from "@/lib/docs"
+import { metadataTitle } from "@/lib/metadata"
 import type { OgImage } from "@/lib/opengraph-image"
 import { categoryTitle, proBlocks } from "@/lib/pro/catalog"
+import { getStudies, getStudyHref } from "@/lib/research"
+import { researchDescription, researchTitle } from "@/lib/research/markdown"
 import { siteName } from "@/lib/site"
 import {
   getShadcnComparisonHref,
@@ -43,7 +46,7 @@ import {
 
 type OgPage = { path: string; image: OgImage }
 
-const heroSection = "Blocks for shadcn/ui"
+const heroSection = "AI chat UI for shadcn/ui"
 
 function plural(count: number, word: string) {
   return `${count} ${word}${count === 1 ? "" : "s"}`
@@ -57,7 +60,7 @@ function fromMetadata(
   return {
     path,
     image: {
-      title: String(metadata.title ?? ""),
+      title: metadataTitle(metadata),
       description: String(metadata.description ?? ""),
       ...image,
     },
@@ -69,8 +72,9 @@ function getOgPages(): OgPage[] {
     fromMetadata("/", home, {
       variant: "hero",
       section: `${docsComponents.length} free components`,
-      title: "The hard states, handled.",
-      accent: "Blocks for shadcn/ui.",
+      title: "Ship your AI app’s chat UI this weekend",
+      description:
+        "Skip weeks of streaming, tool call, voice and agent state work. Drop in shadcn/ui blocks that already handle them.",
     }),
     fromMetadata("/pricing", pricing, { variant: "hero", section: "Free & Pro" }),
     fromMetadata("/blocks", blocks, { variant: "hero", section: "HextaUI Pro" }),
@@ -202,6 +206,27 @@ function getOgPages(): OgPage[] {
     })),
   ]
 
+  const researchPages = [
+    {
+      path: "/research",
+      image: {
+        variant: "slab" as const,
+        section: "Research",
+        title: researchTitle,
+        description: researchDescription,
+      },
+    },
+    ...getStudies().map((study) => ({
+      path: getStudyHref(study.slug),
+      image: {
+        variant: "slab" as const,
+        section: "Research",
+        title: study.title,
+        description: study.summary,
+      },
+    })),
+  ]
+
   return [
     ...marketing,
     ...blockPages,
@@ -210,6 +235,7 @@ function getOgPages(): OgPage[] {
     ...categoryPages,
     ...comparePages,
     ...blogPages,
+    ...researchPages,
   ]
 }
 

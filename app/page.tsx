@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Link from "@/components/site/link"
 
 import { HeroActions } from "@/components/site/hero-actions"
 import { InlineScript } from "@/components/site/inline-script"
@@ -10,8 +9,8 @@ import { heroRevealScript } from "@/lib/hero-reveal"
 import { T, t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
 import { siteName } from "@/lib/site"
-import { getProBlock, proBlocks } from "@/lib/pro/catalog"
-import { planPrice } from "@/lib/pro/pricing"
+import { getProBlock } from "@/lib/pro/catalog"
+import { refundDays } from "@/lib/pro/pricing"
 
 export const metadata: Metadata = pageMetadata({
   path: "/",
@@ -26,10 +25,6 @@ const stageBlockNames = [
   "tool-calls",
   "voice-mode",
 ]
-
-const ecommerceCount = proBlocks.filter(
-  (block) => block.category === "ecommerce"
-).length
 
 export default function Page() {
   const stageBlocks = stageBlockNames
@@ -53,41 +48,26 @@ export default function Page() {
         <div className="frame-width relative flex flex-col items-center px-4 sm:px-8">
           <div className="flex w-full max-w-215 flex-col items-center gap-7 pt-10 text-center text-white sm:gap-10 sm:pt-24">
             <div className="flex flex-col items-center">
-              <Link
-                href="/blocks"
-                className="hero-badge hero-reveal mb-6 [--reveal-delay:0.85s] max-sm:hidden"
-              >
-                <span className="opacity-80">
-                  {t("{count} new e-commerce blocks", {
-                    count: ecommerceCount,
-                  })}
-                </span>
-                <span aria-hidden="true" className="h-4 w-px bg-white/10" />
-                <span>{t("Take a look")}</span>
-              </Link>
               <h1
                 id="home-title"
-                className="marketing-display flex flex-col gap-0.5 text-balance"
+                className="marketing-display hero-reveal text-balance [--reveal-delay:0.4s]"
               >
-                <span className="hero-reveal [--reveal-delay:0.4s]">
-                  <T>The hard states, handled.</T>
-                </span>{" "}
-                <span className="hero-reveal text-brand-ice [--reveal-delay:0.5s]">
-                  <T>Blocks for shadcn/ui.</T>
-                </span>
+                <T>Ship your AI app’s chat UI this weekend</T>
               </h1>
               <p className="hero-reveal mt-5 max-w-140 text-base/6 font-medium text-pretty text-white/85 [--reveal-delay:0.6s] sm:text-lg/7">
-                {t(
-                  "{count} free components, plus Pro blocks for AI products and stores from {price}. Streaming, retries and approvals, already worked out.",
-                  {
-                    count: docsComponents.length,
-                    price: `$${planPrice("solo")}`,
-                  }
-                )}
+                <T>
+                  Skip the weeks it takes to get streaming, tool calls, voice
+                  and agent states right, and drop in shadcn/ui blocks that
+                  already handle them.
+                </T>
               </p>
             </div>
             <div className="hero-reveal [--reveal-delay:0.7s]">
-              <HeroActions />
+              <HeroActions
+                label={t("Get Pro and ship faster")}
+                payment={t("One-time payment")}
+                refund={t("{days}-day refund", { days: refundDays })}
+              />
             </div>
           </div>
           <div className="relative mt-8 w-full max-w-252 pb-20 sm:mt-14 sm:pb-28">

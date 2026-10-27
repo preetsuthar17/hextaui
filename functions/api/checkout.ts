@@ -9,7 +9,7 @@ import {
   type PaymentsEnv,
 } from "@/lib/payments"
 import { checkoutReturnUrl, createClaim } from "@/lib/purchase-claim"
-import { isProPlanId, planRank } from "@/lib/pro/pricing"
+import { isSalePlanId, planRank } from "@/lib/pro/pricing"
 import { apiError, sameOriginError } from "@/lib/api-error"
 
 type Context = {
@@ -24,12 +24,11 @@ export async function onRequestPost({ request, env }: Context) {
 
   const body = (await request.json().catch(() => ({}))) as { plan?: unknown }
   const plan = body.plan ?? "solo"
-  if (!isProPlanId(plan)) {
+  if (!isSalePlanId(plan)) {
     return apiError("bad_request", {
       error: "Unknown plan",
-      detail: "The plan must be solo, team or unlimited.",
-      resolution:
-        'Send { "plan": "solo" }, { "plan": "team" } or { "plan": "unlimited" }.',
+      detail: "The plan must be solo or team.",
+      resolution: 'Send { "plan": "solo" } or { "plan": "team" }.',
     })
   }
 

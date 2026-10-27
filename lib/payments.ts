@@ -16,6 +16,7 @@ import {
   planRank,
   teamPlanIds,
   type ProPlanId,
+  type SalePlanId,
   type TeamPlanId,
 } from "@/lib/pro/pricing"
 
@@ -92,7 +93,7 @@ function productPlans(env: PaymentsEnv) {
   return plans
 }
 
-function checkoutProduct(env: PaymentsEnv, plan: ProPlanId, now = new Date()) {
+function checkoutProduct(env: PaymentsEnv, plan: SalePlanId, now = new Date()) {
   const products = planProducts(env)[plan]
   return (isEarlyBird(now) ? products.early : products.regular) || null
 }

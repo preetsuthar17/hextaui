@@ -172,4 +172,14 @@ describe("POST /api/checkout", () => {
     })
     expect(response.status).toBe(400)
   })
+
+  it("rejects the retired Unlimited plan", async () => {
+    mocks.getSession.mockResolvedValue(null)
+    const response = await onRequestPost({
+      request: post({ plan: "unlimited" }),
+      env: makeEnv(),
+    })
+    expect(response.status).toBe(400)
+    expect(mocks.create).not.toHaveBeenCalled()
+  })
 })

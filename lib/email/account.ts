@@ -1,6 +1,6 @@
 import { renderEmail, type EmailContent } from "@/lib/email/layout"
 import { sendEmail, type MailerEnv } from "@/lib/email/send"
-import { proPlans, refundDays, type ProPlanId } from "@/lib/pro/pricing"
+import { allProPlans, refundDays, type ProPlanId } from "@/lib/pro/pricing"
 import { siteContactEmail, siteName, siteUrl } from "@/lib/site"
 
 type Person = { name: string; email: string }
@@ -14,7 +14,7 @@ function welcomeContent(user: Person): EmailContent {
     title: `Welcome to ${siteName}`,
     paragraphs: [
       `Hi ${firstName(user.name)}, thanks for signing up.`,
-      `${siteName} is a free, open-source component library for shadcn/ui, plus Pro blocks for AI products: chat, streaming, tool calls and every other hard state, already handled.`,
+      `${siteName} is a free, open-source component library for shadcn/ui, plus Pro blocks that get your AI app’s chat UI shipped in days, with streaming, tool calls, voice and agent states already handled.`,
       "Prompt Input is free, so you can install a Pro block in your own project and see how it holds up before you buy.",
     ],
     links: [
@@ -31,7 +31,7 @@ function welcomeContent(user: Person): EmailContent {
 }
 
 function purchaseContent(user: Person, plan: ProPlanId): EmailContent {
-  const { name, seats } = proPlans[plan]
+  const { name, seats } = allProPlans[plan]
   return {
     title: `You have ${siteName} Pro ${name}`,
     paragraphs: [
@@ -61,7 +61,7 @@ function guestPurchaseContent(
   plan: ProPlanId,
   claimUrl: string | null
 ): EmailContent {
-  const { name } = proPlans[plan]
+  const { name } = allProPlans[plan]
   return {
     title: `Your ${siteName} Pro ${name} is paid for`,
     paragraphs: [
@@ -130,7 +130,7 @@ function sendPurchaseEmail(env: MailerEnv, user: Person, plan: ProPlanId) {
     env,
     "purchase",
     user.email,
-    `Your ${siteName} Pro ${proPlans[plan].name} is ready`,
+    `Your ${siteName} Pro ${allProPlans[plan].name} is ready`,
     purchaseContent(user, plan)
   )
 }
@@ -145,7 +145,7 @@ function sendGuestPurchaseEmail(
     env,
     "guest purchase",
     buyer.email,
-    `Unlock your ${siteName} Pro ${proPlans[plan].name}`,
+    `Unlock your ${siteName} Pro ${allProPlans[plan].name}`,
     guestPurchaseContent(buyer, plan, claimUrl)
   )
 }

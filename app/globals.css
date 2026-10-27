@@ -1756,8 +1756,8 @@
   translate: 0 -50%;
   border-inline-end: 1px solid color-mix(in oklab, var(--color-foreground) 40%, transparent);
   background:
-    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 40%, transparent) 1px, transparent 1px) 0 0 / 20% 100% repeat-x,
-    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 16%, transparent) 1px, transparent 1px) 0 50% / 2% 50% repeat-x,
+    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 40%, transparent) 1px, transparent 1px) 0 0 / calc(100% / 3) 100% repeat-x,
+    linear-gradient(90deg, color-mix(in oklab, var(--color-foreground) 16%, transparent) 1px, transparent 1px) 0 50% / calc(100% / 30) 50% repeat-x,
     linear-gradient(color-mix(in oklab, var(--color-foreground) 18%, transparent), color-mix(in oklab, var(--color-foreground) 18%, transparent)) 0 50% / 100% 1px no-repeat;
 }
 
@@ -1765,7 +1765,7 @@
   position: absolute;
   top: calc(var(--track-y) + 0.75rem);
   left: 0;
-  translate: calc(var(--p) / 500 * 100cqw - 50%) 0;
+  translate: calc(var(--p) / 300 * 100cqw - 50%) 0;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   line-height: 1rem;
@@ -1797,7 +1797,7 @@
   z-index: 2;
   top: var(--track-y);
   left: 0;
-  translate: calc(var(--p) / 500 * 100cqw) 0;
+  translate: calc(var(--p) / 300 * 100cqw) 0;
   transition:
     translate 1100ms var(--ease-slide) 200ms,
     opacity 200ms var(--ease-out-cubic);
@@ -1847,9 +1847,9 @@
   position: absolute;
   top: var(--track-y);
   left: 0;
-  width: calc((var(--to) - var(--from)) / 500 * 100cqw);
+  width: calc((var(--to) - var(--from)) / 300 * 100cqw);
   height: 0.5rem;
-  translate: calc(var(--from) / 500 * 100cqw) -50%;
+  translate: calc(var(--from) / 300 * 100cqw) -50%;
   border-radius: 999px;
   background: repeating-linear-gradient(
     -45deg,
@@ -1872,7 +1872,7 @@
   left: 0;
   width: 0.625rem;
   height: 0.625rem;
-  translate: calc(var(--p) / 500 * 100cqw - 50%) -50%;
+  translate: calc(var(--p) / 300 * 100cqw - 50%) -50%;
   border-radius: 999px;
   border: 1.5px solid color-mix(in oklab, var(--brand) 75%, transparent);
   background-color: var(--color-background);

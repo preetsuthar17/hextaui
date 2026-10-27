@@ -1,4 +1,4 @@
-import { proPlans, type ProPlanId } from "@/lib/pro/pricing"
+import { allProPlans, type ProPlanId } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
 type CompletedPurchase = {
@@ -72,7 +72,7 @@ function trackPurchaseCompleted(purchase: CompletedPurchase) {
       items: [
         {
           item_id: purchase.plan,
-          item_name: `HextaUI Pro ${proPlans[purchase.plan].name}`,
+          item_name: `HextaUI Pro ${allProPlans[purchase.plan].name}`,
           price: value,
           quantity: 1,
         },

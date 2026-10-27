@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { createAuthClient } from "better-auth/react"
 
 import { minilytics } from "@/lib/minilytics"
-import type { ProPlanId } from "@/lib/pro/pricing"
+import type { SalePlanId } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
 const authClient = createAuthClient()
@@ -184,7 +184,7 @@ function signIn(provider: SignInProvider) {
   })
 }
 
-async function startCheckout(plan: ProPlanId = "solo") {
+async function startCheckout(plan: SalePlanId = "solo") {
   track("Checkout started", { plan })
   const response = await fetch("/api/checkout", {
     method: "POST",

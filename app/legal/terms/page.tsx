@@ -13,7 +13,7 @@ import { pageMetadata } from "@/lib/metadata"
 export const metadata: Metadata = pageMetadata({
   title: "Terms of Service",
   description:
-    "The terms for using HextaUI, its accounts and HextaUI Pro purchases.",
+    "The terms for using HextaUI: the free components, your account, HextaUI Pro purchases, acceptable use and ownership.",
   path: "/legal/terms",
 })
 
@@ -23,7 +23,7 @@ export default function Page() {
       href="/legal/terms"
       title="Terms of Service"
       description={String(metadata.description)}
-      updated="2026-10-08"
+      updated="2026-10-27"
     >
       <DocsParagraph>
         These terms cover your use of HextaUI (hextaui.com), run by Preet
@@ -95,9 +95,8 @@ export default function Page() {
         <DocsParagraph>Please don’t:</DocsParagraph>
         <DocsList>
           <li>
-            Share your account or API tokens, or resell access. A Team or
-            Unlimited plan may keep one shared token in CI, as the Pro License
-            describes.
+            Share your account or API tokens, or resell access. A Team plan may
+            keep one shared token in CI, as the Pro License describes.
           </li>
           <li>Redistribute Pro code outside what the Pro License allows.</li>
           <li>

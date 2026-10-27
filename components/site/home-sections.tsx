@@ -90,7 +90,7 @@ const questions = [
   },
   {
     question: "What is HextaUI Pro?",
-    answer: `Practical blocks built for AI products: complete screens such as a chat thread, tool calls, agent todos and voice mode today, with account, settings and dashboard blocks next, and the hard states like streaming, retries and approvals already handled. It costs ${proPriceText}. It covers unlimited personal and commercial projects, includes every future block category and comes with a ${refundDays}-day refund. Prompt Input is free to try.`,
+    answer: `Drop-in blocks that get your AI app’s chat UI shipped in days instead of weeks: complete screens such as a chat thread, tool calls, agent todos and voice mode, with streaming, retries and approvals already worked out, and account, settings and dashboard blocks next. It costs ${proPriceText}. It covers unlimited personal and commercial projects, includes every future block category and comes with a ${refundDays}-day refund. Prompt Input is free to try.`,
   },
   {
     question: "Can my AI assistant use it?",

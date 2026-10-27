@@ -40,6 +40,11 @@ import {
 } from "@/lib/md/routes"
 import { getPricingMarkdown, pricingUpdated } from "@/lib/pricing-info"
 import { blockSections, getProBlock, proBlocks } from "@/lib/pro/catalog"
+import { getStudies, getStudy, getStudyHref } from "@/lib/research"
+import {
+  getResearchIndexMarkdown,
+  getStudyMarkdown,
+} from "@/lib/research/markdown"
 import {
   getShadcnComparison,
   getShadcnComparisonHref,
@@ -237,7 +242,7 @@ function getCategoryMarkdown(slug: string) {
 function getBlocksMarkdown() {
   return [
     heading(1, "React blocks for AI products, built on shadcn/ui"),
-    "> Practical blocks built for AI products, with the hard states handled: streaming, tool calls, reasoning, voice and the screens around them. Part of HextaUI Pro, with Prompt Input free.",
+    "> Drop-in shadcn/ui blocks that ship your AI app’s chat UI in days, with streaming, tool calls, reasoning and voice done. Part of HextaUI Pro, Prompt Input free.",
     `${proBlocks.length} blocks. Every block is part of ${siteName} Pro (${absoluteUrl("/pricing")}); blocks marked free install without a token.`,
     ...blockSections.flatMap((section) => [
       heading(2, section.title),
@@ -459,6 +464,35 @@ const renderers: MarkdownRenderer[] = [
         slugOf(path, 4)
       )
       return markdown ? { markdown } : null
+    },
+  },
+  {
+    pattern: "/research",
+    section: "content",
+    paths: () => ["/research"],
+    render: async () => ({
+      markdown: getResearchIndexMarkdown(),
+      updated: getStudies()
+        .map((study) => study.updated)
+        .sort()
+        .at(-1),
+    }),
+  },
+  {
+    pattern: "/research/:topic",
+    section: "content",
+    paths: () => getStudies().map((study) => getStudyHref(study.slug)),
+    render: async (path) => {
+      const study = getStudy(slugOf(path, 2))
+      if (!study) return null
+      return {
+        markdown: getStudyMarkdown(study),
+        updated: study.updated,
+        related: [
+          { title: "All research", href: "/research" },
+          ...study.related,
+        ],
+      }
     },
   },
   {

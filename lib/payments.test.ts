@@ -175,6 +175,36 @@ describe("findProAccess", () => {
     expect(await guests()).toHaveLength(1)
   })
 
+  it("keeps owner and seat access on a legacy Unlimited purchase", async () => {
+    await addUser("owner", "owner@example.com")
+    await addUser("mate", "mate@example.com")
+    await db.insert(schema.purchase).values({
+      id: "pay_unlimited",
+      userId: "owner",
+      productId: "pdt_unlimited",
+      plan: "unlimited",
+      customerId: "cus_1",
+      status: "paid",
+      amount: 29900,
+      currency: "USD",
+    })
+    await db.insert(schema.teamMember).values({
+      id: "seat_1",
+      purchaseId: "pay_unlimited",
+      email: "mate@example.com",
+    })
+
+    expect(await findProAccess(db, "owner")).toMatchObject({
+      via: "owner",
+      plan: "unlimited",
+    })
+    expect(await findProAccess(db, "mate")).toMatchObject({
+      via: "member",
+      plan: "unlimited",
+      ownerName: "owner",
+    })
+  })
+
   it("gives no access for a refunded guest purchase", async () => {
     await recordPayment(db, payment({}), env)
     await revokePurchase(db, "pay_1", "refunded")
