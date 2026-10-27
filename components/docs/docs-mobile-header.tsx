@@ -5,18 +5,19 @@ import { IconMenu2 } from "@tabler/icons-react"
 import { cn } from "cn"
 
 import { DocsBrand } from "@/components/docs/docs-brand"
-import { DocsNav } from "@/components/docs/docs-nav"
 import { DocsSearchButton } from "@/components/docs/docs-search"
 import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetBody,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 import type { DocsNavSection } from "@/lib/docs"
+
+const loadMenu = () => import("@/components/docs/docs-mobile-menu")
+
+const DocsMobileMenu = React.lazy(() =>
+  loadMenu().then((module) => ({ default: module.DocsMobileMenu }))
+)
+
+function prefetchMenu() {
+  loadMenu().catch(() => {})
+}
 
 function DocsMobileHeader({
   sections,
@@ -26,6 +27,8 @@ function DocsMobileHeader({
   className?: string
 }) {
   const [open, setOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
 
   return (
     <header
@@ -34,25 +37,32 @@ function DocsMobileHeader({
         className
       )}
     >
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger
-          render={<Button variant="ghost" size="icon" aria-label="Open menu" />}
-        >
-          <IconMenu2 />
-        </SheetTrigger>
-        <SheetContent side="left">
-          <SheetHeader>
-            <SheetTitle>HextaUI</SheetTitle>
-          </SheetHeader>
-          <SheetBody>
-            <DocsNav
-              sections={sections}
-              onNavigate={() => setOpen(false)}
-              className="-mx-4 pb-6"
-            />
-          </SheetBody>
-        </SheetContent>
-      </Sheet>
+      <Button
+        ref={triggerRef}
+        variant="ghost"
+        size="icon"
+        aria-label="Open menu"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onPointerDown={prefetchMenu}
+        onFocus={prefetchMenu}
+        onClick={() => {
+          setMounted(true)
+          setOpen(true)
+        }}
+      >
+        <IconMenu2 />
+      </Button>
+      {mounted ? (
+        <React.Suspense fallback={null}>
+          <DocsMobileMenu
+            sections={sections}
+            open={open}
+            onOpenChange={setOpen}
+            finalFocus={triggerRef}
+          />
+        </React.Suspense>
+      ) : null}
       <DocsBrand />
       <DocsSearchButton className="ms-auto" />
     </header>

@@ -1,114 +1,76 @@
 "use client"
 
-import Link from "@/components/site/link"
-import { IconLogout, IconUser } from "@tabler/icons-react"
+import * as React from "react"
 import { cn } from "cn"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { SignInOptions } from "@/components/account/sign-in-options"
-import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { signOut, useSession } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
+import { readSignedIn } from "@/lib/signed-in"
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("")
+const loadAccountMenu = () => import("@/components/site/account-menu")
+const loadSignInDialog = () => import("@/components/site/sign-in-dialog")
+
+const AccountMenu = React.lazy(() =>
+  loadAccountMenu().then((module) => ({ default: module.AccountMenu }))
+)
+const SignInDialog = React.lazy(() =>
+  loadSignInDialog().then((module) => ({ default: module.SignInDialog }))
+)
+
+function prefetchSignIn() {
+  loadSignInDialog().catch(() => {})
+}
+
+function subscribe() {
+  return () => {}
 }
 
 function UserMenu({ signInClassName }: { signInClassName?: string }) {
-  const { session, pending, cachedUser } = useSession()
-  const user = session?.user ?? cachedUser
   const c = useChrome()
+  const signedIn = React.useSyncExternalStore(
+    subscribe,
+    readSignedIn,
+    () => null
+  )
+  const [open, setOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
 
-  if (!user) {
+  if (signedIn) {
     return (
-      <Dialog>
-        <DialogTrigger
-          render={
-            signInClassName ? (
-              <button
-                type="button"
-                className={cn(signInClassName, pending && "invisible")}
-              />
-            ) : (
-              <Button
-                variant="ghost"
-                size="sm"
-                className={pending ? "invisible" : undefined}
-              />
-            )
-          }
-        >
-          {c("Sign in")}
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Sign in to HextaUI</DialogTitle>
-            <DialogDescription>
-              Your account holds your Pro access and the tokens you use to
-              install Pro blocks.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogBody>
-            <SignInOptions className="max-w-none" />
-          </DialogBody>
-        </DialogContent>
-      </Dialog>
+      <React.Suspense
+        fallback={<span aria-hidden="true" className="size-8 shrink-0" />}
+      >
+        <AccountMenu signInClassName={signInClassName} />
+      </React.Suspense>
     )
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button variant="ghost" size="icon-sm" aria-label="Account menu" />
-        }
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-haspopup="dialog"
+        onPointerEnter={prefetchSignIn}
+        onFocus={prefetchSignIn}
+        onClick={() => {
+          setMounted(true)
+          setOpen(true)
+        }}
+        className={cn(signInClassName, signedIn === null && "invisible")}
       >
-        <Avatar size="sm">
-          {user.image ? <AvatarImage src={user.image} alt="" /> : null}
-          <AvatarFallback>{initials(user.name || user.email)}</AvatarFallback>
-        </Avatar>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>
-            <span className="block truncate text-foreground">{user.name}</span>
-            <span className="block truncate font-normal">{user.email}</span>
-          </DropdownMenuLabel>
-          <DropdownMenuItem render={<Link href="/account" />}>
-            <IconUser />
-            Account
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
-          <IconLogout />
-          Sign out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        {c("Sign in")}
+      </button>
+      {mounted ? (
+        <React.Suspense fallback={null}>
+          <SignInDialog
+            open={open}
+            onOpenChange={setOpen}
+            finalFocus={triggerRef}
+          />
+        </React.Suspense>
+      ) : null}
+    </>
   )
 }
 

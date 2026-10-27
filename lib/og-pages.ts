@@ -19,7 +19,6 @@ import { metadata as license } from "@/app/legal/license/page"
 import { metadata as privacy } from "@/app/legal/privacy/page"
 import { metadata as refunds } from "@/app/legal/refunds/page"
 import { metadata as terms } from "@/app/legal/terms/page"
-import { metadata as home } from "@/app/page"
 import { metadata as pricing } from "@/app/pricing/page"
 import { metadata as sponsor } from "@/app/sponsor/page"
 import {
@@ -34,6 +33,7 @@ import {
 } from "@/lib/component-categories"
 import { docsComponents, docsEntries, titleCase } from "@/lib/docs"
 import { metadataTitle } from "@/lib/metadata"
+import { homeOgImage } from "@/lib/og-home"
 import type { OgImage } from "@/lib/opengraph-image"
 import { categoryTitle, proBlocks } from "@/lib/pro/catalog"
 import { getStudies, getStudyHref } from "@/lib/research"
@@ -69,13 +69,7 @@ function fromMetadata(
 
 function getOgPages(): OgPage[] {
   const marketing = [
-    fromMetadata("/", home, {
-      variant: "hero",
-      section: `${docsComponents.length} free components`,
-      title: "Ship your AI app’s chat UI this weekend",
-      description:
-        "Skip weeks of streaming, tool call, voice and agent state work. Drop in shadcn/ui blocks that already handle them.",
-    }),
+    { path: "/", image: homeOgImage },
     fromMetadata("/pricing", pricing, { variant: "hero", section: "Free & Pro" }),
     fromMetadata("/blocks", blocks, { variant: "hero", section: "HextaUI Pro" }),
     fromMetadata("/about", about, { variant: "hero", section: heroSection }),

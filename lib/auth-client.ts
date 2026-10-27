@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { createAuthClient } from "better-auth/react"
 
 import { minilytics } from "@/lib/minilytics"
+import { readSignedIn, writeSignedIn } from "@/lib/signed-in"
 import type { SalePlanId } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
@@ -11,7 +12,6 @@ const authClient = createAuthClient()
 
 type Session = typeof authClient.$Infer.Session
 
-const signedInKey = "hextaui-signed-in"
 const userKey = "hextaui-user"
 const proKey = "hextaui-pro"
 
@@ -30,21 +30,6 @@ function writeCachedUser(user: CachedUser | null) {
   try {
     if (user) localStorage.setItem(userKey, JSON.stringify(user))
     else localStorage.removeItem(userKey)
-  } catch {}
-}
-
-function readSignedIn() {
-  try {
-    return localStorage.getItem(signedInKey) === "1"
-  } catch {
-    return false
-  }
-}
-
-function writeSignedIn(signedIn: boolean) {
-  try {
-    if (signedIn) localStorage.setItem(signedInKey, "1")
-    else localStorage.removeItem(signedInKey)
   } catch {}
 }
 

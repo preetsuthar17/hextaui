@@ -45,4 +45,11 @@ function lookup(locale: Locale, namespace: string, key: string) {
   )
 }
 
-export { collect, lookup, messagesPath, namespaceFile, type Messages }
+export {
+  collect,
+  lookup,
+  messagesPath,
+  namespaceFile,
+  readMessages,
+  type Messages,
+}

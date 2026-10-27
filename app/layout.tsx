@@ -10,6 +10,7 @@ import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
 import { InlineScript } from "@/components/site/inline-script"
 import { JsonLd } from "@/components/site/json-ld"
+import { LazyToaster } from "@/components/site/lazy-toaster"
 import { SiteChrome } from "@/components/site/site-chrome"
 import { SiteHeader } from "@/components/site/site-header"
 import { WebMcp } from "@/components/site/web-mcp"
@@ -25,10 +26,10 @@ import {
   siteUrl,
 } from "@/lib/site"
 import { catalogViewScript } from "@/lib/catalog-view"
+import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { getGithubStars } from "@/lib/github"
 import { siteJsonLd } from "@/lib/structured-data"
 import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -77,6 +78,9 @@ export const viewport: Viewport = {
   ],
 }
 
+const componentSlugs = docsComponents.map((entry) => entry.slug)
+const hooksHref = `/docs/${docsHooks[0]?.slug ?? docsUtilities[0]?.slug}`
+
 const fontSans = Inter({
   subsets: ["latin"],
   axes: ["opsz"],
@@ -120,7 +124,11 @@ export default async function RootLayout({
           <DocsSearchProvider>
             <div className="flex min-h-svh flex-col">
               <SiteChrome>
-                <SiteHeader stars={stars} />
+                <SiteHeader
+                  stars={stars}
+                  componentSlugs={componentSlugs}
+                  hooksHref={hooksHref}
+                />
               </SiteChrome>
               <div className="flex flex-1 flex-col">{children}</div>
               <SiteChrome>
@@ -129,7 +137,7 @@ export default async function RootLayout({
             </div>
           </DocsSearchProvider>
           <FrameLines />
-          <Toaster />
+          <LazyToaster />
           <SiteChrome>
             <CookieConsent />
           </SiteChrome>

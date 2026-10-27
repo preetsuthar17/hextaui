@@ -1,7 +1,8 @@
 import { cleanup, render } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { WebMcp, webMcpTools } from "@/components/site/web-mcp"
+import { WebMcp } from "@/components/site/web-mcp"
+import { webMcpTools } from "@/components/site/web-mcp-tools"
 
 type Registered = {
   name: string

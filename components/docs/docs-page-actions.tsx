@@ -1,27 +1,26 @@
 "use client"
 
 import * as React from "react"
-import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import {
   IconBrandOpenai,
   IconChevronDown,
   IconCopy,
-  IconMarkdown,
 } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  dropdownMenuItemVariants,
-} from "@/components/ui/dropdown-menu"
-import { absoluteUrl } from "@/lib/site"
 import { track } from "@/lib/track"
 import { useChrome } from "@/lib/i18n/chrome"
+
+const loadMenu = () => import("@/components/docs/docs-page-actions-menu")
+
+const DocsPageActionsMenu = React.lazy(() =>
+  loadMenu().then((module) => ({ default: module.DocsPageActionsMenu }))
+)
+
+function prefetchMenu() {
+  loadMenu().catch(() => {})
+}
 
 function IconV0(props: React.ComponentProps<"svg">) {
   return (
@@ -126,11 +125,11 @@ function DocsPageActions({
   registryHref?: string
   className?: string
 }) {
-  const prompt = encodeURIComponent(
-    `Read ${absoluteUrl(markdownHref)}, I want to ask questions about it.`
-  )
-  const itemClassName = dropdownMenuItemVariants()
   const c = useChrome()
+  const [open, setOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
+  const openOnPointerDown = React.useRef(false)
 
   return (
     <ButtonGroup aria-label={c("Page actions")} className={className}>
@@ -152,65 +151,40 @@ function DocsPageActions({
         {c("Copy page")}
       </Button>
       <ButtonGroupSeparator />
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              variant="secondary"
-              size="icon-sm"
-              aria-label={c("More page actions")}
-            />
-          }
-        >
-          <IconChevronDown />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-48">
-          <DropdownMenuGroup>
-            <MenuPrimitive.LinkItem
-              href={markdownHref}
-              target="_blank"
-              rel="noopener"
-              closeOnClick
-              className={itemClassName}
-            >
-              <IconMarkdown />
-              {c("View as Markdown")}
-            </MenuPrimitive.LinkItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            {registryHref ? (
-              <MenuPrimitive.LinkItem
-                href={`https://v0.dev/chat/api/open?url=${encodeURIComponent(
-                  absoluteUrl(registryHref)
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                closeOnClick
-                className={itemClassName}
-              >
-                <IconV0 />
-                Open in v0
-              </MenuPrimitive.LinkItem>
-            ) : null}
-            {assistants.map((assistant) => (
-              <MenuPrimitive.LinkItem
-                key={assistant.name}
-                href={assistant.href(prompt)}
-                target="_blank"
-                rel="noopener noreferrer"
-                closeOnClick
-                className={itemClassName}
-              >
-                <assistant.icon />
-                Open in {assistant.name}
-              </MenuPrimitive.LinkItem>
-            ))}
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Button
+        ref={triggerRef}
+        variant="secondary"
+        size="icon-sm"
+        aria-label={c("More page actions")}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onPointerEnter={prefetchMenu}
+        onFocus={prefetchMenu}
+        onPointerDown={() => {
+          openOnPointerDown.current = open
+        }}
+        onClick={() => {
+          const wasOpen = openOnPointerDown.current
+          openOnPointerDown.current = false
+          setMounted(true)
+          setOpen(!wasOpen && !open)
+        }}
+      >
+        <IconChevronDown />
+      </Button>
+      {mounted ? (
+        <React.Suspense fallback={null}>
+          <DocsPageActionsMenu
+            open={open}
+            onOpenChange={setOpen}
+            anchor={triggerRef}
+            markdownHref={markdownHref}
+            registryHref={registryHref}
+          />
+        </React.Suspense>
+      ) : null}
     </ButtonGroup>
   )
 }
 
-export { DocsPageActions, IconV0, copyMarkdown, loadMarkdown }
+export { assistants, DocsPageActions, IconV0, copyMarkdown, loadMarkdown }

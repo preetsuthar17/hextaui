@@ -2,10 +2,15 @@
 
 import * as React from "react"
 import Link from "@/components/site/link"
-import { GoogleAnalytics } from "@next/third-parties/google"
 
 import { Button } from "@/components/ui/button"
 import { useChrome } from "@/lib/i18n/chrome"
+
+const GoogleAnalytics = React.lazy(() =>
+  import("@next/third-parties/google").then((module) => ({
+    default: module.GoogleAnalytics,
+  }))
+)
 
 const gaId = "G-22S9WDP6VC"
 const storageKey = "hextaui-analytics-consent"
@@ -101,7 +106,11 @@ function CookieConsent() {
 
   return (
     <>
-      {consent === "granted" ? <GoogleAnalytics gaId={gaId} /> : null}
+      {consent === "granted" ? (
+        <React.Suspense fallback={null}>
+          <GoogleAnalytics gaId={gaId} />
+        </React.Suspense>
+      ) : null}
       {open ? (
         <section
           aria-label={c("Cookie consent")}

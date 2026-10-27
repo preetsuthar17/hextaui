@@ -100,7 +100,12 @@ function languageAlternates(path: string) {
   >
 }
 
+function chromeDictionaryId(locale: Locale) {
+  return `chrome-${locale}`
+}
+
 export {
+  chromeDictionaryId,
   defaultLocale,
   getPathLocale,
   isLocale,

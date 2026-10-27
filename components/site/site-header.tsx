@@ -6,6 +6,7 @@ import Link from "@/components/site/link"
 import {
   IconBook,
   IconBrightness,
+  IconChevronDown,
   IconChevronRight,
   IconCode,
   IconComponents,
@@ -18,76 +19,35 @@ import {
   IconMenu2,
   IconNews,
   IconPlugConnected,
-  IconReceipt,
   IconSettings,
   IconShoppingBag,
   IconSparkles,
   IconTerminal2,
-  type Icon,
 } from "@tabler/icons-react"
 import { cn } from "cn"
 import { useTheme } from "next-themes"
 
 import { GithubLogo } from "@/components/site/github-logo"
+import { type MobileMenuGroup } from "@/components/site/mobile-menu"
 import { useGithubStars } from "@/components/site/use-github-stars"
 import { UserMenu } from "@/components/site/user-menu"
 import { Button } from "@/components/ui/button"
-import { KbdGroup } from "@/components/ui/kbd"
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import {
-  Sheet,
-  SheetBody,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  type Menu,
+  type PlainLink,
+  type SiteSection,
+} from "@/components/site/site-nav"
 import { comparisons } from "@/lib/compare"
-import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { formatStars } from "@/lib/github"
 import { useChrome } from "@/lib/i18n/chrome"
 import { useSitePathname } from "@/lib/i18n/client"
 import { useSoloPrice } from "@/lib/pro/use-early-bird"
 import { siteName, siteRepository } from "@/lib/site"
 
-type SiteSection =
-  "home" | "docs" | "components" | "blocks" | "resources" | "pricing"
-
-type MenuLink = {
-  label: string
-  href: string
-  description?: string
-  icon?: Icon
-}
-
-type Menu = {
-  section: SiteSection
-  label: string
-  primary: { title: string; links: MenuLink[] }
-  secondary: { title: string; links: MenuLink[] }
-}
-
-const componentPaths = new Set([
-  "/components",
-  ...docsComponents.map((entry) => `/docs/${entry.slug}`),
-])
 const resourcePaths = ["/blog", "/changelog", "/compare", "/sponsor", "/about"]
 
-const hooksHref = `/docs/${docsHooks[0]?.slug ?? docsUtilities[0]?.slug}`
-
-const menus: Menu[] = [
+function buildMenus(hooksHref: string): Menu[] {
+  return [
   {
     section: "blocks",
     label: "Blocks",
@@ -222,14 +182,18 @@ const menus: Menu[] = [
       })),
     },
   },
-]
+  ]
+}
 
-const plainLinks: { section: SiteSection; label: string; href: string }[] = [
+const plainLinks: PlainLink[] = [
   { section: "components", label: "Components", href: "/components" },
   { section: "pricing", label: "Pricing", href: "/pricing" },
 ]
 
-function sectionFor(pathname: string): SiteSection | null {
+function sectionFor(
+  pathname: string,
+  componentPaths: Set<string>
+): SiteSection | null {
   const path = pathname.replace(/\/$/, "") || "/"
   if (path === "/") return "home"
   if (path === "/blocks" || path.startsWith("/blocks/")) return "blocks"
@@ -248,30 +212,130 @@ function sectionFor(pathname: string): SiteSection | null {
 
 const textAction = "site-nav-item inline-flex items-center gap-1"
 
-function ThemeToggle() {
+const loadSiteNav = () => import("@/components/site/site-nav")
+
+type SiteNavModule = Awaited<ReturnType<typeof loadSiteNav>>
+
+const desktopQuery = "(min-width: 48rem) and (hover: hover)"
+
+function useSiteNav() {
+  const [siteNav, setSiteNav] = React.useState<SiteNavModule | null>(null)
+
+  React.useEffect(() => {
+    let live = true
+    const media = window.matchMedia(desktopQuery)
+    const load = () => {
+      loadSiteNav().then(
+        (module) => {
+          if (live) setSiteNav(module)
+        },
+        () => {}
+      )
+    }
+    const onChange = (event: MediaQueryListEvent) => {
+      if (event.matches) load()
+    }
+    if (media.matches) load()
+    else media.addEventListener("change", onChange)
+    return () => {
+      live = false
+      media.removeEventListener("change", onChange)
+    }
+  }, [])
+
+  return siteNav
+}
+
+function ThemeToggle({ siteNav }: { siteNav: SiteNavModule | null }) {
   const { resolvedTheme, setTheme } = useTheme()
+  const toggle = () => setTheme(resolvedTheme === "dark" ? "light" : "dark")
+
+  if (siteNav) return <siteNav.ThemeToggleTooltip onToggle={toggle} />
 
   return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Toggle theme"
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-          />
-        }
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      aria-label="Toggle theme"
+      onClick={toggle}
+    >
+      <IconBrightness />
+    </Button>
+  )
+}
+
+const staticLinkClassName =
+  "flex min-w-0 items-center gap-2 rounded-md text-sm outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden"
+
+function StaticNav({
+  menus,
+  active,
+  soloPrice,
+}: {
+  menus: Menu[]
+  active: SiteSection | null
+  soloPrice: number
+}) {
+  const c = useChrome()
+
+  return (
+    <nav
+      aria-label={c("Main")}
+      data-slot="navigation-menu"
+      data-orientation="horizontal"
+      className="group/navigation-menu relative isolate flex max-w-max min-w-0 flex-1 items-center justify-center"
+    >
+      <ul
+        data-slot="navigation-menu-list"
+        className="-m-1 flex min-w-0 flex-1 list-none items-center gap-0.5 p-1"
       >
-        <IconBrightness />
-      </TooltipTrigger>
-      <TooltipContent>
-        Toggle theme
-        <KbdGroup keys="d" size="sm" />
-      </TooltipContent>
-    </Tooltip>
+        <li data-slot="navigation-menu-item" className="relative">
+          <Link
+            href={plainLinks[0].href}
+            data-slot="navigation-menu-link"
+            data-current={active === "components" ? "" : undefined}
+            aria-current={active === "components" ? "page" : undefined}
+            className={staticLinkClassName}
+          >
+            {c(plainLinks[0].label)}
+          </Link>
+        </li>
+        {menus.map((menu) => (
+          <li
+            key={menu.section}
+            data-slot="navigation-menu-item"
+            className="relative"
+          >
+            <button
+              type="button"
+              data-slot="navigation-menu-trigger"
+              data-current={active === menu.section ? "" : undefined}
+              aria-expanded="false"
+              className="inline-flex w-max items-center justify-center gap-1 rounded-md text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden"
+            >
+              {c(menu.label)}
+              <IconChevronDown
+                aria-hidden="true"
+                data-slot="navigation-menu-trigger-icon"
+                className="size-3.5"
+              />
+            </button>
+          </li>
+        ))}
+        <li data-slot="navigation-menu-item" className="relative">
+          <Link
+            href={plainLinks[1].href}
+            data-slot="navigation-menu-link"
+            data-current={active === "pricing" ? "" : undefined}
+            aria-current={active === "pricing" ? "page" : undefined}
+            className={staticLinkClassName}
+          >
+            {c(plainLinks[1].label)}
+            <span className="site-nav-price">${soloPrice}</span>
+          </Link>
+        </li>
+      </ul>
+    </nav>
   )
 }
 
@@ -294,62 +358,18 @@ function Logo() {
   )
 }
 
-function MenuItemLink({ link }: { link: MenuLink }) {
-  const c = useChrome()
-  const MenuIcon = link.icon
+const loadMobileMenu = () => import("@/components/site/mobile-menu")
 
-  return (
-    <NavigationMenuLink render={<Link href={link.href} />}>
-      <span className="flex min-w-0 items-start gap-3">
-        {MenuIcon ? (
-          <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-background text-muted-foreground inset-ring-(length:--hairline) inset-ring-border forced-colors:border">
-            <MenuIcon className="size-5" stroke={1.5} />
-          </span>
-        ) : null}
-        <span className="flex min-w-0 flex-col gap-0.5">
-          <span className="font-medium">{c(link.label)}</span>
-          {link.description ? (
-            <span className="text-pretty text-muted-foreground">
-              {c(link.description)}
-            </span>
-          ) : null}
-        </span>
-      </span>
-    </NavigationMenuLink>
-  )
+const MobileMenuSheet = React.lazy(() =>
+  loadMobileMenu().then((module) => ({ default: module.MobileMenuSheet }))
+)
+
+function prefetchMobileMenu() {
+  loadMobileMenu().catch(() => {})
 }
 
-function MenuPanel({ menu }: { menu: Menu }) {
-  const c = useChrome()
-
-  return (
-    <NavigationMenuContent className="w-[min(42rem,calc(100vw-2rem))]">
-      <div className="-m-2 grid grid-cols-[1.35fr_1fr]">
-        <div className="flex flex-col gap-0.5 p-3">
-          <p className="px-2 pt-1 pb-2 text-xs font-medium text-muted-foreground">
-            {c(menu.primary.title)}
-          </p>
-          {menu.primary.links.map((link) => (
-            <MenuItemLink key={link.href} link={link} />
-          ))}
-        </div>
-        <div className="flex flex-col gap-0.5 border-s bg-muted/50 p-3">
-          <p className="px-2 pt-1 pb-2 text-xs font-medium text-muted-foreground">
-            {c(menu.secondary.title)}
-          </p>
-          {menu.secondary.links.map((link) => (
-            <MenuItemLink key={link.href} link={link} />
-          ))}
-        </div>
-      </div>
-    </NavigationMenuContent>
-  )
-}
-
-function MobileMenu() {
-  const c = useChrome()
-  const [open, setOpen] = React.useState(false)
-  const groups = [
+function mobileGroupsFor(menus: Menu[]): MobileMenuGroup[] {
+  return [
     {
       title: "Product",
       links: [
@@ -360,71 +380,80 @@ function MobileMenu() {
     },
     ...menus.map((menu) => ({
       title: menu.label,
-      links: [...menu.primary.links, ...menu.secondary.links],
+      links: [...menu.primary.links, ...menu.secondary.links].map(
+        ({ label, href }) => ({ label, href })
+      ),
     })),
   ]
+}
+
+function MobileMenu({ menus }: { menus: Menu[] }) {
+  const c = useChrome()
+  const [open, setOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label={c("Menu")}
-            className="md:hidden"
-          />
-        }
+    <>
+      <Button
+        ref={triggerRef}
+        variant="ghost"
+        size="icon-sm"
+        aria-label={c("Menu")}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        className="md:hidden"
+        onPointerDown={prefetchMobileMenu}
+        onFocus={prefetchMobileMenu}
+        onClick={() => {
+          setMounted(true)
+          setOpen(true)
+        }}
       >
         <IconMenu2 />
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[min(20rem,100vw)]">
-        <SheetHeader>
-          <SheetTitle>{siteName}</SheetTitle>
-        </SheetHeader>
-        <SheetBody>
-          <nav aria-label={c("Main")} className="flex flex-col gap-6 pb-6">
-            {groups.map((group) => (
-              <div key={group.title} className="flex flex-col">
-                <p className="py-1 text-xs font-medium text-muted-foreground">
-                  {c(group.title)}
-                </p>
-                <ul>
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="footer-link text-foreground"
-                      >
-                        {c(link.label)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
-        </SheetBody>
-      </SheetContent>
-    </Sheet>
+      </Button>
+      {mounted ? (
+        <React.Suspense fallback={null}>
+          <MobileMenuSheet
+            open={open}
+            onOpenChange={setOpen}
+            groups={mobileGroupsFor(menus)}
+            finalFocus={triggerRef}
+          />
+        </React.Suspense>
+      ) : null}
+    </>
   )
 }
 
 function SiteHeader({
   stars: initialStars = null,
+  componentSlugs,
+  hooksHref,
   className,
 }: {
   stars?: number | null
+  componentSlugs: string[]
+  hooksHref: string
   className?: string
 }) {
   const pathname = useSitePathname()
   const c = useChrome()
-  const active = sectionFor(pathname)
+  const menus = React.useMemo(() => buildMenus(hooksHref), [hooksHref])
+  const componentPaths = React.useMemo(
+    () =>
+      new Set([
+        "/components",
+        ...componentSlugs.map((slug) => `/docs/${slug}`),
+      ]),
+    [componentSlugs]
+  )
+  const active = sectionFor(pathname, componentPaths)
   const home = active === "home"
   const headerRef = React.useRef<HTMLElement>(null)
   const stars = useGithubStars(initialStars)
   const soloPrice = useSoloPrice()
+  const siteNav = useSiteNav()
 
   React.useEffect(() => {
     const header = headerRef.current
@@ -465,43 +494,16 @@ function SiteHeader({
           <Logo />
         </div>
         <div className="site-nav flex justify-center max-md:hidden">
-          <NavigationMenu
-            aria-label={c("Main")}
-            align="center"
-            className="[&>[data-slot=navigation-menu-highlight]]:hidden"
-          >
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  render={<Link href={plainLinks[0].href} />}
-                  data-current={active === "components" ? "" : undefined}
-                  aria-current={active === "components" ? "page" : undefined}
-                >
-                  {c(plainLinks[0].label)}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              {menus.map((menu) => (
-                <NavigationMenuItem key={menu.section}>
-                  <NavigationMenuTrigger
-                    data-current={active === menu.section ? "" : undefined}
-                  >
-                    {c(menu.label)}
-                  </NavigationMenuTrigger>
-                  <MenuPanel menu={menu} />
-                </NavigationMenuItem>
-              ))}
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  render={<Link href={plainLinks[1].href} />}
-                  data-current={active === "pricing" ? "" : undefined}
-                  aria-current={active === "pricing" ? "page" : undefined}
-                >
-                  {c(plainLinks[1].label)}
-                  <span className="site-nav-price">${soloPrice}</span>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          {siteNav ? (
+            <siteNav.SiteNavMenu
+              menus={menus}
+              plainLinks={plainLinks}
+              active={active}
+              soloPrice={soloPrice}
+            />
+          ) : (
+            <StaticNav menus={menus} active={active} soloPrice={soloPrice} />
+          )}
         </div>
         <div className="flex items-center justify-end gap-4">
           <a
@@ -520,7 +522,7 @@ function SiteHeader({
               <span className="tabular-nums">{formatStars(stars)}</span>
             )}
           </a>
-          <ThemeToggle />
+          <ThemeToggle siteNav={siteNav} />
           <UserMenu signInClassName={textAction} />
           <Link
             href="/docs/installation"
@@ -532,7 +534,7 @@ function SiteHeader({
               className="size-3.5 rtl:-scale-x-100"
             />
           </Link>
-          <MobileMenu />
+          <MobileMenu menus={menus} />
         </div>
       </div>
     </header>
