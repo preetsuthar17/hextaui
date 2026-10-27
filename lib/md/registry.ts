@@ -51,6 +51,8 @@ import {
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
 import { absoluteUrl, siteName } from "@/lib/site"
+import { getPageBuilderMarkdown } from "@/lib/page-builder/markdown"
+import { tools } from "@/lib/tools"
 
 type MarkdownSection = "core" | "docs" | "content" | "compare" | "legal"
 
@@ -494,6 +496,18 @@ const renderers: MarkdownRenderer[] = [
         ],
       }
     },
+  },
+  {
+    pattern: "/tools/:slug",
+    section: "core",
+    paths: () =>
+      tools
+        .filter((tool) => tool.status === "live")
+        .map((tool) => `/tools/${tool.slug}`),
+    render: async (path) =>
+      path === "/tools/page-builder"
+        ? { markdown: getPageBuilderMarkdown() }
+        : null,
   },
   {
     pattern: "/legal/:page",

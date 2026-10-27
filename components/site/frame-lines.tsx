@@ -2,7 +2,13 @@
 
 import { useSitePathname } from "@/lib/i18n/client"
 
-const framelessPrefixes = ["/docs", "/blocks/", "/preview/", "/account"]
+const framelessPrefixes = [
+  "/docs",
+  "/blocks/",
+  "/preview/",
+  "/account",
+  "/tools/page-builder",
+]
 
 function FrameLines() {
   const pathname = useSitePathname()

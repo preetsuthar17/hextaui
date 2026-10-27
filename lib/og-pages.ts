@@ -21,6 +21,7 @@ import { metadata as refunds } from "@/app/legal/refunds/page"
 import { metadata as terms } from "@/app/legal/terms/page"
 import { metadata as pricing } from "@/app/pricing/page"
 import { metadata as sponsor } from "@/app/sponsor/page"
+import { metadata as pageBuilder } from "@/app/tools/page-builder/page"
 import {
   blogDescription,
   blogPosts,
@@ -75,6 +76,10 @@ function getOgPages(): OgPage[] {
     fromMetadata("/about", about, { variant: "hero", section: heroSection }),
     fromMetadata("/contact", contact, { variant: "hero", section: heroSection }),
     fromMetadata("/sponsor", sponsor, { variant: "hero", section: heroSection }),
+    fromMetadata("/tools/page-builder", pageBuilder, {
+      variant: "hero",
+      section: "Free tool",
+    }),
   ]
 
   const blockPages = proBlocks.map((block) => ({

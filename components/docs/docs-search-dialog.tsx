@@ -21,6 +21,7 @@ import {
   IconHash,
   IconKeyboard,
   IconLayoutGrid,
+  IconLayoutRows,
   IconLink,
   IconMarkdown,
   IconMoon,
@@ -602,6 +603,23 @@ function useGlobalActions(): ActionEntry[] {
         description: "Every component on one page.",
         keywords: ["index", "list", "gallery", "overview"],
         href: "/components",
+      },
+      {
+        id: "action:page-builder",
+        title: "Open the page builder",
+        kind: "action",
+        icon: IconLayoutRows,
+        description:
+          "Compose a landing page from free sections and export the code.",
+        keywords: [
+          "landing page",
+          "builder",
+          "sections",
+          "hero",
+          "template",
+          "tool",
+        ],
+        href: "/tools/page-builder",
       },
       {
         id: "action:llms",

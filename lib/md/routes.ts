@@ -20,6 +20,7 @@ const markdownRoutePatterns = [
   "/legal/:page",
   "/research",
   "/research/:topic",
+  "/tools/:slug",
 ] as const
 
 const markdownSkippedRoutes: Record<string, string> = {
