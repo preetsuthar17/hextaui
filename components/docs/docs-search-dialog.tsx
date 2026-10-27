@@ -22,6 +22,7 @@ import {
   IconKeyboard,
   IconLayoutGrid,
   IconPalette,
+  IconLayoutRows,
   IconLink,
   IconMarkdown,
   IconMoon,
@@ -610,8 +611,18 @@ function useGlobalActions(): ActionEntry[] {
         title: "Open the theme editor",
         kind: "action",
         icon: IconPalette,
-        description: "Make a shadcn/ui theme and preview it on every component.",
-        keywords: ["theme", "colors", "palette", "generator", "tools", "oklch", "dark mode", "contrast"],
+        description:
+          "Make a shadcn/ui theme and preview it on every component.",
+        keywords: [
+          "theme",
+          "colors",
+          "palette",
+          "generator",
+          "tools",
+          "oklch",
+          "dark mode",
+          "contrast",
+        ],
         href: "/tools/theme-editor",
       },
       {
@@ -631,6 +642,23 @@ function useGlobalActions(): ActionEntry[] {
           "tools",
         ],
         href: "/tools/testimonial-wall",
+      },
+      {
+        id: "action:page-builder",
+        title: "Open the page builder",
+        kind: "action",
+        icon: IconLayoutRows,
+        description:
+          "Compose a landing page from free sections and export the code.",
+        keywords: [
+          "landing page",
+          "builder",
+          "sections",
+          "hero",
+          "template",
+          "tool",
+        ],
+        href: "/tools/page-builder",
       },
       {
         id: "action:llms",

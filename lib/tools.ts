@@ -24,8 +24,8 @@ const tools: Tool[] = [
     slug: "page-builder",
     title: "Page builder",
     description:
-      "Put a landing page together from HextaUI sections and export the code.",
-    status: "soon",
+      "Compose a landing page from free shadcn/ui sections, edit it live and export clean Next.js code.",
+    status: "live",
   },
 ]
 

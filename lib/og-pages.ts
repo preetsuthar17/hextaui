@@ -21,13 +21,9 @@ import { metadata as refunds } from "@/app/legal/refunds/page"
 import { metadata as terms } from "@/app/legal/terms/page"
 import { metadata as pricing } from "@/app/pricing/page"
 import { metadata as sponsor } from "@/app/sponsor/page"
+import { metadata as pageBuilder } from "@/app/tools/page-builder/page"
 import { metadata as themeEditor } from "@/app/tools/theme-editor/page"
-import {
-  blogDescription,
-  blogPosts,
-  blogTitle,
-  getBlogHref,
-} from "@/lib/blog"
+import { blogDescription, blogPosts, blogTitle, getBlogHref } from "@/lib/blog"
 import {
   componentCategories,
   getComponentCategoryHref,
@@ -76,11 +72,27 @@ function fromMetadata(
 function getOgPages(): OgPage[] {
   const marketing = [
     { path: "/", image: homeOgImage },
-    fromMetadata("/pricing", pricing, { variant: "hero", section: "Free & Pro" }),
-    fromMetadata("/blocks", blocks, { variant: "hero", section: "HextaUI Pro" }),
+    fromMetadata("/pricing", pricing, {
+      variant: "hero",
+      section: "Free & Pro",
+    }),
+    fromMetadata("/blocks", blocks, {
+      variant: "hero",
+      section: "HextaUI Pro",
+    }),
     fromMetadata("/about", about, { variant: "hero", section: heroSection }),
-    fromMetadata("/contact", contact, { variant: "hero", section: heroSection }),
-    fromMetadata("/sponsor", sponsor, { variant: "hero", section: heroSection }),
+    fromMetadata("/contact", contact, {
+      variant: "hero",
+      section: heroSection,
+    }),
+    fromMetadata("/sponsor", sponsor, {
+      variant: "hero",
+      section: heroSection,
+    }),
+    fromMetadata("/tools/page-builder", pageBuilder, {
+      variant: "hero",
+      section: "Free tool",
+    }),
   ]
 
   const blockPages = proBlocks.map((block) => ({
@@ -131,9 +143,18 @@ function getOgPages(): OgPage[] {
       variant: "slab",
       section: "Changelog",
     }),
-    fromMetadata("/legal/license", license, { variant: "slab", section: "Legal" }),
-    fromMetadata("/legal/privacy", privacy, { variant: "slab", section: "Legal" }),
-    fromMetadata("/legal/refunds", refunds, { variant: "slab", section: "Legal" }),
+    fromMetadata("/legal/license", license, {
+      variant: "slab",
+      section: "Legal",
+    }),
+    fromMetadata("/legal/privacy", privacy, {
+      variant: "slab",
+      section: "Legal",
+    }),
+    fromMetadata("/legal/refunds", refunds, {
+      variant: "slab",
+      section: "Legal",
+    }),
     fromMetadata("/legal/terms", terms, { variant: "slab", section: "Legal" }),
   ]
 
@@ -142,7 +163,9 @@ function getOgPages(): OgPage[] {
     image: {
       variant: "slab" as const,
       section: "Docs",
-      title: docsComponents.includes(entry) ? titleCase(entry.name) : entry.name,
+      title: docsComponents.includes(entry)
+        ? titleCase(entry.name)
+        : entry.name,
       description: entry.description,
     },
   }))

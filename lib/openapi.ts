@@ -190,6 +190,33 @@ function getOpenApiDocument() {
           },
         },
       },
+      "/r/pages/{id}.json": {
+        get: {
+          operationId: "getPageRegistryItem",
+          tags: ["Registry"],
+          summary: "Get a page from the Page Builder as a registry item",
+          description:
+            "Returns a landing page composed in the free Page Builder at https://hextaui.com/tools/page-builder as a `registry:block`: `app/page.tsx` plus one file per section, with the HextaUI components it uses as registry dependencies. The id is the page link the builder copies; pass the URL to `npx shadcn@latest add`.",
+          security: [],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description:
+                "The encoded page from the builder's Export panel or the `p` value of its share link.",
+              schema: { type: "string", maxLength: 8001 },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "The registry item.",
+              content: { [json]: { schema: ref("RegistryItem") } },
+            },
+            ...pick("400"),
+          },
+        },
+      },
       "/mcp/index.json": {
         get: {
           operationId: "getCatalog",
@@ -581,7 +608,8 @@ function getOpenApiDocument() {
               name: "url",
               in: "query",
               required: true,
-              description: "Link to the post, like https://x.com/<handle>/status/<id>.",
+              description:
+                "Link to the post, like https://x.com/<handle>/status/<id>.",
               schema: { type: "string", format: "uri", maxLength: 500 },
             },
           ],

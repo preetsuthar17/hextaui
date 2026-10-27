@@ -51,9 +51,7 @@ import {
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
 import { absoluteUrl, siteName } from "@/lib/site"
-import {
-  getTestimonialWallMarkdown,
-} from "@/lib/testimonial-wall/content"
+import { getTestimonialWallMarkdown } from "@/lib/testimonial-wall/content"
 import {
   themeEditorDescription,
   themeEditorFaq,
@@ -72,6 +70,7 @@ import {
   toolsDescription,
   toolsTitle,
 } from "@/lib/tools"
+import { getPageBuilderMarkdown } from "@/lib/page-builder/markdown"
 
 type MarkdownSection = "core" | "docs" | "content" | "compare" | "legal"
 
@@ -330,13 +329,17 @@ function getThemeEditorMarkdown() {
     heading(2, "Install a theme"),
     `Every theme has a share link and an install command. The command for the default HextaUI theme is \`${themeInstallCommand(encodeTheme(defaultTheme))}\`.`,
     heading(2, "Questions"),
-    ...themeEditorFaq.flatMap((item) => [heading(3, item.question), item.answer]),
+    ...themeEditorFaq.flatMap((item) => [
+      heading(3, item.question),
+      item.answer,
+    ]),
   ].join("\n\n")
 }
 
 const toolMarkdown: Record<string, () => string> = {
   "theme-editor": getThemeEditorMarkdown,
   "testimonial-wall": getTestimonialWallMarkdown,
+  "page-builder": getPageBuilderMarkdown,
 }
 
 const renderers: MarkdownRenderer[] = [
