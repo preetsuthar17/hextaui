@@ -22,7 +22,7 @@ import { ToggleRtl } from "@/components/examples/toggle/rtl"
 import { TogglePill } from "@/components/examples/toggle/pill"
 import { ToggleSizes } from "@/components/examples/toggle/sizes"
 import { ToggleText } from "@/components/examples/toggle/text"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("toggle")
 

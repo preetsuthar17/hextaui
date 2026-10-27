@@ -22,7 +22,7 @@ import { AlertDialogWithMedia } from "@/components/examples/alert-dialog/media"
 import { AlertDialogNested } from "@/components/examples/alert-dialog/nested"
 import { AlertDialogRtl } from "@/components/examples/alert-dialog/rtl"
 import { AlertDialogSmall } from "@/components/examples/alert-dialog/small"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("alert-dialog")
 

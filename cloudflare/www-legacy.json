@@ -1615,5 +1615,16 @@
       "subpath_matching": false,
       "preserve_path_suffix": false
     }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/components/media",
+      "target_url": "https://hextaui.com/components",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
   }
 ]

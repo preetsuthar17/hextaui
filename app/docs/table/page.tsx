@@ -21,7 +21,7 @@ import { TableScroll } from "@/components/examples/table/scroll"
 import { TableSizes } from "@/components/examples/table/sizes"
 import { TableSticky } from "@/components/examples/table/sticky"
 import { TableWrap } from "@/components/examples/table/wrap"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("table")
 

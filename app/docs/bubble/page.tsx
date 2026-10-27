@@ -25,7 +25,7 @@ import { BubbleShowMore } from "@/components/examples/bubble/show-more"
 import { BubbleTail } from "@/components/examples/bubble/tail"
 import { BubbleTooltip } from "@/components/examples/bubble/tooltip"
 import { BubbleVariants } from "@/components/examples/bubble/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("bubble")
 

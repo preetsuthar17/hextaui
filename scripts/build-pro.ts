@@ -79,6 +79,10 @@ function listFiles(dir: string, base = dir): string[] {
   })
 }
 
+function isDemoFile(file: string) {
+  return /^demo([-.]|$)/.test(path.basename(file))
+}
+
 function withoutTemplates(source: string) {
   return source.replace(/`(?:\\[\s\S]|[^`\\])*`/g, "``")
 }
@@ -162,6 +166,19 @@ function uiComponents(sources: string[]) {
     }
   }
   return [...names].sort()
+}
+
+function blockComponents(
+  files: string[],
+  sources: string[],
+  entryFile: string
+) {
+  const own = uiComponents(
+    sources.filter((_, index) => !isDemoFile(files[index]))
+  )
+  return own.length > 0
+    ? own
+    : uiComponents(sources.filter((_, index) => files[index] === entryFile))
 }
 
 function packageDependencies(sources: string[], extra: string[] = []) {
@@ -250,7 +267,7 @@ async function main() {
       ...(meta.layout ? { layout: meta.layout } : {}),
       ...(free ? { free } : {}),
       files: itemFiles.map((file) => file.path),
-      components: uiComponents(sources),
+      components: blockComponents(files, sources, entryFile),
       usage,
       docs: meta.docs ?? {},
     })

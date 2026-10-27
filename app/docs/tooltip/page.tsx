@@ -23,7 +23,7 @@ import { TooltipRtl } from "@/components/examples/tooltip/rtl"
 import { TooltipShortcut } from "@/components/examples/tooltip/shortcut"
 import { TooltipSides } from "@/components/examples/tooltip/sides"
 import { TooltipToolbar } from "@/components/examples/tooltip/toolbar"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("tooltip")
 

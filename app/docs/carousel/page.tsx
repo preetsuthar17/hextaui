@@ -27,7 +27,7 @@ import { CarouselRtl } from "@/components/examples/carousel/rtl"
 import { CarouselSeveralPerView } from "@/components/examples/carousel/several-per-view"
 import { CarouselWithThumbnails } from "@/components/examples/carousel/thumbnails"
 import { CarouselVertical } from "@/components/examples/carousel/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("carousel")
 

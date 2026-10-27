@@ -21,7 +21,7 @@ import { SheetNested } from "@/components/examples/sheet/nested"
 import { SheetNoCloseButton } from "@/components/examples/sheet/no-close-button"
 import { SheetRtl } from "@/components/examples/sheet/rtl"
 import { SheetSides } from "@/components/examples/sheet/sides"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("sheet")
 

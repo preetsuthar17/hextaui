@@ -12,7 +12,7 @@ import {
 } from "@/components/docs/docs-content"
 import { DocsPage } from "@/components/docs/docs-page"
 import type { DocsTocItem } from "@/lib/docs"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 import { absoluteUrl } from "@/lib/site"
 
@@ -91,7 +91,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/docs/mcp",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [
             { name: "Docs", path: "/docs" },

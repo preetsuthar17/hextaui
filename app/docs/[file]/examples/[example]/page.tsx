@@ -74,8 +74,8 @@ export async function generateMetadata({
       markdown: `${href}.md`,
       image: ogImagePath(`/docs/${component.slug}`),
       type: "article",
+      noindex: true,
     }),
-    robots: { index: false, follow: true },
   }
 }
 

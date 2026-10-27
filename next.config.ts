@@ -11,9 +11,6 @@ export default function nextConfig(phase: string): NextConfig {
   return {
     output: "export",
     env,
-    experimental: {
-      turbopackLazyDynamicImports: true,
-    },
     rewrites: async () => [
       {
         source: "/:page((?!md/).+)\\.md",

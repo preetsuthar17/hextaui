@@ -20,7 +20,7 @@ import { DataTablePinnedColumns } from "@/components/examples/data-table/pinned-
 import { DataTableRtl } from "@/components/examples/data-table/rtl"
 import { DataTableStickyHeader } from "@/components/examples/data-table/sticky-header"
 import { TableDemo } from "@/components/examples/data-table/table"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("data-table")
 

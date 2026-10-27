@@ -1,4 +1,3 @@
-import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync } from "node:fs"
 import path from "node:path"
 
@@ -6,10 +5,13 @@ import type { MetadataRoute } from "next"
 
 import { blogContentFile } from "@/lib/blog-content"
 import { isBlogSlug } from "@/lib/blog"
+import { commitDate, git, hasHistory, proDir } from "@/lib/git-dates"
+import { categorySources } from "@/lib/category-lists"
 import { componentCategories } from "@/lib/component-categories"
 import { ogImagePath } from "@/lib/metadata"
 import { getOgPages } from "@/lib/og-pages"
 import { proBlocks } from "@/lib/pro/catalog"
+import { getStudies, getStudyHref } from "@/lib/research"
 import { getShadcnComparisons } from "@/lib/shadcn-compare"
 import { absoluteUrl, isNoindexPath, isUnlistedPath } from "@/lib/site"
 
@@ -25,6 +27,7 @@ const dynamicRoutes: Record<string, string[]> = {
   "/components/[category]": componentCategories.map(
     (category) => category.slug
   ),
+  "/research/[topic]": getStudies().map((study) => study.slug),
 }
 
 const ogPaths = new Set(getOgPages().map((page) => page.path))
@@ -70,45 +73,10 @@ function findPages(dir: string, segments: string[] = []): Page[] {
   })
 }
 
-function git(args: string[], input?: string) {
-  try {
-    return execFileSync("git", args, {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      input,
-      stdio: ["pipe", "pipe", "ignore"],
-    }).trim()
-  } catch (error) {
-    const stdout = (error as { stdout?: string }).stdout
-    return typeof stdout === "string" ? stdout.trim() : null
-  }
-}
-
 function ignoredFiles(files: string[]) {
   const output = git(["check-ignore", "--stdin"], files.join("\n"))
   return new Set(output ? output.split("\n") : [])
 }
-
-function hasHistory() {
-  const shallow = () => git(["rev-parse", "--is-shallow-repository"])
-  if (shallow() === "true") {
-    try {
-      execFileSync(
-        "git",
-        ["fetch", "--quiet", "--unshallow", "--filter=blob:none"],
-        {
-          cwd: process.cwd(),
-          env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
-          stdio: "ignore",
-          timeout: 60_000,
-        }
-      )
-    } catch {}
-  }
-  return shallow() === "false"
-}
-
-const proDir = path.join(process.cwd(), "pro")
 
 function sourcesFor(route: string, file: string) {
   const post = /^\/blog\/([^/]+)$/.exec(route)?.[1]
@@ -117,9 +85,8 @@ function sourcesFor(route: string, file: string) {
   if (compared) {
     return [file, `components/ui/${compared}.tsx`, "lib/shadcn-snapshot.json"]
   }
-  if (/^\/components\/[^/]+$/.test(route)) {
-    return [file, "lib/component-categories.ts"]
-  }
+  const category = /^\/components\/([^/]+)$/.exec(route)?.[1]
+  if (category) return categorySources(category)
 
   const slug = /^\/docs\/([^/]+)$/.exec(route)?.[1]
   if (!slug) return [file]
@@ -133,20 +100,19 @@ function sourcesFor(route: string, file: string) {
   ].filter((source) => existsSync(path.resolve(process.cwd(), source)))
 }
 
-function commitDate(args: string[], cwd = process.cwd()) {
-  try {
-    const date = execFileSync("git", ["log", "-1", "--format=%cI", ...args], {
-      cwd,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-    }).trim()
-    return date ? new Date(date) : undefined
-  } catch {
-    return undefined
-  }
+function researchDate(route: string) {
+  const studies = getStudies().filter(
+    (study) => route === "/research" || getStudyHref(study.slug) === route
+  )
+  const latest = studies.map((study) => study.updated).sort().at(-1)
+  return latest ? new Date(`${latest}T00:00:00Z`) : undefined
 }
 
 function lastModified(route: string, file: string, history: boolean) {
+  if (route === "/research" || route.startsWith("/research/")) {
+    return researchDate(route)
+  }
+
   if (!history) {
     return undefined
   }

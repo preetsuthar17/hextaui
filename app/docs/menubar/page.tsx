@@ -19,7 +19,7 @@ import { MenubarIcons } from "@/components/examples/menubar/icons"
 import { MenubarRtl } from "@/components/examples/menubar/rtl"
 import { MenubarTriggerIcons } from "@/components/examples/menubar/trigger-icons"
 import { MenubarVertical } from "@/components/examples/menubar/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("menubar")
 

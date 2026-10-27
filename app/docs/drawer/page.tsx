@@ -25,7 +25,7 @@ import { DrawerResponsive } from "@/components/examples/drawer/responsive"
 import { DrawerRtl } from "@/components/examples/drawer/rtl"
 import { DrawerScrollable } from "@/components/examples/drawer/scrollable"
 import { DrawerSnapPoints } from "@/components/examples/drawer/snap-points"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("drawer")
 

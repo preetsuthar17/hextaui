@@ -148,5 +148,7 @@
 /blocks/team-permissions-matrix /blocks/team 301
 /blocks/team-activity-feed /blocks/notifications 301
 /showcase / 301
+/components/media /components 301
 
 /preview/:slug /docs/:slug 301
+/:lang/components/media /:lang/components 301

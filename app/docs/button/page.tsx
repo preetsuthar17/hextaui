@@ -31,7 +31,7 @@ import { ButtonSmoothWidth } from "@/components/examples/button/smooth-width"
 import { ButtonVariants } from "@/components/examples/button/variants"
 import { ButtonVariantsFeedback } from "@/components/examples/button/variants-feedback"
 import { ButtonWithIcon } from "@/components/examples/button/with-icon"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("button")
 

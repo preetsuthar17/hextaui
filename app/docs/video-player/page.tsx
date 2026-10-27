@@ -22,7 +22,7 @@ import { VideoPlayerGlobalShortcuts } from "@/components/examples/video-player/g
 import { VideoPlayerMinimal } from "@/components/examples/video-player/minimal"
 import { VideoPlayerRtl } from "@/components/examples/video-player/rtl"
 import { VideoPlayerSeekOffsets } from "@/components/examples/video-player/seek-offsets"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("video-player")
 

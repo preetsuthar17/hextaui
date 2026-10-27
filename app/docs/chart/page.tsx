@@ -27,7 +27,7 @@ import { ChartStacked } from "@/components/examples/chart/stacked"
 import { ChartTheme } from "@/components/examples/chart/theme"
 import { ChartTooltipIndicators } from "@/components/examples/chart/tooltip"
 import { ChartValueFormat } from "@/components/examples/chart/value-format"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("chart")
 

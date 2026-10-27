@@ -24,7 +24,7 @@ import { AccordionNested } from "@/components/examples/accordion/nested"
 import { AccordionOutline } from "@/components/examples/accordion/outline"
 import { AccordionRtl } from "@/components/examples/accordion/rtl"
 import { AccordionSeparated } from "@/components/examples/accordion/separated"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("accordion")
 

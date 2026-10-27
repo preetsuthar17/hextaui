@@ -1,7 +1,7 @@
 {
   "source": "https://ui.shadcn.com/r/styles/base-vega",
   "style": "base-vega",
-  "fetched": "2026-10-16",
+  "fetched": "2026-10-26",
   "components": {
     "accordion": {
       "parts": [
@@ -529,6 +529,66 @@
       "registryDependencies": [],
       "lines": 34
     },
+    "code-block": {
+      "parts": [
+        "CodeBlock",
+        "CodeBlockHeader",
+        "CodeBlockTitle",
+        "CodeBlockActions",
+        "CodeBlockCopyButton",
+        "CodeBlockContent",
+        "CodeBlockLine",
+        "CodeBlockFooter"
+      ],
+      "variants": {
+        "CodeBlock": {
+          "variant": [
+            "default",
+            "destructive"
+          ]
+        },
+        "CodeBlockLine": {
+          "variant": [
+            "default",
+            "added",
+            "removed",
+            "highlighted"
+          ]
+        }
+      },
+      "props": {
+        "CodeBlock": [
+          "variant",
+          "size"
+        ],
+        "CodeBlockHeader": [],
+        "CodeBlockTitle": [],
+        "CodeBlockActions": [],
+        "CodeBlockCopyButton": [
+          "value",
+          "variant",
+          "size",
+          "onClick"
+        ],
+        "CodeBlockContent": [
+          "wrap",
+          "lineNumbers",
+          "startLine"
+        ],
+        "CodeBlockLine": [
+          "variant"
+        ],
+        "CodeBlockFooter": []
+      },
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "button",
+        "use-highlighted-code"
+      ],
+      "lines": 259
+    },
     "collapsible": {
       "parts": [
         "Collapsible",
@@ -736,6 +796,16 @@
       ],
       "lines": 162
     },
+    "direction": {
+      "parts": [],
+      "variants": {},
+      "props": {},
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [],
+      "lines": 6
+    },
     "drawer": {
       "parts": [
         "Drawer",
@@ -921,6 +991,14 @@
         "separator"
       ],
       "lines": 238
+    },
+    "form": {
+      "parts": [],
+      "variants": {},
+      "props": {},
+      "dependencies": [],
+      "registryDependencies": [],
+      "lines": 1
     },
     "hover-card": {
       "parts": [
@@ -1761,6 +1839,17 @@
       "registryDependencies": [],
       "lines": 51
     },
+    "sonner": {
+      "parts": [],
+      "variants": {},
+      "props": {},
+      "dependencies": [
+        "next-themes",
+        "sonner"
+      ],
+      "registryDependencies": [],
+      "lines": 85
+    },
     "spinner": {
       "parts": [
         "Spinner"
@@ -1986,6 +2075,38 @@
       ],
       "registryDependencies": [],
       "lines": 65
+    },
+    "trace": {
+      "parts": [
+        "Trace",
+        "TraceLine",
+        "TraceIcon",
+        "TraceTitle",
+        "TraceDescription",
+        "TraceCollapsible",
+        "TraceCollapsibleTrigger",
+        "TraceCollapsibleContent"
+      ],
+      "variants": {},
+      "props": {
+        "Trace": [],
+        "TraceLine": [
+          "status"
+        ],
+        "TraceIcon": [],
+        "TraceTitle": [],
+        "TraceDescription": [],
+        "TraceCollapsible": [],
+        "TraceCollapsibleTrigger": [],
+        "TraceCollapsibleContent": []
+      },
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "collapsible"
+      ],
+      "lines": 167
     }
   }
 }

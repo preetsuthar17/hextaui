@@ -14,7 +14,7 @@ import {
 } from "@/components/docs/docs-props-table"
 import { UseDelayedLoadingDemo } from "@/components/examples/use-delayed-loading/demo"
 import { UseDelayedLoadingSkeleton } from "@/components/examples/use-delayed-loading/skeleton"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-delayed-loading")
 

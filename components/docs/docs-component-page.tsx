@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { DocsGlance } from "@/components/docs/docs-glance"
 import { DocsPage } from "@/components/docs/docs-page"
 import { DocsProBlocksNote } from "@/components/docs/docs-pro-blocks-note"
 import { DocsRelated } from "@/components/docs/docs-related"
@@ -33,7 +34,12 @@ function DocsComponentPage({
       description={component.description}
       markdownHref={`/docs/${component.slug}.md`}
       registryHref={`/r/${component.slug}.json`}
-      note={<DocsProBlocksNote links={getProBlocksUsing(component.slug)} />}
+      note={
+        <>
+          <DocsProBlocksNote links={getProBlocksUsing(component.slug)} />
+          <DocsGlance slug={component.slug} />
+        </>
+      }
     >
       <JsonLd
         data={docsArticleJsonLd({

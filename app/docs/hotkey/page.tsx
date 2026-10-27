@@ -11,7 +11,7 @@ import { DocsInstall } from "@/components/docs/docs-install"
 import { DocsAttributesTable } from "@/components/docs/docs-props-table"
 import { HotkeyDemo } from "@/components/examples/hotkey/demo"
 import { HotkeyListener } from "@/components/examples/hotkey/listener"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("hotkey")
 

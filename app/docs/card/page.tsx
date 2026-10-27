@@ -24,7 +24,7 @@ import { CardRtl } from "@/components/examples/card/rtl"
 import { CardSemantics } from "@/components/examples/card/semantics"
 import { CardSizes } from "@/components/examples/card/sizes"
 import { CardVariants } from "@/components/examples/card/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("card")
 

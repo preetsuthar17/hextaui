@@ -22,7 +22,7 @@ import { AvatarLoading } from "@/components/examples/avatar/loading"
 import { AvatarRtl } from "@/components/examples/avatar/rtl"
 import { AvatarSizes } from "@/components/examples/avatar/sizes"
 import { AvatarStatusDemo } from "@/components/examples/avatar/status"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("avatar")
 

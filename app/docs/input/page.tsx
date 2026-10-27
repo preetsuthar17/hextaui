@@ -26,7 +26,7 @@ import { InputRtl } from "@/components/examples/input/rtl"
 import { InputSizes } from "@/components/examples/input/sizes"
 import { InputTypes } from "@/components/examples/input/types"
 import { InputWithButton } from "@/components/examples/input/with-button"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("input")
 

@@ -18,6 +18,8 @@ const markdownRoutePatterns = [
   "/compare/:slug",
   "/compare/shadcn-ui/:component",
   "/legal/:page",
+  "/research",
+  "/research/:topic",
 ] as const
 
 const markdownSkippedRoutes: Record<string, string> = {

@@ -21,7 +21,7 @@ import { SkeletonRtl } from "@/components/examples/skeleton/rtl"
 import { SkeletonShapes } from "@/components/examples/skeleton/shapes"
 import { SkeletonTextDemo } from "@/components/examples/skeleton/text"
 import { SkeletonWrapContent } from "@/components/examples/skeleton/wrap-content"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("skeleton")
 

@@ -22,7 +22,7 @@ import { BadgeRemovable } from "@/components/examples/badge/removable"
 import { BadgeRtl } from "@/components/examples/badge/rtl"
 import { BadgeSizes } from "@/components/examples/badge/sizes"
 import { BadgeVariants } from "@/components/examples/badge/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("badge")
 

@@ -24,7 +24,7 @@ import { DialogRtl } from "@/components/examples/dialog/rtl"
 import { DialogScrollableContent } from "@/components/examples/dialog/scrollable-content"
 import { DialogSizes } from "@/components/examples/dialog/sizes"
 import { DialogStickyFooter } from "@/components/examples/dialog/sticky-footer"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("dialog")
 

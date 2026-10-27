@@ -24,7 +24,7 @@ import { CollapsibleOpenByDefault } from "@/components/examples/collapsible/open
 import { CollapsibleRtl } from "@/components/examples/collapsible/rtl"
 import { CollapsibleShowMore } from "@/components/examples/collapsible/show-more"
 import { CollapsibleUnmounted } from "@/components/examples/collapsible/unmounted"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("collapsible")
 

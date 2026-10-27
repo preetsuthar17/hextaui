@@ -25,7 +25,7 @@ import { PopoverNested } from "@/components/examples/popover/nested"
 import { PopoverPlacement } from "@/components/examples/popover/placement"
 import { PopoverResizing } from "@/components/examples/popover/resizing"
 import { PopoverRtl } from "@/components/examples/popover/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("popover")
 

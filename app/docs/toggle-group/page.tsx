@@ -23,7 +23,7 @@ import { ToggleGroupRtl } from "@/components/examples/toggle-group/rtl"
 import { ToggleGroupSizes } from "@/components/examples/toggle-group/sizes"
 import { ToggleGroupSpacing } from "@/components/examples/toggle-group/spacing"
 import { ToggleGroupVertical } from "@/components/examples/toggle-group/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("toggle-group")
 

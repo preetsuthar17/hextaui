@@ -20,7 +20,7 @@ import { NumberFlowInline } from "@/components/examples/number-flow/inline"
 import { NumberFlowRtl } from "@/components/examples/number-flow/rtl"
 import { NumberFlowTiming } from "@/components/examples/number-flow/timing"
 import { NumberFlowTrendDemo } from "@/components/examples/number-flow/trend"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("number-flow")
 

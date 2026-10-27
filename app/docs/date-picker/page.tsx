@@ -23,7 +23,7 @@ import { DatePickerInSheet } from "@/components/examples/date-picker/in-sheet"
 import { DatePickerNarrow } from "@/components/examples/date-picker/narrow"
 import { DatePickerRange } from "@/components/examples/date-picker/range"
 import { DatePickerRtl } from "@/components/examples/date-picker/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("date-picker")
 

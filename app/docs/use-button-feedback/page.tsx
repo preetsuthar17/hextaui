@@ -17,7 +17,7 @@ import {
 import { ButtonForm } from "@/components/examples/button/form"
 import { UseButtonFeedbackAutosave } from "@/components/examples/use-button-feedback/autosave"
 import { UseButtonFeedbackFast } from "@/components/examples/use-button-feedback/fast"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-button-feedback")
 

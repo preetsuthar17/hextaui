@@ -5,15 +5,28 @@ import { BlockPreview } from "@/components/blocks/block-preview"
 import { BlockPreviewBack } from "@/components/blocks/block-preview-back"
 import { PreviewDocument } from "@/components/blocks/preview-document"
 import { getProBlock, proBlockParams } from "@/lib/pro/catalog"
+import { pageMetadata } from "@/lib/metadata"
 
 export const dynamicParams = false
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: false, indexifembedded: true },
-}
-
 export function generateStaticParams() {
   return proBlockParams()
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/preview/blocks/[name]">): Promise<Metadata> {
+  const block = getProBlock((await params).name)
+  if (!block) return {}
+  return {
+    ...pageMetadata({
+      title: `${block.title} preview`,
+      description: `A full-screen live preview of the ${block.title} block, as embedded in the HextaUI docs.`,
+      path: `/preview/blocks/${block.name}`,
+      noindex: true,
+    }),
+    robots: { index: false, follow: false, indexifembedded: true },
+  }
 }
 
 export default async function Page({

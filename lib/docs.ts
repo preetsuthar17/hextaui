@@ -1,7 +1,3 @@
-import type { Metadata } from "next"
-
-import { pageMetadata } from "@/lib/metadata"
-
 type DocsNavItem = {
   title: string
   href: string
@@ -834,18 +830,6 @@ function getDocsTitle(slug: string) {
   )
 }
 
-function getDocsComponentMetadata(slug: string): Metadata {
-  const component = getDocsComponent(slug)
-
-  return pageMetadata({
-    title: getDocsTitle(slug),
-    description: component.description,
-    path: `/docs/${component.slug}`,
-    markdown: `/docs/${component.slug}.md`,
-    type: "article",
-  })
-}
-
 function getDocsExampleHref(file: string) {
   const [dir, id] = file.split("/")
   return `/docs/${dir}/examples/${id}`
@@ -871,7 +855,6 @@ export {
   docsNav,
   docsTitles,
   getDocsComponent,
-  getDocsComponentMetadata,
   getDocsExampleHref,
   getDocsPager,
   getDocsSlug,

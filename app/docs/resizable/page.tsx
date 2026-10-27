@@ -20,7 +20,7 @@ import { ResizablePersist } from "@/components/examples/resizable/persist"
 import { ResizableRtl } from "@/components/examples/resizable/rtl"
 import { ResizableSize } from "@/components/examples/resizable/size"
 import { ResizableVertical } from "@/components/examples/resizable/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("resizable")
 

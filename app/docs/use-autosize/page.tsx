@@ -11,7 +11,7 @@ import { DocsInstall } from "@/components/docs/docs-install"
 import { DocsPropsTable } from "@/components/docs/docs-props-table"
 import { UseAutosizeControlled } from "@/components/examples/use-autosize/controlled"
 import { UseAutosizeDemo } from "@/components/examples/use-autosize/demo"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-autosize")
 

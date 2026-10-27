@@ -23,7 +23,7 @@ import { ContextMenuLongContent } from "@/components/examples/context-menu/long-
 import { ContextMenuNested } from "@/components/examples/context-menu/nested"
 import { ContextMenuRender } from "@/components/examples/context-menu/render"
 import { ContextMenuRtl } from "@/components/examples/context-menu/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("context-menu")
 

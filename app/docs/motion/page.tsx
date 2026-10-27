@@ -15,7 +15,7 @@ import {
 import { MotionEasing } from "@/components/examples/motion/easing"
 import { MotionSizeMorph } from "@/components/examples/motion/size-morph"
 import { MotionSlidingHighlight } from "@/components/examples/motion/sliding-highlight"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("motion")
 

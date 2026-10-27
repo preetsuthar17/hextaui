@@ -20,7 +20,7 @@ import { TextareaRows } from "@/components/examples/textarea/rows"
 import { TextareaRtl } from "@/components/examples/textarea/rtl"
 import { TextareaStates } from "@/components/examples/textarea/states"
 import { TextareaSubmit } from "@/components/examples/textarea/submit"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("textarea")
 

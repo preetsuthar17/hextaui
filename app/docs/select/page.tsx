@@ -22,7 +22,7 @@ import { SelectMultiple } from "@/components/examples/select/multiple"
 import { SelectRtl } from "@/components/examples/select/rtl"
 import { SelectSizes } from "@/components/examples/select/sizes"
 import { SelectStates } from "@/components/examples/select/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("select")
 

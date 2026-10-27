@@ -21,7 +21,7 @@ import { CommandLongContent } from "@/components/examples/command/long-content"
 import { CommandPages } from "@/components/examples/command/pages"
 import { CommandRtl } from "@/components/examples/command/rtl"
 import { CommandScrollable } from "@/components/examples/command/scrollable"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("command")
 

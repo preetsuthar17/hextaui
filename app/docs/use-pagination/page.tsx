@@ -14,7 +14,7 @@ import {
 } from "@/components/docs/docs-props-table"
 import { UsePaginationDemo } from "@/components/examples/use-pagination/demo"
 import { UsePaginationDots } from "@/components/examples/use-pagination/dots"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-pagination")
 

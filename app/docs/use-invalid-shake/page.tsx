@@ -13,7 +13,7 @@ import {
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
 import { UseInvalidShakeDemo } from "@/components/examples/use-invalid-shake/demo"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-invalid-shake")
 

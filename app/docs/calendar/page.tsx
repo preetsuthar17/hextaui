@@ -26,7 +26,7 @@ import { CalendarRangeLimits } from "@/components/examples/calendar/range-limits
 import { CalendarRtl } from "@/components/examples/calendar/rtl"
 import { CalendarSheet } from "@/components/examples/calendar/sheet"
 import { CalendarWeekNumbers } from "@/components/examples/calendar/week-numbers"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("calendar")
 

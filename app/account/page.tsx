@@ -1,11 +1,15 @@
 import type { Metadata } from "next"
 
 import { AccountView } from "@/components/account/account-view"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Account",
-  robots: { index: false, follow: false },
-}
+  description:
+    "Your HextaUI account: your profile, your HextaUI Pro access and the email settings for release notes.",
+  path: "/account",
+  noindex: true,
+})
 
 export default function Page() {
   return (

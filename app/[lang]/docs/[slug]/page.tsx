@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { docsEntries } from "@/lib/docs"
+import { getDocsMetaDescription } from "@/lib/docs-metadata"
 import { isTranslatedLocale } from "@/lib/i18n/config"
 import { localizeMetadata } from "@/lib/i18n/metadata"
 import { localizedDocsSlugs } from "@/lib/i18n/pages"
@@ -28,7 +30,11 @@ export async function generateMetadata({
   if (!isTranslatedLocale(lang) || !localizedDocsSlugs.includes(slug)) return {}
   setRequestLocale(lang, `docs/${slug}`)
   const { metadata } = await loadPage(slug)
-  return metadata ? localizeMetadata(metadata, `/docs/${slug}`) : {}
+  if (!metadata) return {}
+  const description = docsEntries.some((entry) => entry.slug === slug)
+    ? getDocsMetaDescription(slug)
+    : metadata.description
+  return localizeMetadata({ ...metadata, description }, `/docs/${slug}`)
 }
 
 export default async function Page({

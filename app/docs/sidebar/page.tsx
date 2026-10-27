@@ -23,7 +23,7 @@ import { SidebarRtl } from "@/components/examples/sidebar/rtl"
 import { SidebarSkeleton } from "@/components/examples/sidebar/skeleton"
 import { SidebarSubmenus } from "@/components/examples/sidebar/submenus"
 import { SidebarVariants } from "@/components/examples/sidebar/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("sidebar")
 

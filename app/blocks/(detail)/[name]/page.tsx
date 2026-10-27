@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 
 import { BlockBuyBar, BlockBuyButton } from "@/components/blocks/block-buy"
 import { BlockCode } from "@/components/blocks/block-code"
+import { BlockGlance } from "@/components/blocks/block-glance"
 import { BlockFrame } from "@/components/blocks/block-frame"
 import { UnlessPro } from "@/components/blocks/unless-pro"
 import { DocsCodeBlock } from "@/components/docs/docs-code-block"
@@ -24,6 +25,7 @@ import {
   DocsKeyboardTable,
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
+import { getBlockMetaDescription } from "@/lib/block-facts"
 import { getBlockComponents, getBlockLinks } from "@/lib/docs-related"
 import { T, t } from "@/lib/i18n/rich"
 import { ogImagePath, pageMetadata } from "@/lib/metadata"
@@ -54,7 +56,7 @@ export async function generateMetadata({
   return block
     ? pageMetadata({
         title: getProBlockTitle(block),
-        description: block.description,
+        description: getBlockMetaDescription(block),
         path: `/blocks/${block.name}`,
       })
     : {}
@@ -72,6 +74,7 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       title={block.title}
       description={block.description}
       navItems={blocksNavItems}
+      note={<BlockGlance block={block} />}
       actions={
         block.free ? null : (
           <UnlessPro>

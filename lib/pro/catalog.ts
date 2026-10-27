@@ -46,6 +46,10 @@ function getProBlock(name: string) {
   return proBlocks.find((block) => block.name === name)
 }
 
+function getBlocksUsing(slug: string) {
+  return proBlocks.filter((block) => block.components?.includes(slug))
+}
+
 function proBlockParams() {
   return proBlocks.length > 0
     ? proBlocks.map((block) => ({ name: block.name }))
@@ -78,6 +82,7 @@ const blocksNav: DocsNavSection[] = blockSections.map((section) => ({
 const blocksNavItems = blocksNav.flatMap((section) => section.items)
 
 export {
+  getBlocksUsing,
   blockSections,
   blocksNav,
   blocksNavItems,

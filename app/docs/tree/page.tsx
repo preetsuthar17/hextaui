@@ -24,7 +24,7 @@ import { TreeMultiple } from "@/components/examples/tree/multiple"
 import { TreeNavigation } from "@/components/examples/tree/navigation"
 import { TreeRtl } from "@/components/examples/tree/rtl"
 import { TreeSmall } from "@/components/examples/tree/small"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("tree")
 

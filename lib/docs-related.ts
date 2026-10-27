@@ -1,6 +1,6 @@
 import registry from "@/registry.json"
 import { docsComponents, docsEntries, getDocsComponent } from "@/lib/docs"
-import { proBlocks } from "@/lib/pro/catalog"
+import { getBlocksUsing, proBlocks } from "@/lib/pro/catalog"
 
 type RelatedLink = {
   href: string
@@ -73,8 +73,7 @@ function blockLink(block: (typeof proBlocks)[number]): RelatedLink {
 }
 
 function getProBlocksUsing(slug: string): RelatedLink[] {
-  return proBlocks
-    .filter((block) => block.components?.includes(slug))
+  return getBlocksUsing(slug)
     .sort((a, b) => blockRank(a) - blockRank(b))
     .map(blockLink)
 }

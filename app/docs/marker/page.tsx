@@ -19,7 +19,7 @@ import { MarkerRtl } from "@/components/examples/marker/rtl"
 import { MarkerSticky } from "@/components/examples/marker/sticky"
 import { MarkerTimeDemo } from "@/components/examples/marker/time"
 import { MarkerVariants } from "@/components/examples/marker/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("marker")
 

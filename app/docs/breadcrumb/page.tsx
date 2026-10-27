@@ -22,7 +22,7 @@ import { BreadcrumbLinkComponent } from "@/components/examples/breadcrumb/link-c
 import { BreadcrumbLongContent } from "@/components/examples/breadcrumb/long-content"
 import { BreadcrumbRtl } from "@/components/examples/breadcrumb/rtl"
 import { BreadcrumbWithIcons } from "@/components/examples/breadcrumb/with-icons"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("breadcrumb")
 

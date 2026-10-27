@@ -24,7 +24,7 @@ import { ProgressSegments } from "@/components/examples/progress/segments"
 import { ProgressSizes } from "@/components/examples/progress/sizes"
 import { ProgressUnlabeled } from "@/components/examples/progress/unlabeled"
 import { ProgressVariants } from "@/components/examples/progress/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("progress")
 

@@ -22,7 +22,7 @@ import { NativeSelectInvalid } from "@/components/examples/native-select/invalid
 import { NativeSelectLongContent } from "@/components/examples/native-select/long-content"
 import { NativeSelectRtl } from "@/components/examples/native-select/rtl"
 import { NativeSelectSizes } from "@/components/examples/native-select/sizes"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("native-select")
 

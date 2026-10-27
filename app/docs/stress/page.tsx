@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { DocsCodeBlock } from "@/components/docs/docs-code-block"
 import { DocsSection } from "@/components/docs/docs-content"
 import { DocsPage } from "@/components/docs/docs-page"
+import { pageMetadata } from "@/lib/metadata"
 
 import { StressDemos } from "./stress-demos"
 
@@ -36,10 +37,13 @@ export const columns = columnHelper.columns([
   }),
 ])`
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Stress",
-  robots: { index: false, follow: false },
-}
+  description:
+    "Every component with worst-case data: unbroken strings, long emails and URLs, emoji, RTL, CJK, empty labels and huge lists.",
+  path: "/docs/stress",
+  noindex: true,
+})
 
 export default function Page() {
   return (

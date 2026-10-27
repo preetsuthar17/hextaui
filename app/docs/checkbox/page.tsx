@@ -23,7 +23,7 @@ import { CheckboxRtl } from "@/components/examples/checkbox/rtl"
 import { CheckboxSelectAll } from "@/components/examples/checkbox/select-all"
 import { CheckboxSiblingLabel } from "@/components/examples/checkbox/sibling-label"
 import { CheckboxStates } from "@/components/examples/checkbox/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("checkbox")
 

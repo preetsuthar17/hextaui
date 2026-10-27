@@ -24,7 +24,7 @@ import { AspectRatioRtl } from "@/components/examples/aspect-ratio/rtl"
 import { AspectRatioSlowLoad } from "@/components/examples/aspect-ratio/slow-load"
 import { AspectRatioTextContent } from "@/components/examples/aspect-ratio/text-content"
 import { AspectRatioWithoutPlaceholder } from "@/components/examples/aspect-ratio/without-placeholder"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("aspect-ratio")
 

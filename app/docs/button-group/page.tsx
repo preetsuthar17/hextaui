@@ -25,7 +25,7 @@ import { ButtonGroupRtl } from "@/components/examples/button-group/rtl"
 import { ButtonGroupSizes } from "@/components/examples/button-group/sizes"
 import { ButtonGroupSplit } from "@/components/examples/button-group/split"
 import { ButtonGroupVertical } from "@/components/examples/button-group/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("button-group")
 

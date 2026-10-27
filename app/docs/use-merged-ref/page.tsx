@@ -15,7 +15,7 @@ import {
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
 import { UseMergedRefDemo } from "@/components/examples/use-merged-ref/demo"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-merged-ref")
 

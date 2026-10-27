@@ -15,7 +15,7 @@ import {
   DocsPropsTable,
 } from "@/components/docs/docs-props-table"
 import { UseComposedRefDemo } from "@/components/examples/use-composed-ref/demo"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-composed-ref")
 

@@ -180,6 +180,14 @@ export default function Page() {
             title: item.name,
           }))}
         />
+        <DocsParagraph>
+          For size, parts, variants and dependencies across every shadcn/ui
+          component, see the{" "}
+          <LegalLink href="/research/shadcn-ui-components">
+            shadcn/ui component statistics
+          </LegalLink>
+          .
+        </DocsParagraph>
       </InfoSection>
 
       <MoreComparisons current="/compare/shadcn-ui" />

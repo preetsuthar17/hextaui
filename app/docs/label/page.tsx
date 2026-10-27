@@ -19,7 +19,7 @@ import { LabelIndicator } from "@/components/examples/label/indicator"
 import { LabelLongContent } from "@/components/examples/label/long-content"
 import { LabelRtl } from "@/components/examples/label/rtl"
 import { LabelStates } from "@/components/examples/label/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("label")
 

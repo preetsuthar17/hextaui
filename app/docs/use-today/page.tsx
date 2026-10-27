@@ -11,7 +11,7 @@ import { DocsInstall } from "@/components/docs/docs-install"
 import { DocsAttributesTable } from "@/components/docs/docs-props-table"
 import { UseTodayBounds } from "@/components/examples/use-today/bounds"
 import { UseTodayDemo } from "@/components/examples/use-today/demo"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-today")
 

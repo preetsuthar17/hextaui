@@ -20,7 +20,7 @@ import { RadioGroupForm } from "@/components/examples/radio-group/form"
 import { RadioGroupHorizontal } from "@/components/examples/radio-group/horizontal"
 import { RadioGroupRtl } from "@/components/examples/radio-group/rtl"
 import { RadioGroupStates } from "@/components/examples/radio-group/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("radio-group")
 

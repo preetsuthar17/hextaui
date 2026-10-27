@@ -24,7 +24,7 @@ import { HoverCardLongContent } from "@/components/examples/hover-card/long-cont
 import { HoverCardRichContent } from "@/components/examples/hover-card/rich-content"
 import { HoverCardRtl } from "@/components/examples/hover-card/rtl"
 import { HoverCardSides } from "@/components/examples/hover-card/sides"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("hover-card")
 

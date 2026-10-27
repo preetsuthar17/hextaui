@@ -120,6 +120,7 @@ function getComponentCategoryHref(slug: string) {
 }
 
 export {
+  minimumComponents,
   componentCategories,
   getCategoryComponents,
   getComponentCategory,

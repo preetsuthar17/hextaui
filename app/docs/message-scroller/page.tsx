@@ -19,7 +19,7 @@ import { MessageScrollerHistory } from "@/components/examples/message-scroller/h
 import { MessageScrollerJump } from "@/components/examples/message-scroller/jump"
 import { MessageScrollerPeek } from "@/components/examples/message-scroller/peek"
 import { MessageScrollerSavedThread } from "@/components/examples/message-scroller/saved-thread"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("message-scroller")
 

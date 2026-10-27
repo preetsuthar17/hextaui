@@ -22,7 +22,7 @@ import { TabsOverflow } from "@/components/examples/tabs/overflow"
 import { TabsOverflowSegmented } from "@/components/examples/tabs/overflow-segmented"
 import { TabsRtl } from "@/components/examples/tabs/rtl"
 import { TabsVertical } from "@/components/examples/tabs/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("tabs")
 

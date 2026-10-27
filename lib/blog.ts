@@ -13,6 +13,7 @@ type BlogPost = {
 }
 
 const blogTitle = "Blog"
+const blogSeoTitle = "HextaUI blog: shadcn/ui, AI chat and e-commerce UI"
 const blogDescription =
   "Articles from the maker of HextaUI on shadcn/ui, Base UI, the hard UI states, AI chat interfaces, e-commerce UI and registries that AI coding agents can use."
 const blogLead =
@@ -176,6 +177,8 @@ function blogPostMetadata(slug: string): Metadata {
     path,
     markdown: getBlogMarkdownHref(slug),
     imageAlt: `${post.title} — ${siteName}`,
+    type: "article",
+    publishedTime: post.published,
   })
 
   return {
@@ -185,8 +188,6 @@ function blogPostMetadata(slug: string): Metadata {
     openGraph: {
       ...metadata.openGraph,
       type: "article",
-      publishedTime: post.published,
-      modifiedTime: post.published,
       authors: [blogAuthor.url],
       tags: post.tags,
     },
@@ -195,7 +196,7 @@ function blogPostMetadata(slug: string): Metadata {
 
 const blogIndexMetadata: Metadata = {
   ...pageMetadata({
-    title: blogTitle,
+    title: blogSeoTitle,
     description: blogDescription,
     path: "/blog",
     markdown: "/blog.md",

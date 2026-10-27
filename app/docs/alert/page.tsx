@@ -24,7 +24,7 @@ import { AlertRichContent } from "@/components/examples/alert/rich-content"
 import { AlertRtl } from "@/components/examples/alert/rtl"
 import { AlertSoft } from "@/components/examples/alert/soft"
 import { AlertVariants } from "@/components/examples/alert/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("alert")
 

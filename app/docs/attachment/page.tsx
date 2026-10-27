@@ -25,7 +25,7 @@ import { AttachmentStates } from "@/components/examples/attachment/states"
 import { AttachmentStress } from "@/components/examples/attachment/stress"
 import { AttachmentTriggerDemo } from "@/components/examples/attachment/trigger"
 import { AttachmentUploadFlow } from "@/components/examples/attachment/upload-flow"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("attachment")
 

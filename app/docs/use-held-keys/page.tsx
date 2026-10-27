@@ -14,7 +14,7 @@ import {
 } from "@/components/docs/docs-props-table"
 import { UseHeldKeysDemo } from "@/components/examples/use-held-keys/demo"
 import { UseHeldKeysShortcut } from "@/components/examples/use-held-keys/shortcut"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("use-held-keys")
 

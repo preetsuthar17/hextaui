@@ -19,7 +19,7 @@ import {
   type DocsTocItem,
 } from "@/lib/docs"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 import { siteDescription, siteRepository } from "@/lib/site"
 
@@ -72,7 +72,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/docs",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [{ name: "Docs", path: "/docs" }],
         })}

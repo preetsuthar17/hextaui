@@ -22,25 +22,16 @@ async function fetchJson<T>(url: string): Promise<T> {
   return (await response.json()) as T
 }
 
-const local = JSON.parse(
-  fs.readFileSync(path.join(root, "registry.json"), "utf8")
-) as { items: RegistryItem[] }
-const localUi = new Set(
-  local.items
-    .filter((item) => item.type === "registry:ui")
-    .map((item) => item.name)
-)
-
 const index = await fetchJson<RegistryItem[]>(
   "https://ui.shadcn.com/r/index.json"
 )
-const shared = index
-  .filter((item) => item.type === "registry:ui" && localUi.has(item.name))
+const names = index
+  .filter((item) => item.type === "registry:ui")
   .map((item) => item.name)
   .sort()
 
 const components: Record<string, ReturnType<typeof getComponentFacts>> = {}
-for (const name of shared) {
+for (const name of names) {
   const item = await fetchJson<RegistryItem>(`${base}/${name}.json`)
   const source = (item.files ?? []).map((file) => file.content ?? "").join("\n")
   components[name] = getComponentFacts(source, item)
@@ -61,5 +52,5 @@ fs.writeFileSync(
 )
 
 console.log(
-  `shadcn: ${shared.length} shared components written to ${path.relative(root, output)}`
+  `shadcn: ${names.length} components written to ${path.relative(root, output)}`
 )

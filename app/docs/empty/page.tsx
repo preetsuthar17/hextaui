@@ -28,7 +28,7 @@ import { EmptyRtl } from "@/components/examples/empty/rtl"
 import { EmptySearchResults } from "@/components/examples/empty/search-results"
 import { EmptySmall } from "@/components/examples/empty/small"
 import { EmptyTransition } from "@/components/examples/empty/transition"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("empty")
 

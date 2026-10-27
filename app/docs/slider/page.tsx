@@ -24,7 +24,7 @@ import { SliderSizes } from "@/components/examples/slider/sizes"
 import { SliderSteps } from "@/components/examples/slider/steps"
 import { SliderValueBubble } from "@/components/examples/slider/value-bubble"
 import { SliderVertical } from "@/components/examples/slider/vertical"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("slider")
 

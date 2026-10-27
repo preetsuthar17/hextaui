@@ -19,7 +19,7 @@ import { ToastDemo } from "@/components/examples/toast/demo"
 import { ToastPromise } from "@/components/examples/toast/promise"
 import { ToastTypes } from "@/components/examples/toast/types"
 import { ToastUpdate } from "@/components/examples/toast/update"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("toast")
 

@@ -18,7 +18,7 @@ import { QuestionnaireConditional } from "@/components/examples/questionnaire/co
 import { QuestionnaireDemo } from "@/components/examples/questionnaire/demo"
 import { QuestionnaireLift } from "@/components/examples/questionnaire/lift"
 import { QuestionnaireRtl } from "@/components/examples/questionnaire/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("questionnaire")
 

@@ -8,7 +8,7 @@ import {
   changelogGroups,
   type ChangelogEntry,
 } from "@/lib/changelog"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
@@ -79,7 +79,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/changelog",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [{ name: "Changelog", path: "/changelog" }],
           type: "WebPage",

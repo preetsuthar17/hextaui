@@ -22,7 +22,7 @@ import { SwitchIos } from "@/components/examples/switch/ios"
 import { SwitchRtl } from "@/components/examples/switch/rtl"
 import { SwitchSizes } from "@/components/examples/switch/sizes"
 import { SwitchStates } from "@/components/examples/switch/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("switch")
 

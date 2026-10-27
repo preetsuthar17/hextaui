@@ -10,6 +10,7 @@
   "Each of these pages puts one HextaUI component next to its shadcn/ui version, with the parts, variants and props that differ.",
   "Files land in `@/components/ui`, next to any shadcn/ui components you already have.",
   "Finished states. Buttons show pending, success and error feedback from the promise you return. Switches save and roll back. Inputs shake when they are invalid. Spinners wait before they appear so fast work doesn’t flicker.",
+  "For size, parts, variants and dependencies across every shadcn/ui component, see the <0>shadcn/ui component statistics</0>.",
   "HextaUI and shadcn/ui",
   "HextaUI is not a replacement for shadcn/ui. It is a registry you add to a shadcn/ui project, with the same CLI, the same component names and the same theme tokens. This page explains what it adds and when you don’t need it.",
   "HextaUI is not a replacement for shadcn/ui. It uses the same CLI, names and theme tokens, and adds finished states, motion, extra components and AI blocks.",

@@ -21,7 +21,7 @@ import { SeparatorRender } from "@/components/examples/separator/render"
 import { SeparatorRtl } from "@/components/examples/separator/rtl"
 import { SeparatorVertical } from "@/components/examples/separator/vertical"
 import { SeparatorVerticalLabel } from "@/components/examples/separator/vertical-label"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("separator")
 

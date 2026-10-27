@@ -11,7 +11,7 @@ import {
   SectionHead,
 } from "@/components/site/pricing-sections"
 import { SponsorForm } from "@/components/site/sponsor-form"
-import { pageMetadata } from "@/lib/metadata"
+import { metadataTitle, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 import { currentSponsor, sponsorPrice, sponsorReviewDays } from "@/lib/sponsor"
 
@@ -35,7 +35,7 @@ export default function Page() {
       <JsonLd
         data={pageJsonLd({
           path: "/sponsor",
-          name: String(metadata.title),
+          name: metadataTitle(metadata),
           description: String(metadata.description),
           breadcrumbs: [{ name: "Sponsor", path: "/sponsor" }],
           type: "WebPage",

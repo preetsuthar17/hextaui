@@ -17,7 +17,7 @@ import { NavigationMenuActive } from "@/components/examples/navigation-menu/acti
 import { NavigationMenuDemo } from "@/components/examples/navigation-menu/demo"
 import { NavigationMenuDropdown } from "@/components/examples/navigation-menu/dropdown"
 import { NavigationMenuRtl } from "@/components/examples/navigation-menu/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("navigation-menu")
 

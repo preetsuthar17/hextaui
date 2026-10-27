@@ -30,7 +30,7 @@ import { InputGroupRtl } from "@/components/examples/input-group/rtl"
 import { InputGroupSizes } from "@/components/examples/input-group/sizes"
 import { InputGroupTextDemo } from "@/components/examples/input-group/text"
 import { InputGroupTextareaDemo } from "@/components/examples/input-group/textarea"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("input-group")
 

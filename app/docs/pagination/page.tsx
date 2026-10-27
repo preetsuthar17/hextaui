@@ -21,7 +21,7 @@ import { PaginationDemo } from "@/components/examples/pagination/demo"
 import { PaginationLinks } from "@/components/examples/pagination/links"
 import { PaginationLong } from "@/components/examples/pagination/long"
 import { PaginationRtl } from "@/components/examples/pagination/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("pagination")
 

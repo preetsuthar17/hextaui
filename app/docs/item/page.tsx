@@ -26,7 +26,7 @@ import { ItemSelectable } from "@/components/examples/item/selectable"
 import { ItemSeparatorDemo } from "@/components/examples/item/separator"
 import { ItemSizes } from "@/components/examples/item/sizes"
 import { ItemVariants } from "@/components/examples/item/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("item")
 

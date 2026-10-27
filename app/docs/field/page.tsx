@@ -27,7 +27,7 @@ import { FieldResponsive } from "@/components/examples/field/responsive"
 import { FieldRtl } from "@/components/examples/field/rtl"
 import { FieldStatusDemo } from "@/components/examples/field/status"
 import { FieldValidation } from "@/components/examples/field/validation"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("field")
 

@@ -48,16 +48,16 @@ minimumReleaseAgeExclude:
   - '@ai-sdk/provider@4.0.22 || 4.0.24'
   - '@ai-sdk/react@4.0.131 || 4.0.133 || 4.0.152'
   - ai@7.0.128 || 7.0.130 || 7.0.148
-  - '@cloudflare/workers-types@5.20261007.1 || 5.20261021.1'
+  - '@cloudflare/workers-types@5.20261007.1 || 5.20261021.1 || 5.20261026.1'
   - '@next/third-parties@16.4.0'
   - miniflare@5.20261006.0-alpha || 5.20261019.1-beta
   - wrangler@4.148.0 || 4.151.3
-  - '@better-auth/core@1.7.12'
-  - '@better-auth/drizzle-adapter@1.7.12'
-  - '@better-auth/kysely-adapter@1.7.12'
-  - '@better-auth/memory-adapter@1.7.12'
-  - '@better-auth/mongo-adapter@1.7.12'
-  - '@better-auth/prisma-adapter@1.7.12'
-  - '@better-auth/telemetry@1.7.12'
-  - better-auth@1.7.12
+  - '@better-auth/core@1.7.12 || 1.7.13'
+  - '@better-auth/drizzle-adapter@1.7.12 || 1.7.13'
+  - '@better-auth/kysely-adapter@1.7.12 || 1.7.13'
+  - '@better-auth/memory-adapter@1.7.12 || 1.7.13'
+  - '@better-auth/mongo-adapter@1.7.12 || 1.7.13'
+  - '@better-auth/prisma-adapter@1.7.12 || 1.7.13'
+  - '@better-auth/telemetry@1.7.12 || 1.7.13'
+  - better-auth@1.7.12 || 1.7.13
   - react-resizable-panels@4.14.8

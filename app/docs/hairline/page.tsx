@@ -11,7 +11,7 @@ import { DocsExample } from "@/components/docs/docs-example"
 import { DocsAttributesTable } from "@/components/docs/docs-props-table"
 import { HairlineDemo } from "@/components/examples/hairline/demo"
 import { HairlineList } from "@/components/examples/hairline/list"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
 
 export const metadata = getDocsComponentMetadata("hairline")

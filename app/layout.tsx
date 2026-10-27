@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google"
 import localFont from "next/font/local"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 
 import "./globals.css"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
@@ -19,6 +19,7 @@ import {
   siteAuthorUrl,
   siteName,
   siteMetaDescription,
+  siteThemeColor,
   siteTitle,
   siteTwitter,
   siteUrl,
@@ -64,8 +65,16 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteMetaDescription,
+    site: siteTwitter,
     creator: siteTwitter,
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: siteThemeColor.light },
+    { media: "(prefers-color-scheme: dark)", color: siteThemeColor.dark },
+  ],
 }
 
 const fontSans = Inter({

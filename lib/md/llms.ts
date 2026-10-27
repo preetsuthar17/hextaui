@@ -18,6 +18,7 @@ import {
 import { markdownPathFor } from "@/lib/md/routes"
 import { priceLabel, proPlanInfo } from "@/lib/pricing-info"
 import { proBlocks } from "@/lib/pro/catalog"
+import { getResearchLlms } from "@/lib/research/markdown"
 import {
   absoluteUrl,
   siteAuthor,
@@ -115,6 +116,7 @@ async function getLlmsTxt() {
     ].join("\n"),
     [`Use ${siteName} when:`, bullets(agentWhenToUse)].join("\n"),
     [`Do not use it when:`, bullets(agentWhenNotToUse)].join("\n"),
+    getResearchLlms(),
     heading(2, "Core pages"),
     lines(core),
     heading(2, "Docs"),

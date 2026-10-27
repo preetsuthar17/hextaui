@@ -19,7 +19,7 @@ import { SpinnerDelayed } from "@/components/examples/spinner/delayed"
 import { SpinnerDemo } from "@/components/examples/spinner/demo"
 import { SpinnerInline } from "@/components/examples/spinner/inline"
 import { SpinnerSizes } from "@/components/examples/spinner/sizes"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("spinner")
 

@@ -24,7 +24,7 @@ import { ScrollAreaRtl } from "@/components/examples/scroll-area/rtl"
 import { ScrollAreaSheet } from "@/components/examples/scroll-area/sheet"
 import { ScrollAreaText } from "@/components/examples/scroll-area/text"
 import { ScrollAreaWithoutFade } from "@/components/examples/scroll-area/without-fade"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("scroll-area")
 

@@ -18,7 +18,7 @@ import { MessageDemo } from "@/components/examples/message/demo"
 import { MessageHeaderFooter } from "@/components/examples/message/header-footer"
 import { MessageLongContent } from "@/components/examples/message/long-content"
 import { MessageRtl } from "@/components/examples/message/rtl"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("message")
 

@@ -8,13 +8,18 @@ import { CatalogBody, CatalogHeader } from "@/components/site/catalog-header"
 import { ComponentCard } from "@/components/site/component-card"
 import { JsonLd } from "@/components/site/json-ld"
 import {
+  getCategoryList,
+  getCategoryListSummary,
+  getCategoryListTitle,
+} from "@/lib/category-lists"
+import {
   componentCategories,
-  getCategoryComponents,
-  getComponentCategory,
   getComponentCategoryHref,
 } from "@/lib/component-categories"
 import { getProBlocksUsing } from "@/lib/docs-related"
+import { getRequestLocale } from "@/lib/i18n/request"
 import { t } from "@/lib/i18n/rich"
+import { markTranslated } from "@/lib/i18n/translated"
 import { ogImagePath, pageMetadata } from "@/lib/metadata"
 import { pageJsonLd } from "@/lib/structured-data"
 
@@ -27,23 +32,29 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps<"/components/[category]">): Promise<Metadata> {
-  const category = getComponentCategory((await params).category)
-  if (!category) return {}
+  const list = getCategoryList((await params).category)
+  if (!list) return {}
 
   return pageMetadata({
-    title: category.title,
-    description: category.description,
-    path: getComponentCategoryHref(category.slug),
+    title: getCategoryListTitle(list),
+    description: markTranslated(
+      [getCategoryListSummary(list), t(list.category.description)].join(
+        getRequestLocale().locale === "ja" ? "" : " "
+      )
+    ),
+    path: getComponentCategoryHref(list.category.slug),
   })
 }
 
 export default async function Page({
   params,
 }: PageProps<"/components/[category]">) {
-  const category = getComponentCategory((await params).category)
-  if (!category) notFound()
+  const list = getCategoryList((await params).category)
+  if (!list) notFound()
+  const { category, components } = list
   const path = getComponentCategoryHref(category.slug)
-  const components = getCategoryComponents(category.slug)
+  const title = getCategoryListTitle(list)
+  const summary = getCategoryListSummary(list)
   const blocks = [
     ...new Map(
       components
@@ -61,8 +72,8 @@ export default async function Page({
       <JsonLd
         data={pageJsonLd({
           path,
-          name: category.title,
-          description: category.description,
+          name: title,
+          description: summary,
           breadcrumbs: crumbs,
           type: "CollectionPage",
           image: ogImagePath(getComponentCategoryHref(category.slug)),
@@ -75,9 +86,12 @@ export default async function Page({
       <CatalogHeader
         breadcrumbs={<DocsBreadcrumbs crumbs={crumbs} />}
         title={t(category.name)}
-        lede={category.intro.map((paragraph) => (
-          <p key={paragraph}>{t(paragraph)}</p>
-        ))}
+        lede={[
+          <p key="summary">{summary}</p>,
+          ...category.intro.map((paragraph) => (
+            <p key={paragraph}>{t(paragraph)}</p>
+          )),
+        ]}
       />
       <CatalogBody>
         <CatalogGrid>

@@ -26,7 +26,7 @@ import { ComboboxPopupSearch } from "@/components/examples/combobox/popup-search
 import { ComboboxRtl } from "@/components/examples/combobox/rtl"
 import { ComboboxInSheet } from "@/components/examples/combobox/sheet"
 import { ComboboxStates } from "@/components/examples/combobox/states"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("combobox")
 

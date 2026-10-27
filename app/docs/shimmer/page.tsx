@@ -14,7 +14,7 @@ import { DocsAttributesTable } from "@/components/docs/docs-props-table"
 import { ShimmerDemo } from "@/components/examples/shimmer/demo"
 import { ShimmerOptions } from "@/components/examples/shimmer/options"
 import { ShimmerStatus } from "@/components/examples/shimmer/status"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
 
 export const metadata = getDocsComponentMetadata("shimmer")

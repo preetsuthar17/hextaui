@@ -20,7 +20,7 @@ import { KbdRtl } from "@/components/examples/kbd/rtl"
 import { KbdShortcuts } from "@/components/examples/kbd/shortcuts"
 import { KbdSizes } from "@/components/examples/kbd/sizes"
 import { KbdVariants } from "@/components/examples/kbd/variants"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("kbd")
 

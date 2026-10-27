@@ -28,7 +28,7 @@ import { InputOTPRtl } from "@/components/examples/input-otp/rtl"
 import { InputOTPSeparate } from "@/components/examples/input-otp/separate"
 import { InputOTPSizes } from "@/components/examples/input-otp/sizes"
 import { InputOTPStatusExample } from "@/components/examples/input-otp/status"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("input-otp")
 

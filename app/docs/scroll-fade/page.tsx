@@ -14,7 +14,7 @@ import { DocsAttributesTable } from "@/components/docs/docs-props-table"
 import { ScrollFadeDemo } from "@/components/examples/scroll-fade/demo"
 import { ScrollFadeEdge } from "@/components/examples/scroll-fade/edge"
 import { ScrollFadeHorizontal } from "@/components/examples/scroll-fade/horizontal"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 import { getRegistryItemUrl } from "@/lib/docs-registry"
 
 export const metadata = getDocsComponentMetadata("scroll-fade")

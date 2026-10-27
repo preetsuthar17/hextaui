@@ -27,7 +27,7 @@ import { DropdownMenuRtl } from "@/components/examples/dropdown-menu/rtl"
 import { DropdownMenuScrolling } from "@/components/examples/dropdown-menu/scrolling"
 import { DropdownMenuSelect } from "@/components/examples/dropdown-menu/select"
 import { DropdownMenuSafeArea } from "@/components/examples/dropdown-menu/safe-area"
-import { getDocsComponentMetadata } from "@/lib/docs"
+import { getDocsComponentMetadata } from "@/lib/docs-metadata"
 
 export const metadata = getDocsComponentMetadata("dropdown-menu")
 
