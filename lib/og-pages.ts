@@ -21,6 +21,7 @@ import { metadata as refunds } from "@/app/legal/refunds/page"
 import { metadata as terms } from "@/app/legal/terms/page"
 import { metadata as pricing } from "@/app/pricing/page"
 import { metadata as sponsor } from "@/app/sponsor/page"
+import { metadata as themeEditor } from "@/app/tools/theme-editor/page"
 import {
   blogDescription,
   blogPosts,
@@ -39,6 +40,7 @@ import { categoryTitle, proBlocks } from "@/lib/pro/catalog"
 import { getStudies, getStudyHref } from "@/lib/research"
 import { researchDescription, researchTitle } from "@/lib/research/markdown"
 import { siteName } from "@/lib/site"
+import { toolsDescription, toolsTitle } from "@/lib/tools"
 import {
   getShadcnComparisonHref,
   getShadcnComparisons,
@@ -221,6 +223,22 @@ function getOgPages(): OgPage[] {
     })),
   ]
 
+  const toolPages = [
+    {
+      path: "/tools",
+      image: {
+        variant: "slab" as const,
+        section: "Tools",
+        title: toolsTitle,
+        description: toolsDescription,
+      },
+    },
+    fromMetadata("/tools/theme-editor", themeEditor, {
+      variant: "slab",
+      section: "Tools",
+    }),
+  ]
+
   return [
     ...marketing,
     ...blockPages,
@@ -230,6 +248,7 @@ function getOgPages(): OgPage[] {
     ...comparePages,
     ...blogPages,
     ...researchPages,
+    ...toolPages,
   ]
 }
 

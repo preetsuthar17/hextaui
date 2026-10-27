@@ -4,7 +4,7 @@
 
 @source "../pro";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *):not(:where([data-color-scheme=light] *)));
 
 @theme inline {
   --font-heading: var(--font-sans);

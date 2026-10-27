@@ -92,6 +92,7 @@ describe("OpenAPI document", () => {
     const documented = Object.keys(document.paths).map((route) =>
       route
         .replace("{name}.json", "[name]")
+        .replace("{id}.json", "[id]")
         .replace("{id}", "[id]")
         .replace("{name}", "[name]")
     )

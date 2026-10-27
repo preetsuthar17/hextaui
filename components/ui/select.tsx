@@ -125,7 +125,9 @@ type SelectContentProps = SelectPrimitive.Popup.Props &
   Pick<
     SelectPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
-  >
+  > & {
+    portalProps?: Omit<SelectPrimitive.Portal.Props, "children">
+  }
 
 function SelectContent({
   className,
@@ -136,6 +138,7 @@ function SelectContent({
   alignOffset = 0,
   alignItemWithTrigger = true,
   dir,
+  portalProps,
   ...props
 }: SelectContentProps) {
   const triggerRef = React.useContext(SelectTriggerContext)
@@ -155,7 +158,7 @@ function SelectContent({
   )
 
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal {...portalProps}>
       <SelectPrimitive.Positioner
         ref={setPositioner}
         dir={dir}

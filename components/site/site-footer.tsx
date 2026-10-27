@@ -28,6 +28,7 @@ const groups = [
     title: "Resources",
     pages: [
       { href: "/blog", title: "Blog" },
+      { href: "/tools", title: "Tools" },
       { href: "/compare", title: "Compare" },
       { href: "/research", title: "Research" },
       { href: "/docs/mcp", title: "MCP server" },

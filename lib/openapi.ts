@@ -42,7 +42,7 @@ const nameParameter = (description: string, example: string) => ({
 const signedIn = [{ sessionCookie: [] }]
 const proAccess = [{ bearerToken: [] }, { sessionCookie: [] }]
 
-const functionPath = /^\/(api|r\/pro)(\/|$)/
+const functionPath = /^\/(api|r\/pro|r\/themes)(\/|$)/
 
 function withDefaultErrors<T extends { paths: Record<string, object> }>(
   document: T
@@ -152,6 +152,37 @@ function getOpenApiDocument() {
               content: { [json]: { schema: ref("RegistryItem") } },
             },
             "404": errors["404"],
+          },
+        },
+      },
+      "/r/themes/{id}.json": {
+        get: {
+          operationId: "getThemeRegistryItem",
+          tags: ["Registry"],
+          summary: "Get a theme from the theme editor as a registry item",
+          description:
+            "Decodes a theme id from https://hextaui.com/tools/theme-editor and returns it as a shadcn `registry:theme` item with light and dark OKLCH variables. Pass the URL to `npx shadcn@latest add` to install the theme. Ids are content-addressed, so responses cache for a year.",
+          security: [],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description:
+                "Theme id from the theme editor's share link or install command, in base64url.",
+              schema: {
+                type: "string",
+                pattern: "^[A-Za-z0-9_-]{1,1200}$",
+                example: "AVA",
+              },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "The theme as a registry item.",
+              content: { [json]: { schema: ref("RegistryItem") } },
+            },
+            ...pick("400"),
           },
         },
       },

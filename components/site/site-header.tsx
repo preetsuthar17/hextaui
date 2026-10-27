@@ -23,6 +23,7 @@ import {
   IconShoppingBag,
   IconSparkles,
   IconTerminal2,
+  IconTool,
 } from "@tabler/icons-react"
 import { cn } from "cn"
 import { useTheme } from "next-themes"
@@ -44,7 +45,14 @@ import { useSitePathname } from "@/lib/i18n/client"
 import { useSoloPrice } from "@/lib/pro/use-early-bird"
 import { siteName, siteRepository } from "@/lib/site"
 
-const resourcePaths = ["/blog", "/changelog", "/compare", "/sponsor", "/about"]
+const resourcePaths = [
+  "/blog",
+  "/tools",
+  "/changelog",
+  "/compare",
+  "/sponsor",
+  "/about",
+]
 
 function buildMenus(hooksHref: string): Menu[] {
   return [
@@ -153,6 +161,12 @@ function buildMenus(hooksHref: string): Menu[] {
           href: "/blog",
           description: "Guides for building AI and commerce UI",
           icon: IconNews,
+        },
+        {
+          label: "Tools",
+          href: "/tools",
+          description: "Free theme editor and more for shadcn/ui",
+          icon: IconTool,
         },
         {
           label: "Changelog",

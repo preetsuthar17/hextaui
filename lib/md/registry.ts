@@ -51,6 +51,24 @@ import {
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
 import { absoluteUrl, siteName } from "@/lib/site"
+import {
+  themeEditorDescription,
+  themeEditorFaq,
+  themeEditorLead,
+  themeEditorSteps,
+  themeEditorTitle,
+} from "@/lib/theme-editor/content"
+import { encodeTheme } from "@/lib/theme-editor/encode"
+import { themePresets } from "@/lib/theme-editor/presets"
+import { themeInstallCommand } from "@/lib/theme-editor/registry"
+import { defaultTheme } from "@/lib/theme-editor/theme"
+import {
+  getLiveTools,
+  getToolHref,
+  tools,
+  toolsDescription,
+  toolsTitle,
+} from "@/lib/tools"
 
 type MarkdownSection = "core" | "docs" | "content" | "compare" | "legal"
 
@@ -274,6 +292,49 @@ function getChangelogMarkdown() {
   ].join("\n\n")
 }
 
+function getToolsMarkdown() {
+  const soon = tools.filter((tool) => tool.status === "soon")
+  return [
+    heading(1, toolsTitle),
+    `> ${toolsDescription}`,
+    heading(2, "Tools"),
+    getLiveTools()
+      .map((tool) =>
+        linkItem({
+          title: tool.title,
+          href: getToolHref(tool.slug),
+          description: tool.description,
+        })
+      )
+      .join("\n"),
+    ...(soon.length > 0
+      ? [
+          heading(2, "Coming soon"),
+          bullets(soon.map((tool) => `${tool.title}: ${tool.description}`)),
+        ]
+      : []),
+  ].join("\n\n")
+}
+
+function getThemeEditorMarkdown() {
+  return [
+    heading(1, themeEditorTitle),
+    `> ${themeEditorDescription}`,
+    themeEditorLead,
+    `The editor runs in the browser at ${absoluteUrl("/tools/theme-editor")}. Presets: ${themePresets.map((preset) => preset.name).join(", ")}.`,
+    heading(2, "How it works"),
+    ...themeEditorSteps.flatMap((step) => [heading(3, step.title), step.body]),
+    heading(2, "Install a theme"),
+    `Every theme has a share link and an install command. The command for the default HextaUI theme is \`${themeInstallCommand(encodeTheme(defaultTheme))}\`.`,
+    heading(2, "Questions"),
+    ...themeEditorFaq.flatMap((item) => [heading(3, item.question), item.answer]),
+  ].join("\n\n")
+}
+
+const toolMarkdown: Record<string, () => string> = {
+  "theme-editor": getThemeEditorMarkdown,
+}
+
 const renderers: MarkdownRenderer[] = [
   {
     pattern: "/",
@@ -491,6 +552,33 @@ const renderers: MarkdownRenderer[] = [
         related: [
           { title: "All research", href: "/research" },
           ...study.related,
+        ],
+      }
+    },
+  },
+  {
+    pattern: "/tools",
+    section: "content",
+    paths: () => ["/tools"],
+    render: async () => ({ markdown: getToolsMarkdown() }),
+  },
+  {
+    pattern: "/tools/:slug",
+    section: "content",
+    paths: () =>
+      getLiveTools()
+        .filter((tool) => toolMarkdown[tool.slug])
+        .map((tool) => getToolHref(tool.slug)),
+    render: async (path) => {
+      const slug = slugOf(path, 2)
+      const markdown = toolMarkdown[slug]
+      if (!markdown) return null
+      return {
+        markdown: markdown(),
+        related: [
+          { title: "All tools", href: "/tools" },
+          { title: "Components", href: "/components" },
+          { title: "Blocks", href: "/blocks" },
         ],
       }
     },

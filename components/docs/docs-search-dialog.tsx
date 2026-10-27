@@ -21,6 +21,7 @@ import {
   IconHash,
   IconKeyboard,
   IconLayoutGrid,
+  IconPalette,
   IconLink,
   IconMarkdown,
   IconMoon,
@@ -602,6 +603,15 @@ function useGlobalActions(): ActionEntry[] {
         description: "Every component on one page.",
         keywords: ["index", "list", "gallery", "overview"],
         href: "/components",
+      },
+      {
+        id: "action:theme-editor",
+        title: "Open the theme editor",
+        kind: "action",
+        icon: IconPalette,
+        description: "Make a shadcn/ui theme and preview it on every component.",
+        keywords: ["theme", "colors", "palette", "generator", "tools", "oklch", "dark mode", "contrast"],
+        href: "/tools/theme-editor",
       },
       {
         id: "action:llms",
