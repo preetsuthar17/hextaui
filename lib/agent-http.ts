@@ -1,5 +1,12 @@
 import { apiError, apiNotFound } from "@/lib/api-error"
-import { siteUrl } from "@/lib/site"
+import {
+  handleMarkdownApi,
+  isMarkdownApiPath,
+  markdownNotFound,
+  serveMarkdown,
+} from "@/lib/md/http"
+import { htmlPathFor, matchMarkdownRoute } from "@/lib/md/routes"
+import { isNoindexPath, siteUrl } from "@/lib/site"
 
 type Next = () => Promise<Response>
 type Assets = (path: string) => Promise<Response>
@@ -50,14 +57,7 @@ function prefersMarkdown(accept: string | null) {
   const markdown = Math.max(
     ...markdownTypes.map((type) => acceptQuality(accept, type))
   )
-  return markdown > 0 && markdown >= acceptQuality(accept, "text/html")
-}
-
-const aiAgentPattern =
-  /\b(GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-User|Claude-SearchBot|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|DeepSeekBot|ora-agent|cohere-ai|MistralAI-User)\b/i
-
-function isAiAgent(userAgent: string | null) {
-  return userAgent ? aiAgentPattern.test(userAgent) : false
+  return markdown > 0 && markdown > acceptQuality(accept, "text/html")
 }
 
 function withVary(response: Response, ...headers: string[]) {
@@ -73,30 +73,6 @@ function withVary(response: Response, ...headers: string[]) {
   const next = new Response(response.body, response)
   next.headers.set("vary", [...values, ...missing].filter(Boolean).join(", "))
   return next
-}
-
-async function markdownResponse(
-  assets: Assets,
-  path: string,
-  status: number,
-  method: string
-) {
-  const source = await assets(path)
-  if (!source.ok) {
-    return null
-  }
-  const body = await source.text()
-  return new Response(method === "HEAD" ? null : body, {
-    status,
-    headers: {
-      "content-type": "text/markdown; charset=utf-8",
-      vary: status === 200 ? "Accept, User-Agent" : "Accept",
-      "cache-control":
-        status === 200 ? "public, max-age=0, must-revalidate" : "no-store",
-      "access-control-allow-origin": "*",
-      ...(status === 200 ? {} : { "x-robots-tag": "noindex" }),
-    },
-  })
 }
 
 function isApiPath(pathname: string) {
@@ -117,46 +93,55 @@ async function handleAgentRequest(
   assets: Assets
 ) {
   const url = new URL(request.url)
+  const { pathname } = url
   const readable = request.method === "GET" || request.method === "HEAD"
   const markdown = readable && prefersMarkdown(request.headers.get("accept"))
 
-  if (url.pathname === "/" && readable) {
-    if (markdown || isAiAgent(request.headers.get("user-agent"))) {
-      const response = await markdownResponse(
-        assets,
-        "/index.md",
-        200,
-        request.method
-      )
-      if (response) {
-        return response
-      }
+  if (isMarkdownApiPath(pathname)) {
+    return handleMarkdownApi(request, assets)
+  }
+
+  if (pathname.endsWith(".md")) {
+    const path = htmlPathFor(pathname)
+    if (matchMarkdownRoute(path)) {
+      return serveMarkdown({ request, assets, path, negotiated: false })
     }
-    return withVary(await next(), "Accept", "User-Agent")
+    const response = await next()
+    return response.status === 404 && readable
+      ? markdownNotFound(request, assets, false)
+      : response
+  }
+
+  if (markdown && isNoindexPath(pathname)) {
+    return markdownNotFound(request, assets, true)
+  }
+
+  if (matchMarkdownRoute(pathname)) {
+    if (markdown) {
+      return serveMarkdown({
+        request,
+        assets,
+        path: pathname,
+        negotiated: true,
+      })
+    }
+    return withVary(await next(), "Accept")
   }
 
   const response = await next()
 
-  if (response.status >= 400 && isApiPath(url.pathname) && !isJson(response)) {
+  if (response.status >= 400 && isApiPath(pathname) && !isJson(response)) {
     return response.status === 405
       ? apiError("method_not_allowed", {
-          detail: `${request.method} is not supported on ${url.pathname}.`,
+          detail: `${request.method} is not supported on ${pathname}.`,
           resolution: `See ${siteUrl}/openapi.json for the methods each endpoint accepts.`,
         })
-      : apiNotFound(`${request.method} ${url.pathname}`)
+      : apiNotFound(`${request.method} ${pathname}`)
   }
 
-  if (response.status === 404 && !isApiPath(url.pathname)) {
+  if (response.status === 404 && !isApiPath(pathname)) {
     if (markdown) {
-      const notFound = await markdownResponse(
-        assets,
-        "/404.md",
-        404,
-        request.method
-      )
-      if (notFound) {
-        return notFound
-      }
+      return markdownNotFound(request, assets, true)
     }
     return withVary(response, "Accept")
   }
@@ -164,10 +149,4 @@ async function handleAgentRequest(
   return response
 }
 
-export {
-  acceptQuality,
-  handleAgentRequest,
-  isAiAgent,
-  isApiPath,
-  prefersMarkdown,
-}
+export { acceptQuality, handleAgentRequest, isApiPath, prefersMarkdown }

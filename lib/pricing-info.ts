@@ -122,14 +122,16 @@ function getPricingMarkdown() {
   const bullets = (items: string[]) =>
     items.map((item) => `- ${item}`).join("\n")
   const [solo, team, unlimited] = proPlanInfo
+  const description = `${siteName} components are free under the MIT License. ${siteName} Pro is a one-time payment: Solo ${priceLabel(solo)}, Team ${priceLabel(team)}, Unlimited ${priceLabel(unlimited)}.`
   return `${[
     frontmatter({
       title: `${siteName} pricing`,
-      description: `${siteName} components are free under the MIT License. ${siteName} Pro is a one-time payment: Solo ${priceLabel(solo)}, Team ${priceLabel(team)}, Unlimited ${priceLabel(unlimited)}.`,
+      description,
       canonical: absoluteUrl("/pricing"),
       "last-updated": pricingUpdated,
     }),
     `# ${siteName} pricing`,
+    `> ${description}`,
     `Prices are in ${pricingCurrency}. Payments are handled by Dodo Payments.`,
     `## ${freePlan.name}: free`,
     freePlan.summary,
@@ -163,7 +165,10 @@ function getPricingMarkdown() {
       `| Refund | Not applicable | ${refundDays} days, no questions asked | ${refundDays} days, no questions asked | ${refundDays} days, no questions asked |`,
     ].join("\n"),
     "## Common questions",
-    bullets(pricingQuestions.map((item) => `${item.question} ${item.answer}`)),
+    ...pricingQuestions.flatMap((item) => [
+      `### ${item.question}`,
+      item.answer,
+    ]),
     "## How to buy",
     `Sign in with GitHub or Google at ${absoluteUrl("/account")} and choose Solo, Team or Unlimited. Checkout needs a person in a browser; agents cannot buy on a user's behalf through the API.`,
     "## Terms",

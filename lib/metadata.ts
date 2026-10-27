@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 
 import { languageAlternates } from "@/lib/i18n/config"
+import { markdownPathFor, matchMarkdownRoute } from "@/lib/md/routes"
 import {
+  isNoindexPath,
   siteMetaDescription,
   siteName,
   siteTitle,
@@ -13,6 +15,7 @@ type PageMetadataOptions = {
   title?: string
   description?: string
   markdown?: string
+  aiSummary?: string
   image?: string
   imageAlt?: string
   type?: "website" | "article"
@@ -41,12 +44,18 @@ function pageMetadata({
   path,
   title,
   description: fullDescription = siteMetaDescription,
-  markdown,
+  markdown: markdownOverride,
+  aiSummary,
   image: imageUrl = ogImagePath(path),
   imageAlt,
   type = "website",
 }: PageMetadataOptions): Metadata {
   const description = clampDescription(fullDescription)
+  const markdown =
+    markdownOverride ??
+    (matchMarkdownRoute(path) && !isNoindexPath(path)
+      ? markdownPathFor(path)
+      : undefined)
   const socialTitle = title ? `${title} — ${siteName}` : siteTitle
   const image = {
     url: imageUrl,
@@ -79,6 +88,7 @@ function pageMetadata({
       creator: siteTwitter,
       images: [image],
     },
+    other: { "ai-summary": aiSummary ?? description },
   }
 }
 

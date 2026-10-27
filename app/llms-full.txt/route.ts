@@ -1,9 +1,9 @@
-import { getLlmsFull } from "@/lib/docs-markdown"
+import { getLlmsFullTxt } from "@/lib/md/llms"
 
 export const dynamic = "force-static"
 
 export async function GET() {
-  return new Response(await getLlmsFull(), {
+  return new Response(await getLlmsFullTxt(), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   })
 }

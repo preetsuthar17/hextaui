@@ -4,6 +4,7 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Link: </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="describedby"; type="text/plain", </ai.txt>; rel="describedby"; type="text/plain"
 
 /opengraph-image
   Content-Type: image/png
@@ -22,6 +23,7 @@
 /*.md
   Content-Type: text/markdown; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex, follow
 
 /docs/*.md
   Link: <https://hextaui.com/docs/:splat>; rel="canonical"
@@ -69,10 +71,22 @@
 /llms-full.txt
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800
+
+/ai.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+
+/markdown-catalog.json
+  Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
 
 /
   Vary: Accept
-  Link: </index.md>; rel="alternate"; type="text/markdown", </llms.txt>; rel="describedby"; type="text/plain", </.well-known/api-catalog>; rel="api-catalog", </openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json", </docs/api>; rel="service-doc"; type="text/html", </.well-known/ard.json>; rel="ard"; type="application/json", </pricing.md>; rel="alternate"; type="text/markdown"; title="Pricing"
+  Link: </index.md>; rel="alternate"; type="text/markdown", </.well-known/api-catalog>; rel="api-catalog", </openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json", </docs/api>; rel="service-doc"; type="text/html", </.well-known/ard.json>; rel="ard"; type="application/json", </pricing.md>; rel="alternate"; type="text/markdown"; title="Pricing"
 
 /openapi.json
   Content-Type: application/json; charset=utf-8

@@ -16,6 +16,10 @@ export default function nextConfig(phase: string): NextConfig {
     },
     rewrites: async () => [
       {
+        source: "/:page((?!md/).+)\\.md",
+        destination: "/md/:page.md",
+      },
+      {
         source: "/api/:path*",
         destination: "http://localhost:8788/api/:path*",
       },

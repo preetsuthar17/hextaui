@@ -23,6 +23,7 @@ export const metadata: Metadata = pageMetadata({
   title,
   description,
   path: "/components",
+  aiSummary: `The catalog of all ${components.length} free HextaUI components, grouped into categories, each linking to its docs page with installation, examples and API reference.`,
 })
 
 const categoryLinkClassName =

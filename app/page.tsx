@@ -9,12 +9,13 @@ import { docsComponents } from "@/lib/docs"
 import { heroRevealScript } from "@/lib/hero-reveal"
 import { T, t } from "@/lib/i18n/rich"
 import { pageMetadata } from "@/lib/metadata"
+import { siteName } from "@/lib/site"
 import { getProBlock, proBlocks } from "@/lib/pro/catalog"
 import { planPrice } from "@/lib/pro/pricing"
 
 export const metadata: Metadata = pageMetadata({
   path: "/",
-  markdown: "/index.md",
+  aiSummary: `The ${siteName} home page: an open-source library of ${docsComponents.length} React components for shadcn/ui on Base UI and Tailwind CSS v4, plus ${siteName} Pro, paid blocks for AI chat, tool calls and app screens.`,
 })
 
 const stageBlockNames = [
@@ -78,7 +79,10 @@ export default function Page() {
               <p className="hero-reveal mt-5 max-w-140 text-base/6 font-medium text-pretty text-white/85 [--reveal-delay:0.6s] sm:text-lg/7">
                 {t(
                   "{count} free components, plus Pro blocks for AI products and stores from {price}. Streaming, retries and approvals, already worked out.",
-                  { count: docsComponents.length, price: `$${planPrice("solo")}` }
+                  {
+                    count: docsComponents.length,
+                    price: `$${planPrice("solo")}`,
+                  }
                 )}
               </p>
             </div>

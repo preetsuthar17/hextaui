@@ -123,6 +123,13 @@ export default function Page() {
           as Markdown. <DocsCode>/llms.txt</DocsCode> links to all of them.
         </li>
         <li>
+          <DocsCode>GET /api/md/&#123;path&#125;</DocsCode> returns any public
+          page as Markdown, the same file as{" "}
+          <DocsCode>/&#123;path&#125;.md</DocsCode> or a request with{" "}
+          <DocsCode>Accept: text/markdown</DocsCode>.{" "}
+          <DocsCode>GET /api/md/_catalog</DocsCode> lists every one.
+        </li>
+        <li>
           <DocsCode>POST /mcp</DocsCode> is the Streamable HTTP endpoint of the
           MCP server.
         </li>

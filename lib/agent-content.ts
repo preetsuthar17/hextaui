@@ -82,8 +82,9 @@ function getNotFoundMarkdown() {
     `There is no ${siteName} page at this URL. It may have moved, or the link may have a typo.`,
     "## Where to go instead",
     bullets([
-      `[llms.txt](${absoluteUrl("/llms.txt")}): every docs page as Markdown`,
-      `[Docs](${absoluteUrl("/docs.md")}): introduction and quick start`,
+      `[llms.txt](${absoluteUrl("/llms.txt")}): every page as Markdown`,
+      `[Markdown catalog](${absoluteUrl("/api/md/_catalog")}): every Markdown URL`,
+      `[Docs](${absoluteUrl("/docs")}): introduction and quick start`,
       `[Sitemap](${absoluteUrl("/sitemap.xml")}): every public page`,
       `[OpenAPI](${absoluteUrl("/openapi.json")}): HTTP endpoints`,
       `[MCP server](${absoluteUrl("/mcp")}): search the docs as tools`,

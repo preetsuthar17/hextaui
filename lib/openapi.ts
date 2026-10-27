@@ -223,6 +223,95 @@ function getOpenApiDocument() {
           },
         },
       },
+      "/api/md/{path}": {
+        get: {
+          operationId: "getMarkdownPage",
+          tags: ["Docs"],
+          summary: "Get any page as Markdown",
+          description:
+            "Returns the Markdown version of a public HTML page: `/api/md/pricing` for `/pricing`, `/api/md/index` for the home page. The same Markdown is served at `<page>.md` and to requests whose Accept header prefers `text/markdown`. Responses carry `X-Markdown-Tokens`, `Content-Location` with the canonical HTML URL and `X-Robots-Tag: noindex, follow`.",
+          security: [],
+          parameters: [
+            {
+              name: "path",
+              in: "path",
+              required: true,
+              description:
+                "Path of the HTML page without the leading slash, such as `pricing`, `docs/button` or `blog/shadcn-ui-states`.",
+              schema: { type: "string", example: "docs/button" },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "The page as Markdown.",
+              content: { [markdown]: { schema: { type: "string" } } },
+            },
+            "404": {
+              description: "No public page has that path.",
+              content: { [markdown]: { schema: { type: "string" } } },
+            },
+          },
+        },
+      },
+      "/api/md/_catalog": {
+        get: {
+          operationId: "getMarkdownCatalog",
+          tags: ["Docs"],
+          summary: "List every Markdown page",
+          description:
+            "Returns every page that has a Markdown version, with its HTML URL, Markdown URL, title, summary and section.",
+          security: [],
+          responses: {
+            "200": {
+              description: "The Markdown catalog.",
+              content: {
+                [json]: {
+                  schema: {
+                    type: "object",
+                    required: ["site", "url", "count", "routes"],
+                    properties: {
+                      site: { type: "string" },
+                      url: { type: "string", format: "uri" },
+                      count: { type: "integer" },
+                      routes: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          required: ["path", "url", "markdown", "title"],
+                          properties: {
+                            path: { type: "string" },
+                            url: { type: "string", format: "uri" },
+                            markdown: { type: "string", format: "uri" },
+                            title: { type: "string" },
+                            summary: { type: "string" },
+                            section: { type: "string" },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/ai.txt": {
+        get: {
+          operationId: "getAiUsagePolicy",
+          tags: ["Docs"],
+          summary: "Get the AI usage policy",
+          description:
+            "Returns ai.txt: what AI systems may and may not do with HextaUI content, and how to attribute it.",
+          security: [],
+          responses: {
+            "200": {
+              description: "The ai.txt file.",
+              content: { "text/plain": { schema: { type: "string" } } },
+            },
+          },
+        },
+      },
       "/mcp": {
         post: {
           operationId: "callMcpServer",

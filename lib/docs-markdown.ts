@@ -12,7 +12,8 @@ import {
   DocsSection,
 } from "@/components/docs/docs-content"
 import { DocsExample } from "@/components/docs/docs-example"
-import { DocsInstall } from "@/components/docs/docs-install"
+import { DocsBreadcrumbs } from "@/components/docs/docs-breadcrumbs"
+import { DocsInstall, DocsStep } from "@/components/docs/docs-install"
 import { DocsPage } from "@/components/docs/docs-page"
 import {
   DocsAttributesTable,
@@ -22,6 +23,28 @@ import {
   type DocsKey,
   type DocsProp,
 } from "@/components/docs/docs-props-table"
+import { DocsRelated } from "@/components/docs/docs-related"
+import { UnlessPro } from "@/components/blocks/unless-pro"
+import {
+  ContactEmail,
+  contactEmail,
+  LegalLink,
+  LegalPage,
+  LegalSection,
+} from "@/components/legal/legal-page"
+import {
+  CompareLinkGrid,
+  CompareLinks,
+  CompareTable,
+  MoreComparisons,
+  type CompareLinkItem,
+  type CompareRow,
+} from "@/components/site/compare"
+import { InfoPage, InfoSection } from "@/components/site/info-page"
+import { JsonLd } from "@/components/site/json-ld"
+import { TrackedLink } from "@/components/site/tracked-link"
+import { Table, TableCell, TableHead, TableRow } from "@/components/ui/table"
+import { comparisons } from "@/lib/compare"
 import {
   docsComponents,
   docsEntries,
@@ -31,10 +54,10 @@ import {
   getDocsComponent,
 } from "@/lib/docs"
 import { getRegistryKind } from "@/lib/docs-registry"
+import { type RelatedLink } from "@/lib/docs-related"
 import { readDocsSource } from "@/lib/docs-source"
-import { getAgentGuideMarkdown } from "@/lib/agent-content"
 import { agentNotes } from "@/lib/agent-notes"
-import { absoluteUrl, siteDescription, siteName, siteUrl } from "@/lib/site"
+import { absoluteUrl, siteName } from "@/lib/site"
 
 type Element = React.ReactElement<Record<string, unknown>>
 
@@ -65,34 +88,51 @@ function inlineCode(value: string) {
 }
 
 function inline(node: React.ReactNode): string {
-  return toArray(node)
-    .map((child) => {
-      if (child === null || child === undefined || typeof child === "boolean") {
-        return ""
-      }
-      if (typeof child === "string" || typeof child === "number") {
-        return String(child)
-      }
-      if (!isElement(child)) {
-        return ""
-      }
-      const children = child.props.children as React.ReactNode
-      if (child.type === DocsCode || child.type === "code") {
-        return inlineCode(inline(children))
-      }
-      if (child.type === "a" || child.type === Link) {
-        return `[${inline(children)}](${absoluteUrl(String(child.props.href))})`
-      }
-      if (child.type === "strong" || child.type === "b") {
-        return `**${inline(children)}**`
-      }
-      if (child.type === "em" || child.type === "i") {
-        return `_${inline(children)}_`
-      }
-      return inline(children)
+  const children = toArray(node)
+  return children
+    .map((child, index) => {
+      const gap =
+        index > 0 && isElement(child) && isElement(children[index - 1])
+          ? " "
+          : ""
+      return `${gap}${inlineNode(child)}`
     })
     .join("")
     .replace(/\s+/g, " ")
+}
+
+function inlineNode(child: React.ReactNode): string {
+  if (child === null || child === undefined || typeof child === "boolean") {
+    return ""
+  }
+  if (typeof child === "string" || typeof child === "number") {
+    return String(child)
+  }
+  if (!isElement(child)) {
+    return ""
+  }
+  const children = child.props.children as React.ReactNode
+  if (child.type === DocsCode || child.type === "code") {
+    return inlineCode(inline(children))
+  }
+  if (
+    child.type === "a" ||
+    child.type === Link ||
+    child.type === LegalLink ||
+    child.type === TrackedLink
+  ) {
+    return `[${inline(children)}](${absoluteUrl(String(child.props.href))})`
+  }
+  if (child.type === ContactEmail) {
+    return `[${contactEmail}](mailto:${contactEmail})`
+  }
+  if (child.type === "strong" || child.type === "b") {
+    return `**${inline(children)}**`
+  }
+  if (child.type === "em" || child.type === "i") {
+    return `_${inline(children)}_`
+  }
+  return inline(children)
 }
 
 function cell(node: React.ReactNode) {
@@ -120,6 +160,93 @@ function fence(code: string, lang = "tsx", title?: string) {
 
 function heading(level: number, text: string) {
   return `${"#".repeat(level)} ${text}`
+}
+
+function linkList(
+  links: { href: string; title: string; description?: string }[]
+) {
+  return links
+    .map(
+      (link) =>
+        `- [${link.title}](${absoluteUrl(link.href)})${link.description ? ` - ${link.description}` : ""}`
+    )
+    .join("\n")
+}
+
+function findAll(node: React.ReactNode, type: React.ElementType): Element[] {
+  return toArray(node).flatMap((child) => {
+    if (!isElement(child)) return []
+    if (child.type === type) return [child]
+    return findAll(child.props.children as React.ReactNode, type)
+  })
+}
+
+const markdownElementTypes = new Set<unknown>([
+  DocsComponentPage,
+  DocsPage,
+  DocsSection,
+  DocsHeading,
+  DocsParagraph,
+  DocsList,
+  DocsCodeBlock,
+  DocsExample,
+  DocsInstall,
+  DocsStep,
+  DocsCommand,
+  DocsCode,
+  DocsPropsTable,
+  DocsKeyboardTable,
+  DocsAttributesTable,
+  DocsRelated,
+  DocsBreadcrumbs,
+  InfoPage,
+  InfoSection,
+  LegalPage,
+  LegalSection,
+  LegalLink,
+  ContactEmail,
+  CompareTable,
+  CompareLinks,
+  CompareLinkGrid,
+  MoreComparisons,
+  JsonLd,
+  Link,
+  TrackedLink,
+  UnlessPro,
+  Table,
+])
+
+function isClientReference(type: unknown) {
+  return (
+    typeof type === "function" &&
+    (type as { $$typeof?: symbol }).$$typeof ===
+      Symbol.for("react.client.reference")
+  )
+}
+
+async function expandTree(node: React.ReactNode): Promise<React.ReactNode> {
+  if (Array.isArray(node)) {
+    return Promise.all(node.map(expandTree))
+  }
+  if (!isElement(node)) {
+    return node
+  }
+  if (
+    typeof node.type === "function" &&
+    !markdownElementTypes.has(node.type) &&
+    !isClientReference(node.type)
+  ) {
+    const render = node.type as (props: unknown) => React.ReactNode
+    return expandTree(await render(node.props))
+  }
+  if (node.props.children === undefined) {
+    return node
+  }
+  return React.cloneElement(
+    node,
+    undefined,
+    await expandTree(node.props.children as React.ReactNode)
+  )
 }
 
 async function blocks(
@@ -155,11 +282,7 @@ async function element(
   if (node.type === DocsComponentPage) {
     const component = getDocsComponent(String(props.slug))
     return [
-      ...pageHeader(
-        component.name,
-        component.description,
-        `/docs/${component.slug}`
-      ),
+      ...pageHeader(component.name, component.description),
       ...(await blocks(children, options)),
     ]
   }
@@ -168,8 +291,7 @@ async function element(
     return [
       ...pageHeader(
         String(props.title),
-        props.description ? inline(props.description as React.ReactNode) : "",
-        String(props.href)
+        props.description ? inline(props.description as React.ReactNode) : ""
       ),
       ...(await blocks(children, options)),
     ]
@@ -186,6 +308,107 @@ async function element(
     ]
   }
 
+  if (node.type === InfoPage) {
+    return [
+      heading(1, String(props.title)),
+      `> ${String(props.lead)}`,
+      ...(await blocks(children, options)),
+    ]
+  }
+
+  if (node.type === LegalPage) {
+    return [
+      heading(1, String(props.title)),
+      `> ${String(props.description)}`,
+      ...(await blocks(children, options)),
+    ]
+  }
+
+  if (node.type === InfoSection || node.type === LegalSection) {
+    return [
+      heading(2, String(props.title)),
+      ...(await blocks(children, options)),
+    ]
+  }
+
+  if (node.type === DocsStep) {
+    return [
+      heading(3, `Step ${String(props.step)}: ${String(props.title)}`),
+      ...(await blocks(children, options)),
+    ]
+  }
+
+  if (node.type === UnlessPro) {
+    return blocks(children, options)
+  }
+
+  if (node.type === DocsRelated) {
+    const links = props.links as RelatedLink[]
+    if (links.length === 0) return []
+    return [
+      heading(2, String(props.title)),
+      ...(props.description ? [String(props.description)] : []),
+      linkList(links),
+    ]
+  }
+
+  if (node.type === CompareTable) {
+    const columns = props.columns as string[]
+    const rows = (props.rows as CompareRow[]).map((row) => [
+      cell(row.label),
+      ...row.values.map((value) => cell(value)),
+    ])
+    return [table([String(props.rowHeader ?? ""), ...columns], rows)]
+  }
+
+  if (node.type === CompareLinks || node.type === CompareLinkGrid) {
+    return [linkList(props.items as CompareLinkItem[])]
+  }
+
+  if (node.type === MoreComparisons) {
+    return [
+      heading(2, "More comparisons"),
+      linkList([
+        { href: "/compare", title: "All comparisons" },
+        ...comparisons.filter((page) => page.href !== props.current),
+      ]),
+    ]
+  }
+
+  if (node.type === Table) {
+    const rows = findAll(children, TableRow).map((row) =>
+      toArray(row.props.children as React.ReactNode)
+        .filter(
+          (item): item is Element =>
+            isElement(item) &&
+            (item.type === TableHead || item.type === TableCell)
+        )
+        .map((item) => cell(item.props.children as React.ReactNode))
+    )
+    const [head, ...body] = rows
+    return head ? [table(head, body)] : []
+  }
+
+  if (
+    node.type === JsonLd ||
+    node.type === DocsBreadcrumbs ||
+    node.type === "nav" ||
+    node.type === "form" ||
+    node.type === "script"
+  ) {
+    return []
+  }
+
+  if (
+    node.type === "h1" ||
+    node.type === "h2" ||
+    node.type === "h3" ||
+    node.type === "h4"
+  ) {
+    const text = inline(children).trim()
+    return text ? [heading(Number(String(node.type).slice(1)), text)] : []
+  }
+
   if (node.type === DocsHeading) {
     return [heading(Number(props.level ?? 2), inline(children).trim())]
   }
@@ -193,6 +416,15 @@ async function element(
   if (node.type === DocsParagraph || node.type === "p") {
     const text = inline(children).trim()
     return text ? [text] : []
+  }
+
+  if (
+    (node.type === "ul" || node.type === "ol") &&
+    !toArray(children)
+      .filter(isElement)
+      .every((item) => item.type === "li")
+  ) {
+    return blocks(children, options)
   }
 
   if (node.type === DocsList || node.type === "ul" || node.type === "ol") {
@@ -327,11 +559,10 @@ function getDocsExampleName(file: string) {
   return file.replace("/", "-")
 }
 
-function pageHeader(title: string, description: string, href: string) {
+function pageHeader(title: string, description: string) {
   return [
     heading(1, title),
     ...(description ? [`> ${description.trim()}`] : []),
-    `Docs: ${absoluteUrl(href)}\nMarkdown: ${absoluteUrl(`${href}.md`)}`,
   ]
 }
 
@@ -404,10 +635,10 @@ async function getDocsSections(slug: string): Promise<DocsMarkdownSection[]> {
   return sections
 }
 
-async function getDocsMarkdown(slug: string) {
-  const output = await renderDocsPage(slug, { source: true, slug })
+async function getDocsMarkdown(slug: string, { source = true } = {}) {
+  const output = await renderDocsPage(slug, { source, slug })
 
-  if (docsEntries.some((item) => item.slug === slug)) {
+  if (source && docsEntries.some((item) => item.slug === slug)) {
     output.push(
       heading(2, "Notes for AI assistants"),
       agentNotes.map((note) => `- ${note}`).join("\n"),
@@ -463,55 +694,9 @@ function getDocsLlms() {
   ].join("\n\n")}\n`
 }
 
-function getLlmsIndex() {
-  return `${[
-    heading(1, siteName),
-    `> ${siteDescription} Accessible React components on Base UI and Tailwind CSS v4 that you copy into your project and own.`,
-    `${siteName} keeps the shadcn/ui API and adds the details that make an interface feel finished: interruptible motion, reduced-motion fallbacks, keyboard support, right-to-left layouts and touch-sized targets. Every component is tested against its edge cases before it ships.`,
-    [
-      ...agentNotes.map((note) => `- ${note}`),
-      "- Each component page lists its dependencies, the full source to copy, usage, examples, keyboard support and an API reference.",
-      `- The shadcn registry index is ${absoluteUrl("/r/registry.json")}. Register it as a namespace in components.json with \`"registries": { "@hextaui": "${siteUrl}/r/{name}.json" }\` to run \`npx shadcn@latest add @hextaui/<name>\` or browse it through the shadcn MCP server.`,
-      `- Without the CLI, add the theme tokens from ${absoluteUrl("/docs/installation#theme")} before copying component files.`,
-      `- Append \`.md\` to any docs URL for its Markdown, for example ${absoluteUrl("/docs/button.md")}.`,
-    ].join("\n"),
-    getAgentGuideMarkdown(2),
-    heading(2, "Developer resources"),
-    [
-      `- [OpenAPI spec](${absoluteUrl("/openapi.json")}): every HTTP endpoint with operation ids, typed parameters and response schemas.`,
-      `- [API docs](${absoluteUrl("/docs/api.md")}): public endpoints, authentication with sessions and API tokens, and RFC 9457 error responses.`,
-      `- [MCP server](${absoluteUrl("/docs/mcp.md")}): Streamable HTTP at ${absoluteUrl("/mcp")}, server card at ${absoluteUrl("/.well-known/mcp/server-card.json")}.`,
-      `- [Agent skill](${absoluteUrl("/.well-known/agent-skills/hextaui/SKILL.md")}): how an agent should find, read and install ${siteName} components.`,
-      `- [Authentication](${absoluteUrl("/docs/api.md")}): public endpoints need no key; Pro endpoints take an API token as a bearer token, described by ${absoluteUrl("/.well-known/oauth-protected-resource")}.`,
-      `- [Pricing](${absoluteUrl("/pricing.md")}): free MIT components and the one-time ${siteName} Pro price.`,
-      `- [API catalog](${absoluteUrl("/.well-known/api-catalog")}) (RFC 9727) and [ARD catalog](${absoluteUrl("/.well-known/ard.json")}).`,
-    ].join("\n"),
-    heading(2, "Docs"),
-    guideList(),
-    heading(2, "Components"),
-    list(docsComponents),
-    heading(2, "Hooks"),
-    list(docsHooks),
-    heading(2, "Utilities"),
-    list(docsUtilities),
-    heading(2, "Optional"),
-    `- [Docs index](${absoluteUrl("/docs/llms.txt")}): only the docs pages, for agents that need component context and nothing else.`,
-    `- [Pro blocks index](${absoluteUrl("/blocks/llms.txt")}): the ${siteName} Pro blocks and how to install them.`,
-    `- [Blog index](${absoluteUrl("/blog/llms.txt")}): articles on shadcn/ui, Base UI, AI chat interfaces and agent-ready registries, each with a Markdown twin.`,
-    `- [Full documentation](${absoluteUrl("/llms-full.txt")}): Every docs page in one file, with usage, installation, keyboard support and API reference. Component source and example code live in each component's Markdown page.`,
-  ].join("\n\n")}\n`
-}
-
-async function getLlmsFull() {
-  const pages = await Promise.all(
-    docsMarkdownPages.map((slug) =>
-      renderDocsPage(slug, { source: false, slug })
-    )
-  )
-  return `${[getLlmsIndex(), ...pages.map((page) => `${page.join("\n\n")}\n`)].join("\n---\n\n")}`
-}
-
 export {
+  blocks as renderMarkdownBlocks,
+  expandTree,
   codeCell as docsCodeCell,
   docsMarkdownPages,
   fence as docsFence,
@@ -524,8 +709,6 @@ export {
   getDocsMarkdown,
   getDocsLlms,
   getDocsMarkdownHref,
-  getLlmsFull,
-  getLlmsIndex,
   heading as docsHeading,
   loadDocsPage,
   table as docsTable,

@@ -11,12 +11,18 @@ const html = (status = 200) =>
     },
   })
 
+const files: Record<string, string> = {
+  "/index.md": "# HextaUI\n",
+  "/pricing.md":
+    "# HextaUI pricing\n\n> Free and Pro.\n\nCanonical: https://hextaui.com/pricing\nLast updated: 2026-10-08\n\nBody\n",
+  "/404.md": "# Page not found\n\nSee https://hextaui.com/llms.txt\n",
+  "/markdown-catalog.json": '{"count":1}',
+}
+
 const assets = async (path: string) =>
-  path === "/index.md"
-    ? new Response("# HextaUI\n")
-    : path === "/404.md"
-      ? new Response("# Page not found\n\nSee https://hextaui.com/llms.txt\n")
-      : new Response("missing", { status: 404 })
+  path in files
+    ? new Response(files[path])
+    : new Response("missing", { status: 404 })
 
 function request(
   path: string,
@@ -38,7 +44,8 @@ describe("prefersMarkdown", () => {
     ["text/markdown", true],
     ["text/markdown, text/html;q=0.9", true],
     ["text/x-markdown", true],
-    ["text/html, text/markdown", true],
+    ["text/html, text/markdown", false],
+    ["text/markdown, text/html", false],
     ["text/html, text/markdown;q=0.5", false],
     ["text/markdown;q=0", false],
     ["text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false],
@@ -60,7 +67,11 @@ describe("handleAgentRequest", () => {
     expect(response.headers.get("content-type")).toBe(
       "text/markdown; charset=utf-8"
     )
-    expect(response.headers.get("vary")).toBe("Accept, User-Agent")
+    expect(response.headers.get("vary")).toBe("Accept")
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, follow")
+    expect(response.headers.get("content-location")).toBe(
+      "https://hextaui.com/"
+    )
     expect(await response.text()).toBe("# HextaUI\n")
   })
 
@@ -71,37 +82,134 @@ describe("handleAgentRequest", () => {
       assets
     )
     expect(response.headers.get("content-type")).toContain("text/html")
-    expect(response.headers.get("vary")).toBe(
-      "accept-encoding, Accept, User-Agent"
-    )
+    expect(response.headers.get("vary")).toBe("accept-encoding, Accept")
     expect(await response.text()).toContain("<h1>")
   })
 
   it.each([
     "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
-    "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; GPTBot/1.2; +https://openai.com/gptbot",
-    "PerplexityBot/1.0",
-  ])("serves Markdown on the homepage to AI agent %s", async (userAgent) => {
-    const response = await handleAgentRequest(
-      request("/", "text/html", "GET", userAgent),
-      async () => html(),
-      assets
-    )
-    expect(response.headers.get("content-type")).toContain("text/markdown")
-  })
-
-  it("keeps HTML for search engines and browsers", async () => {
-    for (const userAgent of [
-      "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_0) AppleWebKit/605.1.15 Safari/605.1.15",
-    ]) {
+    "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  ])("keeps HTML for %s unless Accept asks for Markdown", async (userAgent) => {
+    for (const accept of ["*/*", "text/html", undefined]) {
       const response = await handleAgentRequest(
-        request("/", "text/html", "GET", userAgent),
+        request("/", accept, "GET", userAgent),
         async () => html(),
         assets
       )
       expect(response.headers.get("content-type")).toContain("text/html")
     }
+  })
+
+  it("serves the .md suffix with Markdown headers", async () => {
+    const response = await handleAgentRequest(
+      request("/pricing.md"),
+      async () => html(404),
+      assets
+    )
+    expect(response.status).toBe(200)
+    expect(response.headers.get("content-type")).toBe(
+      "text/markdown; charset=utf-8"
+    )
+    expect(Number(response.headers.get("x-markdown-tokens"))).toBeGreaterThan(0)
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, follow")
+    expect(response.headers.get("content-location")).toBe(
+      "https://hextaui.com/pricing"
+    )
+    expect(response.headers.get("link")).toBe(
+      '<https://hextaui.com/pricing>; rel="canonical"'
+    )
+    expect(response.headers.get("last-modified")).toBe(
+      "Thu, 08 Oct 2026 00:00:00 GMT"
+    )
+    expect(response.headers.get("access-control-allow-origin")).toBe("*")
+    expect(response.headers.get("vary")).toBeNull()
+  })
+
+  it("negotiates content routes and varies on Accept", async () => {
+    const markdown = await handleAgentRequest(
+      request("/pricing", "text/markdown, text/html;q=0.5"),
+      async () => html(),
+      assets
+    )
+    expect(markdown.headers.get("content-type")).toContain("text/markdown")
+    expect(markdown.headers.get("vary")).toBe("Accept")
+
+    const page = await handleAgentRequest(
+      request("/pricing"),
+      async () => html(),
+      assets
+    )
+    expect(page.headers.get("content-type")).toContain("text/html")
+    expect(page.headers.get("vary")).toContain("Accept")
+  })
+
+  it("never negotiates files and non-content routes", async () => {
+    for (const path of ["/llms.txt", "/robots.txt", "/sitemap.xml"]) {
+      const ok = html()
+      expect(
+        await handleAgentRequest(
+          request(path, "text/markdown"),
+          async () => ok,
+          assets
+        )
+      ).toBe(ok)
+    }
+  })
+
+  it("serves /api/md and the catalog", async () => {
+    const page = await handleAgentRequest(
+      request("/api/md/pricing"),
+      async () => html(404),
+      assets
+    )
+    expect(page.headers.get("content-type")).toContain("text/markdown")
+    const catalog = await handleAgentRequest(
+      request("/api/md/_catalog"),
+      async () => html(404),
+      assets
+    )
+    expect(await catalog.json()).toEqual({ count: 1 })
+    const missing = await handleAgentRequest(
+      request("/api/md/account"),
+      async () => html(404),
+      assets
+    )
+    expect(missing.status).toBe(404)
+    expect(missing.headers.get("content-type")).toContain("text/markdown")
+  })
+
+  it("answers Markdown requests for private pages with a Markdown 404", async () => {
+    const response = await handleAgentRequest(
+      request("/account", "text/markdown"),
+      async () => html(),
+      assets
+    )
+    expect(response.status).toBe(404)
+    expect(response.headers.get("content-type")).toContain("text/markdown")
+  })
+
+  it("returns a Markdown 404 for unknown .md URLs", async () => {
+    for (const path of ["/does-not-exist.md", "/blog/nope.md"]) {
+      const response = await handleAgentRequest(
+        request(path),
+        async () => html(404),
+        assets
+      )
+      expect(response.status, path).toBe(404)
+      expect(response.headers.get("content-type")).toContain("text/markdown")
+    }
+  })
+
+  it("answers preflight requests", async () => {
+    const response = await handleAgentRequest(
+      request("/pricing.md", undefined, "OPTIONS"),
+      async () => html(),
+      assets
+    )
+    expect(response.status).toBe(204)
+    expect(response.headers.get("access-control-allow-methods")).toContain(
+      "GET"
+    )
   })
 
   it("sends no Markdown body for HEAD", async () => {

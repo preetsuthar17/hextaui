@@ -266,7 +266,7 @@ async function getDocsExampleMarkdown(slug: string, id: string) {
   return `${[
     docsHeading(1, getExampleHeading(component.name, example.title)),
     ...(text ? [`> ${text}`] : []),
-    `Example: ${absoluteUrl(href)}\nComponent docs: ${absoluteUrl(`/docs/${slug}.md`)}`,
+    `Component docs: ${absoluteUrl(`/docs/${slug}`)}`,
     docsHeading(2, "Add this example"),
     docsFence(
       `npx shadcn@latest add ${absoluteUrl(`/r/${getDocsExampleName(example.file)}.json`)}`,
@@ -298,7 +298,7 @@ async function getDocsExampleMarkdown(slug: string, id: string) {
           others
             .map(
               (item) =>
-                `- [${item.title}](${absoluteUrl(`${getDocsExampleHref(item.file)}.md`)})`
+                `- [${item.title}](${absoluteUrl(getDocsExampleHref(item.file))})`
             )
             .join("\n"),
         ]
