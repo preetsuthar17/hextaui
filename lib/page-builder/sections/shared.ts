@@ -206,6 +206,161 @@ function sectionHead(props: Props, align: "center" | "start" = "center") {
   )
 }
 
+const mockNav = [
+  { label: "Overview", icon: "IconChartBar", active: true },
+  { label: "Questions", icon: "IconMessage", active: false },
+  { label: "Dashboards", icon: "IconLayersIntersect", active: false },
+  { label: "Alerts", icon: "IconClock", active: false },
+  { label: "Sources", icon: "IconPlug", active: false },
+]
+
+const mockStats = [
+  { label: "Weekly active", value: "12,480", change: "+8.2%" },
+  { label: "Activation", value: "64%", change: "+3.1%" },
+  { label: "Churn", value: "1.9%", change: "−0.4%" },
+]
+
+const mockBars = [
+  ["Jan", "h-[38%]"],
+  ["Feb", "h-[46%]"],
+  ["Mar", "h-[42%]"],
+  ["Apr", "h-[55%]"],
+  ["May", "h-[61%]"],
+  ["Jun", "h-[58%]"],
+  ["Jul", "h-[70%]"],
+  ["Aug", "h-[76%]"],
+  ["Sep", "h-[84%]"],
+] as const
+
+function productMock(className: string) {
+  return h(
+    "div",
+    {
+      className: `${className} overflow-hidden rounded-2xl border bg-muted/40 p-1.5 sm:p-2`,
+      "aria-hidden": "true",
+    },
+    h(
+      "div",
+      {
+        className:
+          "flex size-full overflow-hidden rounded-xl border bg-background text-start",
+      },
+      h(
+        "div",
+        {
+          className:
+            "hidden w-44 shrink-0 flex-col gap-0.5 border-e bg-muted/30 p-3 md:flex",
+        },
+        h(
+          "p",
+          { className: "px-2 pb-3 text-xs font-medium text-muted-foreground" },
+          "Workspace"
+        ),
+        mockNav.map((item) =>
+          h(
+            "span",
+            {
+              className: item.active
+                ? "flex items-center gap-2 rounded-md bg-background px-2 py-1.5 text-xs font-medium ring-1 ring-border"
+                : "flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-muted-foreground",
+            },
+            icon(item.icon, "size-3.5"),
+            item.label
+          )
+        )
+      ),
+      h(
+        "div",
+        { className: "flex min-w-0 flex-1 flex-col gap-4 p-4 sm:p-5" },
+        h(
+          "div",
+          { className: "flex items-center justify-between gap-3" },
+          h(
+            "div",
+            { className: "flex flex-col" },
+            h("p", { className: "text-sm font-semibold" }, "Overview"),
+            h(
+              "p",
+              { className: "text-xs text-muted-foreground" },
+              "Last 30 days"
+            )
+          ),
+          h(
+            "Badge",
+            { appearance: "outline", className: "gap-1.5" },
+            h("span", {
+              className: "size-1.5 rounded-full bg-primary",
+              "aria-hidden": "true",
+            }),
+            "Live"
+          )
+        ),
+        h(
+          "div",
+          { className: "grid grid-cols-3 gap-2 sm:gap-3" },
+          mockStats.map((stat) =>
+            h(
+              "div",
+              { className: "flex flex-col gap-1 rounded-lg border p-2.5 sm:p-3" },
+              h(
+                "span",
+                { className: "truncate text-xs text-muted-foreground" },
+                stat.label
+              ),
+              h(
+                "span",
+                {
+                  className:
+                    "text-base font-semibold tracking-tight tabular-nums sm:text-lg",
+                },
+                stat.value
+              ),
+              h(
+                "span",
+                { className: "text-xs text-muted-foreground tabular-nums" },
+                stat.change
+              )
+            )
+          )
+        ),
+        h(
+          "div",
+          {
+            className:
+              "flex min-h-0 flex-1 flex-col gap-2 rounded-lg border p-3 sm:p-4",
+          },
+          h(
+            "p",
+            { className: "text-xs font-medium text-muted-foreground" },
+            "Weekly active users"
+          ),
+          h(
+            "div",
+            { className: "flex min-h-0 flex-1 items-end gap-1.5 sm:gap-2" },
+            mockBars.map(([month, height], index) =>
+              h(
+                "div",
+                {
+                  className:
+                    "flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1.5",
+                },
+                h("div", {
+                  className: `${height} w-full rounded-sm ${index === mockBars.length - 1 ? "bg-primary" : "bg-primary/20"}`,
+                }),
+                h(
+                  "span",
+                  { className: "text-[10px] text-muted-foreground" },
+                  month
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
 function media(props: Props, className: string) {
   const src = text(props, "imageUrl").trim()
   if (src && isSafeUrl(src)) {
@@ -219,83 +374,7 @@ function media(props: Props, className: string) {
       })
     )
   }
-  const bars = [
-    "h-[38%]",
-    "h-[52%]",
-    "h-[44%]",
-    "h-[63%]",
-    "h-[57%]",
-    "h-[71%]",
-    "h-[66%]",
-    "h-[80%]",
-    "h-[74%]",
-    "h-[88%]",
-    "h-[83%]",
-    "h-[96%]",
-  ]
-  const line = (width: string, tone = "bg-muted") =>
-    h("div", { className: `h-2 ${width} rounded-full ${tone}` })
-  return h(
-    "div",
-    {
-      className: `${className} overflow-hidden rounded-2xl border bg-muted/50 p-1.5 sm:p-2`,
-      "aria-hidden": "true",
-    },
-    h(
-      "div",
-      {
-        className:
-          "flex size-full overflow-hidden rounded-xl border bg-background",
-      },
-      h(
-        "div",
-        { className: "hidden w-1/5 flex-col gap-3 border-e p-4 sm:flex" },
-        h("div", { className: "mb-2 size-5 rounded-md bg-primary" }),
-        line("w-3/4", "bg-foreground/15"),
-        line("w-2/3"),
-        line("w-1/2"),
-        line("w-3/5")
-      ),
-      h(
-        "div",
-        { className: "flex min-w-0 flex-1 flex-col gap-3 p-3 sm:gap-4 sm:p-5" },
-        h(
-          "div",
-          { className: "flex items-center justify-between gap-4" },
-          line("w-1/4", "bg-foreground/15"),
-          h("div", { className: "h-5 w-14 rounded-md bg-primary sm:h-6" })
-        ),
-        h(
-          "div",
-          { className: "grid grid-cols-3 gap-2 sm:gap-3" },
-          ["w-1/2", "w-2/3", "w-3/5"].map((width) =>
-            h(
-              "div",
-              {
-                className: "flex flex-col gap-2 rounded-lg border p-2.5 sm:p-3",
-              },
-              line(width),
-              h("div", {
-                className: "h-3 w-2/3 rounded-full bg-foreground/10 sm:h-4",
-              })
-            )
-          )
-        ),
-        h(
-          "div",
-          {
-            className:
-              "flex min-h-0 flex-1 items-end gap-1 rounded-lg border p-3 sm:gap-2 sm:p-4",
-          },
-          bars.map((height, index) =>
-            h("div", {
-              className: `${height} flex-1 rounded-sm ${index === bars.length - 1 ? "bg-primary" : "bg-primary/15"}`,
-            })
-          )
-        )
-      )
-    )
-  )
+  return productMock(className)
 }
 
 const actionFields: ScalarField[] = [

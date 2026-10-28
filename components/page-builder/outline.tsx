@@ -1,10 +1,16 @@
 "use client"
 
 import * as React from "react"
-import { IconGripVertical, IconLock } from "@tabler/icons-react"
+import {
+  IconCopy,
+  IconGripVertical,
+  IconLock,
+  IconTrash,
+} from "@tabler/icons-react"
 
+import { labelOf } from "@/components/page-builder/page-canvas"
+import { Button } from "@/components/ui/button"
 import type { PlacedSection } from "@/lib/page-builder/doc"
-import { getSection, sectionLabel } from "@/lib/page-builder/registry"
 
 type Drag = {
   key: string
@@ -17,23 +23,21 @@ type Drag = {
   rows: HTMLElement[]
 }
 
-function labelOf(placed: PlacedSection) {
-  if (placed.type === "pro") return `${placed.title} · Pro`
-  const section = getSection(placed.sectionId)
-  return section ? sectionLabel(section) : placed.sectionId
-}
-
 function Outline({
   sections,
   selected,
   onSelect,
   onMove,
+  onDuplicate,
+  onRemove,
   onAnnounce,
 }: {
   sections: PlacedSection[]
   selected: string | null
   onSelect: (key: string) => void
   onMove: (key: string, to: number) => void
+  onDuplicate: (key: string) => void
+  onRemove: (key: string) => void
   onAnnounce: (message: string) => void
 }) {
   const listRef = React.useRef<HTMLOListElement>(null)
@@ -156,18 +160,15 @@ function Outline({
 
   if (sections.length === 0) {
     return (
-      <p className="p-6 text-center text-sm text-pretty text-muted-foreground">
-        The page is empty. Add sections from the Sections tab.
+      <p className="py-6 text-center text-sm text-pretty text-muted-foreground">
+        The page is empty. Press A to add a section.
       </p>
     )
   }
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
-      <p
-        id="pb-outline-help"
-        className="px-2 pb-2 text-xs text-pretty text-muted-foreground"
-      >
+    <div className="-mx-1 max-h-[min(28rem,60svh)] min-h-0 overflow-y-auto overscroll-contain px-1 [scrollbar-width:thin]">
+      <p id="pb-outline-help" className="sr-only">
         Drag the handle, or focus it and use the arrow keys, to reorder.
       </p>
       <ol
@@ -183,7 +184,7 @@ function Outline({
               key={placed.key}
               data-row=""
               data-active={active ? "" : undefined}
-              className="relative flex items-center gap-1 rounded-md bg-background data-dragging:z-10 data-dragging:shadow-md data-dragging:ring-(length:--hairline) data-dragging:ring-border data-active:bg-muted"
+              className="group/row relative flex items-center gap-0.5 rounded-md bg-popover pe-0.5 data-dragging:z-10 data-dragging:shadow-md data-dragging:ring-(length:--hairline) data-dragging:ring-foreground/10 data-active:bg-muted forced-colors:data-active:outline-2 forced-colors:data-active:-outline-offset-2 forced-colors:data-active:outline-solid"
             >
               <button
                 type="button"
@@ -218,6 +219,24 @@ function Outline({
                   />
                 ) : null}
               </button>
+              <div className="flex shrink-0 items-center opacity-0 transition-opacity duration-150 ease-out-cubic group-focus-within/row:opacity-100 group-hover/row:opacity-100 motion-reduce:transition-none pointer-coarse:opacity-100">
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  aria-label={`Duplicate ${label}`}
+                  onClick={() => onDuplicate(placed.key)}
+                >
+                  <IconCopy />
+                </Button>
+                <Button
+                  variant="ghost-destructive"
+                  size="icon-xs"
+                  aria-label={`Delete ${label}`}
+                  onClick={() => onRemove(placed.key)}
+                >
+                  <IconTrash />
+                </Button>
+              </div>
             </li>
           )
         })}

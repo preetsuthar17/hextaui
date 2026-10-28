@@ -1,6 +1,7 @@
 import { fromBase64Url, toBase64Url } from "@/lib/base64url"
 import { diffProps, type Props } from "@/lib/page-builder/fields"
 import { getSection, sectionProps } from "@/lib/page-builder/registry"
+import { normalizeThemeId } from "@/lib/page-builder/theme"
 
 type ProBlockInfo = { name: string; title: string; category: string }
 
@@ -8,7 +9,7 @@ type PlacedSection =
   | { key: string; type: "section"; sectionId: string; props: Props }
   | { key: string; type: "pro"; name: string; title: string }
 
-type PageDoc = { sections: PlacedSection[] }
+type PageDoc = { sections: PlacedSection[]; theme?: string | null }
 
 type EncodedEntry = [string] | [string, Props]
 
@@ -61,6 +62,9 @@ function fromEntries(
   if (typeof value !== "object" || value === null) return null
   const entries = (value as { s?: unknown }).s
   if (!Array.isArray(entries)) return null
+  const rawTheme = (value as { t?: unknown }).t
+  const theme =
+    typeof rawTheme === "string" ? normalizeThemeId(rawTheme) : null
   const placed: PlacedSection[] = []
   for (const entry of entries.slice(0, maxSections)) {
     if (!Array.isArray(entry) || typeof entry[0] !== "string") continue
@@ -75,7 +79,7 @@ function fromEntries(
     const section = placeSection(id, entry[1] ?? {})
     if (section) placed.push(section)
   }
-  return { sections: placed }
+  return theme ? { sections: placed, theme } : { sections: placed }
 }
 
 async function pipe(
@@ -108,7 +112,9 @@ async function pipe(
 }
 
 async function encodeDoc(doc: PageDoc) {
-  const json = JSON.stringify({ s: toEntries(doc) })
+  const json = JSON.stringify(
+    doc.theme ? { s: toEntries(doc), t: doc.theme } : { s: toEntries(doc) }
+  )
   const compressed = await pipe(
     new TextEncoder().encode(json),
     new CompressionStream("deflate-raw")
@@ -138,13 +144,14 @@ async function decodeDoc(
 
 function readHashParams(hash: string) {
   const params = new URLSearchParams(hash.replace(/^#/, ""))
-  return { page: params.get("p"), theme: params.get("theme") }
+  return { page: params.get("p"), theme: params.get("t") }
 }
 
 function writeHashParams(current: string, page: string | null) {
   const params = new URLSearchParams(current.replace(/^#/, ""))
   if (page) params.set("p", page)
   else params.delete("p")
+  params.delete("t")
   const value = params.toString()
   return value ? `#${value}` : ""
 }

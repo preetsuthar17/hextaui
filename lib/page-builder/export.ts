@@ -8,12 +8,14 @@ import {
   registryNames,
 } from "@/lib/page-builder/node"
 import { getSection, kindInfo } from "@/lib/page-builder/registry"
+import { themeCssFile, themeFromId } from "@/lib/page-builder/theme"
+import { themeRegistryItem } from "@/lib/theme-editor/registry"
 
 type ExportFile = {
   path: string
   name: string
   content: string
-  kind: "page" | "section" | "pro"
+  kind: "page" | "section" | "pro" | "theme"
 }
 
 type PageExport = {
@@ -21,10 +23,12 @@ type PageExport = {
   registry: string[]
   dependencies: string[]
   proBlocks: { name: string; title: string }[]
+  theme: string | null
 }
 
 const siteOrigin = "https://hextaui.com"
 const sectionsDir = "components/sections"
+const themeFilePath = "app/theme.css"
 
 function pascal(value: string) {
   return value
@@ -155,14 +159,26 @@ function exportPage(doc: PageDoc): PageExport {
   ].join("\n")
   const page = `${importLines ? `${importLines}\n\n` : ""}export default function Page() {\n  return (\n    <div className="flex min-h-svh flex-col bg-background text-foreground">\n${pageBody}\n    </div>\n  )\n}\n`
 
+  const theme = doc.theme ?? null
   return {
     files: [
       { path: "app/page.tsx", name: "Page", kind: "page", content: page },
       ...files,
+      ...(theme
+        ? [
+            {
+              path: themeFilePath,
+              name: "Theme",
+              kind: "theme" as const,
+              content: themeCssFile(theme),
+            },
+          ]
+        : []),
     ],
     registry: registryNames(allTags),
     dependencies: dependencyNames(allTags),
     proBlocks,
+    theme,
   }
 }
 
@@ -186,7 +202,14 @@ function proInstallCommand(result: PageExport) {
     : null
 }
 
+function themeCssVars(theme: string | null) {
+  return theme
+    ? themeRegistryItem(themeFromId(theme), theme).cssVars
+    : undefined
+}
+
 function registryItem(result: PageExport, encoded: string) {
+  const cssVars = themeCssVars(result.theme)
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: "landing-page",
@@ -196,7 +219,10 @@ function registryItem(result: PageExport, encoded: string) {
     docs: `Edit it at ${siteOrigin}/tools/page-builder#p=${encoded}`,
     dependencies: result.dependencies,
     registryDependencies: result.registry.map(registryUrl),
-    files: result.files.map((file) => ({
+    ...(cssVars ? { cssVars } : {}),
+    files: result.files
+      .filter((file) => file.kind !== "theme")
+      .map((file) => ({
       path: file.path,
       type: file.kind === "page" ? "registry:page" : "registry:component",
       target: file.path,

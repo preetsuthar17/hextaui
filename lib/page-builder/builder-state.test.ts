@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import {
+  decodeDoc,
   encodeDoc,
   placePro,
   placeSection,
@@ -8,8 +9,20 @@ import {
 } from "@/lib/page-builder/doc"
 import { builderReducer, initialState } from "@/lib/page-builder/history"
 import { pageRegistryResponse } from "@/lib/page-builder/registry-response"
-import { applyTheme, decodeThemeParam } from "@/lib/page-builder/theme"
-import { toBase64Url } from "@/lib/base64url"
+import { exportPage, registryItem } from "@/lib/page-builder/export"
+import { cleanInline, inlineFields, setPath } from "@/lib/page-builder/inline"
+import { getSection } from "@/lib/page-builder/registry"
+import { starterDoc, starters } from "@/lib/page-builder/starters"
+import {
+  applyTheme,
+  canvasVars,
+  defaultThemeId,
+  normalizeThemeId,
+  parseThemeInput,
+  presetThemes,
+  themeFromId,
+  themeName,
+} from "@/lib/page-builder/theme"
 
 const pro = [{ name: "chat-thread", title: "Chat Thread", category: "ai" }]
 
@@ -123,26 +136,89 @@ describe("builder state", () => {
 })
 
 describe("canvas theme", () => {
-  it("reads light and dark variables and drops unsafe values", () => {
-    const encoded = toBase64Url(
-      new TextEncoder().encode(
-        JSON.stringify({
-          light: {
-            primary: "oklch(0.5 0.2 250)",
-            "--radius": "0.5rem",
-            bad: "red; } body { x",
-            img: "url(x)",
-          },
-          dark: { primary: "oklch(0.8 0.1 250)" },
-        })
-      )
-    )
-    expect(decodeThemeParam(encoded)).toEqual({
-      light: { "--primary": "oklch(0.5 0.2 250)", "--radius": "0.5rem" },
-      dark: { "--primary": "oklch(0.8 0.1 250)" },
+  it("reads theme editor links and ids with the real decoder", () => {
+    const ocean = presetThemes.find((item) => item.preset.slug === "ocean")!
+    const id = ocean.id!
+    expect(normalizeThemeId(id)).toBe(id)
+    expect(parseThemeInput(`https://hextaui.com/tools/theme-editor#t=${id}`)).toBe(id)
+    expect(parseThemeInput(`https://hextaui.com/r/themes/${id}.json`)).toBe(id)
+    expect(parseThemeInput(id)).toBe(id)
+    expect(parseThemeInput("nope!")).toBeNull()
+    expect(parseThemeInput("")).toBeNull()
+    expect(themeName(id)).toBe("Ocean")
+    expect(themeName(null)).toBe("HextaUI")
+    expect(themeName(defaultThemeId)).toBe("HextaUI")
+    for (const { id: presetId } of presetThemes) {
+      if (presetId) expect(normalizeThemeId(presetId)).toBe(presetId)
+    }
+  })
+
+  it("sets both token and color variables for the canvas", () => {
+    const vars = canvasVars(themeFromId(null), "dark")
+    expect(vars["--primary"]).toBe(vars["--color-primary"])
+    expect(vars["--radius"]).toBeDefined()
+    expect(vars["--color-radius"]).toBeUndefined()
+  })
+
+  it("carries the theme through share links, history and exports", async () => {
+    const ocean = presetThemes.find((item) => item.preset.slug === "ocean")!.id!
+    let state = initialState(doc("hero-centered"))
+    state = builderReducer(state, { type: "theme", theme: ocean })
+    expect(state.doc.theme).toBe(ocean)
+    state = builderReducer(state, { type: "duplicate", key: state.doc.sections[0].key })
+    expect(state.doc.theme).toBe(ocean)
+    const encoded = await encodeDoc(state.doc)
+    const decoded = await decodeDoc(encoded, pro)
+    expect(decoded?.theme).toBe(ocean)
+    const result = exportPage(state.doc)
+    const css = result.files.find((file) => file.path === "app/theme.css")
+    expect(css?.content).toContain(":root {")
+    expect(css?.content).toContain(".dark {")
+    const item = registryItem(result, encoded)
+    expect(item.cssVars?.light.primary).toBeDefined()
+    expect(item.files.some((file) => file.path === "app/theme.css")).toBe(false)
+    state = builderReducer(state, { type: "undo" })
+    state = builderReducer(state, { type: "undo" })
+    expect(state.doc.theme).toBeUndefined()
+    expect(exportPage(state.doc).files.some((file) => file.kind === "theme")).toBe(false)
+  })
+
+  it("swaps a layout and keeps the shared copy", () => {
+    let state = initialState(doc("hero-centered"))
+    const key = state.doc.sections[0].key
+    state = builderReducer(state, {
+      type: "update",
+      key,
+      coalesce: "headline",
+      at: 0,
+      patch: (props) => ({ ...props, headline: "Mine" }),
     })
-    expect(decodeThemeParam("nope!")).toBeNull()
-    expect(decodeThemeParam(null)).toBeNull()
+    state = builderReducer(state, { type: "swap", key, sectionId: "hero-split" })
+    const placed = state.doc.sections[0]
+    expect(placed.type === "section" && placed.sectionId).toBe("hero-split")
+    expect(placed.type === "section" && placed.props.headline).toBe("Mine")
+    expect(placed.key).toBe(key)
+    expect(builderReducer(state, { type: "swap", key, sectionId: "footer-simple" })).toBe(state)
+  })
+
+  it("maps inline text fields and writes them back", () => {
+    const section = getSection("pricing-tiers")!
+    const props = section.defaults
+    const fields = inlineFields(section, props)
+    expect(fields.map((field) => field.path)).toContain("headline")
+    expect(fields.map((field) => field.path)).toContain("plans.1.name")
+    expect(fields.some((field) => field.path.endsWith("features"))).toBe(false)
+    const next = setPath(props, "plans.1.name", "Scale")
+    expect((next.plans as { name: string }[])[1].name).toBe("Scale")
+    expect(setPath(props, "plans.9.name", "x")).toBe(props)
+    expect(cleanInline("  a\n  b ", 40)).toBe("a b ")
+  })
+
+  it("builds every starter from known sections", () => {
+    for (const starter of starters) {
+      const built = starterDoc(starter.id)!
+      expect(built.sections).toHaveLength(starter.sections.length)
+    }
   })
 
   it("scopes variables to one element and clears old ones", () => {

@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { createPortal } from "react-dom"
+import { cn } from "cn"
 
 import { applyTheme, type ThemeVars } from "@/lib/page-builder/theme"
 
@@ -33,25 +34,33 @@ function syncRootClass(target: Document, dark: boolean) {
   target.documentElement.style.overflow = "hidden"
 }
 
+type FrameDevice = "desktop" | "tablet" | "phone"
+
 function CanvasFrame({
   width,
+  device,
   dark,
   theme,
   title,
   onKeyDown,
+  onScale,
+  overlay,
   children,
 }: {
   width: number
+  device: FrameDevice
   dark: boolean
-  theme: ThemeVars | null
+  theme: ThemeVars
   title: string
   onKeyDown?: (event: KeyboardEvent) => void
+  onScale?: (scale: number) => void
+  overlay?: React.ReactNode
   children: React.ReactNode
 }) {
   const frameRef = React.useRef<HTMLIFrameElement>(null)
   const outerRef = React.useRef<HTMLDivElement>(null)
   const [mount, setMount] = React.useState<HTMLElement | null>(null)
-  const [height, setHeight] = React.useState(800)
+  const [height, setHeight] = React.useState(720)
   const [available, setAvailable] = React.useState(0)
   const keyHandler = React.useRef(onKeyDown)
 
@@ -81,7 +90,7 @@ function CanvasFrame({
     const onKey = (event: KeyboardEvent) => keyHandler.current?.(event)
     view?.addEventListener("keydown", onKey)
     const resize = new ResizeObserver(() => {
-      setHeight(Math.max(240, Math.ceil(mount.getBoundingClientRect().height)))
+      setHeight(Math.max(320, Math.ceil(mount.getBoundingClientRect().height)))
     })
     resize.observe(mount)
     return () => {
@@ -98,17 +107,14 @@ function CanvasFrame({
 
   React.useEffect(() => {
     if (!mount) return
-    applyTheme(theme ?? {}, mount.ownerDocument.documentElement)
+    applyTheme(theme, mount.ownerDocument.documentElement)
   }, [mount, theme])
 
   const scale = available > 0 ? Math.min(1, available / width) : 1
 
   React.useEffect(() => {
-    mount?.ownerDocument.documentElement.style.setProperty(
-      "--pb-ui-scale",
-      String(1 / scale)
-    )
-  }, [mount, scale])
+    onScale?.(scale)
+  }, [onScale, scale])
 
   React.useEffect(() => {
     const outer = outerRef.current
@@ -123,8 +129,8 @@ function CanvasFrame({
   return (
     <div ref={outerRef} className="flex w-full justify-center">
       <div
-        data-pb-device=""
-        className="relative h-(--pb-outer-h) w-(--pb-outer-w) shrink-0 overflow-hidden rounded-lg bg-background ring-(length:--hairline) ring-border forced-colors:border"
+        data-pb-device={device}
+        className="relative h-(--pb-outer-h) w-(--pb-outer-w) shrink-0 motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-out-cubic"
         style={
           {
             "--pb-outer-w": `${width * scale}px`,
@@ -135,17 +141,29 @@ function CanvasFrame({
           } as React.CSSProperties
         }
       >
-        <iframe
-          ref={frameRef}
-          title={title}
-          srcDoc={frameDocument}
-          onLoad={attach}
-          className="absolute top-0 left-0 block h-(--pb-frame-h) w-(--pb-frame-w) origin-top-left scale-(--pb-scale) border-0"
-        />
+        <div
+          className={cn(
+            "absolute inset-0 overflow-hidden bg-background ring-(length:--hairline) ring-foreground/10 forced-colors:border",
+            device === "phone"
+              ? "rounded-3xl"
+              : device === "tablet"
+                ? "rounded-2xl"
+                : "rounded-xl"
+          )}
+        >
+          <iframe
+            ref={frameRef}
+            title={title}
+            srcDoc={frameDocument}
+            onLoad={attach}
+            className="absolute top-0 left-0 block h-(--pb-frame-h) w-(--pb-frame-w) origin-top-left scale-(--pb-scale) border-0 motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-out-cubic"
+          />
+        </div>
+        {mount ? overlay : null}
         {mount ? createPortal(children, mount) : null}
       </div>
     </div>
   )
 }
 
-export { CanvasFrame }
+export { CanvasFrame, type FrameDevice }

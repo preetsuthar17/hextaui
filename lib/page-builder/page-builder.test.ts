@@ -118,11 +118,11 @@ describe("page doc encoding", () => {
   })
 
   it("reads and writes the hash without dropping the theme", () => {
-    expect(readHashParams("#p=1abc&theme=xyz")).toEqual({
+    expect(readHashParams("#p=1abc&t=xyz")).toEqual({
       page: "1abc",
       theme: "xyz",
     })
-    expect(writeHashParams("#theme=xyz", "1abc")).toBe("#theme=xyz&p=1abc")
+    expect(writeHashParams("#t=xyz&x=1", "1abc")).toBe("#x=1&p=1abc")
     expect(writeHashParams("#p=1abc", null)).toBe("")
   })
 })

@@ -1,40 +1,72 @@
-import { fromBase64Url } from "@/lib/base64url"
+import { themeToCss } from "@/lib/theme-editor/css"
+import { decodeTheme, encodeTheme } from "@/lib/theme-editor/encode"
+import { themePresets } from "@/lib/theme-editor/presets"
+import {
+  defaultTheme,
+  themeVars,
+  type Theme,
+  type ThemeMode,
+} from "@/lib/theme-editor/theme"
 
 type ThemeVars = Record<string, string>
 
-type CanvasTheme = { light: ThemeVars; dark: ThemeVars }
+const themeIdPattern = /^[A-Za-z0-9_-]+$/
 
-const varName = /^-{0,2}[a-z][a-z0-9-]{0,40}$/
-const unsafeValue = /[;{}<>]|url\(|expression\(/i
+const defaultThemeId = encodeTheme(defaultTheme)
 
-function cleanVars(value: unknown): ThemeVars {
-  if (typeof value !== "object" || value === null) return {}
+function normalizeThemeId(id: string | null | undefined) {
+  if (!id || !themeIdPattern.test(id)) return null
+  const theme = decodeTheme(id)
+  return theme ? encodeTheme(theme) : null
+}
+
+const presetThemes = themePresets.map((preset) => ({
+  preset,
+  id:
+    preset.slug === "hextaui"
+      ? null
+      : normalizeThemeId(encodeTheme(preset.theme)),
+}))
+
+const presetIds = new Map(
+  presetThemes.flatMap(({ preset, id }) => (id ? [[id, preset] as const] : []))
+)
+
+function parseThemeInput(input: string) {
+  const value = input.trim()
+  if (!value) return null
+  const fromHash = /[#&?]t=([A-Za-z0-9_-]+)/.exec(value)
+  if (fromHash) return normalizeThemeId(fromHash[1])
+  const fromRegistry = /\/r\/themes\/([A-Za-z0-9_-]+)(?:\.json)?/.exec(value)
+  if (fromRegistry) return normalizeThemeId(fromRegistry[1])
+  return normalizeThemeId(value)
+}
+
+function themeFromId(id: string | null | undefined): Theme {
+  return (id ? decodeTheme(id) : null) ?? defaultTheme
+}
+
+function themeName(id: string | null | undefined) {
+  if (!id || id === defaultThemeId) return "HextaUI"
+  return presetIds.get(id)?.name ?? "Custom"
+}
+
+function presetSlug(id: string | null | undefined) {
+  if (!id || id === defaultThemeId) return "hextaui"
+  return presetIds.get(id)?.slug ?? null
+}
+
+function canvasVars(theme: Theme, mode: ThemeMode): ThemeVars {
   const vars: ThemeVars = {}
-  for (const [key, raw] of Object.entries(value).slice(0, 80)) {
-    if (typeof raw !== "string" || !varName.test(key)) continue
-    if (raw.length > 120 || unsafeValue.test(raw)) continue
-    vars[key.startsWith("--") ? key : `--${key.replace(/^-+/, "")}`] = raw
+  for (const [name, value] of Object.entries(themeVars(theme, mode))) {
+    vars[name] = value
+    if (name !== "--radius") vars[`--color-${name.slice(2)}`] = value
   }
   return vars
 }
 
-function decodeThemeParam(encoded: string | null): CanvasTheme | null {
-  if (!encoded) return null
-  const bytes = fromBase64Url(encoded)
-  if (!bytes) return null
-  try {
-    const value = JSON.parse(new TextDecoder().decode(bytes)) as Record<
-      string,
-      unknown
-    >
-    const light = cleanVars(value.light ?? value)
-    const dark = cleanVars(value.dark ?? value.light ?? value)
-    return Object.keys(light).length || Object.keys(dark).length
-      ? { light, dark }
-      : null
-  } catch {
-    return null
-  }
+function themeCssFile(id: string) {
+  return `${themeToCss(themeFromId(id))}\n`
 }
 
 function applyTheme(vars: ThemeVars, el: HTMLElement) {
@@ -47,8 +79,14 @@ function applyTheme(vars: ThemeVars, el: HTMLElement) {
 
 export {
   applyTheme,
-  cleanVars,
-  decodeThemeParam,
-  type CanvasTheme,
+  canvasVars,
+  defaultThemeId,
+  normalizeThemeId,
+  parseThemeInput,
+  presetThemes,
+  presetSlug,
+  themeCssFile,
+  themeFromId,
+  themeName,
   type ThemeVars,
 }

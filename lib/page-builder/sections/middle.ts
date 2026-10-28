@@ -525,7 +525,11 @@ const testimonialsGrid: SectionDefinition = {
               h(
                 "blockquote",
                 { className: "text-base/7 text-pretty" },
-                `“${String(item.quote)}”`
+                h(
+                  "p",
+                  { className: "before:content-['“'] after:content-['”']" },
+                  String(item.quote)
+                )
               ),
               person(item)
             )
@@ -562,7 +566,11 @@ const testimonialSingle: SectionDefinition = {
             className:
               "text-2xl font-medium tracking-tight text-balance sm:text-3xl sm:leading-snug",
           },
-          `“${text(props, "quote")}”`
+          h(
+            "p",
+            { className: "before:content-['“'] after:content-['”']" },
+            text(props, "quote")
+          )
         ),
         person(
           { name: text(props, "name"), role: text(props, "role") },

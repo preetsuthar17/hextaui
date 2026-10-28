@@ -1,31 +1,45 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
+import { useTheme } from "next-themes"
 import {
   IconArrowBackUp,
   IconArrowForwardUp,
+  IconColorSwatch,
   IconDeviceDesktop,
   IconDeviceMobile,
   IconDeviceTablet,
-  IconLink,
+  IconListDetails,
   IconMoon,
+  IconPlus,
   IconSun,
 } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { TooltipGroup, TooltipTrigger } from "@/components/ui/tooltip"
-import { CanvasFrame } from "@/components/page-builder/canvas-frame"
-import {
-  CanvasSections,
-  type SectionActions,
-} from "@/components/page-builder/canvas-sections"
-import { ExportDialog } from "@/components/page-builder/export-dialog"
-import { Inspector } from "@/components/page-builder/inspector"
 import { Outline } from "@/components/page-builder/outline"
-import { Palette } from "@/components/page-builder/palette"
+import { labelOf, PageCanvas, type CanvasActions } from "@/components/page-builder/page-canvas"
+import { SectionFields } from "@/components/page-builder/section-fields"
+import { SectionPicker } from "@/components/page-builder/section-picker"
+import { EmptyPage, StartScreen } from "@/components/page-builder/start-screen"
+import { ThemePanel } from "@/components/page-builder/theme-panel"
+import {
+  ToolApp,
+  ToolCanvas,
+  ToolExportButton,
+  ToolMoreBelow,
+  ToolShareButton,
+  ToolTopBar,
+} from "@/components/tools/shell/tool-app"
+import {
+  ToolDock,
+  ToolDockButton,
+  ToolDockPopover,
+  ToolDockSegmented,
+  ToolDockSeparator,
+} from "@/components/tools/shell/tool-dock"
+import { ToolSheet } from "@/components/tools/shell/tool-sheet"
+import { useIsPhone } from "@/components/tools/shell/use-tool-shortcut"
+import { Spinner } from "@/components/ui/spinner"
 import {
   decodeDoc,
   encodeDoc,
@@ -33,57 +47,43 @@ import {
   placeSection,
   readHashParams,
   writeHashParams,
-  type PageDoc,
+  type PlacedSection,
   type ProBlockInfo,
 } from "@/lib/page-builder/doc"
 import type { Props } from "@/lib/page-builder/fields"
 import { builderReducer, initialState } from "@/lib/page-builder/history"
-import { starterSections } from "@/lib/page-builder/registry"
-import { decodeThemeParam, type CanvasTheme } from "@/lib/page-builder/theme"
+import { setPath } from "@/lib/page-builder/inline"
+import { getSection, kindInfo } from "@/lib/page-builder/registry"
+import { starterDoc } from "@/lib/page-builder/starters"
+import {
+  canvasVars,
+  defaultThemeId,
+  normalizeThemeId,
+  themeFromId,
+  themeName,
+} from "@/lib/page-builder/theme"
 import { track } from "@/lib/track"
+
+const ExportDialog = dynamic(() =>
+  import("@/components/page-builder/export-dialog").then(
+    (module) => module.ExportDialog
+  )
+)
 
 type Device = "desktop" | "tablet" | "phone"
 
-const devices: {
-  value: Device
-  label: string
-  width: number
-  icon: typeof IconDeviceDesktop
-}[] = [
-  { value: "desktop", label: "Desktop", width: 1280, icon: IconDeviceDesktop },
-  { value: "tablet", label: "Tablet", width: 768, icon: IconDeviceTablet },
-  { value: "phone", label: "Phone", width: 390, icon: IconDeviceMobile },
-]
-
-const wideQuery = "(min-width: 1024px)"
-
-function starterDoc(): PageDoc {
-  return {
-    sections: starterSections.flatMap((id) => {
-      const placed = placeSection(id)
-      return placed ? [placed] : []
-    }),
-  }
+const deviceWidths: Record<Device, number> = {
+  desktop: 1280,
+  tablet: 768,
+  phone: 390,
 }
 
-function subscribeWide(callback: () => void) {
-  const query = window.matchMedia(wideQuery)
-  query.addEventListener("change", callback)
-  return () => query.removeEventListener("change", callback)
-}
-
-function useWide() {
-  return React.useSyncExternalStore(
-    subscribeWide,
-    () => window.matchMedia(wideQuery).matches,
-    () => true
-  )
-}
+const siteOrigin = "https://hextaui.com"
 
 function isTyping(target: EventTarget | null) {
   if (!(target instanceof Element)) return false
   return Boolean(
-    target.closest("input, textarea, select, [contenteditable='true']")
+    target.closest("input, textarea, select, [contenteditable='true'], [contenteditable='plaintext-only']")
   )
 }
 
@@ -91,34 +91,71 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
-function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
+function isApple() {
+  return /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)
+}
+
+function useSiteDark() {
+  return React.useSyncExternalStore(
+    (notify) => {
+      const observer = new MutationObserver(notify)
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      })
+      return () => observer.disconnect()
+    },
+    () => document.documentElement.classList.contains("dark"),
+    () => false
+  )
+}
+
+function PageBuilder({
+  title,
+  proBlocks,
+}: {
+  title: string
+  proBlocks: ProBlockInfo[]
+}) {
   const [state, dispatch] = React.useReducer(builderReducer, null, () =>
-    initialState(starterDoc())
+    initialState({ sections: [] })
   )
   const [ready, setReady] = React.useState(false)
+  const [blank, setBlank] = React.useState(false)
   const [encoded, setEncoded] = React.useState<string | null>(null)
   const [device, setDevice] = React.useState<Device>("desktop")
-  const [dark, setDark] = React.useState(false)
-  const [theme, setTheme] = React.useState<CanvasTheme | null>(null)
-  const [tab, setTab] = React.useState("sections")
+  const dark = useSiteDark()
+  const { setTheme: setSiteTheme } = useTheme()
+  const [sheetOpen, setSheetOpen] = React.useState(false)
+  const [pickerOpen, setPickerOpen] = React.useState(false)
+  const [outlineOpen, setOutlineOpen] = React.useState(false)
+  const [themeOpen, setThemeOpen] = React.useState(false)
   const [exportOpen, setExportOpen] = React.useState(false)
+  const [exportLoaded, setExportLoaded] = React.useState(false)
   const [announcement, setAnnouncement] = React.useState("")
-  const scrollerRef = React.useRef<HTMLDivElement>(null)
-  const wide = useWide()
+  const [mod, setMod] = React.useState("Ctrl")
+  const canvasRef = React.useRef<HTMLDivElement>(null)
+  const isPhone = useIsPhone()
   const canvasDoc = React.useDeferredValue(state.doc)
 
   React.useEffect(() => {
     let live = true
-    setDark(document.documentElement.classList.contains("dark"))
-    const { page, theme: themeParam } = readHashParams(window.location.hash)
-    setTheme(decodeThemeParam(themeParam))
+    setMod(isApple() ? "⌘" : "Ctrl")
+    const { page, theme } = readHashParams(window.location.hash)
+    const incomingTheme = normalizeThemeId(theme)
     if (!page) {
+      if (incomingTheme && incomingTheme !== defaultThemeId) {
+        dispatch({ type: "load", doc: { sections: [], theme: incomingTheme } })
+      }
       setReady(true)
       return
     }
     decodeDoc(page, proBlocks).then((doc) => {
       if (!live) return
-      if (doc && doc.sections.length > 0) dispatch({ type: "load", doc })
+      if (doc && doc.sections.length > 0) {
+        dispatch({ type: "load", doc })
+        setBlank(true)
+      }
       setReady(true)
     })
     return () => {
@@ -129,20 +166,21 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
   React.useEffect(() => {
     if (!ready) return
     let live = true
-    const timer = setTimeout(() => {
-      encodeDoc(state.doc).then((value) => {
-        if (!live) return
-        setEncoded(value)
-        const hash = writeHashParams(
-          window.location.hash,
-          state.doc.sections.length ? value : null
-        )
-        window.history.replaceState(
-          window.history.state,
-          "",
-          `${window.location.pathname}${window.location.search}${hash}`
-        )
-      })
+    encodeDoc(state.doc).then((value) => {
+      if (live) setEncoded(value)
+    })
+    const timer = setTimeout(async () => {
+      const value = await encodeDoc(state.doc)
+      if (!live) return
+      const hash = writeHashParams(
+        window.location.hash,
+        state.doc.sections.length ? value : null
+      )
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${window.location.pathname}${window.location.search}${hash}`
+      )
     }, 400)
     return () => {
       live = false
@@ -150,22 +188,19 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
     }
   }, [state.doc, ready])
 
-  const announce = React.useCallback(
-    (message: string) => setAnnouncement(message),
-    []
-  )
+  const announce = React.useCallback((message: string) => setAnnouncement(message), [])
 
   const scrollToSection = React.useCallback((key: string) => {
     let tries = 0
     const attempt = () => {
-      const scroller = scrollerRef.current
+      const scroller = canvasRef.current
       const frame = scroller?.querySelector("iframe")
       const target = frame?.contentDocument?.querySelector<HTMLElement>(
         `[data-pb-key="${CSS.escape(key)}"]`
       )
       if (!scroller || !frame || !target) {
         tries += 1
-        if (tries < 20) requestAnimationFrame(attempt)
+        if (tries < 30) requestAnimationFrame(attempt)
         return
       }
       const frameRect = frame.getBoundingClientRect()
@@ -175,7 +210,7 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
         scroller.getBoundingClientRect().top +
         scroller.scrollTop +
         target.offsetTop * scale -
-        24
+        56
       scroller.scrollTo({
         top: Math.max(0, top),
         behavior: prefersReducedMotion() ? "auto" : "smooth",
@@ -184,7 +219,7 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
     requestAnimationFrame(attempt)
   }, [])
 
-  const actions: SectionActions = React.useMemo(
+  const actions: CanvasActions = React.useMemo(
     () => ({
       onSelect: (key) => dispatch({ type: "select", key }),
       onShift: (key, by) => {
@@ -196,6 +231,22 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
         dispatch({ type: "remove", key })
         announce("Section deleted. Press Command Z to undo.")
       },
+      onSwap: (key, sectionId) => {
+        dispatch({ type: "swap", key, sectionId })
+        track("Page builder swap", { section: sectionId })
+      },
+      onEdit: (key) => {
+        dispatch({ type: "select", key })
+        setSheetOpen(true)
+      },
+      onInline: (key, path, value) =>
+        dispatch({
+          type: "update",
+          key,
+          patch: (props: Props) => setPath(props, path, value),
+          coalesce: `inline:${path}`,
+          at: performance.now(),
+        }),
     }),
     [announce, scrollToSection]
   )
@@ -207,12 +258,11 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
     []
   )
 
-  const insert = (
-    placed: ReturnType<typeof placePro> | null,
-    label: string
-  ) => {
+  const insert = (placed: PlacedSection | null, label: string) => {
     if (!placed) return
     dispatch({ type: "insert", section: placed })
+    setBlank(true)
+    setPickerOpen(false)
     announce(`${label} added.`)
     scrollToSection(placed.key)
     track("Page builder add", {
@@ -220,272 +270,323 @@ function PageBuilder({ proBlocks }: { proBlocks: ProBlockInfo[] }) {
     })
   }
 
-  const onKeyDown = React.useCallback((event: KeyboardEvent) => {
-    if (isTyping(event.target)) return
-    const mod = event.metaKey || event.ctrlKey
-    if (!mod) return
-    const key = event.key.toLowerCase()
-    if (key === "z" && !event.shiftKey) {
-      event.preventDefault()
-      dispatch({ type: "undo" })
-    } else if ((key === "z" && event.shiftKey) || key === "y") {
-      event.preventDefault()
-      dispatch({ type: "redo" })
-    }
-  }, [])
+  const selectedRef = React.useRef(state.selected)
+  React.useEffect(() => {
+    selectedRef.current = state.selected
+  })
+
+  const onKeyDown = React.useCallback(
+    (event: KeyboardEvent) => {
+      if (isTyping(event.target)) return
+      const mod = event.metaKey || event.ctrlKey
+      const key = event.key.toLowerCase()
+      if (mod && key === "z" && !event.shiftKey) {
+        event.preventDefault()
+        dispatch({ type: "undo" })
+        return
+      }
+      if (mod && ((key === "z" && event.shiftKey) || key === "y")) {
+        event.preventDefault()
+        dispatch({ type: "redo" })
+        return
+      }
+      if (mod && key === "d" && selectedRef.current) {
+        event.preventDefault()
+        dispatch({ type: "duplicate", key: selectedRef.current })
+        return
+      }
+      if (mod || event.altKey) return
+      const target = event.target
+      if (
+        target instanceof Element &&
+        target.closest('[role="dialog"], [role="menu"], [role="listbox"]')
+      ) {
+        return
+      }
+      if ((key === "backspace" || key === "delete") && selectedRef.current) {
+        event.preventDefault()
+        dispatch({ type: "remove", key: selectedRef.current })
+        announce("Section deleted. Press Command Z to undo.")
+      } else if (key === "escape" && selectedRef.current) {
+        dispatch({ type: "select", key: null })
+      } else if (key === "e" && selectedRef.current) {
+        event.preventDefault()
+        setSheetOpen(true)
+      }
+    },
+    [announce]
+  )
 
   React.useEffect(() => {
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [onKeyDown])
 
-  const selectedIndex = state.doc.sections.findIndex(
-    (placed) => placed.key === state.selected
+  const forwardFrameKey = React.useCallback(
+    (event: KeyboardEvent) => {
+      if (isTyping(event.target)) return
+      const mod = event.metaKey || event.ctrlKey
+      if (mod || ["backspace", "delete", "escape", "e"].includes(event.key.toLowerCase())) {
+        onKeyDown(event)
+        return
+      }
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: event.key,
+          shiftKey: event.shiftKey,
+          bubbles: true,
+        })
+      )
+    },
+    [onKeyDown]
   )
-  const selected = state.doc.sections[selectedIndex] ?? null
-  const activeDevice = wide
-    ? (devices.find((item) => item.value === device) ?? devices[0])
-    : devices[2]
-  const canvasTheme = theme ? (dark ? theme.dark : theme.light) : null
 
-  const shareUrl = async () => {
-    const value = encoded ?? (await encodeDoc(state.doc))
-    const url = new URL(window.location.href)
-    url.hash = writeHashParams(url.hash, value).slice(1)
-    await navigator.clipboard.writeText(url.toString())
-    track("Page builder share", { sections: String(state.doc.sections.length) })
+  const theme = React.useMemo(() => themeFromId(state.doc.theme), [state.doc.theme])
+  const vars = React.useMemo(
+    () => canvasVars(theme, dark ? "dark" : "light"),
+    [theme, dark]
+  )
+  const activeDevice: Device = isPhone ? "phone" : device
+  const sections = canvasDoc.sections
+  const hasSections = state.doc.sections.length > 0
+  const showStart = ready && !hasSections && !blank
+  const selected = state.doc.sections.find((placed) => placed.key === state.selected) ?? null
+  const selectedSection =
+    selected?.type === "section" ? getSection(selected.sectionId) : null
+
+  const setTheme = (next: string | null, source: string) => {
+    dispatch({ type: "theme", theme: next === defaultThemeId ? null : next })
+    track("Page builder theme", { theme: source })
   }
 
-  const toolbar = (
-    <div className="flex h-12 shrink-0 items-center gap-2 border-b px-3">
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        <p className="truncate text-sm font-medium">Page builder</p>
-        <span className="text-xs text-muted-foreground tabular-nums">
-          {state.doc.sections.length}{" "}
-          {state.doc.sections.length === 1 ? "section" : "sections"}
-        </span>
-      </div>
-      {wide ? (
-        <ToggleGroup
-          size="sm"
-          aria-label="Preview width"
-          value={[device]}
-          onValueChange={(value) => {
-            if (value[0]) setDevice(value[0] as Device)
+  const startWith = (id: string) => {
+    const doc = starterDoc(id)
+    if (!doc) return
+    dispatch({
+      type: "load",
+      doc: state.doc.theme ? { ...doc, theme: state.doc.theme } : doc,
+    })
+    dispatch({ type: "select", key: null })
+    setBlank(true)
+    canvasRef.current?.scrollTo({ top: 0 })
+    track("Page builder starter", { starter: id })
+  }
+
+  return (
+    <ToolApp
+      slug="page-builder"
+      title={title}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={setSheetOpen}
+    >
+      <ToolTopBar>
+        <ToolShareButton
+          getUrl={() => {
+            const url = new URL(`${siteOrigin}${window.location.pathname}`)
+            if (encoded && hasSections) url.hash = `p=${encoded}`
+            return url.toString()
           }}
-        >
-          {devices.map((item) => (
-            <ToggleGroupItem
-              key={item.value}
-              value={item.value}
-              aria-label={item.label}
-            >
-              <item.icon aria-hidden="true" />
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
-      ) : null}
-      <div className="flex flex-1 items-center justify-end gap-1">
-        <TooltipGroup>
-          {wide ? (
-            <>
-              <TooltipTrigger
-                content={
-                  <>
-                    Undo
-                    <Kbd keys="mod+z" />
-                  </>
-                }
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Undo"
-                    disabled={state.past.length === 0}
-                    focusableWhenDisabled
-                    onClick={() => dispatch({ type: "undo" })}
-                  />
-                }
-              >
-                <IconArrowBackUp />
-              </TooltipTrigger>
-              <TooltipTrigger
-                content={
-                  <>
-                    Redo
-                    <Kbd keys="mod+shift+z" />
-                  </>
-                }
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Redo"
-                    disabled={state.future.length === 0}
-                    focusableWhenDisabled
-                    onClick={() => dispatch({ type: "redo" })}
-                  />
-                }
-              >
-                <IconArrowForwardUp />
-              </TooltipTrigger>
-            </>
-          ) : null}
-          <TooltipTrigger
-            content={dark ? "Preview in light mode" : "Preview in dark mode"}
-            render={
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                aria-label="Dark preview"
-                aria-pressed={dark}
-                onClick={() => setDark((value) => !value)}
-              />
-            }
-          >
-            {dark ? <IconSun /> : <IconMoon />}
-          </TooltipTrigger>
-        </TooltipGroup>
-        <Button
-          variant="outline"
-          size="sm"
-          feedback
-          successLabel="Link copied"
-          onClick={shareUrl}
-        >
-          <IconLink data-icon="inline-start" />
-          Share
-        </Button>
-        <Button
-          size="sm"
-          disabled={state.doc.sections.length === 0}
+          onShare={() =>
+            track("Page builder share", {
+              sections: String(state.doc.sections.length),
+            })
+          }
+        />
+        <ToolExportButton
+          disabled={!hasSections}
           onClick={() => {
+            setExportLoaded(true)
             setExportOpen(true)
             track("Page builder export", {
               sections: String(state.doc.sections.length),
             })
           }}
-        >
-          Export
-        </Button>
-      </div>
-    </div>
-  )
-
-  const canvas = (
-    <div
-      ref={scrollerRef}
-      className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain bg-muted/40 p-3 sm:p-6 dark:bg-muted/20"
-    >
-      <CanvasFrame
-        width={activeDevice.width}
-        dark={dark}
-        theme={canvasTheme}
-        title="Page preview"
-        onKeyDown={onKeyDown}
-      >
-        <CanvasSections
-          sections={canvasDoc.sections}
-          selected={state.selected}
-          editable={wide}
-          actions={actions}
         />
-      </CanvasFrame>
-    </div>
-  )
-
-  return (
-    <div
-      data-slot="page-builder"
-      data-ready={ready ? "" : undefined}
-      className="flex h-[calc(100svh-3.5rem)] min-h-[36rem] flex-col border-y bg-background text-foreground"
-    >
-      {toolbar}
-      {wide ? (
-        <div className="grid min-h-0 flex-1 grid-cols-[16.5rem_minmax(0,1fr)_19rem]">
-          <aside
-            aria-label="Sections"
-            className="flex min-h-0 flex-col border-e"
-          >
-            <Tabs
-              value={tab}
-              onValueChange={(value) => setTab(String(value))}
-              className="flex min-h-0 flex-1 flex-col"
+      </ToolTopBar>
+      <ToolCanvas
+        ref={canvasRef}
+        label="Page canvas"
+        contentClassName="sm:pt-6"
+        aside={<ToolMoreBelow />}
+        dock={
+          <ToolDock label="Page builder controls">
+            <ToolDockPopover
+              icon={<IconPlus />}
+              label="Add section"
+              shortcut="a"
+              open={pickerOpen}
+              onOpenChange={setPickerOpen}
+              title="Add a section"
+              description={
+                selected
+                  ? `Goes in after ${labelOf(selected)}.`
+                  : "Goes in at the end of the page."
+              }
+              contentClassName="w-[min(60rem,calc(100vw-2rem))]"
             >
-              <div className="border-b px-2 py-1.5">
-                <TabsList className="w-full">
-                  <TabsTrigger value="sections" className="flex-1">
-                    Sections
-                  </TabsTrigger>
-                  <TabsTrigger value="outline" className="flex-1">
-                    Outline
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              <TabsContent
-                value="sections"
-                className="flex min-h-0 flex-1 flex-col"
-              >
-                <Palette
-                  proBlocks={proBlocks}
-                  onAdd={(section) =>
-                    insert(placeSection(section.id), section.variant)
-                  }
-                  onAddPro={(block) => insert(placePro(block), block.title)}
-                />
-              </TabsContent>
-              <TabsContent
-                value="outline"
-                className="flex min-h-0 flex-1 flex-col"
-              >
-                <Outline
-                  sections={state.doc.sections}
-                  selected={state.selected}
-                  onSelect={(key) => {
-                    dispatch({ type: "select", key })
-                    scrollToSection(key)
+              <SectionPicker
+                proBlocks={proBlocks}
+                vars={vars}
+                dark={dark}
+                onAdd={(section) =>
+                  insert(
+                    placeSection(section.id),
+                    `${kindInfo(section.kind).title} ${section.variant}`
+                  )
+                }
+                onAddPro={(block) => insert(placePro(block), block.title)}
+              />
+            </ToolDockPopover>
+            <ToolDockPopover
+              icon={<IconListDetails />}
+              label="Outline"
+              hideLabel={isPhone}
+              value={hasSections ? String(state.doc.sections.length) : undefined}
+              shortcut="o"
+              open={outlineOpen}
+              onOpenChange={setOutlineOpen}
+              title="Outline"
+              description="Drag to reorder, or focus a handle and use the arrow keys."
+            >
+              <Outline
+                sections={state.doc.sections}
+                selected={state.selected}
+                onSelect={(key) => {
+                  dispatch({ type: "select", key })
+                  scrollToSection(key)
+                }}
+                onMove={(key, to) => dispatch({ type: "move", key, to })}
+                onDuplicate={actions.onDuplicate}
+                onRemove={actions.onRemove}
+                onAnnounce={announce}
+              />
+            </ToolDockPopover>
+            {isPhone ? null : (
+              <>
+                <ToolDockSeparator />
+                <ToolDockSegmented<Device>
+                  label="Device"
+                  value={device}
+                  onValueChange={(next) => {
+                    setDevice(next)
+                    track("Page builder device", { device: next })
                   }}
-                  onMove={(key, to) => dispatch({ type: "move", key, to })}
-                  onAnnounce={announce}
+                  options={[
+                    { value: "desktop", label: "Desktop", icon: <IconDeviceDesktop />, hideLabel: true },
+                    { value: "tablet", label: "Tablet", icon: <IconDeviceTablet />, hideLabel: true },
+                    { value: "phone", label: "Phone", icon: <IconDeviceMobile />, hideLabel: true },
+                  ]}
                 />
-              </TabsContent>
-            </Tabs>
-          </aside>
-          {canvas}
-          <aside
-            aria-label="Edit section"
-            className="flex min-h-0 flex-col border-s"
-          >
-            <Inspector
-              placed={selected}
-              index={selectedIndex}
-              count={state.doc.sections.length}
-              onChange={onChange}
-              onShift={actions.onShift}
-              onDuplicate={actions.onDuplicate}
-              onRemove={actions.onRemove}
+              </>
+            )}
+            <ToolDockSeparator />
+            <ToolDockButton
+              icon={dark ? <IconMoon /> : <IconSun />}
+              label={dark ? "Dark" : "Light"}
+              hideLabel={isPhone}
+              hint="Switch light and dark"
+              shortcut="d"
+              listen={false}
+              onClick={() => setSiteTheme(dark ? "light" : "dark")}
             />
-          </aside>
-        </div>
-      ) : (
-        <>
-          <p className="border-b bg-muted/40 px-4 py-2.5 text-sm text-pretty text-muted-foreground">
-            This is a preview. Open the page builder on a larger screen to add
-            and edit sections. Share and Export work here too.
-          </p>
-          {canvas}
-        </>
-      )}
+            <ToolDockPopover
+              icon={<IconColorSwatch />}
+              label="Theme"
+              hideLabel={isPhone}
+              value={themeName(state.doc.theme)}
+              shortcut="t"
+              open={themeOpen}
+              onOpenChange={setThemeOpen}
+              contentClassName="w-96"
+            >
+              <ThemePanel
+                theme={state.doc.theme ?? null}
+                mode={dark ? "dark" : "light"}
+                onChange={setTheme}
+              />
+            </ToolDockPopover>
+            <ToolDockSeparator />
+            <ToolDockButton
+              icon={<IconArrowBackUp />}
+              label="Undo"
+              hideLabel
+              shortcut={mod === "⌘" ? "⌘Z" : "Ctrl+Z"}
+              listen={false}
+              disabled={state.past.length === 0}
+              className="disabled:pointer-events-none disabled:opacity-40"
+              onClick={() => dispatch({ type: "undo" })}
+            />
+            <ToolDockButton
+              icon={<IconArrowForwardUp />}
+              label="Redo"
+              hideLabel
+              shortcut={`${mod === "⌘" ? "⇧⌘" : "Ctrl+Shift+"}Z`}
+              listen={false}
+              disabled={state.future.length === 0}
+              className="disabled:pointer-events-none disabled:opacity-40"
+              onClick={() => dispatch({ type: "redo" })}
+            />
+          </ToolDock>
+        }
+      >
+        {!ready ? (
+          <div className="flex min-h-80 items-center justify-center text-sm text-muted-foreground">
+            <Spinner aria-hidden className="me-2" />
+            Opening the page
+          </div>
+        ) : showStart ? (
+          <StartScreen
+            vars={vars}
+            dark={dark}
+            onStart={startWith}
+            onBlank={() => {
+              setBlank(true)
+              setPickerOpen(true)
+            }}
+          />
+        ) : (
+          <PageCanvas
+            sections={sections}
+            selected={state.selected}
+            width={deviceWidths[activeDevice]}
+            device={activeDevice}
+            dark={dark}
+            theme={vars}
+            actions={actions}
+            onKeyDown={forwardFrameKey}
+            empty={
+              <EmptyPage
+                onAdd={() => setPickerOpen(true)}
+                onStarters={() => setBlank(false)}
+              />
+            }
+          />
+        )}
+      </ToolCanvas>
+      <ToolSheet
+        title={
+          selectedSection
+            ? `${kindInfo(selectedSection.kind).title} · ${selectedSection.variant}`
+            : selected?.type === "pro"
+              ? selected.title
+              : "Edit section"
+        }
+        description={selectedSection?.description}
+      >
+        <SectionFields placed={selected} onChange={onChange} />
+      </ToolSheet>
       <p role="status" className="sr-only">
         {announcement}
       </p>
-      <ExportDialog
-        open={exportOpen}
-        onOpenChange={setExportOpen}
-        doc={state.doc}
-        encoded={encoded}
-      />
-    </div>
+      {exportLoaded ? (
+        <ExportDialog
+          open={exportOpen}
+          onOpenChange={setExportOpen}
+          doc={state.doc}
+          encoded={encoded}
+        />
+      ) : null}
+    </ToolApp>
   )
 }
 

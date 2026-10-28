@@ -9,16 +9,16 @@ const pageBuilderDescription =
 
 const pageBuilderSteps = [
   {
-    title: "Pick sections",
-    body: `${sections.length} free sections: navbars, heroes, logo strips, features, stats, testimonials, pricing, FAQ, calls to action and footers, in two or three layouts each.`,
+    title: "Start from a page",
+    body: `Pick a SaaS, AI product, agency or waitlist starter, or start blank and add from ${sections.length} free sections: navbars, heroes, logo strips, features, stats, testimonials, pricing, FAQ, calls to action and footers, two or three layouts each.`,
   },
   {
-    title: "Edit the copy",
-    body: "Click a section to change its text, links and lists. Reorder by dragging or with the keyboard, undo with ⌘Z, and check the page at desktop, tablet and phone widths in light and dark.",
+    title: "Edit on the canvas",
+    body: "Click a section to select it, then click its headline, text or buttons to type in place. Swap its layout, reorder it, or open Edit for lists, links and images. Check desktop, tablet and phone widths in light and dark, and undo anything with ⌘Z.",
   },
   {
-    title: "Export the code",
-    body: "One shadcn command writes app/page.tsx and a file per section, with the HextaUI components they use. Or copy each file, or download a .zip.",
+    title: "Theme and export",
+    body: "Pick a theme editor preset or paste a theme link. One shadcn command then writes app/page.tsx, a file per section, the theme and the HextaUI components they use. Or copy each file, or download a .zip.",
   },
 ]
 
@@ -31,7 +31,7 @@ const pageBuilderQuestions = [
   {
     question: "How does the one-line install work?",
     answer:
-      "Your page is compressed into the link. The shadcn CLI fetches https://hextaui.com/r/pages/<link>.json, which turns it back into a registry item with app/page.tsx, a file per section and the HextaUI components they need.",
+      "Your page and its theme are compressed into the link. The shadcn CLI fetches https://hextaui.com/r/pages/<link>.json, which turns it back into a registry item with app/page.tsx, a file per section, the theme colors and the HextaUI components they need.",
   },
   {
     question: "Where is my page saved?",
@@ -39,9 +39,14 @@ const pageBuilderQuestions = [
       "Only in the address bar. Nothing is stored on a server, so copy the Share link to keep a page or send it to someone.",
   },
   {
+    question: "Can I use a theme from the theme editor?",
+    answer:
+      "Yes. Pick one of the theme editor presets, or copy Share in the theme editor and paste the link into Theme. The export adds it as app/theme.css, and the install command writes it into your CSS.",
+  },
+  {
     question: "Can I add HextaUI Pro blocks?",
     answer:
-      "Pro blocks appear in the list as locked previews. Placed on a page, they export as a placeholder section and the shadcn command to install the real block, which needs HextaUI Pro.",
+      "Pro blocks appear in Add section as locked previews. Placed on a page, they export as a placeholder section and the shadcn command to install the real block, which needs HextaUI Pro.",
   },
   {
     question: "Will the sections match my theme?",
