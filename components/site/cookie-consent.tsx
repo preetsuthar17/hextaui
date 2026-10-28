@@ -3,6 +3,7 @@
 import * as React from "react"
 import Link from "@/components/site/link"
 
+import { useSiteChromeMode } from "@/components/site/site-chrome"
 import { Button } from "@/components/ui/button"
 import { useChrome } from "@/lib/i18n/chrome"
 
@@ -103,6 +104,7 @@ function useConsent() {
 function CookieConsent() {
   const { consent, open } = useConsent()
   const c = useChrome()
+  const chrome = useSiteChromeMode()
 
   return (
     <>
@@ -114,7 +116,8 @@ function CookieConsent() {
       {open ? (
         <section
           aria-label={c("Cookie consent")}
-          className="fixed inset-x-2 bottom-2 z-100 flex flex-col gap-2 rounded-xl bg-popover p-3 text-xs/5 sm:inset-x-4 sm:bottom-4 sm:gap-3 sm:p-4 sm:text-sm text-popover-foreground shadow-lg ring-(length:--hairline) ring-foreground/10 motion-safe:animate-in motion-safe:animation-duration-300 motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 sm:right-auto sm:w-[22.5rem] forced-colors:border"
+          data-chrome={chrome}
+          className="fixed inset-x-2 bottom-2 z-100 flex flex-col gap-2 rounded-xl bg-popover p-3 text-xs/5 sm:inset-x-4 sm:bottom-4 sm:gap-3 sm:p-4 sm:text-sm text-popover-foreground shadow-lg ring-(length:--hairline) ring-foreground/10 motion-safe:animate-in motion-safe:animation-duration-300 motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 sm:right-auto sm:w-[22.5rem] data-[chrome=app]:top-14 data-[chrome=app]:bottom-auto data-[chrome=app]:motion-safe:slide-in-from-top-2 sm:data-[chrome=app]:right-4 sm:data-[chrome=app]:left-auto forced-colors:border"
         >
           <p className="text-pretty text-muted-foreground">
             {c(

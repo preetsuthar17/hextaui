@@ -50,19 +50,19 @@ const defaultTracking = 0
 const minTracking = -0.05
 const maxTracking = 0.1
 
-const defaultTextBase = 16
+const defaultTextBase = 15
 const minTextBase = 12
 const maxTextBase = 20
 
 const textScale = [
-  ["xs", 0.75],
-  ["sm", 0.875],
+  ["xs", 11 / 15],
+  ["sm", 13 / 15],
   ["base", 1],
-  ["lg", 1.125],
-  ["xl", 1.25],
-  ["2xl", 1.5],
-  ["3xl", 1.875],
-  ["4xl", 2.25],
+  ["lg", 17 / 15],
+  ["xl", 19 / 15],
+  ["2xl", 23 / 15],
+  ["3xl", 29 / 15],
+  ["4xl", 35 / 15],
 ] as const
 
 const trackingScale = [
@@ -213,8 +213,10 @@ function previewVars(theme: Theme, mode: ThemeMode) {
   for (const [name, offset] of trackingScale) {
     vars[`--tracking-${name}`] = trackingValue(theme.tracking + offset)
   }
-  for (const [name, factor] of textScale) {
-    vars[`--text-${name}`] = textSize(theme, factor)
+  if (Math.round(theme.textBase) !== defaultTextBase) {
+    for (const [name, factor] of textScale) {
+      vars[`--text-${name}`] = textSize(theme, factor)
+    }
   }
   for (const [size, value] of Object.entries(shadowScale(theme.shadow))) {
     vars[`--shadow-${size}`] = value

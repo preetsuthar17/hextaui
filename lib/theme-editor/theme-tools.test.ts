@@ -55,7 +55,7 @@ const styled: Theme = {
   ...themePresets[2].theme,
   fonts: { sans: "Plus Jakarta Sans", serif: "Lora", mono: "My Custom Mono" },
   tracking: -0.02,
-  textBase: 15,
+  textBase: 17,
   shadow: {
     color: color("oklch(0.3 0.05 260)"),
     opacity: 0.18,
@@ -81,7 +81,7 @@ describe("share encoding v2", () => {
     const decoded = decodeTheme(id)!
     expect(decoded.fonts).toEqual(styled.fonts)
     expect(decoded.tracking).toBeCloseTo(-0.02, 3)
-    expect(decoded.textBase).toBe(15)
+    expect(decoded.textBase).toBe(17)
     expect(decoded.shadow.opacity).toBeCloseTo(0.18, 2)
     expect(decoded.shadow).toMatchObject({ blur: 6, spread: -1, x: 1, y: 3 })
     expect(formatOklch(decoded.shadow.color)).toBe("oklch(0.3 0.05 260)")
@@ -154,7 +154,7 @@ describe("typography and shadows", () => {
     expect(vars["--font-sans"]).toContain("Plus Jakarta Sans")
     expect(vars["--tracking-normal"]).toBe("-0.02em")
     expect(vars["--tracking-tight"]).toBe("-0.045em")
-    expect(vars["--text-base"]).toBe("0.9375rem")
+    expect(vars["--text-base"]).toBe("1.0625rem")
     expect(vars["--color-primary"]).toBe(vars["--primary"])
     expect(vars["--shadow-md"]).toContain("oklch(0.3 0.05 260 / 0.18)")
   })
@@ -173,7 +173,7 @@ describe("CSS with extras", () => {
     expect(css).toContain('--font-sans: "Plus Jakarta Sans", ui-sans-serif')
     expect(css).toContain("--shadow-x: 1px;")
     expect(css).toContain("--tracking-tight: calc(var(--tracking-normal) - 0.025em);")
-    expect(css).toContain("--text-base: 0.9375rem;")
+    expect(css).toContain("--text-base: 1.0625rem;")
     expect(css).toContain("letter-spacing: var(--tracking-normal);")
     const parsed = parseThemeCss(css)!
     expect(parsed.invalid).toEqual([])
@@ -235,7 +235,7 @@ describe("CSS with extras", () => {
     expect(result.item.cssVars.light["font-sans"]).toContain("Plus Jakarta Sans")
     expect(result.item.cssVars.light["shadow-md"]).toBeDefined()
     expect(result.item.cssVars.theme["font-sans"]).toBe("var(--font-sans)")
-    expect(result.item.cssVars.theme["text-sm"]).toBe("0.8203rem")
+    expect(result.item.cssVars.theme["text-sm"]).toBe("0.9208rem")
     expect("css" in result.item).toBe(true)
   })
 })
