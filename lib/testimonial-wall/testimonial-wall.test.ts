@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest"
 
 import {
+  defaultWallFrame,
+  frameLimits,
+  normalizeFrame,
+} from "@/lib/testimonial-wall/frame"
+import {
   findTweetUrls,
   parseCsv,
   parseImport,
@@ -236,6 +241,34 @@ describe("share links", () => {
     expect(await decodeWallState("w1.%%%")).toBeNull()
     expect(await decodeWallState("w1.AAAA")).toBeNull()
     expect(readShareHash("#other=1")).toBeNull()
+  })
+
+  it("round-trips the frame and drops default frame values", async () => {
+    const frame = {
+      ...defaultWallFrame,
+      background: "graphite" as const,
+      title: "Teams ship faster",
+    }
+    const state = {
+      testimonials: seedTestimonials.slice(0, 2),
+      options: defaultWallOptions,
+      frame,
+    }
+    expect(await decodeWallState(await encodeWallState(state))).toEqual(state)
+    expect(
+      await decodeWallState(
+        await encodeWallState({ ...state, frame: defaultWallFrame })
+      )
+    ).toEqual({ ...state, frame: defaultWallFrame })
+  })
+
+  it("normalizes a broken frame", () => {
+    expect(
+      normalizeFrame({ background: "neon", padding: 3, title: 4 })
+    ).toEqual(defaultWallFrame)
+    expect(
+      normalizeFrame({ title: `  ${"a".repeat(200)}  ` }).title
+    ).toHaveLength(frameLimits.title)
   })
 
   it("normalizes decoded state", () => {

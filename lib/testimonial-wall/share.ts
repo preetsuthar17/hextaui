@@ -1,4 +1,5 @@
 import { fromBase64Url } from "@/lib/base64url"
+import { defaultWallFrame } from "@/lib/testimonial-wall/frame"
 import {
   defaultWallOptions,
   normalizeWallState,
@@ -36,7 +37,17 @@ function compactState(state: WallState) {
       options[key] = value
     }
   }
-  return { testimonials: state.testimonials, options }
+  const frame: Record<string, unknown> = {}
+  for (const [key, value] of Object.entries(state.frame ?? {})) {
+    if (value !== defaultWallFrame[key as keyof typeof defaultWallFrame]) {
+      frame[key] = value
+    }
+  }
+  return {
+    testimonials: state.testimonials,
+    options,
+    ...(state.frame ? { frame } : {}),
+  }
 }
 
 async function encodeWallState(state: WallState) {

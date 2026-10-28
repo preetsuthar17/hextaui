@@ -17,11 +17,11 @@ const tools: Tool[] = [
   },
   {
     slug: "testimonial-wall",
-    title: "Testimonial wall builder",
+    title: "Testimonial wall",
     description:
       "Turn customer quotes and X posts into a masonry, marquee, grid or carousel wall, then copy the React code, a PNG or a share link.",
     status: "live",
-    layout: "page",
+    layout: "app",
   },
   {
     slug: "page-builder",
