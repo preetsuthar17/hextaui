@@ -69,7 +69,7 @@ const harmonies: { kind: HarmonyKind; label: string; offsets: number[] }[] = [
   { kind: "complementary", label: "Complementary", offsets: [0, 180] },
   { kind: "analogous", label: "Analogous", offsets: [-30, 0, 30] },
   { kind: "triadic", label: "Triadic", offsets: [0, 120, 240] },
-  { kind: "split", label: "Split complementary", offsets: [0, 150, 210] },
+  { kind: "split", label: "Split", offsets: [0, 150, 210] },
 ]
 
 function harmonyColors(brand: Oklch, kind: HarmonyKind) {
