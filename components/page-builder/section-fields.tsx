@@ -2,13 +2,10 @@
 
 import * as React from "react"
 import {
-  IconArrowDown,
   IconArrowUp,
   IconChevronRight,
-  IconCopy,
   IconLock,
   IconPlus,
-  IconTrash,
   IconX,
 } from "@tabler/icons-react"
 
@@ -29,20 +26,14 @@ import {
   type ScalarField,
   type ScalarValue,
 } from "@/lib/page-builder/fields"
-import { getSection, sectionLabel } from "@/lib/page-builder/registry"
+import { getSection } from "@/lib/page-builder/registry"
 
 type InspectorProps = {
-  placed: PlacedSection | null
-  index: number
-  count: number
   onChange: (
     key: string,
     patch: (props: Props) => Props,
     coalesce: string
   ) => void
-  onShift: (key: string, by: number) => void
-  onDuplicate: (key: string) => void
-  onRemove: (key: string) => void
 }
 
 const labelClassName = "text-xs font-medium text-muted-foreground"
@@ -312,126 +303,75 @@ function FieldInput({
   )
 }
 
-function Inspector({
+function SectionFields({
   placed,
-  index,
-  count,
   onChange,
-  onShift,
-  onDuplicate,
-  onRemove,
-}: InspectorProps) {
+}: {
+  placed: PlacedSection | null
+  onChange: InspectorProps["onChange"]
+}) {
   if (!placed) {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-1 p-6 text-center">
+      <div className="flex flex-col items-center gap-1 px-6 py-12 text-center">
         <p className="text-sm font-medium">Nothing selected</p>
         <p className="text-sm text-pretty text-muted-foreground">
-          Click a section in the preview to edit its text and links.
+          Click a section on the canvas to edit its text, lists and links.
         </p>
       </div>
     )
   }
 
-  const section =
-    placed.type === "section" ? getSection(placed.sectionId) : null
-  const title = section
-    ? sectionLabel(section)
-    : `${placed.type === "pro" ? placed.title : ""} · Pro`
+  if (placed.type === "pro") {
+    return (
+      <div className="flex flex-col gap-3 p-4 text-sm">
+        <p className="flex items-center gap-2 font-medium">
+          <IconLock aria-hidden="true" className="size-4 text-muted-foreground" />
+          {placed.title} is a Pro block
+        </p>
+        <p className="text-pretty text-muted-foreground">
+          It exports as a placeholder section and an install command. With
+          HextaUI Pro, run{" "}
+          <code className="font-mono text-xs text-foreground">
+            npx shadcn@latest add @hextaui-pro/{placed.name}
+          </code>{" "}
+          and render the block in its place.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Button size="sm" nativeButton={false} render={<Link href="/pricing" />}>
+            Unlock with Pro
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            nativeButton={false}
+            render={<Link href={`/blocks/${placed.name}`} />}
+          >
+            View block
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const section = getSection(placed.sectionId)
+  if (!section) return null
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <div className="flex items-center gap-1 border-b px-3 py-2">
-        <h2 className="min-w-0 flex-1 truncate text-sm font-medium">{title}</h2>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label="Move section up"
-          disabled={index <= 0}
-          onClick={() => onShift(placed.key, -1)}
-        >
-          <IconArrowUp />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label="Move section down"
-          disabled={index >= count - 1}
-          onClick={() => onShift(placed.key, 1)}
-        >
-          <IconArrowDown />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label="Duplicate section"
-          onClick={() => onDuplicate(placed.key)}
-        >
-          <IconCopy />
-        </Button>
-        <Button
-          variant="ghost-destructive"
-          size="icon-sm"
-          aria-label="Delete section"
-          onClick={() => onRemove(placed.key)}
-        >
-          <IconTrash />
-        </Button>
-      </div>
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-        {placed.type === "pro" ? (
-          <div className="flex flex-col gap-3 p-4 text-sm">
-            <p className="flex items-center gap-2 font-medium">
-              <IconLock
-                aria-hidden="true"
-                className="size-4 text-muted-foreground"
-              />
-              {placed.title} is a Pro block
-            </p>
-            <p className="text-pretty text-muted-foreground">
-              It exports as a placeholder section and an install command. With
-              HextaUI Pro, run{" "}
-              <code className="font-mono text-xs text-foreground">
-                npx shadcn@latest add @hextaui-pro/{placed.name}
-              </code>{" "}
-              and render the block in its place.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                size="sm"
-                nativeButton={false}
-                render={<Link href="/pricing" />}
-              >
-                Unlock with Pro
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                nativeButton={false}
-                render={<Link href={`/blocks/${placed.name}`} />}
-              >
-                View block
-              </Button>
-            </div>
-          </div>
-        ) : section ? (
-          <form
-            className="flex flex-col gap-4 p-4"
-            onSubmit={(event) => event.preventDefault()}
-          >
-            {section.fields.map((field) => (
-              <FieldInput
-                key={`${placed.key}-${field.key}`}
-                sectionKey={placed.key}
-                field={field}
-                props={placed.props}
-                onChange={onChange}
-              />
-            ))}
-          </form>
-        ) : null}
-      </div>
-    </div>
+    <form
+      className="flex flex-col gap-4 p-4"
+      onSubmit={(event) => event.preventDefault()}
+    >
+      {section.fields.map((field) => (
+        <FieldInput
+          key={`${placed.key}-${field.key}`}
+          sectionKey={placed.key}
+          field={field}
+          props={placed.props}
+          onChange={onChange}
+        />
+      ))}
+    </form>
   )
 }
 
-export { Inspector }
+export { SectionFields }

@@ -1,10 +1,11 @@
-import type { Props } from "@/lib/page-builder/fields"
 import {
   maxSections,
   newKey,
   type PageDoc,
   type PlacedSection,
 } from "@/lib/page-builder/doc"
+import type { Props } from "@/lib/page-builder/fields"
+import { getSection, sectionProps } from "@/lib/page-builder/registry"
 
 type BuilderState = {
   doc: PageDoc
@@ -28,6 +29,8 @@ type BuilderAction =
       coalesce: string
       at: number
     }
+  | { type: "swap"; key: string; sectionId: string }
+  | { type: "theme"; theme: string | null }
   | { type: "select"; key: string | null }
   | { type: "undo" }
   | { type: "redo" }
@@ -70,7 +73,21 @@ function moveTo(doc: PageDoc, key: string, to: number): PageDoc | null {
   const sections = [...doc.sections]
   const [item] = sections.splice(from, 1)
   sections.splice(target, 0, item)
-  return { sections }
+  return { ...doc, sections }
+}
+
+function carryProps(from: Props, sectionId: string) {
+  const target = getSection(sectionId)
+  if (!target) return {}
+  const kept: Props = {}
+  for (const field of target.fields) {
+    const value = from[field.key]
+    if (value === undefined) continue
+    if (field.type === "list" ? Array.isArray(value) : !Array.isArray(value)) {
+      kept[field.key] = value
+    }
+  }
+  return sectionProps(sectionId, kept)
 }
 
 function builderReducer(
@@ -87,7 +104,7 @@ function builderReducer(
       const at = index === -1 ? state.doc.sections.length : index + 1
       const sections = [...state.doc.sections]
       sections.splice(at, 0, action.section)
-      return commit(state, { sections }, action.section.key)
+      return commit(state, { ...state.doc, sections }, action.section.key)
     }
     case "move":
     case "shift": {
@@ -107,7 +124,7 @@ function builderReducer(
       const next = sections[Math.min(index, sections.length - 1)]?.key ?? null
       return commit(
         state,
-        { sections },
+        { ...state.doc, sections },
         state.selected === action.key ? next : state.selected
       )
     }
@@ -117,7 +134,33 @@ function builderReducer(
       const copy = { ...state.doc.sections[index], key: newKey() }
       const sections = [...state.doc.sections]
       sections.splice(index + 1, 0, copy)
-      return commit(state, { sections }, copy.key)
+      return commit(state, { ...state.doc, sections }, copy.key)
+    }
+    case "swap": {
+      const index = indexOf(state.doc, action.key)
+      const current = state.doc.sections[index]
+      if (!current || current.type !== "section") return state
+      if (current.sectionId === action.sectionId) return state
+      const from = getSection(current.sectionId)
+      const to = getSection(action.sectionId)
+      if (!from || !to || from.kind !== to.kind) return state
+      const sections = [...state.doc.sections]
+      sections[index] = {
+        ...current,
+        sectionId: action.sectionId,
+        props: carryProps(current.props, action.sectionId),
+      }
+      return commit(state, { ...state.doc, sections })
+    }
+    case "theme": {
+      const theme = action.theme ?? null
+      if ((state.doc.theme ?? null) === theme) return state
+      return commit(
+        state,
+        theme
+          ? { sections: state.doc.sections, theme }
+          : { sections: state.doc.sections }
+      )
     }
     case "update": {
       const index = indexOf(state.doc, action.key)
@@ -125,7 +168,7 @@ function builderReducer(
       if (!current || current.type !== "section") return state
       const sections = [...state.doc.sections]
       sections[index] = { ...current, props: action.patch(current.props) }
-      const doc = { sections }
+      const doc = { ...state.doc, sections }
       const coalesce = `${action.key}:${action.coalesce}`
       if (
         state.coalesce &&

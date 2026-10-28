@@ -238,22 +238,48 @@ function ToolDockSegmented<Value extends string>({
   label: string
   value: Value
   onValueChange: (value: Value) => void
-  options: { value: Value; label: string; icon?: React.ReactNode }[]
+  options: {
+    value: Value
+    label: string
+    icon?: React.ReactNode
+    hideLabel?: boolean
+    hint?: string
+  }[]
 }) {
   return (
     <div role="group" aria-label={label} className="flex shrink-0 items-center gap-0.5">
-      {options.map((option) => (
-        <button
-          key={option.value}
-          type="button"
-          aria-pressed={option.value === value}
-          onClick={() => onValueChange(option.value)}
-          className={dockItemClassName}
-        >
-          {option.icon}
-          {option.label}
-        </button>
-      ))}
+      {options.map((option) =>
+        option.hideLabel || option.hint ? (
+          <React.Fragment key={option.value}>
+            {withTip(
+              <button
+                type="button"
+                aria-pressed={option.value === value}
+                aria-label={option.hideLabel ? option.label : undefined}
+                onClick={() => onValueChange(option.value)}
+                className={dockItemClassName}
+              >
+                {option.icon}
+                <span className={cn(option.hideLabel && "sr-only")}>
+                  {option.label}
+                </span>
+              </button>,
+              { label: option.label, hint: option.hint, hideLabel: option.hideLabel }
+            )}
+          </React.Fragment>
+        ) : (
+          <button
+            key={option.value}
+            type="button"
+            aria-pressed={option.value === value}
+            onClick={() => onValueChange(option.value)}
+            className={dockItemClassName}
+          >
+            {option.icon}
+            {option.label}
+          </button>
+        )
+      )}
     </div>
   )
 }
