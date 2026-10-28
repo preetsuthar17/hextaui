@@ -182,7 +182,7 @@ function ToolShareButton({
   onShare,
   label = "Share",
 }: {
-  getUrl: () => string
+  getUrl: () => string | Promise<string>
   onShare?: () => void
   label?: string
 }) {
@@ -192,9 +192,9 @@ function ToolShareButton({
       size="sm"
       aria-label={label}
       onClick={async () => {
-        const url = getUrl()
         const { toast } = await import("@/components/ui/toast")
         try {
+          const url = await getUrl()
           await navigator.clipboard.writeText(url)
           toast.success("Link copied", {
             description: "Anyone with the link sees this exact setup.",

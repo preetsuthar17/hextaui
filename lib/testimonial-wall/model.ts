@@ -1,3 +1,5 @@
+import { normalizeFrame, type WallFrame } from "@/lib/testimonial-wall/frame"
+
 const testimonialSources = ["x", "linkedin", "producthunt", "web"] as const
 const wallLayouts = [
   "masonry",
@@ -54,6 +56,7 @@ type WallOptions = {
 type WallState = {
   testimonials: Testimonial[]
   options: WallOptions
+  frame?: WallFrame
 }
 
 const wallLimits = {
@@ -332,11 +335,18 @@ function normalizeTestimonials(input: unknown) {
 
 function normalizeWallState(input: unknown): WallState | null {
   if (!input || typeof input !== "object") return null
-  const value = input as { testimonials?: unknown; options?: unknown }
+  const value = input as {
+    testimonials?: unknown
+    options?: unknown
+    frame?: unknown
+  }
   if (!Array.isArray(value.testimonials)) return null
   return {
     testimonials: normalizeTestimonials(value.testimonials),
     options: normalizeOptions(value.options),
+    ...(value.frame === undefined
+      ? {}
+      : { frame: normalizeFrame(value.frame) }),
   }
 }
 

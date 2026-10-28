@@ -1,22 +1,17 @@
 import type { Metadata } from "next"
 
 import { DocsParagraph } from "@/components/docs/docs-content"
-import { LegalLink } from "@/components/legal/legal-page"
+import { factLinkClassName } from "@/components/site/fact-list"
 import { InfoSection } from "@/components/site/info-page"
 import { JsonLd } from "@/components/site/json-ld"
+import Link from "@/components/site/link"
+import { ToolBelowFold } from "@/components/tools/shell/tool-app"
 import { TestimonialWallBuilder } from "@/components/tools/testimonial-wall/testimonial-wall-builder"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { pageMetadata } from "@/lib/metadata"
 import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 import {
   testimonialWallAbout,
   testimonialWallDescription,
-  testimonialWallLead,
   testimonialWallPath,
   testimonialWallQuestions,
   testimonialWallSteps,
@@ -39,55 +34,64 @@ export default function Page() {
           name: testimonialWallTitle,
           description: testimonialWallDescription,
           breadcrumbs: [
-            { name: "Testimonial wall builder", path: testimonialWallPath },
+            { name: "Tools", path: "/tools" },
+            { name: "Testimonial wall", path: testimonialWallPath },
           ],
           extra: [faqPageJsonLd(testimonialWallPath, testimonialWallQuestions)],
         })}
       />
-      <div className="frame-width px-4 pb-16 sm:px-8 sm:pb-24">
-        <header className="flex max-w-2xl flex-col items-start pt-16 pb-12 sm:pt-24 sm:pb-16">
-          <p className="text-sm font-medium text-brand-strong">Free tool</p>
-          <h1 className="marketing-heading mt-3 text-balance">
-            {testimonialWallTitle}
-          </h1>
-          <p className="marketing-lede mt-4 max-w-xl text-pretty text-muted-foreground">
-            {testimonialWallLead}
-          </p>
-        </header>
-        <TestimonialWallBuilder />
-        <p className="mt-8 text-sm text-pretty text-muted-foreground">
-          Built with HextaUI components.{" "}
-          <LegalLink href="/components">Browse components</LegalLink> or{" "}
-          <LegalLink href="/blocks">see Pro blocks</LegalLink>.
-        </p>
-      </div>
-
-      <InfoSection title="What a testimonial wall is">
-        {testimonialWallAbout.map((paragraph) => (
-          <DocsParagraph key={paragraph}>{paragraph}</DocsParagraph>
-        ))}
-      </InfoSection>
-
-      <InfoSection title="How to add it to your site">
-        <ol className="flex list-decimal flex-col gap-2 ps-5 text-base/7 text-pretty text-muted-foreground marker:text-muted-foreground">
-          {testimonialWallSteps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-      </InfoSection>
-
-      <InfoSection title="Questions">
-        <div className="border-t">
-          <Accordion>
-            {testimonialWallQuestions.map((item) => (
-              <AccordionItem key={item.question} value={item.question}>
-                <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent>{item.answer}</AccordionContent>
-              </AccordionItem>
+      <TestimonialWallBuilder title={testimonialWallTitle} />
+      <ToolBelowFold>
+        <InfoSection title="How it works">
+          <ol className="flex flex-col divide-y border-y">
+            {testimonialWallSteps.map((step, index) => (
+              <li key={step.title} className="flex gap-4 py-5">
+                <span className="w-5 shrink-0 pt-0.5 text-sm text-muted-foreground tabular-nums">
+                  {index + 1}
+                </span>
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="text-base font-semibold tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className="text-base/7 text-pretty text-muted-foreground">
+                    {step.body}
+                  </p>
+                </div>
+              </li>
             ))}
-          </Accordion>
-        </div>
-      </InfoSection>
+          </ol>
+        </InfoSection>
+        <InfoSection title="What a testimonial wall is">
+          {testimonialWallAbout.map((paragraph) => (
+            <DocsParagraph key={paragraph}>{paragraph}</DocsParagraph>
+          ))}
+          <DocsParagraph>
+            The wall renders with free{" "}
+            <Link href="/components" className={factLinkClassName}>
+              HextaUI components
+            </Link>
+            , so it follows your theme. Want more finished sections like it?{" "}
+            <Link href="/blocks" className={factLinkClassName}>
+              See HextaUI Pro blocks
+            </Link>
+            .
+          </DocsParagraph>
+        </InfoSection>
+        <InfoSection title="Questions">
+          <dl className="flex flex-col divide-y border-y">
+            {testimonialWallQuestions.map((item) => (
+              <div key={item.question} className="flex flex-col gap-1.5 py-5">
+                <dt className="text-base font-semibold tracking-tight">
+                  {item.question}
+                </dt>
+                <dd className="text-base/7 text-pretty text-muted-foreground">
+                  {item.answer}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </InfoSection>
+      </ToolBelowFold>
     </main>
   )
 }

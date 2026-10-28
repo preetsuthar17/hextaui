@@ -1,4 +1,6 @@
-import type { CSSProperties } from "react"
+"use client"
+
+import * as React from "react"
 import {
   IconBrandLinkedin,
   IconBrandProducthunt,
@@ -52,6 +54,10 @@ const sourceIcons: Record<TestimonialSource, typeof IconBrandX> = {
 }
 
 type CardProps = { testimonial: Testimonial; options: WallOptions }
+
+const SelectContext = React.createContext<
+  ((testimonial: Testimonial) => void) | null
+>(null)
 
 function Rating({ value, accent }: { value: number; accent: string }) {
   return (
@@ -142,6 +148,25 @@ function TestimonialContent({ testimonial, options }: CardProps) {
 }
 
 function TestimonialCard({ testimonial, options }: CardProps) {
+  const select = React.useContext(SelectContext)
+  if (!select) return <WallCard testimonial={testimonial} options={options} />
+  return (
+    <div
+      data-slot="testimonial-wall-item"
+      className="group/item relative h-full rounded-(--radius) [&_a]:relative [&_a]:z-10"
+    >
+      <button
+        type="button"
+        aria-label={`Edit quote from ${testimonial.name}`}
+        onClick={() => select(testimonial)}
+        className="absolute inset-0 z-[1] cursor-pointer rounded-(--radius) transition-shadow duration-150 ease-out-cubic outline-none hover:ring-(length:--hairline) hover:ring-foreground/25 focus-visible:ring-3 focus-visible:ring-focus-ring motion-reduce:transition-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid"
+      />
+      <WallCard testimonial={testimonial} options={options} />
+    </div>
+  )
+}
+
+function WallCard({ testimonial, options }: CardProps) {
   if (options.cardStyle === "plain") {
     return (
       <figure className={c.plain}>
@@ -192,6 +217,26 @@ function FeaturedContent({ testimonial, options }: CardProps) {
 }
 
 function FeaturedTestimonial({ testimonial, options }: CardProps) {
+  const select = React.useContext(SelectContext)
+  if (!select)
+    return <FeaturedCard testimonial={testimonial} options={options} />
+  return (
+    <div
+      data-slot="testimonial-wall-item"
+      className="group/item relative mx-auto w-full max-w-2xl rounded-(--radius) [&_a]:relative [&_a]:z-10"
+    >
+      <button
+        type="button"
+        aria-label={`Edit quote from ${testimonial.name}`}
+        onClick={() => select(testimonial)}
+        className="absolute inset-0 z-[1] cursor-pointer rounded-(--radius) transition-shadow duration-150 ease-out-cubic outline-none hover:ring-(length:--hairline) hover:ring-foreground/25 focus-visible:ring-3 focus-visible:ring-focus-ring motion-reduce:transition-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid"
+      />
+      <FeaturedCard testimonial={testimonial} options={options} />
+    </div>
+  )
+}
+
+function FeaturedCard({ testimonial, options }: CardProps) {
   if (options.cardStyle === "plain") {
     return (
       <figure className={c.featuredPlain}>
@@ -229,7 +274,7 @@ function MarqueeRow({
         style={
           {
             "--marquee-duration": marqueeDuration(testimonials.length),
-          } as CSSProperties
+          } as React.CSSProperties
         }
       >
         <div className={c.marqueeGroup}>
@@ -338,21 +383,37 @@ function TestimonialWall({
   testimonials,
   options,
   className,
+  onSelect,
 }: {
   testimonials: Testimonial[]
   options: WallOptions
   className?: string
+  onSelect?: (index: number) => void
 }) {
+  const select = React.useMemo(
+    () =>
+      onSelect
+        ? (testimonial: Testimonial) => {
+            const index = testimonials.indexOf(testimonial)
+            if (index >= 0) onSelect(index)
+          }
+        : null,
+    [onSelect, testimonials]
+  )
   return (
-    <section
-      aria-label="Testimonials"
-      data-slot="testimonial-wall"
-      data-layout={options.layout}
-      className={cn(c.root, className)}
-      style={{ "--radius": radiusValues[options.radius] } as CSSProperties}
-    >
-      <WallLayout testimonials={testimonials} options={options} />
-    </section>
+    <SelectContext.Provider value={select}>
+      <section
+        aria-label="Testimonials"
+        data-slot="testimonial-wall"
+        data-layout={options.layout}
+        className={cn(c.root, className)}
+        style={
+          { "--radius": radiusValues[options.radius] } as React.CSSProperties
+        }
+      >
+        <WallLayout testimonials={testimonials} options={options} />
+      </section>
+    </SelectContext.Provider>
   )
 }
 

@@ -1,53 +1,78 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
+import { useTheme } from "next-themes"
 import {
+  IconArrowLeft,
   IconCarouselHorizontal,
-  IconDownload,
+  IconEye,
+  IconFrame,
   IconLayoutBoard,
   IconLayoutGrid,
-  IconLink,
   IconMoon,
+  IconPalette,
   IconPhoto,
+  IconPlus,
   IconQuote,
+  IconSparkles,
   IconSun,
+  IconUpload,
   IconViewportWide,
 } from "@tabler/icons-react"
-import { useTheme } from "next-themes"
 
-import { DocsCommand } from "@/components/docs/docs-command"
-import { DocsCopyButton } from "@/components/docs/docs-copy-button"
-import { DesignPanel } from "@/components/tools/testimonial-wall/design-panel"
-import { ImportDialog } from "@/components/tools/testimonial-wall/import-dialog"
+import {
+  ToolApp,
+  ToolCanvas,
+  ToolExportButton,
+  ToolMoreBelow,
+  ToolShareButton,
+  ToolTopBar,
+} from "@/components/tools/shell/tool-app"
+import {
+  ToolDock,
+  ToolDockButton,
+  ToolDockPopover,
+  ToolDockSeparator,
+} from "@/components/tools/shell/tool-dock"
+import { ToolSheet } from "@/components/tools/shell/tool-sheet"
+import {
+  FramePanel,
+  LayoutPanel,
+  ShowPanel,
+  StylePanel,
+} from "@/components/tools/testimonial-wall/panels"
 import {
   TestimonialEditor,
   type Draft,
+  type FocusRequest,
 } from "@/components/tools/testimonial-wall/testimonial-editor"
 import { TestimonialWall } from "@/components/tools/testimonial-wall/testimonial-wall"
+import { WallFrame } from "@/components/tools/testimonial-wall/wall-frame"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { toast } from "@/components/ui/toast"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import {
-  generateWallCode,
-  wallInstallPackages,
-  wallNeedsIconPackage,
-} from "@/lib/testimonial-wall/codegen"
+  defaultWallFrame,
+  frameBackgroundLabels,
+  type WallFrame as WallFrameState,
+} from "@/lib/testimonial-wall/frame"
 import {
+  cardStyleLabels,
   defaultWallOptions,
   layoutLabels,
   normalizeTestimonial,
-  wallLayouts,
+  wallFields,
   wallLimits,
   type Testimonial,
   type WallLayout,
   type WallOptions,
-  type WallState,
 } from "@/lib/testimonial-wall/model"
 import { seedTestimonials } from "@/lib/testimonial-wall/seed"
 import {
@@ -58,6 +83,17 @@ import {
 } from "@/lib/testimonial-wall/share"
 import { track } from "@/lib/track"
 
+const ExportDialog = dynamic(() =>
+  import("@/components/tools/testimonial-wall/export-dialog").then(
+    (module) => module.ExportDialog
+  )
+)
+const ImportPanel = dynamic(() =>
+  import("@/components/tools/testimonial-wall/import-panel").then(
+    (module) => module.ImportPanel
+  )
+)
+
 const layoutIcons: Record<WallLayout, typeof IconLayoutGrid> = {
   masonry: IconLayoutBoard,
   grid: IconLayoutGrid,
@@ -66,23 +102,13 @@ const layoutIcons: Record<WallLayout, typeof IconLayoutGrid> = {
   featured: IconQuote,
 }
 
-const longShareLink = 8000
-
 let nextId = 0
-
-const subscribeNothing = () => () => {}
 
 function toDrafts(testimonials: Testimonial[]): Draft[] {
   return testimonials.map((testimonial) => ({
     ...testimonial,
     id: String(nextId++),
   }))
-}
-
-function cleanTestimonials(drafts: Draft[]) {
-  return drafts
-    .map(({ id: _id, ...draft }) => normalizeTestimonial(draft))
-    .filter((item): item is Testimonial => item !== null)
 }
 
 function downloadBlob(blob: Blob, name: string) {
@@ -94,74 +120,115 @@ function downloadBlob(blob: Blob, name: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function IconAction({
-  label,
-  onClick,
-  busy,
-  children,
-}: {
-  label: string
-  onClick: () => void
-  busy?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button
-            variant="outline"
-            size="icon-sm"
-            aria-label={label}
-            aria-busy={busy || undefined}
-            onClick={onClick}
-          />
-        }
-      >
-        {children}
-      </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
+function useSiteMode() {
+  return React.useSyncExternalStore(
+    (notify) => {
+      const observer = new MutationObserver(notify)
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      })
+      return () => observer.disconnect()
+    },
+    () =>
+      document.documentElement.classList.contains("dark")
+        ? ("dark" as const)
+        : ("light" as const),
+    () => null
   )
 }
 
-function TestimonialWallBuilder() {
+function EmptyWall({
+  onAdd,
+  onSample,
+  onImport,
+}: {
+  onAdd: () => void
+  onSample: () => void
+  onImport: () => void
+}) {
+  return (
+    <Empty size="sm" className="max-w-sm">
+      <EmptyHeader>
+        <EmptyMedia variant="stack">
+          <IconQuote />
+        </EmptyMedia>
+        <EmptyTitle>No quotes on the wall</EmptyTitle>
+        <EmptyDescription>
+          Add one by hand, paste X posts or a spreadsheet, or start again from
+          the sample wall.
+        </EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Button size="sm" onClick={onAdd}>
+            <IconPlus data-icon="inline-start" />
+            Add quote
+          </Button>
+          <Button variant="outline" size="sm" onClick={onSample}>
+            <IconSparkles data-icon="inline-start" />
+            Load sample
+          </Button>
+          <Button variant="ghost" size="sm" onClick={onImport}>
+            <IconUpload data-icon="inline-start" />
+            Import
+          </Button>
+        </div>
+      </EmptyContent>
+    </Empty>
+  )
+}
+
+function TestimonialWallBuilder({ title }: { title: string }) {
   const [drafts, setDrafts] = React.useState(() => toDrafts(seedTestimonials))
   const [options, setOptions] = React.useState<WallOptions>(defaultWallOptions)
+  const [frame, setFrame] = React.useState<WallFrameState>(defaultWallFrame)
   const [openId, setOpenId] = React.useState<string | null>(null)
-  const [panel, setPanel] = React.useState("content")
-  const [importOpen, setImportOpen] = React.useState(false)
-  const [exporting, setExporting] = React.useState(false)
-  const { resolvedTheme, setTheme } = useTheme()
+  const [focus, setFocus] = React.useState<FocusRequest>(null)
+  const [sheetOpen, setSheetOpen] = React.useState(false)
+  const [importing, setImporting] = React.useState(false)
+  const [exportOpen, setExportOpen] = React.useState(false)
+  const [exportLoaded, setExportLoaded] = React.useState(false)
+  const [rendering, setRendering] = React.useState(false)
+  const { setTheme } = useTheme()
+  const siteMode = useSiteMode()
+  const dark = siteMode === "dark"
   const captureRef = React.useRef<HTMLDivElement>(null)
   const changed = React.useRef(false)
 
-  const testimonials = React.useMemo(() => cleanTestimonials(drafts), [drafts])
-  const wall = React.useMemo<WallState>(
-    () => ({ testimonials, options }),
-    [testimonials, options]
+  const entries = React.useMemo(
+    () =>
+      drafts.flatMap(({ id, ...draft }) => {
+        const testimonial = normalizeTestimonial(draft)
+        return testimonial ? [{ id, testimonial }] : []
+      }),
+    [drafts]
+  )
+  const testimonials = React.useMemo(
+    () => entries.map((entry) => entry.testimonial),
+    [entries]
+  )
+  const wall = React.useMemo(
+    () => ({ testimonials, options, frame }),
+    [testimonials, options, frame]
   )
   const preview = React.useDeferredValue(wall)
-  const code = React.useMemo(() => generateWallCode(preview), [preview])
-  const mounted = React.useSyncExternalStore(
-    subscribeNothing,
-    () => true,
-    () => false
-  )
-  const dark = mounted && resolvedTheme === "dark"
+  const previewIds = React.useDeferredValue(entries)
 
   React.useEffect(() => {
     const encoded = readShareHash(window.location.hash)
     if (!encoded) return
     let live = true
-    decodeWallState(encoded).then((state) => {
+    decodeWallState(encoded).then(async (state) => {
       if (!live) return
       if (!state) {
+        const { toast } = await import("@/components/ui/toast")
         toast.error("That share link is broken or out of date")
         return
       }
       setDrafts(toDrafts(state.testimonials))
       setOptions(state.options)
+      if (state.frame) setFrame(state.frame)
     })
     return () => {
       live = false
@@ -197,14 +264,36 @@ function TestimonialWallBuilder() {
     setOptions((current) => ({ ...current, ...patch }))
   }
 
-  const addDraft = () => {
-    const [draft] = toDrafts([{ name: "", body: "" }])
-    updateDrafts((current) => [draft, ...current])
-    setOpenId(draft.id)
-    setPanel("content")
+  const updateFrame = (patch: Partial<WallFrameState>) => {
+    changed.current = true
+    setFrame((current) => ({ ...current, ...patch }))
   }
 
-  const importTestimonials = (
+  const openQuote = (id: string, field: "name" | "body" = "body") => {
+    setImporting(false)
+    setOpenId(id)
+    setSheetOpen(true)
+    setFocus({ id, field, at: Date.now() })
+  }
+
+  const addDraft = () => {
+    if (drafts.length >= wallLimits.testimonials) return
+    const [draft] = toDrafts([{ name: "", body: "" }])
+    updateDrafts((current) => [draft, ...current])
+    openQuote(draft.id, "name")
+  }
+
+  const loadSample = () => {
+    updateDrafts(() => toDrafts(seedTestimonials))
+    setOpenId(null)
+  }
+
+  const openImport = () => {
+    setImporting(true)
+    setSheetOpen(true)
+  }
+
+  const importTestimonials = async (
     items: Testimonial[],
     mode: "add" | "replace"
   ) => {
@@ -215,256 +304,293 @@ function TestimonialWallBuilder() {
       ).slice(0, wallLimits.testimonials)
     )
     setOpenId(null)
+    const { toast } = await import("@/components/ui/toast")
     toast.success(
-      `${mode === "replace" ? "Replaced with" : "Added"} ${items.length} ${items.length === 1 ? "testimonial" : "testimonials"}`
+      `${mode === "replace" ? "Replaced with" : "Added"} ${items.length} ${items.length === 1 ? "quote" : "quotes"}`
     )
     track("Testimonial wall import", { mode, count: String(items.length) })
   }
 
-  const copyShareLink = async () => {
-    try {
-      const encoded = await encodeWallState(wall)
-      const url = `${window.location.origin}${window.location.pathname}${shareHash(encoded)}`
-      window.history.replaceState(window.history.state, "", url)
-      await navigator.clipboard.writeText(url)
-      toast.success(
-        url.length > longShareLink
-          ? "Copied share link. It’s long, so some apps may cut it"
-          : "Copied share link"
-      )
-      track("Testimonial wall share", { count: String(testimonials.length) })
-    } catch {
-      toast.error("Couldn’t copy the link")
-    }
-  }
-
   const downloadPng = async () => {
     const node = captureRef.current
-    if (!node || exporting) return
-    setExporting(true)
+    if (!node || rendering) return
+    setRendering(true)
     try {
       const { exportPng } =
         await import("@/components/tools/testimonial-wall/export-png")
       downloadBlob(await exportPng(node, { dark }), "testimonial-wall.png")
-      track("Testimonial wall PNG", { layout: options.layout })
+      track("Testimonial wall PNG", {
+        layout: options.layout,
+        frame: frame.background,
+      })
     } catch {
+      const { toast } = await import("@/components/ui/toast")
       toast.error("Couldn’t make the PNG. Try another browser")
     } finally {
-      setExporting(false)
+      setRendering(false)
     }
   }
 
-  const downloadCode = () => {
-    downloadBlob(
-      new Blob([code], { type: "text/plain" }),
-      "testimonial-wall.tsx"
-    )
-    track("Testimonial wall download", { layout: options.layout })
-  }
-
   const empty = preview.testimonials.length === 0
+  const shown = wallFields.filter((field) => options.show[field]).length
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[20rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:items-start">
-      <aside
-        aria-label="Wall settings"
-        className="flex min-h-0 flex-col overflow-hidden rounded-xl border lg:sticky lg:top-20 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:max-h-[calc(100dvh-6rem)]"
-      >
-        <Tabs
-          value={panel}
-          onValueChange={(value) => setPanel(String(value))}
-          className="flex min-h-0 flex-1 flex-col"
+    <ToolApp
+      slug="testimonial-wall"
+      title={title}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={(open) => {
+        setSheetOpen(open)
+        if (!open) setImporting(false)
+      }}
+    >
+      <ToolTopBar>
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-label="Download PNG"
+          onClick={downloadPng}
+          disabled={empty}
+          aria-busy={rendering || undefined}
         >
-          <div className="border-b p-2">
-            <TabsList className="w-full *:flex-1">
-              <TabsTrigger value="content">Testimonials</TabsTrigger>
-              <TabsTrigger value="design">Design</TabsTrigger>
-            </TabsList>
-          </div>
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-            <TabsContent value="content">
-              <TestimonialEditor
-                drafts={drafts}
-                openId={openId}
-                onOpenChange={setOpenId}
-                onAdd={addDraft}
-                onImport={() => setImportOpen(true)}
-                onChange={(id, patch) =>
-                  updateDrafts((current) =>
-                    current.map((draft) =>
-                      draft.id === id ? { ...draft, ...patch } : draft
-                    )
-                  )
-                }
-                onMove={(id, offset) =>
-                  updateDrafts((current) => {
-                    const from = current.findIndex((draft) => draft.id === id)
-                    const to = from + offset
-                    if (from < 0 || to < 0 || to >= current.length) {
-                      return current
-                    }
-                    const next = [...current]
-                    const [item] = next.splice(from, 1)
-                    next.splice(to, 0, item)
-                    return next
-                  })
-                }
-                onRemove={(id) => {
-                  updateDrafts((current) =>
-                    current.filter((draft) => draft.id !== id)
-                  )
-                  setOpenId(null)
-                }}
-              />
-            </TabsContent>
-            <TabsContent value="design">
-              <DesignPanel
+          <IconPhoto data-icon="inline-start" />
+          <span className="max-sm:sr-only">
+            {rendering ? "Rendering…" : "PNG"}
+          </span>
+        </Button>
+        <ToolShareButton
+          getUrl={async () => {
+            const url = `${window.location.origin}${window.location.pathname}${shareHash(await encodeWallState(wall))}`
+            window.history.replaceState(window.history.state, "", url)
+            return url
+          }}
+          onShare={() =>
+            track("Testimonial wall share", {
+              count: String(testimonials.length),
+            })
+          }
+        />
+        <ToolExportButton
+          disabled={empty}
+          onClick={() => {
+            setExportLoaded(true)
+            setExportOpen(true)
+            track("Testimonial wall export", { layout: options.layout })
+          }}
+        />
+      </ToolTopBar>
+      <ToolCanvas
+        label="Testimonial wall preview"
+        aside={<ToolMoreBelow />}
+        dock={
+          <ToolDock label="Wall controls">
+            <ToolDockPopover
+              icon={React.createElement(layoutIcons[options.layout])}
+              label="Layout"
+              value={layoutLabels[options.layout]}
+              shortcut="l"
+              contentClassName="w-[29rem]"
+            >
+              <LayoutPanel
                 options={options}
                 testimonials={testimonials}
                 onChange={updateOptions}
               />
-            </TabsContent>
-          </div>
-        </Tabs>
-      </aside>
-
-      <div className="flex min-w-0 flex-col gap-4 max-lg:order-first lg:col-start-2 lg:row-start-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <ToggleGroup
-            variant="outline"
-            size="sm"
-            aria-label="Layout"
-            value={[options.layout]}
-            onValueChange={(value) => {
-              if (value.length > 0) {
-                updateOptions({ layout: value[0] as WallLayout })
-              }
-            }}
-          >
-            {wallLayouts.map((layout) => {
-              const Icon = layoutIcons[layout]
-              return (
-                <ToggleGroupItem
-                  key={layout}
-                  value={layout}
-                  aria-label={layoutLabels[layout]}
-                >
-                  <Icon />
-                  <span className="max-md:hidden">{layoutLabels[layout]}</span>
-                </ToggleGroupItem>
-              )
-            })}
-          </ToggleGroup>
-          <div className="ms-auto flex items-center gap-2">
-            <IconAction
-              label={dark ? "Light preview" : "Dark preview"}
-              onClick={() => setTheme(dark ? "light" : "dark")}
+            </ToolDockPopover>
+            <ToolDockPopover
+              icon={<IconPalette />}
+              label="Style"
+              value={cardStyleLabels[options.cardStyle]}
+              shortcut="s"
             >
-              {dark ? <IconSun /> : <IconMoon />}
-            </IconAction>
-            <IconAction label="Copy share link" onClick={copyShareLink}>
-              <IconLink />
-            </IconAction>
+              <StylePanel options={options} onChange={updateOptions} />
+            </ToolDockPopover>
+            <ToolDockPopover
+              icon={<IconEye />}
+              label="Show"
+              value={`${shown}/${wallFields.length}`}
+              shortcut="h"
+              contentClassName="w-64"
+            >
+              <ShowPanel options={options} onChange={updateOptions} />
+            </ToolDockPopover>
+            <ToolDockPopover
+              icon={<IconFrame />}
+              label="Frame"
+              value={frameBackgroundLabels[frame.background]}
+              shortcut="f"
+              description="Shown in the PNG. The exported code is just the wall."
+              contentClassName="w-[25rem]"
+            >
+              <FramePanel
+                frame={frame}
+                accent={options.accent}
+                dark={dark}
+                onChange={updateFrame}
+              />
+            </ToolDockPopover>
+            <ToolDockSeparator />
+            <ToolDockButton
+              icon={dark ? <IconMoon /> : <IconSun />}
+              label={dark ? "Dark" : "Light"}
+              hint="Switch light and dark"
+              shortcut="d"
+              listen={false}
+              onClick={() => setTheme(dark ? "light" : "dark")}
+            />
+            <ToolDockSeparator />
+            <ToolDockButton
+              icon={<IconQuote />}
+              label="Quotes"
+              value={drafts.length}
+              hint="Edit quotes"
+              shortcut="q"
+              aria-pressed={sheetOpen}
+              onClick={() => {
+                if (sheetOpen) {
+                  setSheetOpen(false)
+                  setImporting(false)
+                } else {
+                  setSheetOpen(true)
+                }
+              }}
+            />
+          </ToolDock>
+        }
+      >
+        {empty ? (
+          <EmptyWall
+            onAdd={addDraft}
+            onSample={loadSample}
+            onImport={openImport}
+          />
+        ) : (
+          <WallFrame
+            ref={captureRef}
+            frame={preview.frame}
+            options={preview.options}
+            accent={preview.options.accent}
+            dark={dark}
+          >
+            <TestimonialWall
+              testimonials={preview.testimonials}
+              options={preview.options}
+              onSelect={(index) => {
+                const entry = previewIds[index]
+                if (entry) openQuote(entry.id)
+              }}
+            />
+          </WallFrame>
+        )}
+      </ToolCanvas>
+      <ToolSheet
+        title={importing ? "Import quotes" : "Quotes"}
+        description={
+          importing
+            ? "Read public X posts, or paste rows from a spreadsheet or an export."
+            : `${drafts.length} of ${wallLimits.testimonials}. Click a card on the wall to edit it.`
+        }
+        action={
+          importing ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="-mt-1"
+              onClick={() => setImporting(false)}
+            >
+              <IconArrowLeft data-icon="inline-start" />
+              Back
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="-mt-1"
+              onClick={() => setImporting(true)}
+            >
+              <IconUpload data-icon="inline-start" />
+              Import
+            </Button>
+          )
+        }
+        footer={
+          importing ? undefined : (
             <Button
               variant="outline"
               size="sm"
-              onClick={downloadPng}
-              disabled={empty}
-              aria-busy={exporting || undefined}
+              className="w-full"
+              onClick={addDraft}
+              disabled={drafts.length >= wallLimits.testimonials}
             >
-              <IconPhoto data-icon="inline-start" />
-              <span className="max-sm:sr-only">
-                {exporting ? "Rendering…" : "PNG"}
-              </span>
+              <IconPlus data-icon="inline-start" />
+              Add quote
             </Button>
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-xl border">
-          <div
-            ref={captureRef}
-            data-slot="testimonial-wall-capture"
-            className="bg-background p-4 sm:p-8"
-          >
-            {empty ? (
-              <p className="py-16 text-center text-sm text-muted-foreground">
-                Add a testimonial with a name and a quote to see the wall.
-              </p>
-            ) : (
-              <TestimonialWall
-                testimonials={preview.testimonials}
-                options={preview.options}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-
-      <section
-        aria-labelledby="testimonial-wall-code"
-        className="flex min-w-0 flex-col gap-3 pt-4 lg:col-start-2 lg:row-start-2"
+          )
+        }
       >
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <div>
-            <h2
-              id="testimonial-wall-code"
-              className="text-base font-semibold tracking-tight"
-            >
-              Get the code
-            </h2>
-            <p className="mt-1 text-sm text-pretty text-muted-foreground">
-              Install the components, then save the file as{" "}
-              <code className="font-mono text-sm text-foreground">
-                components/testimonial-wall.tsx
-              </code>
-              .
+        {importing ? (
+          <ImportPanel
+            onImport={importTestimonials}
+            onDone={() => setImporting(false)}
+          />
+        ) : drafts.length === 0 ? (
+          <div className="flex flex-col items-center gap-3 px-4 py-12 text-center">
+            <p className="text-sm text-pretty text-muted-foreground">
+              No quotes yet. Add one, import X posts, JSON or CSV, or load the
+              sample.
             </p>
-          </div>
-        </div>
-        <DocsCommand
-          packages={wallInstallPackages(preview.options)}
-          mode="dlx"
-        />
-        {wallNeedsIconPackage(preview.options) ? (
-          <DocsCommand packages={["@tabler/icons-react"]} />
-        ) : null}
-        <figure className="min-w-0 overflow-hidden rounded-xl border bg-muted">
-          <figcaption className="flex h-10 items-center gap-1 border-b ps-4 pe-1">
-            <span className="me-auto truncate font-mono text-xs text-muted-foreground">
-              testimonial-wall.tsx
-            </span>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Download file"
-              onClick={downloadCode}
-              disabled={empty}
-            >
-              <IconDownload />
+            <Button variant="outline" size="sm" onClick={loadSample}>
+              <IconSparkles data-icon="inline-start" />
+              Load sample
             </Button>
-            <DocsCopyButton
-              value={code}
-              label="Copy code"
-              event="Testimonial wall code"
-              eventProps={{ layout: preview.options.layout }}
-            />
-          </figcaption>
-          <pre
-            tabIndex={0}
-            aria-label="Generated component"
-            className="max-h-96 overflow-auto overscroll-contain p-4 font-mono text-xs/5 outline-none focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:ring-inset"
-          >
-            <code>{code}</code>
-          </pre>
-        </figure>
-      </section>
-
-      <ImportDialog
-        open={importOpen}
-        onOpenChange={setImportOpen}
-        onImport={importTestimonials}
-      />
-    </div>
+          </div>
+        ) : (
+          <TestimonialEditor
+            drafts={drafts}
+            openId={openId}
+            focus={focus}
+            onOpenChange={setOpenId}
+            onChange={(id, patch) =>
+              updateDrafts((current) =>
+                current.map((draft) =>
+                  draft.id === id ? { ...draft, ...patch } : draft
+                )
+              )
+            }
+            onMove={(id, offset) =>
+              updateDrafts((current) => {
+                const from = current.findIndex((draft) => draft.id === id)
+                const to = from + offset
+                if (from < 0 || to < 0 || to >= current.length) return current
+                const next = [...current]
+                const [item] = next.splice(from, 1)
+                next.splice(to, 0, item)
+                return next
+              })
+            }
+            onRemove={(id) => {
+              updateDrafts((current) =>
+                current.filter((draft) => draft.id !== id)
+              )
+              setOpenId(null)
+            }}
+          />
+        )}
+      </ToolSheet>
+      {exportLoaded ? (
+        <ExportDialog
+          open={exportOpen}
+          onOpenChange={setExportOpen}
+          wall={preview}
+          onDownload={(code) =>
+            downloadBlob(
+              new Blob([code], { type: "text/plain" }),
+              "testimonial-wall.tsx"
+            )
+          }
+        />
+      ) : null}
+    </ToolApp>
   )
 }
 

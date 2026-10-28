@@ -5,13 +5,15 @@ import {
   IconArrowDown,
   IconArrowUp,
   IconChevronDown,
-  IconPlus,
   IconTrash,
-  IconUpload,
 } from "@tabler/icons-react"
-import { cn } from "cn"
 
-import { Avatar, AvatarFallback, getInitials } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  getInitials,
+} from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -29,7 +31,10 @@ type Draft = Testimonial & { id: string }
 
 type DraftField = Exclude<keyof Testimonial, "rating" | "source">
 
+type FocusRequest = { id: string; field: "name" | "body"; at: number } | null
+
 function DraftInput({
+  id,
   label,
   field,
   draft,
@@ -38,8 +43,8 @@ function DraftInput({
   placeholder,
   maxLength,
   inputMode,
-  autoComplete = "off",
 }: {
+  id?: string
   label: string
   field: DraftField
   draft: Draft
@@ -48,19 +53,19 @@ function DraftInput({
   placeholder?: string
   maxLength?: number
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"]
-  autoComplete?: string
 }) {
   return (
     <Field className="min-w-0">
       <FieldLabel>{label}</FieldLabel>
       <Input
+        id={id}
         size="sm"
         type={type}
         value={draft[field] ?? ""}
         placeholder={placeholder}
         maxLength={maxLength}
         inputMode={inputMode}
-        autoComplete={autoComplete}
+        autoComplete="off"
         spellCheck={field === "name" || field === "role"}
         onValueChange={(value) => onChange({ [field]: value })}
       />
@@ -85,33 +90,20 @@ function DraftForm({
   onRemove: () => void
   onDone: () => void
 }) {
-  const bodyId = React.useId()
+  const bodyId = `quote-${draft.id}-body`
 
   return (
-    <div className="flex flex-col gap-3 px-3 pt-1 pb-3">
-      <DraftInput
-        label="Name"
-        field="name"
-        draft={draft}
-        onChange={onChange}
-        maxLength={wallLimits.name}
-        placeholder="Who said it"
-      />
-      <div className="flex flex-col gap-2">
-        <label htmlFor={bodyId} className="text-sm font-medium">
-          Quote
-        </label>
-        <Textarea
-          id={bodyId}
-          value={draft.body}
-          minRows={3}
-          maxRows={8}
-          maxLength={wallLimits.body}
-          placeholder="What they said"
-          onChange={(event) => onChange({ body: event.target.value })}
-        />
-      </div>
+    <div className="flex flex-col gap-3 px-4 pt-1 pb-4">
       <div className="grid grid-cols-2 gap-3">
+        <DraftInput
+          id={`quote-${draft.id}-name`}
+          label="Name"
+          field="name"
+          draft={draft}
+          onChange={onChange}
+          maxLength={wallLimits.name}
+          placeholder="Who said it"
+        />
         <DraftInput
           label="Handle"
           field="handle"
@@ -120,15 +112,27 @@ function DraftForm({
           maxLength={wallLimits.handle + 1}
           placeholder="@handle"
         />
-        <DraftInput
-          label="Role"
-          field="role"
-          draft={draft}
-          onChange={onChange}
-          maxLength={wallLimits.role}
-          placeholder="Founder, Acme"
+      </div>
+      <div className="flex min-w-0 flex-col gap-2">
+        <FieldLabel htmlFor={bodyId}>Quote</FieldLabel>
+        <Textarea
+          id={bodyId}
+          value={draft.body}
+          minRows={3}
+          maxRows={10}
+          maxLength={wallLimits.body}
+          placeholder="What they said"
+          onChange={(event) => onChange({ body: event.target.value })}
         />
       </div>
+      <DraftInput
+        label="Role"
+        field="role"
+        draft={draft}
+        onChange={onChange}
+        maxLength={wallLimits.role}
+        placeholder="Founder, Acme"
+      />
       <div className="grid grid-cols-2 gap-3">
         <Field className="min-w-0">
           <FieldLabel>Source</FieldLabel>
@@ -229,7 +233,7 @@ function DraftForm({
           onClick={onRemove}
         >
           <IconTrash data-icon="inline-start" />
-          Remove
+          Delete
         </Button>
         <Button variant="outline" size="sm" onClick={onDone}>
           Done
@@ -242,98 +246,107 @@ function DraftForm({
 function TestimonialEditor({
   drafts,
   openId,
+  focus,
   onOpenChange,
-  onAdd,
-  onImport,
   onChange,
   onMove,
   onRemove,
 }: {
   drafts: Draft[]
   openId: string | null
+  focus: FocusRequest
   onOpenChange: (id: string | null) => void
-  onAdd: () => void
-  onImport: () => void
   onChange: (id: string, patch: Partial<Testimonial>) => void
   onMove: (id: string, offset: number) => void
   onRemove: (id: string) => void
 }) {
-  const full = drafts.length >= wallLimits.testimonials
+  React.useEffect(() => {
+    if (!focus) return
+    const frame = requestAnimationFrame(() => {
+      const row = document.getElementById(`quote-${focus.id}`)
+      const target = document.getElementById(`quote-${focus.id}-${focus.field}`)
+      let scroller = row?.parentElement ?? null
+      while (scroller && scroller.scrollHeight <= scroller.clientHeight) {
+        scroller = scroller.parentElement
+      }
+      if (
+        row &&
+        scroller &&
+        scroller !== document.documentElement &&
+        scroller !== document.body
+      ) {
+        scroller.scrollTop +=
+          row.getBoundingClientRect().top - scroller.getBoundingClientRect().top
+      }
+      target?.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [focus])
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2 px-3 py-2.5">
-        <p className="me-auto text-xs text-muted-foreground tabular-nums">
-          {drafts.length} of {wallLimits.testimonials}
-        </p>
-        <Button variant="outline" size="sm" onClick={onImport}>
-          <IconUpload data-icon="inline-start" />
-          Import
-        </Button>
-        <Button size="sm" onClick={onAdd} disabled={full}>
-          <IconPlus data-icon="inline-start" />
-          Add
-        </Button>
-      </div>
-      {drafts.length === 0 ? (
-        <p className="border-t px-3 py-8 text-center text-sm text-pretty text-muted-foreground">
-          No testimonials yet. Add one, or import X posts, JSON or CSV.
-        </p>
-      ) : (
-        <ul className="divide-y border-t">
-          {drafts.map((draft, index) => {
-            const open = draft.id === openId
-            const panelId = `testimonial-${draft.id}`
-            return (
-              <li key={draft.id} data-open={open ? "" : undefined}>
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  aria-controls={open ? panelId : undefined}
-                  onClick={() => onOpenChange(open ? null : draft.id)}
-                  className="group/row flex w-full items-center gap-3 px-3 py-2.5 text-start transition-colors duration-150 ease-out outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:ring-inset motion-reduce:transition-none"
-                >
-                  <Avatar size="sm">
-                    <AvatarFallback>{getInitials(draft.name)}</AvatarFallback>
-                  </Avatar>
-                  <span className="flex min-w-0 flex-1 flex-col">
-                    <span
-                      className={cn(
-                        "truncate text-sm font-medium",
-                        !draft.name.trim() && "text-muted-foreground"
-                      )}
-                    >
-                      {draft.name.trim() || "Untitled"}
-                    </span>
-                    <span className="truncate text-xs text-muted-foreground">
-                      {draft.body.trim() || "No quote yet"}
-                    </span>
-                  </span>
-                  <IconChevronDown
-                    aria-hidden
-                    className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 ease-out group-aria-expanded/row:rotate-180 motion-reduce:transition-none"
+    <ul className="divide-y">
+      {drafts.map((draft, index) => {
+        const open = draft.id === openId
+        const panelId = `quote-${draft.id}-panel`
+        const name = draft.name.trim()
+        return (
+          <li
+            key={draft.id}
+            id={`quote-${draft.id}`}
+            data-open={open ? "" : undefined}
+            className="scroll-mt-2 data-open:bg-muted/30"
+          >
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls={open ? panelId : undefined}
+              onClick={() => onOpenChange(open ? null : draft.id)}
+              className="group/row flex w-full items-center gap-3 px-4 py-2.5 text-start transition-colors duration-150 ease-out-cubic outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:ring-inset motion-reduce:transition-none"
+            >
+              <Avatar size="sm">
+                {draft.avatarUrl ? (
+                  <AvatarImage
+                    src={draft.avatarUrl}
+                    alt=""
+                    referrerPolicy="no-referrer"
                   />
-                </button>
-                {open ? (
-                  <div id={panelId}>
-                    <DraftForm
-                      draft={draft}
-                      index={index}
-                      count={drafts.length}
-                      onChange={(patch) => onChange(draft.id, patch)}
-                      onMove={(offset) => onMove(draft.id, offset)}
-                      onRemove={() => onRemove(draft.id)}
-                      onDone={() => onOpenChange(null)}
-                    />
-                  </div>
                 ) : null}
-              </li>
-            )
-          })}
-        </ul>
-      )}
-    </div>
+                <AvatarFallback>{getInitials(name || "?")}</AvatarFallback>
+              </Avatar>
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span
+                  data-empty={name ? undefined : ""}
+                  className="truncate text-sm font-medium data-empty:text-muted-foreground"
+                >
+                  {name || "Untitled"}
+                </span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {draft.body.trim() || "No quote yet"}
+                </span>
+              </span>
+              <IconChevronDown
+                aria-hidden="true"
+                className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 ease-out-cubic group-aria-expanded/row:rotate-180 motion-reduce:transition-none"
+              />
+            </button>
+            {open ? (
+              <div id={panelId}>
+                <DraftForm
+                  draft={draft}
+                  index={index}
+                  count={drafts.length}
+                  onChange={(patch) => onChange(draft.id, patch)}
+                  onMove={(offset) => onMove(draft.id, offset)}
+                  onRemove={() => onRemove(draft.id)}
+                  onDone={() => onOpenChange(null)}
+                />
+              </div>
+            ) : null}
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 
-export { TestimonialEditor, type Draft }
+export { TestimonialEditor, type Draft, type FocusRequest }

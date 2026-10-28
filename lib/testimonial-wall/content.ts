@@ -19,13 +19,25 @@ const testimonialWallDescription =
   "Build a testimonial wall for free: masonry, marquee, grid or carousel. Paste X posts, CSV or JSON, then copy the React code, a PNG or a share link."
 
 const testimonialWallLead =
-  "Turn the nice things people say about your product into a wall of quotes for your site. Paste X posts, CSV or JSON, pick a layout, then copy the React code. It renders with HextaUI components and needs no account, script or subscription."
+  "Turn the nice things people say about your product into a wall of quotes for your site. Paste X posts, CSV or JSON, pick a layout, frame it for a PNG to post, then copy the React code. It renders with HextaUI components and needs no account, script or subscription."
 
 const testimonialWallSteps = [
-  "Add your testimonials by hand, paste X post links, or paste JSON or CSV with name and body columns.",
-  "Pick a layout and how each card looks. The preview updates as you type.",
-  "Run the install command to add the HextaUI components the wall uses.",
-  "Copy the component file into your project and render <TestimonialWall /> where you want it.",
+  {
+    title: "Add your quotes",
+    body: "Open Quotes to type them in, paste X post links, or paste JSON or CSV with name and body columns. Click any card on the wall to edit that quote.",
+  },
+  {
+    title: "Pick a layout and a style",
+    body: "Choose masonry, grid, marquee, carousel or a single featured quote, then set the card style, corners, columns, accent and which details each card shows.",
+  },
+  {
+    title: "Frame it for a post",
+    body: "Put the wall on a background with padding and an optional heading, then download a PNG to share on X or in a launch post.",
+  },
+  {
+    title: "Export the code",
+    body: "Run the install command to add the HextaUI components the wall uses, then save the file in your project and render <TestimonialWall /> where you want it.",
+  },
 ]
 
 const testimonialWallAbout = [
@@ -65,6 +77,11 @@ const testimonialWallQuestions = [
       "Only in your browser. A share link stores the whole wall, compressed, in the part of the URL after the #, which browsers never send to a server. Importing an X post sends only that post’s link.",
   },
   {
+    question: "Can I share the wall as an image?",
+    answer:
+      "Yes. Frame puts the wall on a background with padding and an optional heading, and PNG downloads exactly what the canvas shows at twice the resolution, in light or dark mode. The frame is only for the image; the exported code is the wall itself.",
+  },
+  {
     question: "Does the wall support dark mode and reduced motion?",
     answer:
       "Yes. Cards use your theme’s tokens, so they follow light and dark mode. The marquee pauses on hover and keyboard focus, and it stops and becomes a scrollable row for people who prefer reduced motion.",
@@ -85,9 +102,9 @@ function getTestimonialWallMarkdown() {
     ...testimonialWallAbout,
     heading(2, "Layouts"),
     bullets(wallLayouts.map((layout) => layoutLabels[layout])),
-    heading(2, "How to add it to your site"),
+    heading(2, "How it works"),
     testimonialWallSteps
-      .map((step, index) => `${index + 1}. ${step}`)
+      .map((step, index) => `${index + 1}. **${step.title}.** ${step.body}`)
       .join("\n"),
     fence(wallInstallCommand(sample.options), "bash"),
     "A generated file with two testimonials looks like this:",
