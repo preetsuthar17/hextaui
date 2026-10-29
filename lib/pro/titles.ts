@@ -18,6 +18,7 @@ const proBlockTitles: Record<string, string> = {
   "hexta-ai": "HextaAI: complete AI chat app template for React",
   inventory: "Inventory Table with inline editing for React",
   markdown: "Streaming Markdown for AI chat in React & shadcn/ui",
+  memory: "AI Memory Manager block for React & shadcn/ui",
   models: "AI Model Settings block for React & shadcn/ui",
   notifications: "Notification Settings block for React & shadcn/ui",
   "order-detail": "Order Detail admin page for React & shadcn/ui",
@@ -33,6 +34,7 @@ const proBlockTitles: Record<string, string> = {
   "product-search": "Product Search with suggestions for React",
   profile: "Profile Settings block for React & shadcn/ui",
   "prompt-input": "Prompt Input: AI chat input for React & shadcn/ui",
+  "prompt-library": "AI Prompt Library with variables for React",
   refund: "Order Refund flow for React & shadcn/ui",
   reviews: "Product Reviews & ratings block for React",
   "sales-overview": "Sales Overview analytics dashboard for React",
@@ -49,6 +51,7 @@ const proBlockTitles: Record<string, string> = {
   "tool-calls": "AI Tool Calls UI block for React & shadcn/ui",
   "variant-picker": "Product Variant Picker: swatches & sizes for React",
   "voice-mode": "AI Voice Mode UI block for React & shadcn/ui",
+  workflow: "AI Workflow Builder canvas block for React & shadcn/ui",
 }
 
 function getProBlockTitle(block: Pick<ProBlock, "name" | "title">) {

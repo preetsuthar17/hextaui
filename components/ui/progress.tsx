@@ -81,14 +81,24 @@ const progressSegmentVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary",
+        default: "",
         success: "bg-success",
         warning: "bg-warning",
         destructive: "bg-destructive",
       },
+      tone: {
+        none: "",
+        "chart-1": "bg-chart-1",
+        "chart-2": "bg-chart-2",
+        "chart-3": "bg-chart-3",
+        "chart-4": "bg-chart-4",
+        "chart-5": "bg-chart-5",
+      },
     },
+    compoundVariants: [{ variant: "default", tone: "none", className: "bg-primary" }],
     defaultVariants: {
       variant: "default",
+      tone: "none",
     },
   }
 )
@@ -118,9 +128,12 @@ const progressCircleVariants = cva(
   }
 )
 
+type ProgressTone = "chart-1" | "chart-2" | "chart-3" | "chart-4" | "chart-5"
+
 type ProgressSegment = {
   value: number
   variant?: ProgressVariant
+  tone?: ProgressTone
   label?: string
 }
 
@@ -161,9 +174,13 @@ function ProgressSegments({
         key={index}
         data-slot="progress-segment"
         data-variant={segment.variant ?? "default"}
+        data-tone={segment.tone}
         data-gap={gap ? "" : undefined}
         style={{ "--progress-segment": `${percent}%` } as React.CSSProperties}
-        className={progressSegmentVariants({ variant: segment.variant })}
+        className={progressSegmentVariants({
+          variant: segment.variant,
+          tone: segment.tone ?? "none",
+        })}
       />
     )
   })
@@ -392,5 +409,6 @@ export type {
   ProgressProps,
   ProgressSegment,
   ProgressSize,
+  ProgressTone,
   ProgressVariant,
 }
