@@ -8,6 +8,7 @@ import { AnalyticsScript } from "@/components/site/analytics-script"
 import { FrameLines } from "@/components/site/frame-lines"
 import { SiteFooter } from "@/components/site/site-footer"
 import { CookieConsent } from "@/components/site/cookie-consent"
+import { InAppBrowserPrompt } from "@/components/site/in-app-browser-prompt"
 import { InlineScript } from "@/components/site/inline-script"
 import { JsonLd } from "@/components/site/json-ld"
 import { LazyToaster } from "@/components/site/lazy-toaster"
@@ -140,6 +141,9 @@ export default async function RootLayout({
           <LazyToaster />
           <SiteChrome modes={["site", "app"]}>
             <CookieConsent />
+          </SiteChrome>
+          <SiteChrome>
+            <InAppBrowserPrompt />
           </SiteChrome>
         </ThemeProvider>
         <AnalyticsScript />

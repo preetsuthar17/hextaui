@@ -57,9 +57,31 @@ function androidIntentUrl(href: string) {
   return `intent://${url.host}${url.pathname}${url.search}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(url.href)};end`
 }
 
+type InAppPromptPage = "pricing" | "block"
+
+const promptDismissedKey = "hextaui-in-app-prompt-dismissed"
+const promptQuietDays = 7
+
+function inAppPromptPage(pathname: string): InAppPromptPage | null {
+  const path = pathname.replace(/\/$/, "")
+  if (path === "/pricing") return "pricing"
+  if (/^\/blocks\/[^/.]+$/.test(path)) return "block"
+  return null
+}
+
+function promptDismissedRecently(value: string | null, now: number) {
+  const at = Number(value)
+  if (!value || !Number.isFinite(at)) return false
+  return now - at < promptQuietDays * 24 * 60 * 60 * 1000 && at <= now
+}
+
 export {
   androidIntentUrl,
   currentInAppBrowser,
   detectInAppBrowser,
+  inAppPromptPage,
+  promptDismissedKey,
+  promptDismissedRecently,
   type InAppBrowser,
+  type InAppPromptPage,
 }
