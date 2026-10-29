@@ -304,14 +304,19 @@ function AccordionContent({
       {...props}
     >
       <div
-        data-slot="accordion-content-inner"
-        className={cn(
-          accordionContentVariants({ variant }),
-          "transition-[opacity,translate] duration-200 ease-out-quint group-data-ending-style/accordion-content:-translate-y-1 group-data-ending-style/accordion-content:opacity-0 group-data-ending-style/accordion-content:duration-150 group-data-starting-style/accordion-content:-translate-y-1 group-data-starting-style/accordion-content:opacity-0 motion-reduce:transition-none",
-          className
-        )}
+        data-slot="accordion-content-clip"
+        className="overflow-clip group-data-settled/accordion-content:overflow-visible"
       >
-        {children}
+        <div
+          data-slot="accordion-content-inner"
+          className={cn(
+            accordionContentVariants({ variant }),
+            "transition-[opacity,translate] duration-200 ease-out-quint group-data-ending-style/accordion-content:-translate-y-1 group-data-ending-style/accordion-content:opacity-0 group-data-ending-style/accordion-content:duration-150 group-data-starting-style/accordion-content:-translate-y-1 group-data-starting-style/accordion-content:opacity-0 motion-reduce:transition-none",
+            className
+          )}
+        >
+          {children}
+        </div>
       </div>
     </AccordionPrimitive.Panel>
   )

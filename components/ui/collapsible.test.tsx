@@ -53,6 +53,19 @@ describe("Collapsible", () => {
     expect(content?.className).not.toContain("px-2")
   })
 
+  it("clips the content slide so it never changes the measured height", () => {
+    const { container } = render(<Basic defaultOpen />)
+    const { content, inner } = parts(container)
+    const clip = inner?.parentElement
+
+    expect(clip?.getAttribute("data-slot")).toBe("collapsible-content-clip")
+    expect(clip?.parentElement).toBe(content)
+    expect(clip?.className).toContain("overflow-clip")
+    expect(clip?.className).toContain(
+      "group-data-settled/collapsible-content:overflow-visible"
+    )
+  })
+
   it("unmounts the closed panel when hiddenUntilFound is off", () => {
     const { container } = render(
       <Collapsible>

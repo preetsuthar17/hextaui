@@ -237,17 +237,22 @@ function CollapsibleContent({
       data-slot="collapsible-content"
       ref={setRef}
       hiddenUntilFound={hiddenUntilFound}
-      className="group/collapsible-content h-(--collapsible-panel-height) overflow-clip transition-[height,margin] data-settled:overflow-visible duration-300 ease-spring data-ending-style:h-0 data-ending-style:duration-150 data-starting-style:-mt-(--collapsible-gap-start) data-starting-style:-mb-(--collapsible-gap-end) data-starting-style:h-0 motion-reduce:transition-none data-closed:-mt-(--collapsible-gap-start) data-closed:-mb-(--collapsible-gap-end)"
+      className="group/collapsible-content h-(--collapsible-panel-height) overflow-clip transition-[height,margin] duration-300 ease-spring data-ending-style:h-0 data-ending-style:duration-150 data-settled:overflow-visible data-starting-style:-mt-(--collapsible-gap-start) data-starting-style:-mb-(--collapsible-gap-end) data-starting-style:h-0 motion-reduce:transition-none data-closed:-mt-(--collapsible-gap-start) data-closed:-mb-(--collapsible-gap-end)"
       {...props}
     >
       <div
-        data-slot="collapsible-content-inner"
-        className={cn(
-          "transition-[opacity,translate] duration-200 ease-out-quint group-data-ending-style/collapsible-content:-translate-y-1 group-data-ending-style/collapsible-content:opacity-0 group-data-ending-style/collapsible-content:duration-150 group-data-starting-style/collapsible-content:-translate-y-1 group-data-starting-style/collapsible-content:opacity-0 motion-reduce:transition-none",
-          className
-        )}
+        data-slot="collapsible-content-clip"
+        className="overflow-clip group-data-settled/collapsible-content:overflow-visible"
       >
-        {children}
+        <div
+          data-slot="collapsible-content-inner"
+          className={cn(
+            "transition-[opacity,translate] duration-200 ease-out-quint group-data-ending-style/collapsible-content:-translate-y-1 group-data-ending-style/collapsible-content:opacity-0 group-data-ending-style/collapsible-content:duration-150 group-data-starting-style/collapsible-content:-translate-y-1 group-data-starting-style/collapsible-content:opacity-0 motion-reduce:transition-none",
+            className
+          )}
+        >
+          {children}
+        </div>
       </div>
     </CollapsiblePrimitive.Panel>
   )
