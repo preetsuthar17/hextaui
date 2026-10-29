@@ -14,6 +14,7 @@ import {
   OpenInV0Link,
 } from "@/components/blocks/block-actions"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 const viewports = [
@@ -71,15 +72,26 @@ function BlockFrame({
         </div>
       </div>
       <div className="overflow-hidden rounded-xl border bg-muted">
-        <iframe
-          src={src}
-          title={`${title} preview`}
+        <div
           className={cn(
-            "mx-auto block h-150 w-full bg-background transition-all duration-300 ease-out-quint motion-reduce:transition-none sm:h-200",
+            "relative isolate mx-auto h-150 w-full transition-all duration-300 ease-out-quint motion-reduce:transition-none sm:h-200",
             viewport === "tablet" && "max-w-3xl border-x",
             viewport === "mobile" && "max-w-sm border-x"
           )}
-        />
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-1 flex flex-col items-center justify-center gap-2 bg-background text-sm text-muted-foreground motion-safe:animate-in motion-safe:fade-in-0 motion-safe:fill-mode-backwards motion-safe:animation-duration-300 motion-safe:delay-300"
+          >
+            <Spinner size="sm" />
+            Loading {title}
+          </div>
+          <iframe
+            src={src}
+            title={`${title} preview`}
+            className="block size-full"
+          />
+        </div>
       </div>
     </div>
   )
