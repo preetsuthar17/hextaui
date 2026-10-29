@@ -113,13 +113,15 @@ function BlockTile({
           />
         ) : null}
       </div>
-      <Link
+      <TrackedLink
         href={`/blocks/${name}`}
+        event="Pro link clicked"
+        eventProps={{ from: "home-pro-grid", to: `/blocks/${name}` }}
         className="preview-caption after:absolute after:inset-0 after:rounded-(--tile-radius)"
       >
         {title}
         <span className="text-xs font-normal">{free ? "Free" : "Pro"}</span>
-      </Link>
+      </TrackedLink>
     </li>
   )
 }

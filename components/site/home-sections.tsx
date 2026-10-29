@@ -28,6 +28,12 @@ const linkClassName =
 
 const stats = [
   {
+    name: "Pro blocks",
+    href: "/blocks",
+    value: proBlocks.length,
+    detail: "For AI products and stores, with more categories coming",
+  },
+  {
     name: "Components",
     href: "/components",
     value: docsComponents.length,
@@ -48,12 +54,6 @@ const stats = [
     href: `/docs/${docsUtilities[0]?.slug}`,
     value: docsUtilities.length,
     detail: "For motion, hotkeys, hairlines and scroll fades",
-  },
-  {
-    name: "Pro blocks",
-    href: "/blocks",
-    value: proBlocks.length,
-    detail: "For AI products and stores, with more categories coming",
   },
 ]
 
@@ -153,7 +153,7 @@ function Prose({ children }: { children: React.ReactNode }) {
   )
 }
 
-const moreBlockNames = ["chat-sidebar", "diff-review", "subagents", "storefront"]
+const moreBlockNames = ["chat-sidebar", "subagents", "diff-review", "code-block"]
 
 function HomeSections() {
   const moreBlocks = moreBlockNames
@@ -167,43 +167,18 @@ function HomeSections() {
 
   return (
     <>
-      <section aria-label={t("What’s inside")} className="border-t">
-        <ul className="mx-auto grid w-full max-w-5xl grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <li
-              key={stat.name}
-              className="border-b lg:border-b-0 lg:not-last:border-e"
-            >
-              <Link
-                href={stat.href}
-                className="home-stat"
-              >
-                <span className="marketing-number tabular-nums">
-                  {stat.value}
-                </span>
-                <span className="text-sm font-medium">{t(stat.name)}</span>
-                <span className="text-sm text-pretty text-muted-foreground transition-colors duration-150 motion-reduce:transition-none">
-                  {t(stat.detail, stat.values)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <Band id="home-pro">
         <SectionHead
           id="home-pro"
           eyebrow="HextaUI Pro"
           title="Built for what happens next"
-          className="mb-12 sm:mb-16"
+          className="mb-8"
         >
           {t(
             "Stop a reply mid-sentence, approve a tool call before it runs, and keep the thread still while the model writes."
           )}
         </SectionHead>
-        <HomeBlocks blocks={moreBlocks} />
-        <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <div className="mb-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:mb-16 sm:gap-6">
           <BlockBuyButton from="home-pro" pro />
           <p className="max-w-xl text-sm text-pretty text-muted-foreground">
             {t(
@@ -215,6 +190,7 @@ function HomeSections() {
             </Link>
           </p>
         </div>
+        <HomeBlocks blocks={moreBlocks} />
         <Prose>
           <p>
             <T>
@@ -272,6 +248,30 @@ function HomeSections() {
           </p>
         </Prose>
       </Band>
+
+      <section aria-label={t("What’s inside")} className="border-t">
+        <ul className="mx-auto grid w-full max-w-5xl grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <li
+              key={stat.name}
+              className="border-b lg:border-b-0 lg:not-last:border-e"
+            >
+              <Link
+                href={stat.href}
+                className="home-stat"
+              >
+                <span className="marketing-number tabular-nums">
+                  {stat.value}
+                </span>
+                <span className="text-sm font-medium">{t(stat.name)}</span>
+                <span className="text-sm text-pretty text-muted-foreground transition-colors duration-150 motion-reduce:transition-none">
+                  {t(stat.detail, stat.values)}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <Band id="home-components">
         <SectionHead
