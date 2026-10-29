@@ -50,6 +50,7 @@ const proBlockTitles: Record<string, string> = {
   "tool-calls": "AI Tool Calls UI block for React & shadcn/ui",
   "variant-picker": "Product Variant Picker: swatches & sizes for React",
   "voice-mode": "AI Voice Mode UI block for React & shadcn/ui",
+  workflow: "AI Workflow Builder canvas block for React & shadcn/ui",
 }
 
 function getProBlockTitle(block: Pick<ProBlock, "name" | "title">) {
