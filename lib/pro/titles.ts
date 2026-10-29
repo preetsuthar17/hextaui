@@ -34,6 +34,7 @@ const proBlockTitles: Record<string, string> = {
   "product-search": "Product Search with suggestions for React",
   profile: "Profile Settings block for React & shadcn/ui",
   "prompt-input": "Prompt Input: AI chat input for React & shadcn/ui",
+  "prompt-library": "AI Prompt Library with variables for React",
   refund: "Order Refund flow for React & shadcn/ui",
   reviews: "Product Reviews & ratings block for React",
   "sales-overview": "Sales Overview analytics dashboard for React",
