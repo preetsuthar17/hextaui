@@ -18,12 +18,13 @@ export const metadata: Metadata = pageMetadata({
 })
 
 const stageBlockNames = [
-  "thinking",
   "chat-thread",
-  "prompt-input",
-  "agent-todos",
-  "tool-calls",
+  "hexta-ai",
   "voice-mode",
+  "agent-todos",
+  "prompt-input",
+  "thinking",
+  "tool-calls",
 ]
 
 export default function Page() {
