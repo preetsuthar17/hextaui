@@ -1,0 +1,29 @@
+name: Edge cache
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: edge-cache
+  cancel-in-progress: true
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/edge-cache.ts
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Cache rule, wait for the deploy, purge previews
+        run: node --experimental-strip-types --no-warnings scripts/edge-cache.ts
+        env:
+          CF_CACHE_TOKEN: ${{ secrets.CF_CACHE_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          COMMIT_SHA: ${{ github.event_name == 'push' && github.sha || '' }}
