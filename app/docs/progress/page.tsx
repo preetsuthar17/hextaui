@@ -287,9 +287,9 @@ export default function Page() {
               },
               {
                 name: "segments",
-                type: "{ value: number; variant?: ProgressVariant; label?: string }[]",
+                type: "{ value: number; variant?: ProgressVariant; tone?: ProgressTone; label?: string }[]",
                 description:
-                  "Splits the fill into parts. Their sum becomes the value.",
+                  "Splits the fill into parts. Their sum becomes the value. tone colors a part with chart-1 to chart-5, for categories rather than status.",
               },
               {
                 name: "format",
@@ -325,7 +325,7 @@ export default function Page() {
               {
                 name: 'data-slot="progress-segment"',
                 description:
-                  "One part of a segmented fill, with its own data-variant. data-gap marks a part that follows a filled one.",
+                  "One part of a segmented fill, with its own data-variant and data-tone. data-gap marks a part that follows a filled one.",
               },
             ]}
           />

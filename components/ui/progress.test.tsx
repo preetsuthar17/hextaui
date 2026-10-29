@@ -308,6 +308,25 @@ describe("Progress segments", () => {
     )
   })
 
+  it("colors parts with a chart tone for categories", () => {
+    const { container } = render(
+      <Progress
+        segments={[
+          { value: 30, tone: "chart-1", label: "about you" },
+          { value: 20, tone: "chart-3", label: "work" },
+        ]}
+      />
+    )
+    const parts = segments(container)
+    expect(parts.map((part) => part.getAttribute("data-tone"))).toEqual([
+      "chart-1",
+      "chart-3",
+    ])
+    expect(parts[0].className).toContain("bg-chart-1")
+    expect(parts[0].className).not.toContain("bg-primary")
+    expect(parts[1].className).toContain("bg-chart-3")
+  })
+
   it("keeps a caller's aria value text", () => {
     render(
       <Progress

@@ -18,6 +18,7 @@ const proBlockTitles: Record<string, string> = {
   "hexta-ai": "HextaAI: complete AI chat app template for React",
   inventory: "Inventory Table with inline editing for React",
   markdown: "Streaming Markdown for AI chat in React & shadcn/ui",
+  memory: "AI Memory Manager block for React & shadcn/ui",
   models: "AI Model Settings block for React & shadcn/ui",
   notifications: "Notification Settings block for React & shadcn/ui",
   "order-detail": "Order Detail admin page for React & shadcn/ui",
