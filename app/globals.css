@@ -935,6 +935,19 @@
   padding-top: --spacing(12);
 }
 
+[data-block-preview][data-layout="app"]
+  > [data-slot="block-preview-frame"]
+  > .h-svh {
+  height: 100%;
+}
+
+:root[data-preview-standalone]
+  [data-block-preview]:not([data-layout="app"])
+  > [data-slot="block-preview-frame"]
+  > .h-svh {
+  height: calc(100svh - --spacing(12));
+}
+
 .shiki {
   --code-bg: var(--muted);
   --shiki-light: #1f2328;

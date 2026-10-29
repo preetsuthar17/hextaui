@@ -47,7 +47,10 @@ export default async function Page({
         title={block.title}
         docked={block.layout === "app"}
       />
-      <div className="contents in-data-[layout=app]:block in-data-[layout=app]:min-h-0 in-data-[layout=app]:flex-1">
+      <div
+        data-slot="block-preview-frame"
+        className="contents in-data-[layout=app]:block in-data-[layout=app]:min-h-0 in-data-[layout=app]:flex-1"
+      >
         <BlockPreview name={name} />
       </div>
     </div>
