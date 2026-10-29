@@ -2,10 +2,13 @@
 
 import { UnlessPro } from "@/components/blocks/unless-pro"
 import { TrackedLink } from "@/components/site/tracked-link"
+import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button } from "@/components/ui/button"
+import { startCheckout } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
 import { earlyBirdLastDay, proPlans, refundDays } from "@/lib/pro/pricing"
 import { useEarlyBird, useSoloPrice } from "@/lib/pro/use-early-bird"
+import { track } from "@/lib/track"
 
 function fill(text: string, values: Record<string, string | number>) {
   return text.replace(/\{(\w+)\}/g, (match, key: string) =>
@@ -81,22 +84,85 @@ function BlockPriceNote({ count }: { count: number }) {
   )
 }
 
-function BlockBuyBar({ name, count }: { name: string; count: number }) {
+function BlockCheckoutButton({ name, from }: { name: string; from: string }) {
   const c = useChrome()
+  const { guard, dialog } = useInAppBrowserGate()
 
   return (
-    <UnlessPro>
-      <div className="flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-        <div className="flex min-w-0 flex-col gap-1">
-          <p className="text-sm font-medium">
-            {c("This preview is the real block, running live.")}
-          </p>
-          <p className="text-sm text-pretty text-muted-foreground">
-            <BlockPriceNote count={count} />
-          </p>
-        </div>
+    <>
+      <Button
+        size="sm"
+        feedback
+        successLabel={c("Redirecting…")}
+        errorLabel={c("Try again")}
+        onClick={() => {
+          track("Pro link clicked", { from, to: "checkout", block: name })
+          return guard("checkout", () => startCheckout("solo"))
+        }}
+      >
+        {c("Get Pro")}
+      </Button>
+      {dialog}
+    </>
+  )
+}
+
+function BlockBuyBar({
+  name,
+  count,
+  free = false,
+}: {
+  name: string
+  count: number
+  free?: boolean
+}) {
+  const c = useChrome()
+  const price = useSoloPrice()
+
+  return (
+    <UnlessPro
+      fallback={
+        <p className="text-sm text-muted-foreground">
+          {c("Included in your HextaUI Pro.")}{" "}
+          <a
+            href="#installation"
+            className="text-foreground underline underline-offset-4"
+          >
+            {c("Install it")}
+          </a>
+        </p>
+      }
+    >
+      <div className="flex flex-col gap-3 rounded-xl border px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+        <p className="min-w-0 text-sm text-pretty text-muted-foreground">
+          <span className="font-medium text-foreground">
+            {free
+              ? c("Free to install")
+              : c("Part of HextaUI Pro")}
+          </span>
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
+          {free
+            ? fill(c("The other {count} blocks come with Pro"), { count })
+            : fill(c("all {count} blocks"), { count })}
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
+          <span className="tabular-nums">
+            {fill(c("{price} one-time"), { price: `$${price}` })}
+          </span>
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
+          <TrackedLink
+            href="/pricing"
+            event="Pro link clicked"
+            eventProps={{ from: "block-preview", to: "/pricing", block: name }}
+            className="text-foreground underline underline-offset-4"
+          >
+            {c("Compare plans")}
+          </TrackedLink>
+        </p>
         <div className="shrink-0">
-          <BlockBuyButton name={name} from="block-preview" />
+          <BlockCheckoutButton name={name} from="block-preview" />
         </div>
       </div>
     </UnlessPro>

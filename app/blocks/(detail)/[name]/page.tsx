@@ -109,11 +109,17 @@ export default async function Page({ params }: PageProps<"/blocks/[name]">) {
       <div className="mt-8">
         <BlockFrame name={block.name} title={block.title} free={block.free} />
       </div>
-      {block.free ? null : (
-        <div className="mt-4">
-          <BlockBuyBar name={block.name} count={proBlocks.length} />
-        </div>
-      )}
+      <div className="mt-4">
+        <BlockBuyBar
+          name={block.name}
+          count={
+            block.free
+              ? proBlocks.filter((entry) => !entry.free).length
+              : proBlocks.length
+          }
+          free={block.free}
+        />
+      </div>
 
       {overview?.length ? (
         <DocsSection title="Overview">

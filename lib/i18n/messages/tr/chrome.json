@@ -104,7 +104,6 @@
   "Terms of Service": "Hizmet Şartları",
   "That didn’t go through. Check the address and try again.": "Gönderilemedi. Adresi kontrol edip tekrar deneyin.",
   "The whole library as one plain-text map": "Tüm kütüphane tek bir düz metin haritasında",
-  "This preview is the real block, running live.": "Bu önizleme gerçek blok, canlı çalışıyor.",
   "Tools": "Araçlar",
   "Try Prompt Input free": "Prompt Input'u ücretsiz dene",
   "Try again": "Tekrar dene",
@@ -119,5 +118,13 @@
   "You’re in {app}’s in-app browser.": "{app} uygulama içi tarayıcısındasınız.",
   "You’re on the list. The next release lands in your inbox.": "Listeye eklendiniz. Bir sonraki sürüm e-posta kutunuza gelecek.",
   "llms.txt": "llms.txt",
-  "shadcn AI chat templates": "shadcn yapay zekâ sohbet şablonları"
+  "shadcn AI chat templates": "shadcn yapay zekâ sohbet şablonları",
+  "Part of HextaUI Pro": "HextaUI Pro’nun parçası",
+  "Free to install": "Ücretsiz kurulum",
+  "all {count} blocks": "{count} bloğun tamamı",
+  "The other {count} blocks come with Pro": "Diğer {count} blok Pro ile gelir",
+  "{price} one-time": "{price} tek seferlik",
+  "Compare plans": "Planları karşılaştır",
+  "Included in your HextaUI Pro.": "HextaUI Pro’na dahil.",
+  "Install it": "Kur"
 }

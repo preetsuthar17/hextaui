@@ -104,7 +104,6 @@
   "Terms of Service": "Nutzungsbedingungen",
   "That didn’t go through. Check the address and try again.": "Das hat nicht geklappt. Prüfe die Adresse und versuch es noch einmal.",
   "The whole library as one plain-text map": "Die ganze Bibliothek als eine Klartext-Übersicht",
-  "This preview is the real block, running live.": "Diese Vorschau ist der echte Block, live.",
   "Tools": "Tools",
   "Try Prompt Input free": "Prompt Input kostenlos testen",
   "Try again": "Erneut versuchen",
@@ -119,5 +118,13 @@
   "You’re in {app}’s in-app browser.": "Du bist im In-App-Browser von {app}.",
   "You’re on the list. The next release lands in your inbox.": "Du stehst auf der Liste. Das nächste Release landet in deinem Postfach.",
   "llms.txt": "llms.txt",
-  "shadcn AI chat templates": "shadcn-KI-Chat-Templates"
+  "shadcn AI chat templates": "shadcn-KI-Chat-Templates",
+  "Part of HextaUI Pro": "Teil von HextaUI Pro",
+  "Free to install": "Kostenlos installieren",
+  "all {count} blocks": "alle {count} Blöcke",
+  "The other {count} blocks come with Pro": "Die anderen {count} Blöcke gibt es mit Pro",
+  "{price} one-time": "{price} einmalig",
+  "Compare plans": "Pläne vergleichen",
+  "Included in your HextaUI Pro.": "In deinem HextaUI Pro enthalten.",
+  "Install it": "Installieren"
 }

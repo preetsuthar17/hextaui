@@ -103,7 +103,6 @@
   "Terms of Service",
   "That didn’t go through. Check the address and try again.",
   "The whole library as one plain-text map",
-  "This preview is the real block, running live.",
   "Try Prompt Input free",
   "Try again",
   "Use the app’s ••• or share menu and choose Open in Safari, or copy the link and paste it into Safari.",
@@ -119,5 +118,13 @@
   "llms.txt",
   "shadcn AI chat templates",
   "Tools",
-  "Free theme editor and more for shadcn/ui"
+  "Free theme editor and more for shadcn/ui",
+  "Part of HextaUI Pro",
+  "Free to install",
+  "all {count} blocks",
+  "The other {count} blocks come with Pro",
+  "{price} one-time",
+  "Compare plans",
+  "Included in your HextaUI Pro.",
+  "Install it"
 ]

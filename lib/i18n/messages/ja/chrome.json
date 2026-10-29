@@ -104,7 +104,6 @@
   "Terms of Service": "利用規約",
   "That didn’t go through. Check the address and try again.": "送信できませんでした。アドレスを確認して、もう一度お試しください。",
   "The whole library as one plain-text map": "ライブラリ全体を1つのプレーンテキストの地図に",
-  "This preview is the real block, running live.": "このプレビューは本物のブロックがライブで動いています。",
   "Tools": "ツール",
   "Try Prompt Input free": "Prompt Inputを無料で試す",
   "Try again": "もう一度試す",
@@ -119,5 +118,13 @@
   "You’re in {app}’s in-app browser.": "{app} のアプリ内ブラウザで開いています。",
   "You’re on the list. The next release lands in your inbox.": "登録しました。次のリリースをメールでお知らせします。",
   "llms.txt": "llms.txt",
-  "shadcn AI chat templates": "shadcn の AI チャットテンプレート"
+  "shadcn AI chat templates": "shadcn の AI チャットテンプレート",
+  "Part of HextaUI Pro": "HextaUI Pro に含まれます",
+  "Free to install": "無料でインストール",
+  "all {count} blocks": "全 {count} ブロック",
+  "The other {count} blocks come with Pro": "他の {count} ブロックは Pro に含まれます",
+  "{price} one-time": "{price} 買い切り",
+  "Compare plans": "プランを比較",
+  "Included in your HextaUI Pro.": "お持ちの HextaUI Pro に含まれています。",
+  "Install it": "インストールする"
 }
