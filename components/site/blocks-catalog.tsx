@@ -18,7 +18,7 @@ import { useChrome } from "@/lib/i18n/chrome"
 import { filterBlocks, type FilterableBlock } from "@/lib/pro/filter"
 import { track } from "@/lib/track"
 
-type CatalogBlock = FilterableBlock & { free?: boolean }
+type CatalogBlock = FilterableBlock & { free?: boolean; newUntil?: string }
 
 type CatalogSection = {
   category: string
@@ -168,6 +168,7 @@ function BlocksCatalog({ sections }: { sections: CatalogSection[] }) {
                   key={block.name}
                   name={block.name}
                   title={block.title}
+                  newUntil={block.newUntil}
                   favorite={favorites.includes(block.name)}
                   onFavoriteChange={(favorite) => {
                     favoriteBlocks.toggle(block.name)
@@ -180,6 +181,7 @@ function BlocksCatalog({ sections }: { sections: CatalogSection[] }) {
               items={section.blocks.map((block) => ({
                 href: `/blocks/${block.name}`,
                 title: block.title,
+                newUntil: block.newUntil,
               }))}
             />
           </section>

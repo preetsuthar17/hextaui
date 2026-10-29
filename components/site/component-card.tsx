@@ -7,6 +7,7 @@ import {
   CatalogCardLink,
   CatalogCardPreview,
 } from "@/components/site/catalog-card"
+import { NewDot } from "@/components/site/new-dot"
 import { useInViewOnce } from "@/components/site/use-in-view-once"
 
 type Demo = React.LazyExoticComponent<React.ComponentType>
@@ -85,7 +86,15 @@ function FittedDemo({
   )
 }
 
-function ComponentCard({ slug, name }: { slug: string; name: string }) {
+function ComponentCard({
+  slug,
+  name,
+  newUntil,
+}: {
+  slug: string
+  name: string
+  newUntil?: string
+}) {
   const [ref, inView] = useInViewOnce<HTMLLIElement>()
   const frameRef = React.useRef<HTMLDivElement>(null)
 
@@ -98,7 +107,12 @@ function ComponentCard({ slug, name }: { slug: string; name: string }) {
           </React.Suspense>
         ) : null}
       </CatalogCardPreview>
-      <CatalogCardLink href={`/docs/${slug}`}>{name}</CatalogCardLink>
+      <CatalogCardLink href={`/docs/${slug}`}>
+        <span className="flex min-w-0 items-center gap-2">
+          {name}
+          <NewDot until={newUntil} />
+        </span>
+      </CatalogCardLink>
     </CatalogCard>
   )
 }

@@ -9,6 +9,7 @@ import { CatalogViewToggle } from "@/components/site/catalog-view"
 import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import { T, t } from "@/lib/i18n/rich"
 import { metadataTitle, pageMetadata } from "@/lib/metadata"
+import { blockNewUntil } from "@/lib/new-entries"
 import { pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
@@ -75,6 +76,7 @@ export default function Page() {
                 description: block.description,
                 category: block.category,
                 free: block.free,
+                newUntil: blockNewUntil(block.name),
               })),
             }))}
           />

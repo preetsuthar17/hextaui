@@ -4,6 +4,7 @@ import { DocsShell } from "@/components/docs/docs-shell"
 import { isTranslatedLocale } from "@/lib/i18n/config"
 import { setRequestLocale } from "@/lib/i18n/request"
 import { t } from "@/lib/i18n/rich"
+import { withNewBlocks } from "@/lib/new-entries"
 import { blocksNav } from "@/lib/pro/catalog"
 
 export default async function Layout({
@@ -14,7 +15,7 @@ export default async function Layout({
   if (!isTranslatedLocale(lang)) notFound()
   setRequestLocale(lang)
 
-  const sections = blocksNav.map((section) => ({
+  const sections = withNewBlocks(blocksNav).map((section) => ({
     title: t(section.title),
     items: section.items.map((item) => ({ ...item, title: t(item.title) })),
   }))

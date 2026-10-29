@@ -13,6 +13,7 @@ import {
 import { docsComponents as components } from "@/lib/docs"
 import { T, t } from "@/lib/i18n/rich"
 import { clampDescription, pageMetadata } from "@/lib/metadata"
+import { entryNewUntil } from "@/lib/new-entries"
 import { pageJsonLd } from "@/lib/structured-data"
 
 const title = "React UI components for shadcn/ui"
@@ -82,6 +83,7 @@ export default function Page() {
               key={component.slug}
               slug={component.slug}
               name={component.name}
+              newUntil={entryNewUntil(component.slug)}
             />
           ))}
         </CatalogGrid>
@@ -89,6 +91,7 @@ export default function Page() {
           items={components.map((component) => ({
             href: `/docs/${component.slug}`,
             title: component.name,
+            newUntil: entryNewUntil(component.slug),
           }))}
         />
       </CatalogBody>

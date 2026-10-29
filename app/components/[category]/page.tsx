@@ -21,6 +21,7 @@ import { getRequestLocale } from "@/lib/i18n/request"
 import { t } from "@/lib/i18n/rich"
 import { markTranslated } from "@/lib/i18n/translated"
 import { ogImagePath, pageMetadata } from "@/lib/metadata"
+import { entryNewUntil } from "@/lib/new-entries"
 import { pageJsonLd } from "@/lib/structured-data"
 
 export const dynamicParams = false
@@ -100,6 +101,7 @@ export default async function Page({
               key={component.slug}
               slug={component.slug}
               name={component.name}
+              newUntil={entryNewUntil(component.slug)}
             />
           ))}
         </CatalogGrid>

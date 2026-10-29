@@ -36,8 +36,8 @@ function DocsComponentPage({
       registryHref={`/r/${component.slug}.json`}
       note={
         <>
-          <DocsProBlocksNote links={getProBlocksUsing(component.slug)} />
           <DocsGlance slug={component.slug} />
+          <DocsProBlocksNote links={getProBlocksUsing(component.slug)} />
         </>
       }
     >

@@ -1,4 +1,6 @@
-import { FactList, factLinkClassName, type Fact } from "@/components/site/fact-list"
+import * as React from "react"
+
+import { factLinkClassName } from "@/components/site/fact-list"
 import Link from "@/components/site/link"
 import {
   componentCategories,
@@ -9,17 +11,14 @@ import { getDocsKind } from "@/lib/docs-metadata"
 import { getEntryStats } from "@/lib/entry-stats"
 import { getRequestLocale } from "@/lib/i18n/request"
 import { t } from "@/lib/i18n/rich"
-import { getStudy, getStudyHref } from "@/lib/research"
-import { tableAnchor } from "@/lib/research/study"
-import snapshot from "@/lib/shadcn-snapshot.json"
 import {
   getShadcnComparisonHref,
   getShadcnComparisons,
 } from "@/lib/shadcn-compare"
 
-const usageStudy = "ui-component-usage"
+const internalDependencies = new Set(["cn"])
 
-function getDocsGlanceFacts(slug: string): Fact[] {
+function getDocsGlanceItems(slug: string): React.ReactNode[] {
   const entry = getDocsComponent(slug)
   const stats = getEntryStats(slug)
   const kind = getDocsKind(slug)
@@ -27,99 +26,87 @@ function getDocsGlanceFacts(slug: string): Fact[] {
   const category = componentCategories.find(
     (item) => item.slug === entry.category
   )
-  const compared = getShadcnComparisons().some((item) => item.slug === slug)
-  const inShadcn = slug in snapshot.components
-  const study = kind === "component" ? getStudy(usageStudy) : undefined
-  const blocks = `${stats.blocks} of ${stats.totalBlocks}`
+  const compared =
+    kind === "component" &&
+    getShadcnComparisons().some((item) => item.slug === slug)
 
   return [
-    category
-      ? {
-          label: t("Category"),
-          value: (
-            <Link
-              href={getComponentCategoryHref(category.slug)}
-              className={factLinkClassName}
-            >
-              {t(category.name)}
-            </Link>
-          ),
-        }
-      : {
-          label: t("Kind"),
-          value: t(
-            kind === "component" ? "Component" : kind === "hook" ? "Hook" : "Utility"
-          ),
-        },
-    ...(stats.parts ? [{ label: t("Parts"), value: stats.parts }] : []),
-    { label: t("Examples"), value: stats.examples },
-    {
-      label: t("Source"),
-      value: t("{count} lines", { count: stats.lines }),
-    },
-    ...(kind === "component"
-      ? [
-          {
-            label: t("Used in Pro blocks"),
-            value: study ? (
-              <Link
-                href={`${getStudyHref(study.slug)}#${tableAnchor("component-ranking")}`}
-                className={factLinkClassName}
-              >
-                {blocks}
-              </Link>
-            ) : (
-              blocks
-            ),
-          },
-          {
-            label: t("shadcn/ui version"),
-            value: compared ? (
-              <Link
-                href={getShadcnComparisonHref(slug)}
-                className={factLinkClassName}
-              >
-                {t("Compared")}
-              </Link>
-            ) : (
-              t(inShadcn ? "Yes" : "None")
-            ),
-          },
-        ]
-      : []),
-    ...(stats.dependencies.length
-      ? [
-          {
-            label: t("Dependencies"),
-            value: stats.dependencies.join(", "),
-          },
-        ]
-      : []),
+    category ? (
+      <Link
+        href={getComponentCategoryHref(category.slug)}
+        className={factLinkClassName}
+      >
+        {t(category.name)}
+      </Link>
+    ) : (
+      t(kind === "component" ? "Component" : kind === "hook" ? "Hook" : "Utility")
+    ),
+    ...(stats.parts ? [t("{count} parts", { count: stats.parts })] : []),
+    t("{count} examples", { count: stats.examples }),
     ...(stats.updated
       ? [
-          {
-            label: t("Source updated"),
-            value: (
-              <time dateTime={stats.updated}>
-                {new Intl.DateTimeFormat(locale, {
-                  dateStyle: "medium",
-                  timeZone: "UTC",
-                }).format(new Date(`${stats.updated}T00:00:00Z`))}
-              </time>
-            ),
-          },
+          <time key="updated" dateTime={stats.updated}>
+            {t("Updated {date}", {
+              date: new Intl.DateTimeFormat(locale, {
+                dateStyle: "medium",
+                timeZone: "UTC",
+              }).format(new Date(`${stats.updated}T00:00:00Z`)),
+            })}
+          </time>,
+        ]
+      : []),
+    ...(compared
+      ? [
+          <Link
+            key="compare"
+            href={getShadcnComparisonHref(slug)}
+            className={factLinkClassName}
+          >
+            {t("vs shadcn/ui")}
+          </Link>,
         ]
       : []),
   ]
 }
 
 function DocsGlance({ slug }: { slug: string }) {
+  const dependencies = getEntryStats(slug).dependencies.filter(
+    (name) => !internalDependencies.has(name)
+  )
+
   return (
-    <FactList
-      label={t("At a glance")}
-      facts={getDocsGlanceFacts(slug)}
-      className="mt-4 border-y py-4 sm:grid-cols-4"
-    />
+    <div className="mt-2 flex flex-col gap-2.5 text-sm text-muted-foreground">
+      <ul
+        aria-label={t("At a glance")}
+        className="flex flex-wrap items-center gap-y-1"
+      >
+        {getDocsGlanceItems(slug).map((item, index) => (
+          <li
+            key={index}
+            className="flex items-center tabular-nums not-first:before:mx-2.5 not-first:before:text-border not-first:before:content-['·']"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+      {dependencies.length ? (
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span>{t("Depends on")}</span>
+          <ul
+            aria-label={t("Dependencies")}
+            className="flex flex-wrap items-center gap-1.5"
+          >
+            {dependencies.map((name) => (
+              <li key={name}>
+                <code className="rounded-xs bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
+                  {name}
+                </code>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
   )
 }
 

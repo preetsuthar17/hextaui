@@ -8,6 +8,7 @@ import {
   CatalogCardLink,
   CatalogCardPreview,
 } from "@/components/site/catalog-card"
+import { NewDot } from "@/components/site/new-dot"
 import { useInViewOnce } from "@/components/site/use-in-view-once"
 import { useChrome } from "@/lib/i18n/chrome"
 
@@ -90,12 +91,14 @@ function BlockCard({
   title,
   favorite,
   tile = false,
+  newUntil,
   onFavoriteChange,
 }: {
   name: string
   title: string
   favorite?: boolean
   tile?: boolean
+  newUntil?: string
   onFavoriteChange?: (favorite: boolean) => void
 }) {
   const [ref, inView] = useInViewOnce<HTMLLIElement>()
@@ -133,7 +136,10 @@ function BlockCard({
         href={`/blocks/${name}`}
         className="after:absolute after:inset-0 after:rounded-(--catalog-radius)"
       >
-        {title}
+        <span className="flex min-w-0 items-center gap-2">
+          {title}
+          <NewDot until={newUntil} />
+        </span>
       </CatalogCardLink>
     </CatalogCard>
   )

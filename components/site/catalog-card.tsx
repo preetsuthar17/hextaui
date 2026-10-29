@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import { IconArrowRight } from "@tabler/icons-react"
 import { cn } from "cn"
 
+import { NewDot } from "@/components/site/new-dot"
+
 function CatalogCard({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
@@ -92,16 +94,21 @@ function CatalogGrid({ className, ...props }: React.ComponentProps<"ul">) {
   )
 }
 
-function CatalogList({ items }: { items: { href: string; title: string }[] }) {
+function CatalogList({
+  items,
+}: {
+  items: { href: string; title: string; newUntil?: string }[]
+}) {
   return (
     <ul className="hidden grid-cols-2 gap-2 in-data-[catalog-view=list]:grid sm:grid-cols-3 lg:grid-cols-4">
       {items.map((item) => (
         <li key={item.href}>
           <IntentLink
             href={item.href}
-            className="flex rounded-lg border px-4 py-3 text-sm font-medium transition-colors duration-150 outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
+            className="flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors duration-150 outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:outline-hidden motion-reduce:transition-none"
           >
             {item.title}
+            <NewDot until={item.newUntil} />
           </IntentLink>
         </li>
       ))}

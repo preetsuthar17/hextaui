@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "@/components/site/link"
 import { cn } from "cn"
 
+import { NewDot } from "@/components/site/new-dot"
 import { useSharedHighlight } from "@/components/site/use-shared-highlight"
 import type { DocsNavSection } from "@/lib/docs"
 import { useSitePathname } from "@/lib/i18n/client"
@@ -11,7 +12,7 @@ import { useSitePathname } from "@/lib/i18n/client"
 const buttonSelector = "[data-sidebar=menu-button]"
 
 const menuButtonClassName =
-  "peer/menu-button group/menu-button flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-start text-sm inset-ring-(length:--hairline) inset-ring-transparent outline-none hover:text-sidebar-accent-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:inset-ring-sidebar-ring focus-visible:outline-hidden active:text-sidebar-accent-foreground pointer-coarse:h-10 forced-colors:border data-active:text-sidebar-accent-foreground forced-colors:data-active:outline-2 forced-colors:data-active:-outline-offset-2 forced-colors:data-active:outline-solid [&>span:last-child]:truncate"
+  "peer/menu-button group/menu-button flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-start text-sm inset-ring-(length:--hairline) inset-ring-transparent outline-none hover:text-sidebar-accent-foreground focus-visible:ring-3 focus-visible:ring-focus-ring focus-visible:inset-ring-sidebar-ring focus-visible:outline-hidden active:text-sidebar-accent-foreground pointer-coarse:h-10 forced-colors:border data-active:text-sidebar-accent-foreground forced-colors:data-active:outline-2 forced-colors:data-active:-outline-offset-2 forced-colors:data-active:outline-solid [&>span:first-child]:truncate"
 
 function DocsNav({
   sections,
@@ -89,6 +90,7 @@ function DocsNav({
                       className={menuButtonClassName}
                     >
                       <span>{item.title}</span>
+                      <NewDot until={item.newUntil} />
                     </Link>
                   </li>
                 )

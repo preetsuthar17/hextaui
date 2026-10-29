@@ -1,6 +1,7 @@
 type DocsNavItem = {
   title: string
   href: string
+  newUntil?: string
 }
 
 type DocsNavSection = {
