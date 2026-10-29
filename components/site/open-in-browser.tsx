@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { copyText } from "@/lib/copy-text"
 import {
   androidIntentUrl,
   currentInAppBrowser,
@@ -29,16 +30,6 @@ type Gate = {
   browser: InAppBrowser
   href: string
   run: () => unknown
-}
-
-async function copyText(text: string, input: HTMLInputElement | null) {
-  try {
-    await navigator.clipboard.writeText(text)
-    return
-  } catch {}
-  input?.focus()
-  input?.select()
-  if (!document.execCommand("copy")) throw new Error("Copy failed")
 }
 
 function useInAppBrowserGate() {

@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest"
 
-import { androidIntentUrl, detectInAppBrowser } from "@/lib/in-app-browser"
+import {
+  androidIntentUrl,
+  detectInAppBrowser,
+  inAppPromptPage,
+  promptDismissedRecently,
+} from "@/lib/in-app-browser"
 
 const iosWebKit =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/22E240"
@@ -99,5 +104,40 @@ describe("androidIntentUrl", () => {
 
   it("only handles https pages", () => {
     expect(androidIntentUrl("http://localhost:3000/pricing")).toBeNull()
+  })
+})
+
+describe("inAppPromptPage", () => {
+  it.each([
+    ["/pricing", "pricing"],
+    ["/pricing/", "pricing"],
+    ["/blocks/chat-thread", "block"],
+    ["/blocks/checkout/", "block"],
+  ] as const)("prompts on %s", (pathname, page) => {
+    expect(inAppPromptPage(pathname)).toBe(page)
+  })
+
+  it.each(["/", "/blocks", "/blocks/llms.txt", "/blocks/a/b", "/docs/button"])(
+    "stays quiet on %s",
+    (pathname) => {
+      expect(inAppPromptPage(pathname)).toBeNull()
+    }
+  )
+})
+
+describe("promptDismissedRecently", () => {
+  const now = Date.UTC(2026, 9, 29)
+  const day = 24 * 60 * 60 * 1000
+
+  it("stays dismissed for a week", () => {
+    expect(promptDismissedRecently(String(now - day), now)).toBe(true)
+    expect(promptDismissedRecently(String(now - 6 * day), now)).toBe(true)
+  })
+
+  it("comes back after a week or with a bad value", () => {
+    expect(promptDismissedRecently(String(now - 8 * day), now)).toBe(false)
+    expect(promptDismissedRecently(null, now)).toBe(false)
+    expect(promptDismissedRecently("yes", now)).toBe(false)
+    expect(promptDismissedRecently(String(now + day), now)).toBe(false)
   })
 })
