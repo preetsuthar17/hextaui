@@ -5,10 +5,9 @@ import Link from "@/components/site/link"
 import { IconCheck } from "@tabler/icons-react"
 import { cn } from "cn"
 
-import { useInAppBrowserGate } from "@/components/site/open-in-browser"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { CheckoutButton } from "@/components/site/pricing-checkout"
+import { buttonVariants } from "@/components/ui/button"
 import { NumberFlow } from "@/components/ui/number-flow"
-import { startCheckout } from "@/lib/auth-client"
 import { earlyBirdLastDay, proPlans, type SalePlanId } from "@/lib/pro/pricing"
 import { useEarlyBird } from "@/lib/pro/use-early-bird"
 
@@ -19,6 +18,7 @@ type PricingPlan = {
   name: string
   seats: string
   features: string[]
+  recommended?: boolean
 }
 
 const rulerMax = 300
@@ -65,33 +65,12 @@ function useInView<T extends HTMLElement>() {
   return [ref, seen] as const
 }
 
-function PlanButton({ plan }: { plan: SalePlanId }) {
-  const { guard, dialog } = useInAppBrowserGate()
-
-  return (
-    <>
-      <Button
-        size="lg"
-        variant={plan === "solo" ? "default" : "outline"}
-        className="w-full"
-        feedback
-        successLabel="Redirecting…"
-        errorLabel="Try again"
-        onClick={() => guard("checkout", () => startCheckout(plan))}
-      >
-        Get {proPlans[plan].name}
-      </Button>
-      {dialog}
-    </>
-  )
-}
-
 function FreePlanLink() {
   return (
     <Link
       href="/docs/installation"
       className={cn(
-        buttonVariants({ size: "lg", variant: "outline" }),
+        buttonVariants({ size: "lg", variant: "ghost" }),
         "w-full"
       )}
     >
@@ -215,7 +194,10 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
         {rows.map(({ plan, now, was }) => (
           <li
             key={plan.id}
-            className="pricing-ruler-plan flex flex-col gap-5"
+            className={cn(
+              "pricing-ruler-plan flex flex-col gap-5",
+              plan.recommended && "max-sm:order-first"
+            )}
             data-plan={plan.id}
             onPointerEnter={() => setActive(plan.id)}
             onFocus={() => setActive(plan.id)}
@@ -223,7 +205,14 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
             {...state(plan.id)}
           >
             <div className="flex flex-col gap-1 lg:items-center lg:text-center">
-              <h3 className="font-medium">{plan.name}</h3>
+              <h3 className="flex items-center gap-2 font-medium">
+                {plan.name}
+                {plan.recommended ? (
+                  <span className="text-xs font-medium text-brand-strong">
+                    Recommended
+                  </span>
+                ) : null}
+              </h3>
               <p className="text-sm text-muted-foreground">{plan.seats}</p>
             </div>
             <div className="flex flex-col gap-1.5 lg:items-center">
@@ -270,7 +259,7 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
               {plan.id === "free" ? (
                 <FreePlanLink />
               ) : (
-                <PlanButton plan={plan.id} />
+                <CheckoutButton plan={plan.id} className="w-full" />
               )}
             </div>
           </li>

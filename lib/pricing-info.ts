@@ -1,6 +1,6 @@
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { frontmatter } from "@/lib/frontmatter"
-import { proBlocks } from "@/lib/pro/catalog"
+import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import {
   earlyBirdLastDay,
   earlyBirdLastDayIso,
@@ -10,9 +10,9 @@ import {
   salePlanIds,
   type SalePlanId,
 } from "@/lib/pro/pricing"
-import { absoluteUrl, siteName } from "@/lib/site"
+import { absoluteUrl, siteContactEmail, siteName } from "@/lib/site"
 
-const pricingUpdated = "2026-10-27"
+const pricingUpdated = "2026-10-29"
 const pricingCurrency = "USD"
 const earlyBird = isEarlyBird()
 
@@ -109,6 +109,52 @@ const pricingQuestions = [
   },
 ]
 
+const pricingSteps = [
+  {
+    title: "Pay once",
+    body: "Checkout runs on Dodo Payments. You don't need an account to pay.",
+  },
+  {
+    title: "Unlock Pro on your account",
+    body: "Sign in with GitHub or Google using the email you paid with and Pro unlocks on its own. With any other account, the page you return to and your purchase email have a link that moves it there.",
+  },
+  {
+    title: "Install with the shadcn CLI",
+    body: "Create a token on your account page, add the @hextaui-pro registry to components.json, then install any block, for example npx shadcn add @hextaui-pro/chat-thread. You can also copy the code from any block page.",
+  },
+  {
+    title: "Add your team",
+    body: `On Team, add teammates by email on your account page, up to ${proPlans.team.seats} developers including you, and keep one shared token in CI.`,
+  },
+]
+
+const refundTerms = [
+  `Full refund within ${refundDays} days of buying, no questions asked.`,
+  `Email ${siteContactEmail} from, or mentioning, the email you paid with. The refund goes back to your original payment method, usually within 5 to 10 business days.`,
+  "After a refund, Pro access, team seats, API tokens for Pro blocks and the Pro License end.",
+]
+
+const featuredBlockNames = ["chat-thread", "tool-calls", "checkout", "settings"]
+
+function getPricingBlockSections() {
+  return blockSections.map((section) => ({
+    category: section.category,
+    title: section.title,
+    blocks: section.blocks.map((block) => ({
+      name: block.name,
+      title: block.title,
+      free: Boolean(block.free),
+    })),
+  }))
+}
+
+function getFeaturedBlocks() {
+  return featuredBlockNames.flatMap((name) => {
+    const block = proBlocks.find((item) => item.name === name)
+    return block ? [{ name: block.name, title: block.title }] : []
+  })
+}
+
 function getPricingBlocks() {
   return proBlocks.map((block) => ({
     title: block.title,
@@ -143,7 +189,7 @@ function getPricingMarkdown() {
     `## What every Pro plan includes`,
     proSummary,
     bullets(proIncludes),
-    "### Blocks included",
+    `### Blocks included (${proBlocks.length})`,
     bullets(
       getPricingBlocks().map(
         (block) =>
@@ -169,8 +215,13 @@ function getPricingMarkdown() {
       `### ${item.question}`,
       item.answer,
     ]),
-    "## How to buy",
-    `Sign in with GitHub or Google at ${absoluteUrl("/account")} and choose Solo or Team. Checkout needs a person in a browser; agents cannot buy on a user's behalf through the API.`,
+    "## After you pay",
+    pricingSteps
+      .map((step, index) => `${index + 1}. **${step.title}.** ${step.body}`)
+      .join("\n"),
+    `Your account page is ${absoluteUrl("/account")}. Checkout needs a person in a browser; agents cannot buy on a user's behalf through the API.`,
+    "## Refunds",
+    bullets(refundTerms),
     "## Terms",
     bullets([
       `[Pro License](${absoluteUrl("/legal/license")})`,
@@ -213,14 +264,18 @@ function getProProductJsonLd() {
 export {
   earlyBird,
   freePlan,
+  getFeaturedBlocks,
   getPricingBlocks,
+  getPricingBlockSections,
   getProProductJsonLd,
   getPricingMarkdown,
   priceLabel,
   pricingCurrency,
   pricingQuestions,
+  pricingSteps,
   pricingUpdated,
   proIncludes,
   proPlanInfo,
   proSummary,
+  refundTerms,
 }
