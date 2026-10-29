@@ -335,12 +335,12 @@ export default function Page() {
               {
                 name: "--collapsible-gap-start",
                 description:
-                  "The parent’s gap before the panel, collapsed while closed.",
+                  "The layout parent’s gap before the panel, collapsed while closed. Wrappers with display: contents are skipped.",
               },
               {
                 name: "--collapsible-gap-end",
                 description:
-                  "The parent’s gap after the panel, collapsed while closed.",
+                  "The layout parent’s gap after the panel, collapsed while closed. Wrappers with display: contents are skipped.",
               },
             ]}
           />

@@ -210,6 +210,35 @@ describe("Collapsible", () => {
     })
   })
 
+  it("looks through a display: contents root to the layout parent", () => {
+    const { container } = render(
+      <div style={{ display: "flex", flexDirection: "column", rowGap: 20 }}>
+        <p>Before</p>
+        <Collapsible style={{ display: "contents" }}>
+          <CollapsibleContent>Body</CollapsibleContent>
+        </Collapsible>
+      </div>
+    )
+    const layout = container.firstElementChild as HTMLElement
+
+    act(() => {
+      layout.appendChild(document.createElement("div"))
+    })
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        const content = parts(container).content!
+        expect(content.style.getPropertyValue("--collapsible-gap-start")).toBe(
+          "20px"
+        )
+        expect(content.style.getPropertyValue("--collapsible-gap-end")).toBe(
+          "0px"
+        )
+        resolve()
+      })
+    })
+  })
+
   it("collapses into the next gap when the panel comes first", () => {
     const { container } = render(
       <div>

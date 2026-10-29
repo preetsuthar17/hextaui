@@ -39,8 +39,20 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
   }
 }
 
+function getLayoutItem(panel: HTMLElement) {
+  let item: HTMLElement = panel
+  let parent = panel.parentElement
+
+  while (parent && getComputedStyle(parent).display === "contents") {
+    item = parent
+    parent = parent.parentElement
+  }
+
+  return { item, parent }
+}
+
 function getCollapsedGap(panel: HTMLElement) {
-  const parent = panel.parentElement
+  const { item, parent } = getLayoutItem(panel)
 
   if (!parent) {
     return { start: 0, end: 0 }
@@ -61,11 +73,11 @@ function getCollapsedGap(panel: HTMLElement) {
 
   const reversed = isFlexColumn && style.flexDirection === "column-reverse"
 
-  if (panel.previousElementSibling) {
+  if (item.previousElementSibling) {
     return reversed ? { start: 0, end: gap } : { start: gap, end: 0 }
   }
 
-  if (panel.nextElementSibling) {
+  if (item.nextElementSibling) {
     return reversed ? { start: gap, end: 0 } : { start: 0, end: gap }
   }
 
@@ -195,7 +207,7 @@ function CollapsibleContent({
   className?: string
 }) {
   const observeGap = React.useCallback((panel: HTMLDivElement | null) => {
-    const parent = panel?.parentElement
+    const parent = panel ? getLayoutItem(panel).parent : null
 
     if (!panel || !parent) {
       return
