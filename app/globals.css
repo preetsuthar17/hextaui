@@ -6,6 +6,15 @@
 
 @custom-variant dark (&:is(.dark *):not(:where([data-color-scheme=light] *)));
 
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-display: var(--font-inter), ui-sans-serif, sans-serif;

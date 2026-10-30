@@ -88,3 +88,27 @@ Data-backed copy elsewhere:
 - **Tests:** `lib/category-lists.test.ts` checks that every linked list meets its minimum and matches the sitemap.
 - **No filter pages:** don't add pages for intersections of filters.
 
+## Fonts
+
+Inter and Paper Mono are self-hosted subsets cut by `scripts/fonts/subset.py`. The script isn't part of the build. Run it by hand and commit what it writes: `app/fonts/*.woff2` and the generated `app/fonts/index.ts`. Don't edit those files by hand.
+
+- **Run:** `pnpm build`, then `pnpm fonts:subset`. It needs `uv`, which installs pinned fontTools, brotli and uharfbuzz on the fly. `pnpm fonts:check` exits 1 when the committed fonts no longer match the built site.
+- **Rerun when:**
+  - content gains a non-ASCII character outside Latin-1 and Latin Extended-A, such as a new symbol, arrow or Turkish letter;
+  - the site starts using a Latin-1 letter it didn't use before, since used letters belong in the core file;
+  - code renders text that only appears after interaction (toasts, dialogs, ⌘K), since the script reads those characters from `app`, `components`, `content`, `hooks`, `lib` and `pro/blocks`;
+  - a page turns on `hyphens: auto`. The script then adds U+2010 to the core on its own.
+- **Edit `FONTS` in the script first when:** a page uses a weight under 400, or an OpenType feature beyond the defaults and tabular numbers (for example `slashed-zero`, `ordinal` or `font-feature-settings`). The subsets drop everything else.
+- **Two files per font:**
+  - The core is preloaded. It holds ASCII, curly quotes, dashes, the ellipsis, the minus sign, and every used character that Google's preloaded latin file drew before self-hosting.
+  - The extended file loads through `unicode-range` only on pages that need one of its characters.
+  - Both files share one family name. A fallback face between them would draw the extended characters before the real font did.
+- **Same rendering as Google Fonts:**
+  - Inter only covers what Google's seven subset files drew. Characters such as ⌘ → ← ✓ and the U+2010 hyphen stay on the fallback fonts, as before.
+  - Accented letters stay in the core because kerning and mark placement don't cross font files.
+  - `wght` starts at 400. `opsz` and the top of `wght` keep their full ranges, because clipping them changes outlines.
+  - The no-break space U+00A0 is always in the core, because recharts measures it on every chart page.
+  - Glyph names and the source bounding box are kept, because Chrome on macOS antialiases small text differently without them.
+- **Fallback:** `Inter Fallback` in `app/globals.css` keeps Google's metric overrides. `next/font/local` would compute different ones, so its automatic fallback is off.
+- **Licenses:** both fonts are OFL with no Reserved Font Name, so the subsets keep their names. The script stops if a source font ever declares one.
+

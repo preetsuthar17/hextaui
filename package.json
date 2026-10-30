@@ -23,7 +23,9 @@
     "i18n:sync": "node --experimental-strip-types --no-warnings scripts/i18n-sync.ts",
     "shadcn:snapshot": "node --experimental-strip-types --no-warnings scripts/shadcn-snapshot.ts",
     "pro:build": "node --experimental-strip-types --no-warnings scripts/build-pro.ts",
-    "redirects:www": "node --experimental-strip-types --no-warnings scripts/www-redirects.ts"
+    "redirects:www": "node --experimental-strip-types --no-warnings scripts/www-redirects.ts",
+    "fonts:subset": "uv run --no-project --with \"fonttools[woff]==4.68.0\" --with brotli==1.2.1 --with uharfbuzz==0.57.0 python scripts/fonts/subset.py",
+    "fonts:check": "pnpm fonts:subset --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

@@ -1,8 +1,7 @@
-import { Inter } from "next/font/google"
-import localFont from "next/font/local"
 import type { Metadata, Viewport } from "next"
 
 import "./globals.css"
+import { fontMono, fontSans } from "./fonts"
 import { DocsSearchProvider } from "@/components/docs/docs-search"
 import { AnalyticsScript } from "@/components/site/analytics-script"
 import { FrameLines } from "@/components/site/frame-lines"
@@ -81,22 +80,6 @@ export const viewport: Viewport = {
 
 const componentSlugs = docsComponents.map((entry) => entry.slug)
 const hooksHref = `/docs/${docsHooks[0]?.slug ?? docsUtilities[0]?.slug}`
-
-const fontSans = Inter({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-inter",
-})
-
-const fontMono = localFont({
-  src: "./fonts/PaperMono.woff2",
-  weight: "100 800",
-  style: "normal",
-  display: "swap",
-  variable: "--font-paper-mono",
-  fallback: ["ui-monospace", "Menlo", "Consolas", "monospace"],
-  adjustFontFallback: false,
-})
 
 export default async function RootLayout({
   children,
