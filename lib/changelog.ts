@@ -15,6 +15,26 @@ const changelogGroups = [
 
 const changelog: ChangelogEntry[] = [
   {
+    date: "2026-10-29",
+    title: "Workflow, Model Compare and four more AI blocks",
+    body: [
+      "Six new Pro blocks for AI apps, from a node canvas that runs your workflow step by step to the page where people edit what the assistant remembers. Pro is still $49 once until 30 November, then $79.",
+    ],
+    added: [
+      "Workflow: a node canvas for chaining steps into an AI workflow and watching it run.",
+      "Model Compare: send one prompt to two to four models and compare answers, speed and cost side by side, with diffs, blind voting and follow-ups.",
+      "Prompt Library: saved prompts with variables that drop straight into the composer, with fill-in forms, slash commands, version history and shared prompts.",
+      "Memory: where people see and edit what an assistant remembers, grouped by category with the chats it came from.",
+      "Integrations: the Connections page for MCP servers and built-in integrations, with sign-in, failing servers and per-tool permissions.",
+      "Image Studio: a prompt-to-image workspace where results come into focus as the model works.",
+      "Free tools: a theme editor, a page builder and a testimonial wall, at hextaui.com/tools.",
+    ],
+    changed: [
+      "Pages load 41–61% less JavaScript.",
+      "Every block page has a one-line Pro offer with direct checkout under the preview.",
+    ],
+  },
+  {
     date: "2026-10-21",
     title: "E-commerce blocks",
     body: [

@@ -1610,6 +1610,303 @@
       "status_code": 301,
       "preserve_query_string": true,
       "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/auth-two-factor-verify",
+      "target_url": "https://hextaui.com/docs/input-otp",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/auth-phone-verify",
+      "target_url": "https://hextaui.com/docs/input-otp",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/billing-billing-history",
+      "target_url": "https://hextaui.com/blocks/billing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/billing-payment-form",
+      "target_url": "https://hextaui.com/blocks/billing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/billing-payment-method",
+      "target_url": "https://hextaui.com/blocks/billing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/billing-pricing-table",
+      "target_url": "https://hextaui.com/blocks/billing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/billing-upgrade-prompt",
+      "target_url": "https://hextaui.com/blocks/billing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/settings-import-data",
+      "target_url": "https://hextaui.com/blocks/settings",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/settings-domains",
+      "target_url": "https://hextaui.com/blocks/settings",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/task-board",
+      "target_url": "https://hextaui.com/blocks/agent-todos",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/task-detail",
+      "target_url": "https://hextaui.com/blocks/agent-todos",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/task-create",
+      "target_url": "https://hextaui.com/blocks/agent-todos",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/team-dashboard",
+      "target_url": "https://hextaui.com/blocks/team",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/team-settings",
+      "target_url": "https://hextaui.com/blocks/team",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/team-prompt-library",
+      "target_url": "https://hextaui.com/blocks/prompt-library",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/ai-suggested-prompts",
+      "target_url": "https://hextaui.com/blocks/prompt-input",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/blocks/ai-file-upload",
+      "target_url": "https://hextaui.com/blocks/prompt-input",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/components/auth-phone-verify",
+      "target_url": "https://hextaui.com/docs/input-otp",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/components/team-switcher",
+      "target_url": "https://hextaui.com/blocks/team",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/components/team-chat",
+      "target_url": "https://hextaui.com/blocks/chat-thread",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/docs/application/file-upload",
+      "target_url": "https://hextaui.com/docs/attachment",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/docs/application/avatar-group",
+      "target_url": "https://hextaui.com/docs/avatar",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/docs/application/animated-tabs",
+      "target_url": "https://hextaui.com/docs/tabs",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/docs/text/text-shining",
+      "target_url": "https://hextaui.com/docs/shimmer",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/shop",
+      "target_url": "https://hextaui.com/pricing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/checkout",
+      "target_url": "https://hextaui.com/pricing",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
+      "source_url": "www.hextaui.com/support",
+      "target_url": "https://hextaui.com/contact",
+      "subpath_matching": false,
+      "preserve_path_suffix": false
+    }
+  },
+  {
+    "redirect": {
+      "status_code": 301,
+      "preserve_query_string": true,
+      "include_subdomains": false,
       "source_url": "www.hextaui.com/showcase",
       "target_url": "https://hextaui.com/",
       "subpath_matching": false,
