@@ -30,6 +30,7 @@ type PaymentsEnv = AuthEnv & {
   DODO_TEAM_PRODUCT_ID: string
   DODO_UNLIMITED_EARLY_PRODUCT_ID?: string
   DODO_UNLIMITED_PRODUCT_ID?: string
+  DODO_UPGRADE_DISCOUNT_CODE?: string
 }
 
 type Purchase = typeof schema.purchase.$inferSelect

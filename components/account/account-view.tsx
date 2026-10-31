@@ -319,20 +319,31 @@ function ProUpgrade() {
 }
 
 function TeamUpgrade() {
+  const early = useEarlyBird()
+  const { guard, dialog } = useInAppBrowserGate()
+  const teamPrice = early ? proPlans.team.earlyPrice : proPlans.team.price
+  const upgradePrice = teamPrice - proPlans.solo.earlyPrice
+
   return (
-    <section className="flex flex-col gap-1">
-      <h2 className="font-medium">Need seats for your team?</h2>
-      <p className="text-sm text-pretty text-muted-foreground">
-        Email{" "}
-        <a
-          href={`mailto:${siteContactEmail}?subject=Upgrade%20HextaUI%20Pro%20to%20Team`}
-          className="text-foreground underline underline-offset-4"
-        >
-          {siteContactEmail}
-        </a>{" "}
-        from this account’s email to move to Team, with up to{" "}
-        {proPlans.team.seats} developers. You only pay the difference.
-      </p>
+    <section className="flex flex-col items-start gap-3">
+      <div className="flex flex-col gap-1">
+        <h2 className="font-medium">Need seats for your team?</h2>
+        <p className="text-sm text-pretty text-muted-foreground">
+          Move to Team for up to {proPlans.team.seats} developers, with one
+          shared token allowed in CI. The ${proPlans.solo.earlyPrice} you paid
+          for Solo counts, so it’s ${upgradePrice} once.
+        </p>
+      </div>
+      <Button
+        variant="outline"
+        feedback
+        successLabel="Redirecting…"
+        errorLabel="Try again"
+        onClick={() => guard("checkout", () => startCheckout("team"))}
+      >
+        Upgrade to Team for ${upgradePrice}
+      </Button>
+      {dialog}
     </section>
   )
 }

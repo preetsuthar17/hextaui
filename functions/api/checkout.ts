@@ -36,13 +36,16 @@ export async function onRequestPost({ request, env }: Context) {
     headers: request.headers,
   })
   const user = session?.user ?? null
+  const access = user ? await findProAccess(getDb(env.DB), user.id) : null
 
-  if (user) {
-    const access = await findProAccess(getDb(env.DB), user.id)
-    if (access && planRank[access.plan] >= planRank[plan]) {
-      return Response.json({ url: "/account" })
-    }
+  if (access && planRank[access.plan] >= planRank[plan]) {
+    return Response.json({ url: "/account" })
   }
+
+  const upgradeCode =
+    access?.via === "owner" && access.plan === "solo" && plan === "team"
+      ? env.DODO_UPGRADE_DISCOUNT_CODE
+      : undefined
 
   const productId = checkoutProduct(env, plan)
   if (!productId) {
@@ -56,6 +59,7 @@ export async function onRequestPost({ request, env }: Context) {
   const claim = await createClaim(env.BETTER_AUTH_SECRET)
   const checkout = await getPayments(env).checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
+    ...(upgradeCode ? { discount_codes: [upgradeCode] } : {}),
     ...(user ? { customer: { email: user.email, name: user.name } } : {}),
     metadata: {
       ...(user
