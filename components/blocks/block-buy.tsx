@@ -117,6 +117,7 @@ function BlockBuyBar({
   free?: boolean
 }) {
   const c = useChrome()
+  const early = useEarlyBird()
   const price = useSoloPrice()
 
   return (
@@ -148,6 +149,8 @@ function BlockBuyBar({
           <span aria-hidden="true"> · </span>
           <span className="sr-only">, </span>
           <span className="tabular-nums">
+            {early ? <del>${proPlans.solo.price}</del> : null}
+            {early ? " " : null}
             {fill(c("{price} one-time"), { price: `$${price}` })}
           </span>
           <span aria-hidden="true"> · </span>
