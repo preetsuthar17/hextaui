@@ -43,7 +43,6 @@ import {
 } from "@/lib/auth-client"
 import {
   allProPlans,
-  earlyBirdLastDay,
   isTeamPlan,
   proPlans,
   refundDays,
@@ -51,7 +50,6 @@ import {
   type ProPlanId,
   type SalePlanId,
 } from "@/lib/pro/pricing"
-import { useEarlyBird } from "@/lib/pro/use-early-bird"
 import { trackPurchaseCompleted } from "@/lib/purchase-tracking"
 import { siteContactEmail } from "@/lib/site"
 import {
@@ -72,6 +70,7 @@ type Plan = {
   via: "owner" | "member" | null
   teamOwner: string | null
   purchasedAt: string | null
+  upgradeCredit: number | null
   providers: string[]
   emailUpdates: boolean
 }
@@ -228,7 +227,7 @@ function usePlan(
   return { plan, confirming }
 }
 
-function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
+function PlanCard({ plan }: { plan: ProPlan }) {
   const { guard, dialog } = useInAppBrowserGate()
 
   return (
@@ -240,14 +239,8 @@ function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
         </p>
       </div>
       <p className="mt-auto flex items-baseline gap-2 tabular-nums">
-        {early ? (
-          <del className="text-sm text-muted-foreground">
-            <span className="sr-only">Regular price </span>${plan.price}
-          </del>
-        ) : null}
         <span className="text-2xl font-semibold tracking-tight">
-          {early ? <span className="sr-only">Early bird price </span> : null}$
-          {early ? plan.earlyPrice : plan.price}
+          ${plan.price}
         </span>
         <span className="text-sm text-muted-foreground">once</span>
       </p>
@@ -266,24 +259,12 @@ function PlanCard({ plan, early }: { plan: ProPlan; early: boolean }) {
 }
 
 function ProUpgrade() {
-  const early = useEarlyBird()
-
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2">
-          <h2 className="font-medium">HextaUI Pro</h2>
-          {early ? (
-            <Badge appearance="muted" shape="pill">
-              Early bird
-            </Badge>
-          ) : null}
-        </div>
+        <h2 className="font-medium">HextaUI Pro</h2>
         <p className="text-sm text-pretty text-muted-foreground">
           One payment, no subscription.
-          {early
-            ? ` Early-bird prices end on ${earlyBirdLastDay}, then they go up.`
-            : ""}
         </p>
       </div>
       <ul className="flex flex-col gap-2 text-sm">
@@ -296,7 +277,7 @@ function ProUpgrade() {
       </ul>
       <div className="grid gap-3 sm:grid-cols-2">
         {salePlanIds.map((id) => (
-          <PlanCard key={id} plan={proPlans[id]} early={early} />
+          <PlanCard key={id} plan={proPlans[id]} />
         ))}
       </div>
       <p className="text-xs text-muted-foreground">
@@ -318,11 +299,9 @@ function ProUpgrade() {
   )
 }
 
-function TeamUpgrade() {
-  const early = useEarlyBird()
+function TeamUpgrade({ credit }: { credit: number }) {
   const { guard, dialog } = useInAppBrowserGate()
-  const teamPrice = early ? proPlans.team.earlyPrice : proPlans.team.price
-  const upgradePrice = teamPrice - proPlans.solo.earlyPrice
+  const upgradePrice = proPlans.team.price - credit
 
   return (
     <section className="flex flex-col items-start gap-3">
@@ -330,8 +309,8 @@ function TeamUpgrade() {
         <h2 className="font-medium">Need seats for your team?</h2>
         <p className="text-sm text-pretty text-muted-foreground">
           Move to Team for up to {proPlans.team.seats} developers, with one
-          shared token allowed in CI. The ${proPlans.solo.earlyPrice} you paid
-          for Solo counts, so it’s ${upgradePrice} once.
+          shared token allowed in CI. Your Solo purchase counts for ${credit},
+          so it’s ${upgradePrice} once.
         </p>
       </div>
       <Button
@@ -639,7 +618,9 @@ function AccountContent() {
       {plan && !plan.pro && !busy ? <ProUpgrade /> : null}
       {owned && isTeamPlan(owned) ? <TeamSeats /> : null}
       {plan?.pro ? <ProTokens /> : null}
-      {owned === "solo" ? <TeamUpgrade /> : null}
+      {owned === "solo" && plan?.upgradeCredit ? (
+        <TeamUpgrade credit={plan.upgradeCredit} />
+      ) : null}
       {plan ? <EmailSettings subscribed={plan.emailUpdates} /> : null}
       <div>
         <Button variant="outline" size="sm" onClick={() => signOut()}>

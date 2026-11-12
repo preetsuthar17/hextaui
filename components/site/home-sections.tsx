@@ -13,12 +13,7 @@ import { HomeBlocks, HomeDemos } from "@/components/site/home-preview"
 import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { getProBlock, proBlocks } from "@/lib/pro/catalog"
-import {
-  earlyBirdLastDay,
-  isEarlyBird,
-  proPlans,
-  refundDays,
-} from "@/lib/pro/pricing"
+import { proPlans, refundDays } from "@/lib/pro/pricing"
 import { T, t } from "@/lib/i18n/rich"
 import { siteRepository } from "@/lib/site"
 import { faqPageJsonLd } from "@/lib/structured-data"
@@ -58,10 +53,7 @@ const stats = [
 ]
 
 const { solo, team } = proPlans
-const earlyBird = isEarlyBird()
-const proPriceText = earlyBird
-  ? `$${solo.earlyPrice} once for one developer, or $${team.earlyPrice} for a team of ${team.seats}, until ${earlyBirdLastDay}. After that, Solo is $${solo.price} and Team is $${team.price}`
-  : `$${solo.price} once for one developer, or $${team.price} for a team of ${team.seats}`
+const proPriceText = `$${solo.price} once for one developer, or $${team.price} for a team of ${team.seats}`
 
 const questions = [
   {
@@ -153,7 +145,12 @@ function Prose({ children }: { children: React.ReactNode }) {
   )
 }
 
-const moreBlockNames = ["chat-sidebar", "subagents", "diff-review", "code-block"]
+const moreBlockNames = [
+  "chat-sidebar",
+  "subagents",
+  "diff-review",
+  "code-block",
+]
 
 function HomeSections() {
   const moreBlocks = moreBlockNames
@@ -178,7 +175,7 @@ function HomeSections() {
             "Stop a reply mid-sentence, approve a tool call before it runs, and keep the thread still while the model writes."
           )}
         </SectionHead>
-        <div className="mb-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:mb-16 sm:gap-6">
+        <div className="mb-12 flex flex-col items-start gap-4 sm:mb-16 sm:flex-row sm:items-center sm:gap-6">
           <BlockBuyButton from="home-pro" pro />
           <p className="max-w-xl text-sm text-pretty text-muted-foreground">
             {t(
@@ -256,10 +253,7 @@ function HomeSections() {
               key={stat.name}
               className="border-b lg:border-b-0 lg:not-last:border-e"
             >
-              <Link
-                href={stat.href}
-                className="home-stat"
-              >
+              <Link href={stat.href} className="home-stat">
                 <span className="marketing-number tabular-nums">
                   {stat.value}
                 </span>

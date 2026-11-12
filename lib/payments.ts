@@ -12,8 +12,9 @@ import {
   verifyClaim,
 } from "@/lib/purchase-claim"
 import {
-  isEarlyBird,
+  earlySoloPrice,
   planRank,
+  proPlans,
   teamPlanIds,
   type ProPlanId,
   type SalePlanId,
@@ -31,6 +32,7 @@ type PaymentsEnv = AuthEnv & {
   DODO_UNLIMITED_EARLY_PRODUCT_ID?: string
   DODO_UNLIMITED_PRODUCT_ID?: string
   DODO_UPGRADE_DISCOUNT_CODE?: string
+  DODO_UPGRADE_REGULAR_DISCOUNT_CODE?: string
 }
 
 type Purchase = typeof schema.purchase.$inferSelect
@@ -94,9 +96,18 @@ function productPlans(env: PaymentsEnv) {
   return plans
 }
 
-function checkoutProduct(env: PaymentsEnv, plan: SalePlanId, now = new Date()) {
-  const products = planProducts(env)[plan]
-  return (isEarlyBird(now) ? products.early : products.regular) || null
+function checkoutProduct(env: PaymentsEnv, plan: SalePlanId) {
+  return planProducts(env)[plan].regular || null
+}
+
+function upgradeOffer(env: PaymentsEnv, access: ProAccess | null) {
+  if (access?.via !== "owner" || access.plan !== "solo") return null
+  const early = access.purchase.productId === env.DODO_SOLO_EARLY_PRODUCT_ID
+  const code = early
+    ? env.DODO_UPGRADE_DISCOUNT_CODE
+    : env.DODO_UPGRADE_REGULAR_DISCOUNT_CODE
+  if (!code) return null
+  return { code, credit: early ? earlySoloPrice : proPlans.solo.price }
 }
 
 function paymentProduct(env: PaymentsEnv, payment: Payment) {
@@ -469,6 +480,7 @@ export {
   maskEmail,
   recordPayment,
   revokePurchase,
+  upgradeOffer,
   type ClaimResult,
   type PaymentsEnv,
   type ProAccess,

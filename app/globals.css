@@ -1805,9 +1805,7 @@
   }
 }
 
-.pricing-ruler-pin,
-.pricing-ruler-ghost,
-.pricing-ruler-saving {
+.pricing-ruler-pin {
   transition: opacity 200ms var(--ease-out-cubic);
   &[data-dim] {
     opacity: 0.3;
@@ -1865,40 +1863,6 @@
   }
 }
 
-.pricing-ruler-saving {
-  position: absolute;
-  top: var(--track-y);
-  left: 0;
-  width: calc((var(--to) - var(--from)) / 300 * 100cqw);
-  height: 0.5rem;
-  translate: calc(var(--from) / 300 * 100cqw) -50%;
-  border-radius: 999px;
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in oklab, var(--brand) 60%, transparent) 0 2px,
-    transparent 2px 5px
-  );
-  clip-path: inset(0 0 0 100% round 999px);
-  transition:
-    clip-path 1100ms var(--ease-slide) 200ms,
-    opacity 200ms var(--ease-out-cubic);
-  [data-run] & {
-    clip-path: inset(0 0 0 0 round 999px);
-  }
-}
-
-.pricing-ruler-ghost {
-  position: absolute;
-  z-index: 1;
-  top: var(--track-y);
-  left: 0;
-  width: 0.625rem;
-  height: 0.625rem;
-  translate: calc(var(--p) / 300 * 100cqw - 50%) -50%;
-  border-radius: 999px;
-  border: 1.5px solid color-mix(in oklab, var(--brand) 75%, transparent);
-  background-color: var(--color-background);
-}
 
 .pricing-ruler-links {
   width: 100%;
@@ -1961,38 +1925,9 @@
   }
 }
 
-.pricing-ruler-key-dot,
-.pricing-ruler-key-ring,
-.pricing-ruler-key-stripe {
-  display: inline-block;
-  border-radius: 999px;
-}
-
-.pricing-ruler-key-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: var(--brand);
-}
-
-.pricing-ruler-key-ring {
-  width: 0.5rem;
-  height: 0.5rem;
-  border: 1.5px solid color-mix(in oklab, var(--brand) 75%, transparent);
-}
-
-.pricing-ruler-key-stripe {
-  width: 1.25rem;
-  height: 0.375rem;
-  background: repeating-linear-gradient(
-    -45deg,
-    color-mix(in oklab, var(--brand) 60%, transparent) 0 2px,
-    transparent 2px 5px
-  );
-}
 
 @media (prefers-reduced-motion: reduce) {
   .pricing-ruler-pin,
-  .pricing-ruler-saving,
   .pricing-ruler-links,
   .pricing-ruler-link,
   .pricing-ruler-plan,

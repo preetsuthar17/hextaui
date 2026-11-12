@@ -6,6 +6,7 @@ import {
   adoptGuestPurchases,
   confirmPayment,
   findProAccess,
+  upgradeOffer,
   type PaymentsEnv,
 } from "@/lib/payments"
 import { isSameOrigin } from "@/lib/origin"
@@ -53,6 +54,7 @@ export async function onRequestGet({ request, env }: Context) {
       via: access?.via ?? null,
       teamOwner: access?.via === "member" ? access.ownerName : null,
       purchasedAt: access?.purchase.createdAt ?? null,
+      upgradeCredit: upgradeOffer(env, access)?.credit ?? null,
       providers: [...new Set(accounts.map((account) => account.providerId))],
       emailUpdates: !profile?.unsubscribedAt,
     },

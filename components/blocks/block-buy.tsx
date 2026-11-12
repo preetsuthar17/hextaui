@@ -6,8 +6,7 @@ import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button } from "@/components/ui/button"
 import { startCheckout } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
-import { earlyBirdLastDay, proPlans, refundDays } from "@/lib/pro/pricing"
-import { useEarlyBird, useSoloPrice } from "@/lib/pro/use-early-bird"
+import { proPlans, refundDays } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
 function fill(text: string, values: Record<string, string | number>) {
@@ -30,7 +29,7 @@ function BlockBuyButton({
   pro?: boolean
 }) {
   const c = useChrome()
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
 
   return (
     <Button
@@ -40,7 +39,11 @@ function BlockBuyButton({
         <TrackedLink
           href="/pricing"
           event="Pro link clicked"
-          eventProps={{ from, to: "/pricing", ...(name ? { block: name } : {}) }}
+          eventProps={{
+            from,
+            to: "/pricing",
+            ...(name ? { block: name } : {}),
+          }}
         />
       }
     >
@@ -62,8 +65,7 @@ function BlockBuyButton({
 
 function BlockPriceNote({ count }: { count: number }) {
   const c = useChrome()
-  const early = useEarlyBird()
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
 
   return (
     <>
@@ -73,12 +75,6 @@ function BlockPriceNote({ count }: { count: number }) {
         ),
         { price: `$${price}`, count: count - 1 }
       )}{" "}
-      {early
-        ? fill(c("Early-bird price until {date}, then {regular}."), {
-            date: earlyBirdLastDay,
-            regular: `$${proPlans.solo.price}`,
-          })
-        : null}{" "}
       {fill(c("Refundable within {days} days."), { days: refundDays })}
     </>
   )
@@ -117,8 +113,7 @@ function BlockBuyBar({
   free?: boolean
 }) {
   const c = useChrome()
-  const early = useEarlyBird()
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
 
   return (
     <UnlessPro
@@ -137,9 +132,7 @@ function BlockBuyBar({
       <div className="flex flex-col gap-3 rounded-xl border px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="min-w-0 text-sm text-pretty text-muted-foreground">
           <span className="font-medium text-foreground">
-            {free
-              ? c("Free to install")
-              : c("Part of HextaUI Pro")}
+            {free ? c("Free to install") : c("Part of HextaUI Pro")}
           </span>
           <span aria-hidden="true"> · </span>
           <span className="sr-only">, </span>
@@ -149,8 +142,6 @@ function BlockBuyBar({
           <span aria-hidden="true"> · </span>
           <span className="sr-only">, </span>
           <span className="tabular-nums">
-            {early ? <del>${proPlans.solo.price}</del> : null}
-            {early ? " " : null}
             {fill(c("{price} one-time"), { price: `$${price}` })}
           </span>
           <span aria-hidden="true"> · </span>

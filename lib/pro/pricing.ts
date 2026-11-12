@@ -2,7 +2,6 @@ const proPlans = {
   solo: {
     id: "solo",
     name: "Solo",
-    earlyPrice: 49,
     price: 79,
     seats: 1,
     summary: "One developer, unlimited projects including client work.",
@@ -10,7 +9,6 @@ const proPlans = {
   team: {
     id: "team",
     name: "Team",
-    earlyPrice: 149,
     price: 249,
     seats: 10,
     summary:
@@ -40,18 +38,9 @@ type TeamPlanId = (typeof teamPlanIds)[number]
 
 const planRank: Record<ProPlanId, number> = { solo: 0, team: 1, unlimited: 2 }
 
-const earlyBirdEnd = new Date("2026-12-01T12:00:00Z")
-const earlyBirdLastDay = "30 November 2026"
-const earlyBirdLastDayIso = "2026-11-30"
 const refundDays = 30
 
-function isEarlyBird(now = new Date()) {
-  return now < earlyBirdEnd
-}
-
-function planPrice(plan: SalePlanId, now = new Date()) {
-  return isEarlyBird(now) ? proPlans[plan].earlyPrice : proPlans[plan].price
-}
+const earlySoloPrice = 49
 
 function isProPlanId(value: unknown): value is ProPlanId {
   return typeof value === "string" && Object.hasOwn(allProPlans, value)
@@ -65,23 +54,14 @@ function isTeamPlan(plan: ProPlanId): plan is TeamPlanId {
   return plan !== "solo"
 }
 
-const proPrice = proPlans.solo.earlyPrice
-const proRegularPrice = proPlans.solo.price
-
 export {
   allProPlans,
-  earlyBirdEnd,
-  earlyBirdLastDay,
-  earlyBirdLastDayIso,
-  isEarlyBird,
+  earlySoloPrice,
   isProPlanId,
   isSalePlanId,
   isTeamPlan,
-  planPrice,
   planRank,
   proPlans,
-  proPrice,
-  proRegularPrice,
   refundDays,
   salePlanIds,
   teamPlanIds,

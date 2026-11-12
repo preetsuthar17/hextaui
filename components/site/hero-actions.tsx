@@ -5,11 +5,11 @@ import { cn } from "cn"
 
 import { TrackedLink } from "@/components/site/tracked-link"
 import { useChrome } from "@/lib/i18n/chrome"
-import { useSoloPrice } from "@/lib/pro/use-early-bird"
+import { proPlans } from "@/lib/pro/pricing"
 
 function ProPriceLink({ from, className }: { from: string; className: string }) {
   const c = useChrome()
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
 
   return (
     <TrackedLink
@@ -33,7 +33,7 @@ function HeroActions({
   payment: string
   refund: string
 }) {
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
 
   return (
     <div className="flex flex-col items-center gap-3">

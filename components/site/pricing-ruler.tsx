@@ -8,8 +8,7 @@ import { cn } from "cn"
 import { CheckoutButton } from "@/components/site/pricing-checkout"
 import { buttonVariants } from "@/components/ui/button"
 import { NumberFlow } from "@/components/ui/number-flow"
-import { earlyBirdLastDay, proPlans, type SalePlanId } from "@/lib/pro/pricing"
-import { useEarlyBird } from "@/lib/pro/use-early-bird"
+import { proPlans, type SalePlanId } from "@/lib/pro/pricing"
 
 type PricingPlanId = "free" | SalePlanId
 
@@ -24,13 +23,8 @@ type PricingPlan = {
 const rulerMax = 300
 const rulerTicks = [0, 100, 200, 300]
 
-function planPrices(id: PricingPlanId, early: boolean) {
-  if (id === "free") return { now: 0, was: null }
-  const plan = proPlans[id]
-  return {
-    now: early ? plan.earlyPrice : plan.price,
-    was: early ? plan.price : null,
-  }
+function planPrice(id: PricingPlanId) {
+  return id === "free" ? 0 : proPlans[id].price
 }
 
 function cssVars(vars: Record<string, string>) {
@@ -69,10 +63,7 @@ function FreePlanLink() {
   return (
     <Link
       href="/docs/installation"
-      className={cn(
-        buttonVariants({ size: "lg", variant: "ghost" }),
-        "w-full"
-      )}
+      className={cn(buttonVariants({ size: "lg", variant: "ghost" }), "w-full")}
     >
       Get started
     </Link>
@@ -80,13 +71,12 @@ function FreePlanLink() {
 }
 
 function PricingRuler({ plans }: { plans: PricingPlan[] }) {
-  const early = useEarlyBird()
   const [ref, seen] = useInView<HTMLDivElement>()
   const [active, setActive] = React.useState<PricingPlanId | null>(null)
   const rows = plans.map((plan, index) => ({
     plan,
     index,
-    ...planPrices(plan.id, early),
+    now: planPrice(plan.id),
   }))
   const state = (id: PricingPlanId) => ({
     "data-active": active === id || undefined,
@@ -100,22 +90,6 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
       data-run={seen || undefined}
       onPointerLeave={() => setActive(null)}
     >
-      {early ? (
-        <p className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2">
-            <span className="pricing-ruler-key-dot" aria-hidden="true" />
-            Early-bird price
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="pricing-ruler-key-ring" aria-hidden="true" />
-            Regular price
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="pricing-ruler-key-stripe" aria-hidden="true" />
-            What you save, until {earlyBirdLastDay}
-          </span>
-        </p>
-      ) : null}
       <div className="pricing-ruler-scale" aria-hidden="true">
         <div className="pricing-ruler-track" />
         {rulerTicks.map((value) => (
@@ -130,45 +104,26 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
             ${value}
           </span>
         ))}
-        {rows.map(({ plan, now, was }) =>
-          was === null ? null : (
-            <React.Fragment key={plan.id}>
-              <span
-                ref={cssVars({ "--from": String(now), "--to": String(was) })}
-                className="pricing-ruler-saving"
-                {...state(plan.id)}
+        {rows.map(({ plan, now }) => (
+          <span
+            key={plan.id}
+            ref={cssVars({ "--p": String(now) })}
+            className="pricing-ruler-pin"
+            data-plan={plan.id}
+            onPointerEnter={() => setActive(plan.id)}
+            {...state(plan.id)}
+          >
+            <span className="pricing-ruler-pin-label">
+              <span className="text-muted-foreground">{plan.name}</span>
+              <NumberFlow
+                value={now}
+                prefix="$"
+                duration={1100}
+                className="font-semibold tabular-nums"
               />
-              <span
-                ref={cssVars({ "--p": String(was) })}
-                className="pricing-ruler-ghost"
-                {...state(plan.id)}
-              />
-            </React.Fragment>
-          )
-        )}
-        {rows.map(({ plan, now, was }) => {
-          const at = !seen && was !== null ? was : now
-          return (
-            <span
-              key={plan.id}
-              ref={cssVars({ "--p": String(at) })}
-              className="pricing-ruler-pin"
-              data-plan={plan.id}
-              onPointerEnter={() => setActive(plan.id)}
-              {...state(plan.id)}
-            >
-              <span className="pricing-ruler-pin-label">
-                <span className="text-muted-foreground">{plan.name}</span>
-                <NumberFlow
-                  value={at}
-                  prefix="$"
-                  duration={1100}
-                  className="font-semibold tabular-nums"
-                />
-              </span>
             </span>
-          )
-        })}
+          </span>
+        ))}
       </div>
       <svg
         className="pricing-ruler-links hidden lg:block"
@@ -191,7 +146,7 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
         })}
       </svg>
       <ul className="mt-10 grid gap-y-12 sm:grid-cols-3 sm:gap-x-8 lg:mt-0 lg:gap-x-0">
-        {rows.map(({ plan, now, was }) => (
+        {rows.map(({ plan, now }) => (
           <li
             key={plan.id}
             className={cn(
@@ -217,28 +172,10 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
             </div>
             <div className="flex flex-col gap-1.5 lg:items-center">
               <p className="flex items-baseline gap-2 tabular-nums">
-                <span className="marketing-number font-semibold">
-                  {was !== null ? (
-                    <span className="sr-only">Early bird price </span>
-                  ) : null}
-                  ${now}
-                </span>
-                {was !== null ? (
-                  <del className="text-sm text-muted-foreground">
-                    <span className="sr-only">Regular price </span>${was}
-                  </del>
-                ) : null}
+                <span className="marketing-number font-semibold">${now}</span>
               </p>
-              <p className="text-xs font-medium">
-                {was !== null ? (
-                  <span className="text-brand-strong">
-                    Save ${was - now}, paid once
-                  </span>
-                ) : (
-                  <span className="text-muted-foreground">
-                    {plan.id === "free" ? "Free forever" : "Paid once"}
-                  </span>
-                )}
+              <p className="text-xs font-medium text-muted-foreground">
+                {plan.id === "free" ? "Free forever" : "Paid once"}
               </p>
             </div>
             <ul className="flex flex-col gap-2 border-t pt-5 text-sm">

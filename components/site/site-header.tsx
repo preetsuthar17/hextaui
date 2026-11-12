@@ -42,7 +42,7 @@ import { comparisons } from "@/lib/compare"
 import { formatStars } from "@/lib/github"
 import { useChrome } from "@/lib/i18n/chrome"
 import { useSitePathname } from "@/lib/i18n/client"
-import { useSoloPrice } from "@/lib/pro/use-early-bird"
+import { proPlans } from "@/lib/pro/pricing"
 import { siteName, siteRepository } from "@/lib/site"
 
 const resourcePaths = [
@@ -466,7 +466,7 @@ function SiteHeader({
   const home = active === "home"
   const headerRef = React.useRef<HTMLElement>(null)
   const stars = useGithubStars(initialStars)
-  const soloPrice = useSoloPrice()
+  const soloPrice = proPlans.solo.price
   const siteNav = useSiteNav()
 
   React.useEffect(() => {

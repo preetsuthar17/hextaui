@@ -44,7 +44,7 @@ import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "Pricing",
-  description: `HextaUI components are free under MIT. Pro blocks for AI products are one payment: Solo from $${proPlans.solo.earlyPrice}, or a team of ${proPlans.team.seats} from $${proPlans.team.earlyPrice}.`,
+  description: `HextaUI components are free under MIT. Pro blocks for AI products are one payment: Solo for $${proPlans.solo.price}, or a team of ${proPlans.team.seats} for $${proPlans.team.price}.`,
   path: "/pricing",
   markdown: "/pricing.md",
 })

@@ -23,7 +23,7 @@ import { BlockBuyButton, BlockPriceNote } from "@/components/blocks/block-buy"
 import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { signIn, startCheckout, useSession } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
-import { useSoloPrice } from "@/lib/pro/use-early-bird"
+import { proPlans } from "@/lib/pro/pricing"
 import { track } from "@/lib/track"
 
 type ProFile = { path: string; code: string; html: string }
@@ -78,7 +78,7 @@ function LockedCode({
   reason: "signed-out" | "free"
 }) {
   const c = useChrome()
-  const price = useSoloPrice()
+  const price = proPlans.solo.price
   const { guard, dialog } = useInAppBrowserGate()
 
   return (

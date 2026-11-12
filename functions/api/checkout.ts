@@ -6,6 +6,7 @@ import {
   checkoutProduct,
   findProAccess,
   getPayments,
+  upgradeOffer,
   type PaymentsEnv,
 } from "@/lib/payments"
 import { checkoutReturnUrl, createClaim } from "@/lib/purchase-claim"
@@ -43,9 +44,7 @@ export async function onRequestPost({ request, env }: Context) {
   }
 
   const upgradeCode =
-    access?.via === "owner" && access.plan === "solo" && plan === "team"
-      ? env.DODO_UPGRADE_DISCOUNT_CODE
-      : undefined
+    plan === "team" ? upgradeOffer(env, access)?.code : undefined
 
   const productId = checkoutProduct(env, plan)
   if (!productId) {

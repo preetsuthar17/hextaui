@@ -7,6 +7,7 @@ import {
   findProAccess,
   recordPayment,
   revokePurchase,
+  upgradeOffer,
   type PaymentsEnv,
 } from "@/lib/payments"
 import { createClaim, verifyClaim } from "@/lib/purchase-claim"
@@ -41,6 +42,8 @@ const env = {
   DODO_SOLO_PRODUCT_ID: "pdt_solo",
   DODO_TEAM_EARLY_PRODUCT_ID: "pdt_team_early",
   DODO_TEAM_PRODUCT_ID: "pdt_team",
+  DODO_UPGRADE_DISCOUNT_CODE: "UPGRADE_EARLY",
+  DODO_UPGRADE_REGULAR_DISCOUNT_CODE: "UPGRADE_REGULAR",
 } as unknown as PaymentsEnv
 
 let db: Db
@@ -211,6 +214,48 @@ describe("findProAccess", () => {
     await addUser("u1", "buyer@example.com")
 
     expect(await findProAccess(db, "u1")).toBeNull()
+  })
+})
+
+describe("upgradeOffer", () => {
+  it("credits what the Solo owner paid and nothing to anyone else", async () => {
+    await addUser("early", "early@example.com")
+    await addUser("regular", "regular@example.com")
+    await addUser("team", "team@example.com")
+    await recordPayment(
+      db,
+      payment({ id: "pay_e", metadata: { user_id: "early" } }),
+      env
+    )
+    await recordPayment(
+      db,
+      payment({
+        id: "pay_r",
+        product: "pdt_solo",
+        metadata: { user_id: "regular" },
+      }),
+      env
+    )
+    await recordPayment(
+      db,
+      payment({
+        id: "pay_t",
+        product: "pdt_team",
+        metadata: { user_id: "team" },
+      }),
+      env
+    )
+
+    expect(upgradeOffer(env, await findProAccess(db, "early"))).toEqual({
+      code: "UPGRADE_EARLY",
+      credit: 49,
+    })
+    expect(upgradeOffer(env, await findProAccess(db, "regular"))).toEqual({
+      code: "UPGRADE_REGULAR",
+      credit: 79,
+    })
+    expect(upgradeOffer(env, await findProAccess(db, "team"))).toBeNull()
+    expect(upgradeOffer(env, null)).toBeNull()
   })
 })
 

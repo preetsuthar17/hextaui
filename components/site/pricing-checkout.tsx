@@ -6,12 +6,6 @@ import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { startCheckout } from "@/lib/auth-client"
 import { proPlans, refundDays, type SalePlanId } from "@/lib/pro/pricing"
-import { useEarlyBird } from "@/lib/pro/use-early-bird"
-
-function usePlanPrice(plan: SalePlanId) {
-  const early = useEarlyBird()
-  return early ? proPlans[plan].earlyPrice : proPlans[plan].price
-}
 
 function CheckoutButton({
   plan,
@@ -21,7 +15,7 @@ function CheckoutButton({
   className?: string
 }) {
   const { guard, dialog } = useInAppBrowserGate()
-  const price = usePlanPrice(plan)
+  const price = proPlans[plan].price
   const primary = plan === "solo"
 
   return (

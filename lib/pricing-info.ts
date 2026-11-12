@@ -2,9 +2,6 @@ import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { frontmatter } from "@/lib/frontmatter"
 import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import {
-  earlyBirdLastDay,
-  earlyBirdLastDayIso,
-  isEarlyBird,
   proPlans,
   refundDays,
   salePlanIds,
@@ -14,7 +11,6 @@ import { absoluteUrl, siteContactEmail, siteName } from "@/lib/site"
 
 const pricingUpdated = "2026-10-29"
 const pricingCurrency = "USD"
-const earlyBird = isEarlyBird()
 
 const freeBlockTitles = proBlocks
   .filter((block) => block.free)
@@ -53,9 +49,7 @@ function planInfo(id: SalePlanId) {
     id,
     name: `${siteName} Pro ${plan.name}`,
     shortName: plan.name,
-    price: earlyBird ? plan.earlyPrice : plan.price,
-    earlyPrice: plan.earlyPrice,
-    regularPrice: plan.price,
+    price: plan.price,
     seats: plan.seats,
     summary: plan.summary,
   }
@@ -64,9 +58,7 @@ function planInfo(id: SalePlanId) {
 const proPlanInfo = salePlanIds.map(planInfo)
 
 function priceLabel(plan: ReturnType<typeof planInfo>) {
-  return earlyBird
-    ? `$${plan.earlyPrice} once until ${earlyBirdLastDay}, then $${plan.regularPrice}`
-    : `$${plan.regularPrice} once`
+  return `$${plan.price} once`
 }
 
 const pricingQuestions = [
@@ -79,10 +71,6 @@ const pricingQuestions = [
     question: "Do I need an account to buy?",
     answer:
       "No. Pay first, then sign in with GitHub or Google to unlock Pro. Sign in with the email you paid with and it unlocks on its own; with any other account, the page you return to and your purchase email have a link that moves it there.",
-  },
-  {
-    question: "When does the early-bird price end?",
-    answer: `On ${earlyBirdLastDay}. After that, Solo is $${proPlans.solo.price} and Team is $${proPlans.team.price}. There are no other sales or discount codes.`,
   },
   {
     question: "Solo or Team?",
@@ -246,7 +234,6 @@ function getProProductJsonLd() {
       name: plan.name,
       price: plan.price,
       priceCurrency: pricingCurrency,
-      ...(earlyBird ? { priceValidUntil: earlyBirdLastDayIso } : {}),
       availability: "https://schema.org/InStock",
       url: absoluteUrl("/pricing"),
       seller: { "@id": absoluteUrl("/#organization") },
@@ -262,7 +249,6 @@ function getProProductJsonLd() {
 }
 
 export {
-  earlyBird,
   freePlan,
   getFeaturedBlocks,
   getPricingBlocks,
