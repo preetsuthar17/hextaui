@@ -2132,6 +2132,155 @@
       ]
     },
     {
+      "name": "ui-sdk-color-picker",
+      "type": "registry:ui",
+      "title": "Color picker",
+      "description": "A color picker on Vercel's UI SDK with a saturation area, hue and alpha sliders, typed CSS colors, presets and an eyedropper.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-color-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker",
+      "type": "registry:ui",
+      "title": "Date picker",
+      "description": "A date picker on Vercel's UI SDK where people type a date in their language or pick it, with ranges, presets and ISO values.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json",
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper",
+      "type": "registry:ui",
+      "title": "Image cropper",
+      "description": "An image cropper on Vercel's UI SDK with a resizable selection, aspect ratios, a round avatar frame, zoom, rotate and flip.",
+      "categories": [
+        "media"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json",
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-image-cropper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "A star rating on Vercel's UI SDK with whole or half stars, a hover preview, read-only averages and form support.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input",
+      "type": "registry:ui",
+      "title": "Token input",
+      "description": "A text field on Vercel's UI SDK that mixes typed text with tokens for people, files and commands, with @ and / suggestions.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-token-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "A tree view on Vercel's UI SDK for files and nested pages, with file paths, checkboxes, links and children that load on demand.",
+      "categories": [
+        "data-display"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-tree.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "video-player",
       "type": "registry:ui",
       "title": "Video player",
@@ -13195,6 +13344,921 @@
       "files": [
         {
           "path": "components/examples/tree/small.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-alpha",
+      "type": "registry:example",
+      "title": "Color picker: Alpha",
+      "description": "The Alpha example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/alpha.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-channels",
+      "type": "registry:example",
+      "title": "Color picker: Presets and channels",
+      "description": "The Presets and channels example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/channels.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-controlled",
+      "type": "registry:example",
+      "title": "Color picker: Controlled",
+      "description": "The Controlled example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-demo",
+      "type": "registry:example",
+      "title": "Color picker demo",
+      "description": "The main Color picker demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-disabled",
+      "type": "registry:example",
+      "title": "Color picker: Disabled",
+      "description": "The Disabled example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-form",
+      "type": "registry:example",
+      "title": "Color picker: Form",
+      "description": "The Form example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-inline",
+      "type": "registry:example",
+      "title": "Color picker: Inline",
+      "description": "The Inline example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/inline.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-oklch",
+      "type": "registry:example",
+      "title": "Color picker: OKLCH",
+      "description": "The OKLCH example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/oklch.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-read-only",
+      "type": "registry:example",
+      "title": "Color picker: Read-only",
+      "description": "The Read-only example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-rtl",
+      "type": "registry:example",
+      "title": "Color picker: Right to left",
+      "description": "The Right to left example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-vertical",
+      "type": "registry:example",
+      "title": "Color picker: Vertical sliders",
+      "description": "The Vertical sliders example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-controller",
+      "type": "registry:example",
+      "title": "Date picker: Controller",
+      "description": "The Controller example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-demo",
+      "type": "registry:example",
+      "title": "Date picker demo",
+      "description": "The main Date picker demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-disabled",
+      "type": "registry:example",
+      "title": "Date picker: Disabled and read-only",
+      "description": "The Disabled and read-only example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-form",
+      "type": "registry:example",
+      "title": "Date picker: Form",
+      "description": "The Form example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-limits",
+      "type": "registry:example",
+      "title": "Date picker: Min, max and unavailable dates",
+      "description": "The Min, max and unavailable dates example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/limits.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-locale",
+      "type": "registry:example",
+      "title": "Date picker: Language",
+      "description": "The Language example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/locale.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-presets",
+      "type": "registry:example",
+      "title": "Date picker: Presets",
+      "description": "The Presets example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/presets.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-range",
+      "type": "registry:example",
+      "title": "Date picker: Range",
+      "description": "The Range example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/range.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-rtl",
+      "type": "registry:example",
+      "title": "Date picker: Right to left",
+      "description": "The Right to left example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-avatar",
+      "type": "registry:example",
+      "title": "Image cropper: Avatar",
+      "description": "The Avatar example from the Image cropper docs.",
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/avatar.json",
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/avatar.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-controlled",
+      "type": "registry:example",
+      "title": "Image cropper: Controller",
+      "description": "The Controller example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-demo",
+      "type": "registry:example",
+      "title": "Image cropper demo",
+      "description": "The main Image cropper demo from the docs.",
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/toggle-group.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-disabled",
+      "type": "registry:example",
+      "title": "Image cropper: Disabled",
+      "description": "The Disabled example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-rotate-flip",
+      "type": "registry:example",
+      "title": "Image cropper: Rotate and flip",
+      "description": "The Rotate and flip example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/rotate-flip.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-upload",
+      "type": "registry:example",
+      "title": "Image cropper: Upload",
+      "description": "The Upload example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/input.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/upload.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-controlled",
+      "type": "registry:example",
+      "title": "Rating: Controlled",
+      "description": "The Controlled example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-custom-icon",
+      "type": "registry:example",
+      "title": "Rating: Custom icon",
+      "description": "The Custom icon example from the Rating docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/custom-icon.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-demo",
+      "type": "registry:example",
+      "title": "Rating demo",
+      "description": "The main Rating demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-deselectable",
+      "type": "registry:example",
+      "title": "Rating: Deselectable",
+      "description": "The Deselectable example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/deselectable.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-disabled",
+      "type": "registry:example",
+      "title": "Rating: Disabled",
+      "description": "The Disabled example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-form",
+      "type": "registry:example",
+      "title": "Rating: Form",
+      "description": "The Form example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-half",
+      "type": "registry:example",
+      "title": "Rating: Half stars",
+      "description": "The Half stars example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/half.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-read-only",
+      "type": "registry:example",
+      "title": "Rating: Read-only",
+      "description": "The Read-only example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-rtl",
+      "type": "registry:example",
+      "title": "Rating: Right to left",
+      "description": "The Right to left example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-sizes",
+      "type": "registry:example",
+      "title": "Rating: Sizes",
+      "description": "The Sizes example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/sizes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-codec",
+      "type": "registry:example",
+      "title": "Token input: Custom codec",
+      "description": "The Custom codec example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/codec.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-controller",
+      "type": "registry:example",
+      "title": "Token input: Controller",
+      "description": "The Controller example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-deletion",
+      "type": "registry:example",
+      "title": "Token input: Deleting tokens",
+      "description": "The Deleting tokens example from the Token input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/toggle-group.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/deletion.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-demo",
+      "type": "registry:example",
+      "title": "Token input demo",
+      "description": "The main Token input demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-disabled",
+      "type": "registry:example",
+      "title": "Token input: Disabled",
+      "description": "The Disabled example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-form",
+      "type": "registry:example",
+      "title": "Token input: Form",
+      "description": "The Form example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-prompt",
+      "type": "registry:example",
+      "title": "Token input: Prompt",
+      "description": "The Prompt example from the Token input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/prompt.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-read-only",
+      "type": "registry:example",
+      "title": "Token input: Read-only",
+      "description": "The Read-only example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-rtl",
+      "type": "registry:example",
+      "title": "Token input: Right to left",
+      "description": "The Right to left example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-submit-shortcut",
+      "type": "registry:example",
+      "title": "Token input: Submit shortcut",
+      "description": "The Submit shortcut example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/kbd.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/submit-shortcut.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-checkboxes",
+      "type": "registry:example",
+      "title": "Tree: Checkboxes",
+      "description": "The Checkboxes example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/checkboxes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-controller",
+      "type": "registry:example",
+      "title": "Tree: Controller",
+      "description": "The Controller example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-data",
+      "type": "registry:example",
+      "title": "Tree: Items as data",
+      "description": "The Items as data example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/data.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-demo",
+      "type": "registry:example",
+      "title": "Tree demo",
+      "description": "The main Tree demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-disabled",
+      "type": "registry:example",
+      "title": "Tree: Disabled",
+      "description": "The Disabled example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-find-in-page",
+      "type": "registry:example",
+      "title": "Tree: Find in page",
+      "description": "The Find in page example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/find-in-page.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-lazy",
+      "type": "registry:example",
+      "title": "Tree: Loading children",
+      "description": "The Loading children example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/lazy.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-lines",
+      "type": "registry:example",
+      "title": "Tree: Lines and small size",
+      "description": "The Lines and small size example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/lines.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-links",
+      "type": "registry:example",
+      "title": "Tree: Navigation",
+      "description": "The Navigation example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/links.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-multiple",
+      "type": "registry:example",
+      "title": "Tree: Multiple selection",
+      "description": "The Multiple selection example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/multiple.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-paths",
+      "type": "registry:example",
+      "title": "Tree: File paths",
+      "description": "The File paths example from the Tree docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/paths.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-rtl",
+      "type": "registry:example",
+      "title": "Tree: Right to left",
+      "description": "The Right to left example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/rtl.tsx",
           "type": "registry:example"
         }
       ]

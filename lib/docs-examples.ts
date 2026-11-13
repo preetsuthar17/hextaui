@@ -11,6 +11,7 @@ import {
   getDocsComponent,
   getDocsExampleHref,
   getDocsSlug,
+  isUiSdkEntry,
 } from "@/lib/docs"
 import {
   docsCell,
@@ -216,6 +217,12 @@ function getExampleProps(api: DocsApiPart[], source: string): DocsApiPart[] {
   })
 }
 
+function getExampleSubject(component: { name: string; slug: string }) {
+  return isUiSdkEntry(component.slug)
+    ? `${component.name} (UI SDK)`
+    : component.name
+}
+
 function getExampleHeading(name: string, title: string) {
   return title.toLowerCase().startsWith(name.toLowerCase())
     ? title
@@ -264,7 +271,10 @@ async function getDocsExampleMarkdown(slug: string, id: string) {
   const others = siblings.filter((item) => item.id !== id)
 
   return `${[
-    docsHeading(1, getExampleHeading(component.name, example.title)),
+    docsHeading(
+      1,
+      getExampleHeading(getExampleSubject(component), example.title)
+    ),
     ...(text ? [`> ${text}`] : []),
     `Component docs: ${absoluteUrl(`/docs/${slug}`)}`,
     docsHeading(2, "Add this example"),
@@ -315,6 +325,7 @@ export {
   getDocsExamples,
   getExampleDescription,
   getExampleHeading,
+  getExampleSubject,
   getExampleProps,
   getExampleText,
   getExampleTitle,

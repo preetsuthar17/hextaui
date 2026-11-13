@@ -28,7 +28,7 @@ import {
   componentCategories,
   getComponentCategoryHref,
 } from "@/lib/component-categories"
-import { docsComponents, docsEntries, titleCase } from "@/lib/docs"
+import { docsComponents, docsEntries, docsUiSdk, titleCase } from "@/lib/docs"
 import { metadataTitle } from "@/lib/metadata"
 import { homeOgImage } from "@/lib/og-home"
 import type { OgImage } from "@/lib/opengraph-image"
@@ -162,10 +162,11 @@ function getOgPages(): OgPage[] {
     path: `/docs/${entry.slug}`,
     image: {
       variant: "slab" as const,
-      section: "Docs",
-      title: docsComponents.includes(entry)
-        ? titleCase(entry.name)
-        : entry.name,
+      section: docsUiSdk.includes(entry) ? "UI SDK · Beta" : "Docs",
+      title:
+        docsComponents.includes(entry) || docsUiSdk.includes(entry)
+          ? titleCase(entry.name)
+          : entry.name,
       description: entry.description,
     },
   }))

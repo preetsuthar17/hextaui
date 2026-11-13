@@ -26,6 +26,7 @@ import {
   getDocsExample,
   getExampleDescription,
   getExampleHeading,
+  getExampleSubject,
   getExampleProps,
   getExampleText,
   getExampleTitle,
@@ -68,7 +69,7 @@ export async function generateMetadata({
 
   return {
     ...pageMetadata({
-      title: getExampleTitle(component.name, example.title),
+      title: getExampleTitle(getExampleSubject(component), example.title),
       description: getExampleDescription(component.name, example),
       path: href,
       markdown: `${href}.md`,
@@ -87,7 +88,7 @@ export default async function Page({
   const { component, example, api, siblings } = found
   const href = getDocsExampleHref(example.file)
   const componentHref = `/docs/${component.slug}`
-  const heading = getExampleHeading(component.name, example.title)
+  const heading = getExampleHeading(getExampleSubject(component), example.title)
   const registryName = getDocsExampleName(example.file)
   const source = await readDocsSource(`components/examples/${example.file}.tsx`)
   const parts = getExampleProps(api, source)

@@ -58,6 +58,14 @@ function DocsNav({
             className="flex h-8 min-w-0 shrink-0 items-center gap-2 overflow-hidden rounded-md px-2 text-start text-xs font-medium whitespace-nowrap text-sidebar-foreground/70"
           >
             {section.title}
+            {section.badge ? (
+              <span
+                data-slot="sidebar-group-badge"
+                className="rounded-sm px-1.5 text-xs/4 font-medium text-sidebar-foreground/80 inset-ring-(length:--hairline) inset-ring-sidebar-foreground/20"
+              >
+                {section.badge}
+              </span>
+            ) : null}
           </div>
           <div
             data-slot="sidebar-group-content"

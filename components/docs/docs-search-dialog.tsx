@@ -60,6 +60,7 @@ import {
   docsComponents,
   docsGuides,
   docsHooks,
+  docsUiSdk,
   docsKeywords,
   docsUtilities,
 } from "@/lib/docs"
@@ -82,7 +83,7 @@ import { absoluteUrl, siteRepository } from "@/lib/site"
 
 type PageKind = Extract<
   DocsSearchKind,
-  "guide" | "component" | "hook" | "utility" | "block"
+  "guide" | "component" | "ui-sdk" | "hook" | "utility" | "block"
 >
 
 type PageEntry = DocsSearchDocument & {
@@ -140,6 +141,7 @@ type ResultGroup = {
 const kindIcons: Record<DocsSearchKind, Icon> = {
   guide: IconBook2,
   component: IconComponents,
+  "ui-sdk": IconComponents,
   hook: IconFishHook,
   utility: IconTool,
   block: IconPuzzle,
@@ -171,6 +173,7 @@ const groupLimits: Record<ResultGroup["key"], number> = {
 const pageGroups: { heading: string; kind: PageKind }[] = [
   { heading: "Getting started", kind: "guide" },
   { heading: "Components", kind: "component" },
+  { heading: "UI SDK (beta)", kind: "ui-sdk" },
   { heading: "Hooks", kind: "hook" },
   { heading: "Utilities", kind: "utility" },
   { heading: "Blocks", kind: "block" },
@@ -200,6 +203,9 @@ const pageEntries: PageEntry[] = [
   ),
   ...docsComponents.map((entry) =>
     toPageEntry(entry.slug, entry.name, entry.description, "component")
+  ),
+  ...docsUiSdk.map((entry) =>
+    toPageEntry(entry.slug, entry.name, entry.description, "ui-sdk")
   ),
   ...docsHooks.map((entry) =>
     toPageEntry(entry.slug, entry.name, entry.description, "hook")
