@@ -36,14 +36,15 @@ const changelog: ChangelogEntry[] = [
     changed: [
       "Accordion and Collapsible: disabled triggers are now natively disabled, so Tab skips them. Accordion triggers expose `data-index`.",
       "Upgrade from Solo to Team in one click from your account. You pay only the difference from what you paid for Solo.",
-      "Pro is now $79 for Solo and $249 for Team.",
+      "Pro is now $79 for Solo and $249 for Team. The early-bird price ended on 12 November.",
+      "Docs: the UI SDK components are listed first in the sidebar.",
     ],
   },
   {
     date: "2026-10-29",
     title: "Workflow, Model Compare and four more AI blocks",
     body: [
-      "Six new Pro blocks for AI apps, from a node canvas that runs your workflow step by step to the page where people edit what the assistant remembers. Pro is still $49 once until 30 November, then $79.",
+      "Six new Pro blocks for AI apps, from a node canvas that runs your workflow step by step to the page where people edit what the assistant remembers. Pro was $49 once at the time.",
     ],
     added: [
       "Workflow: a node canvas for chaining steps into an AI workflow and watching it run.",
