@@ -10,7 +10,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     include: ["**/*.test.{ts,tsx}"],
-    exclude: ["node_modules", ".next", "out", ".claude", "pro/video"],
+    exclude: ["node_modules", ".next", "out", ".claude", "pro/video", "pro/films"],
     restoreMocks: true,
   },
 })

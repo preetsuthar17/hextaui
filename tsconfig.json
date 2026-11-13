@@ -32,5 +32,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "pro/video"]
+  "exclude": ["node_modules", "pro/video", "pro/films"]
 }

@@ -88,6 +88,7 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "pro/video/**",
+    "pro/films/**",
   ]),
 ])
 
