@@ -18,7 +18,7 @@
   "Keep closed panels findable with the browser’s page search.": "Kapalı panelleri tarayıcının sayfa içi aramasıyla bulunabilir tutun.",
   "Leading icons": "Öncü simgeler",
   "Long titles wrap while the icon stays on the first line. Closed panels stay searchable, so Cmd/Ctrl+F for “retention” opens this one.": "Uzun başlıklar alt satıra sarar, simge ise ilk satırda kalır. Kapalı paneller aranabilir kalır; bu yüzden Cmd/Ctrl+F ile “retention” aramak bunu açar.",
-  "Moves focus into the open panel, then on to the next trigger.": "Odağı açık panelin içine, sonra bir sonraki trigger'a taşır.",
+  "Moves focus into the open panel, then on to the next trigger. Disabled triggers are skipped.": "Odağı açık panelin içine, ardından sonraki tetikleyiciye taşır. Devre dışı tetikleyiciler atlanır.",
   "Moves focus to the first trigger.": "Odağı ilk trigger'a taşır.",
   "Moves focus to the last trigger.": "Odağı son trigger'a taşır.",
   "Moves focus to the next trigger.": "Odağı sonraki trigger'a taşır.",

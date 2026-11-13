@@ -205,7 +205,7 @@ export default function Page() {
             {
               keys: ["Tab"],
               description:
-                "Moves focus into the open panel, then on to the next trigger.",
+                "Moves focus into the open panel, then on to the next trigger. Disabled triggers are skipped.",
             },
           ]}
         />
@@ -333,6 +333,10 @@ export default function Page() {
               {
                 name: "data-disabled",
                 description: "Present when the item is disabled.",
+              },
+              {
+                name: "data-index",
+                description: "The item’s position, starting at 0.",
               },
             ]}
           />
