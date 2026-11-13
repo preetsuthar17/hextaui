@@ -1,6 +1,7 @@
 import * as React from "react"
 import type { BundledLanguage, SpecialLanguage } from "shiki"
 
+import { BlogDiagram, BlogImage } from "@/components/blog/blog-figure"
 import { DocsCodeBlock } from "@/components/docs/docs-code-block"
 import {
   DocsCode,
@@ -10,7 +11,11 @@ import {
 } from "@/components/docs/docs-content"
 import { LegalLink } from "@/components/legal/legal-page"
 import { CompareTable } from "@/components/site/compare"
-import type { BlogBlock, InlineNode } from "@/lib/blog-markdown"
+import {
+  parseInline,
+  type BlogBlock,
+  type InlineNode,
+} from "@/lib/blog-markdown"
 import { getDocsSlug } from "@/lib/docs"
 import { t, translateItems } from "@/lib/i18n/rich"
 import { siteUrl } from "@/lib/site"
@@ -79,6 +84,19 @@ function Block({ block, caption }: { block: BlogBlock; caption: string }) {
           className="mt-4"
         />
       )
+    case "image":
+      return (
+        <BlogImage
+          src={block.src}
+          darkSrc={block.darkSrc}
+          alt={block.alt}
+          caption={block.caption}
+          width={block.width}
+          height={block.height}
+        />
+      )
+    case "diagram":
+      return <BlogDiagram name={block.name} />
     case "table":
       return (
         <CompareTable
@@ -87,7 +105,7 @@ function Block({ block, caption }: { block: BlogBlock; caption: string }) {
           columns={block.head.slice(1)}
           rows={block.rows.map(([label = "", ...values]) => ({
             label,
-            values,
+            values: values.map((value) => renderInline(parseInline(value))),
           }))}
         />
       )

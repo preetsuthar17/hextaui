@@ -10,6 +10,20 @@ type BlogBlock =
   | { type: "list"; ordered: boolean; items: InlineNode[][] }
   | { type: "code"; lang: string; code: string }
   | { type: "table"; head: string[]; rows: string[][] }
+  | {
+      type: "image"
+      src: string
+      alt: string
+      caption: string
+      width?: number
+      height?: number
+      darkSrc?: string
+    }
+  | { type: "diagram"; name: string }
+
+const imagePattern = /^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)$/
+const diagramPattern = /^!diagram\[([a-z0-9-]+)\]$/
+const blockStart = /^(```|#{2,3} |- |\d+\. |\||!\[|!diagram\[)/
 
 const inlinePattern = /(`[^`]+`)|\*\*(.+?)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g
 
@@ -72,6 +86,25 @@ function parseBlogMarkdown(markdown: string): BlogBlock[] {
       continue
     }
 
+    const image = imagePattern.exec(line.trim())
+    if (image) {
+      blocks.push({
+        type: "image",
+        alt: image[1],
+        src: image[2],
+        caption: image[3] ?? "",
+      })
+      index += 1
+      continue
+    }
+
+    const diagram = diagramPattern.exec(line.trim())
+    if (diagram) {
+      blocks.push({ type: "diagram", name: diagram[1] })
+      index += 1
+      continue
+    }
+
     const heading = /^(#{2,3}) (.+)$/.exec(line)
     if (heading) {
       blocks.push({
@@ -112,7 +145,7 @@ function parseBlogMarkdown(markdown: string): BlogBlock[] {
     while (
       index < lines.length &&
       lines[index].trim() &&
-      !/^(```|#{2,3} |- |\d+\. |\|)/.test(lines[index])
+      !blockStart.test(lines[index])
     ) {
       paragraph.push(lines[index].trim())
       index += 1
@@ -151,6 +184,8 @@ function blogPlainText(blocks: BlogBlock[]) {
             block.head.join(" "),
             ...block.rows.map((row) => row.join(" ")),
           ]
+        case "image":
+          return [block.caption]
         default:
           return []
       }

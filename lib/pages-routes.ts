@@ -6,7 +6,13 @@ const pagesConfigFiles = new Set([
   "_routes.json",
   "_worker.js",
 ])
-const assetDirectories = new Set(["_next", "_not-found", "og", "preview"])
+const assetDirectories = new Set([
+  "_next",
+  "_not-found",
+  "media",
+  "og",
+  "preview",
+])
 const assetFiles = new Set(["opengraph-image"])
 const assetExtension = /\.(png|jpe?g|gif|webp|avif|svg|ico|webmanifest)$/
 const maxRules = 100
