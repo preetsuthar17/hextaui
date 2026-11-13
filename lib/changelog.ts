@@ -15,6 +15,24 @@ const changelogGroups = [
 
 const changelog: ChangelogEntry[] = [
   {
+    date: "2026-11-13",
+    title: "Three guides to Vercel's UI SDK and Base UI 1.9",
+    body: [
+      "Vercel's UI SDK came out this week, so the blog has three hands-on guides to it, every example run against the real beta. The components now document Base UI 1.9, and Solo owners can move to Team in one click.",
+    ],
+    added: [
+      "Blog: Styling Vercel's UI SDK with Tailwind, covering data-slot, state attributes and enter and exit animations.",
+      "Blog: UI SDK vs Base UI vs Radix, which headless library to pick for shadcn-style components.",
+      "Blog: Make your React app operable by AI agents with UI SDK and WebMCP.",
+      "Blog posts can show figures with captions, diagrams and dark-mode images, in every language.",
+    ],
+    changed: [
+      "Accordion and Collapsible: disabled triggers are now natively disabled, so Tab skips them. Accordion triggers expose `data-index`.",
+      "Upgrade from Solo to Team in one click from your account. You pay only the difference from what you paid for Solo.",
+      "Pro is now $79 for Solo and $249 for Team.",
+    ],
+  },
+  {
     date: "2026-10-29",
     title: "Workflow, Model Compare and four more AI blocks",
     body: [
