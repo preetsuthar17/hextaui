@@ -18,6 +18,8 @@ import {
   parseBlogMarkdown,
   type BlogBlock,
 } from "@/lib/blog-markdown"
+import { getBlogDiagram } from "@/lib/blog-diagrams"
+import { darkVariant, imageSize } from "@/lib/blog-media"
 import { frontmatter } from "@/lib/frontmatter"
 import { absoluteUrl, siteName } from "@/lib/site"
 
@@ -35,12 +37,42 @@ function blogContentFile(slug: string) {
   return `content/blog/${slug}.md`
 }
 
+function withImageFacts(block: BlogBlock): BlogBlock {
+  if (block.type !== "image") return block
+  return { ...block, ...imageSize(block.src), darkSrc: darkVariant(block.src) }
+}
+
+function markdownFigure(block: BlogBlock) {
+  if (block.type === "image") {
+    const title = block.caption ? ` "${block.caption}"` : ""
+    return `![${block.alt}](${absoluteUrl(block.src)}${title})`
+  }
+  if (block.type === "diagram") {
+    const { caption, description } = getBlogDiagram(block.name)
+    return `**Diagram: ${caption}.** ${description}`
+  }
+  return undefined
+}
+
+function markdownTwinBody(markdown: string) {
+  let fenced = false
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (line.startsWith("```")) fenced = !fenced
+      if (fenced || !line.startsWith("!")) return line
+      const [block] = parseBlogMarkdown(line)
+      return (block && markdownFigure(block)) ?? line
+    })
+    .join("\n")
+}
+
 async function getBlogArticle(slug: string): Promise<BlogArticle> {
   const post = getBlogPost(slug)
   const markdown = (
     await readFile(path.join(contentDir, `${slug}.md`), "utf8")
   ).trim()
-  const blocks = parseBlogMarkdown(markdown)
+  const blocks = parseBlogMarkdown(markdown).map(withImageFacts)
   const words = countWords(blogPlainText(blocks))
   return { post, blocks, words, minutes: getReadingMinutes(words), markdown }
 }
@@ -63,7 +95,7 @@ async function getBlogPostMarkdown(slug: string) {
     `# ${post.title}`,
     `> ${post.description}`,
     `By ${blogAuthor.name} · ${post.published} · ${minutes} min read`,
-    markdown,
+    markdownTwinBody(markdown),
   ].join("\n\n")}\n`
 }
 

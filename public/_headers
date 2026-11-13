@@ -16,6 +16,9 @@
   Cache-Control: public, max-age=86400
   X-Robots-Tag: noindex
 
+/media/*
+  Cache-Control: public, max-age=86400
+
 /r/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300, must-revalidate
