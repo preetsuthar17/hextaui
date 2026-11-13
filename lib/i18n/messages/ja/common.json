@@ -309,6 +309,7 @@
   "Quiet notes between content, like date dividers and system events, with sticky dates and times that read as Today or Yesterday.": "日付の区切りやシステムイベントのように、コンテンツの間に置く控えめなメモです。日付と時刻はスティッキーで、「今日」や「昨日」と表示されます。",
   "Radio group": "Radio group",
   "Range": "範囲",
+  "Rating": "Rating",
   "Recharts charts with themed colors, a tooltip and legend that read labels from one config, and keyboard navigation with a visible focus ring.": "テーマ対応の色を持つRechartsのチャートです。1つの設定からラベルを読み取るツールチップと凡例、見えるフォーカスリングつきのキーボード操作に対応します。",
   "Refund": "返金",
   "Related": "関連",

@@ -567,6 +567,13 @@ const docsUiSdk: DocsComponent[] = [
       "A text field on Vercel's UI SDK that mixes typed text with tokens for people, files and commands, with @ and / suggestions.",
     category: "forms",
   },
+  {
+    name: "Rating",
+    slug: "ui-sdk-rating",
+    description:
+      "A star rating on Vercel's UI SDK with whole or half stars, a hover preview, read-only averages and form support.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.1"
@@ -718,6 +725,7 @@ const docsKeywords: Record<string, string[]> = {
     "slash command",
     "ui sdk",
   ],
+  "ui-sdk-rating": ["stars", "review", "score", "feedback", "ui sdk"],
   "video-player": ["video", "media", "player", "controls"],
   "use-autosize": ["textarea", "auto resize", "grow"],
   "use-button-feedback": ["async", "loading", "success", "error"],
@@ -778,6 +786,7 @@ const docsTitles: Record<string, string> = {
   tree: "Tree View component for React & shadcn/ui",
   "ui-sdk-color-picker": "Color Picker on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-token-input": "Token Input on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-rating": "Star Rating on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",

@@ -2156,6 +2156,31 @@
       ]
     },
     {
+      "name": "ui-sdk-rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "A star rating on Vercel's UI SDK with whole or half stars, a hover preview, read-only averages and form support.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-token-input",
       "type": "registry:ui",
       "title": "Token input",
@@ -13410,6 +13435,161 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-controlled",
+      "type": "registry:example",
+      "title": "Rating: Controlled",
+      "description": "The Controlled example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-custom-icon",
+      "type": "registry:example",
+      "title": "Rating: Custom icon",
+      "description": "The Custom icon example from the Rating docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/custom-icon.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-demo",
+      "type": "registry:example",
+      "title": "Rating demo",
+      "description": "The main Rating demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-deselectable",
+      "type": "registry:example",
+      "title": "Rating: Deselectable",
+      "description": "The Deselectable example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/deselectable.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-disabled",
+      "type": "registry:example",
+      "title": "Rating: Disabled",
+      "description": "The Disabled example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-form",
+      "type": "registry:example",
+      "title": "Rating: Form",
+      "description": "The Form example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-half",
+      "type": "registry:example",
+      "title": "Rating: Half stars",
+      "description": "The Half stars example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/half.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-read-only",
+      "type": "registry:example",
+      "title": "Rating: Read-only",
+      "description": "The Read-only example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-rtl",
+      "type": "registry:example",
+      "title": "Rating: Right to left",
+      "description": "The Right to left example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-rating-sizes",
+      "type": "registry:example",
+      "title": "Rating: Sizes",
+      "description": "The Sizes example from the Rating docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-rating.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-rating/sizes.tsx",
           "type": "registry:example"
         }
       ]
