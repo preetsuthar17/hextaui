@@ -122,6 +122,14 @@ describe("Collapsible", () => {
     expect(parts(container).trigger.getAttribute("aria-expanded")).toBe("false")
   })
 
+  it("disables the native trigger button so Tab skips it", () => {
+    const { container } = render(<Basic disabled />)
+    const { trigger } = parts(container)
+
+    expect(trigger.hasAttribute("disabled")).toBe(true)
+    expect(trigger.hasAttribute("data-disabled")).toBe(true)
+  })
+
   it("keeps a function className on the trigger and adds the group", () => {
     const { container } = render(
       <Collapsible defaultOpen>

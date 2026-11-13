@@ -21,6 +21,7 @@
   "Pass `open` and `onOpenChange` to drive the panel from your own state. Toggling mid-animation reverses from where the panel is.": "Paneli kendi state'inizle yönetmek için `open` ve `onOpenChange` geçin. Animasyon sırasında değiştirmek, panelin bulunduğu yerden geri döner.",
   "Present when closed.": "Kapalıyken bulunur.",
   "Present when open.": "Açıkken bulunur.",
+  "Present when the collapsible is disabled.": "Collapsible devre dışıyken bulunur.",
   "Present when the panel is open. Style children with group-data-panel-open/collapsible-trigger.": "Panel açıkken bulunur. Alt öğeleri group-data-panel-open/collapsible-trigger ile stilleyin.",
   "Present while the panel animates in.": "Panel açılma animasyonu sırasında bulunur.",
   "Present while the panel animates out.": "Panel kapanma animasyonu sırasında bulunur.",
@@ -28,16 +29,16 @@
   "Show more": "Daha fazla göster",
   "Target the panel in CSS.": "CSS'te paneli hedefleyin.",
   "The default chevron flips when the panel opens.": "Panel açıldığında varsayılan ok ters döner.",
+  "The layout parent’s gap after the panel, collapsed while closed. Wrappers with display: contents are skipped.": "Panelden sonraki düzen üst öğesinin boşluğu, kapalıyken daraltılır. display: contents olan sarmalayıcılar atlanır.",
+  "The layout parent’s gap before the panel, collapsed while closed. Wrappers with display: contents are skipped.": "Panelden önceki düzen üst öğesinin boşluğu, kapalıyken daraltılır. display: contents olan sarmalayıcılar atlanır.",
   "The panel sits above its trigger. When it closes, the gap in the parent’s flex layout collapses in the same animation, so the button below never jumps.": "Panel trigger'ının üstünde durur. Kapandığında üst öğenin flex düzenindeki boşluk aynı animasyonda daralır; böylece alttaki düğme asla zıplamaz.",
   "The panel’s measured height.": "Panelin ölçülen yüksekliği.",
   "The panel’s measured width.": "Panelin ölçülen genişliği.",
-  "The parent’s gap after the panel, collapsed while closed.": "Üst öğenin panelden sonraki boşluğu; kapalıyken daralır.",
-  "The parent’s gap before the panel, collapsed while closed.": "Üst öğenin panelden önceki boşluğu; kapalıyken daralır.",
   "The trigger gets `aria-expanded` and `aria-controls` automatically.": "Trigger otomatik olarak `aria-expanded` ve `aria-controls` alır.",
   "Unbroken strings wrap inside the panel instead of widening the page.": "Kırılmayan dizeler sayfayı genişletmek yerine panelin içinde sarar.",
   "Unmounted when closed": "Kapalıyken kaldırılır (unmount)",
   "Usually a Button.": "Genellikle bir Button.",
   "With reduced motion the panel opens and closes without animating its height.": "Azaltılmış harekette panel, yüksekliğini animasyonlamadan açılır ve kapanır.",
   "`defaultOpen` starts the panel open without taking over its state.": "`defaultOpen` paneli state'ini devralmadan açık başlatır.",
-  "`disabled` on the root keeps the panel in its current state and makes the trigger ignore clicks and keys.": "Kökteki `disabled` paneli mevcut durumunda tutar ve trigger'ın tıklamaları ve tuşları yok saymasını sağlar."
+  "`disabled` on the root keeps the panel in its current state and disables the trigger, so Tab skips it.": "Kökteki `disabled`, paneli mevcut durumunda tutar ve tetikleyiciyi devre dışı bırakır, böylece Tab onu atlar."
 }

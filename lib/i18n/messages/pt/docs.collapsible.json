@@ -21,6 +21,7 @@
   "Pass `open` and `onOpenChange` to drive the panel from your own state. Toggling mid-animation reverses from where the panel is.": "Passe `open` e `onOpenChange` para controlar o painel com seu próprio estado. Alternar no meio da animação reverte a partir de onde o painel está.",
   "Present when closed.": "Presente quando fechado.",
   "Present when open.": "Presente quando aberto.",
+  "Present when the collapsible is disabled.": "Presente quando o collapsible está desativado.",
   "Present when the panel is open. Style children with group-data-panel-open/collapsible-trigger.": "Presente quando o painel está aberto. Estilize os filhos com group-data-panel-open/collapsible-trigger.",
   "Present while the panel animates in.": "Presente enquanto o painel anima a entrada.",
   "Present while the panel animates out.": "Presente enquanto o painel anima a saída.",
@@ -28,16 +29,16 @@
   "Show more": "Mostrar mais",
   "Target the panel in CSS.": "Seleciona o painel no CSS.",
   "The default chevron flips when the panel opens.": "O chevron padrão se inverte quando o painel abre.",
+  "The layout parent’s gap after the panel, collapsed while closed. Wrappers with display: contents are skipped.": "O espaçamento do pai de layout depois do painel, recolhido enquanto fechado. Wrappers com display: contents são ignorados.",
+  "The layout parent’s gap before the panel, collapsed while closed. Wrappers with display: contents are skipped.": "O espaçamento do pai de layout antes do painel, recolhido enquanto fechado. Wrappers com display: contents são ignorados.",
   "The panel sits above its trigger. When it closes, the gap in the parent’s flex layout collapses in the same animation, so the button below never jumps.": "O painel fica acima do seu gatilho. Quando fecha, o espaço no layout flex do pai colapsa na mesma animação, então o botão abaixo nunca salta.",
   "The panel’s measured height.": "A altura medida do painel.",
   "The panel’s measured width.": "A largura medida do painel.",
-  "The parent’s gap after the panel, collapsed while closed.": "O espaço do pai depois do painel, colapsado enquanto fechado.",
-  "The parent’s gap before the panel, collapsed while closed.": "O espaço do pai antes do painel, colapsado enquanto fechado.",
   "The trigger gets `aria-expanded` and `aria-controls` automatically.": "O gatilho recebe `aria-expanded` e `aria-controls` automaticamente.",
   "Unbroken strings wrap inside the panel instead of widening the page.": "Strings sem quebra são quebradas dentro do painel em vez de alargar a página.",
   "Unmounted when closed": "Desmontado quando fechado",
   "Usually a Button.": "Geralmente um Button.",
   "With reduced motion the panel opens and closes without animating its height.": "Com movimento reduzido, o painel abre e fecha sem animar a altura.",
   "`defaultOpen` starts the panel open without taking over its state.": "`defaultOpen` inicia o painel aberto sem assumir o controle do seu estado.",
-  "`disabled` on the root keeps the panel in its current state and makes the trigger ignore clicks and keys.": "`disabled` na raiz mantém o painel no estado atual e faz o gatilho ignorar cliques e teclas."
+  "`disabled` on the root keeps the panel in its current state and disables the trigger, so Tab skips it.": "`disabled` na raiz mantém o painel no estado atual e desativa o gatilho, então o Tab o ignora."
 }

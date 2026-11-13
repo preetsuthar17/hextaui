@@ -112,7 +112,7 @@ export default function Page() {
           description={
             <>
               <DocsCode>disabled</DocsCode> on the root keeps the panel in its
-              current state and makes the trigger ignore clicks and keys.
+              current state and disables the trigger, so Tab skips it.
             </>
           }
         >
@@ -258,6 +258,10 @@ export default function Page() {
                 name: "data-panel-open",
                 description:
                   "Present when the panel is open. Style children with group-data-panel-open/collapsible-trigger.",
+              },
+              {
+                name: "data-disabled",
+                description: "Present when the collapsible is disabled.",
               },
             ]}
           />

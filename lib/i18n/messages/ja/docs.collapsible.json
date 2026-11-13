@@ -21,6 +21,7 @@
   "Pass `open` and `onOpenChange` to drive the panel from your own state. Toggling mid-animation reverses from where the panel is.": "パネルを自分の state で制御するには、`open` と `onOpenChange` を渡します。アニメーションの途中で切り替えると、パネルの現在位置から逆再生されます。",
   "Present when closed.": "閉じているときに付与されます。",
   "Present when open.": "開いているときに付与されます。",
+  "Present when the collapsible is disabled.": "collapsible が無効のときに付きます。",
   "Present when the panel is open. Style children with group-data-panel-open/collapsible-trigger.": "パネルが開いているときに付与されます。子要素のスタイルは group-data-panel-open/collapsible-trigger で指定します。",
   "Present while the panel animates in.": "パネルが開くアニメーションの間、付与されます。",
   "Present while the panel animates out.": "パネルが閉じるアニメーションの間、付与されます。",
@@ -28,16 +29,16 @@
   "Show more": "さらに表示",
   "Target the panel in CSS.": "CSS でパネルを指定します。",
   "The default chevron flips when the panel opens.": "パネルが開くと、デフォルトの山形アイコンが反転します。",
+  "The layout parent’s gap after the panel, collapsed while closed. Wrappers with display: contents are skipped.": "パネルの後ろにあるレイアウト上の親の余白。閉じている間は詰められます。display: contents のラッパーはスキップされます。",
+  "The layout parent’s gap before the panel, collapsed while closed. Wrappers with display: contents are skipped.": "パネルの前にあるレイアウト上の親の余白。閉じている間は詰められます。display: contents のラッパーはスキップされます。",
   "The panel sits above its trigger. When it closes, the gap in the parent’s flex layout collapses in the same animation, so the button below never jumps.": "パネルはトリガーの上に配置されます。閉じるときは、親の flex レイアウトの余白が同じアニメーションで詰まるため、下のボタンが跳ねることはありません。",
   "The panel’s measured height.": "パネルの計測された高さ。",
   "The panel’s measured width.": "パネルの計測された幅。",
-  "The parent’s gap after the panel, collapsed while closed.": "パネルの後ろにある親の余白。閉じている間は詰められます。",
-  "The parent’s gap before the panel, collapsed while closed.": "パネルの前にある親の余白。閉じている間は詰められます。",
   "The trigger gets `aria-expanded` and `aria-controls` automatically.": "トリガーには `aria-expanded` と `aria-controls` が自動で付きます。",
   "Unbroken strings wrap inside the panel instead of widening the page.": "区切りのない文字列は、ページを広げず、パネル内で折り返されます。",
   "Unmounted when closed": "閉じるとアンマウント",
   "Usually a Button.": "通常は Button です。",
   "With reduced motion the panel opens and closes without animating its height.": "モーションの低減が有効な場合、パネルは高さのアニメーションなしで開閉します。",
   "`defaultOpen` starts the panel open without taking over its state.": "`defaultOpen` は、state を引き受けずに、パネルを開いた状態で開始します。",
-  "`disabled` on the root keeps the panel in its current state and makes the trigger ignore clicks and keys.": "ルートの `disabled` は、パネルを現在の状態に保ち、トリガーがクリックとキー操作を無視するようにします。"
+  "`disabled` on the root keeps the panel in its current state and disables the trigger, so Tab skips it.": "ルートの `disabled` は、パネルを現在の状態に保ち、トリガーを無効にするので、Tab でスキップされます。"
 }

@@ -21,6 +21,7 @@
   "Pass `open` and `onOpenChange` to drive the panel from your own state. Toggling mid-animation reverses from where the panel is.",
   "Present when closed.",
   "Present when open.",
+  "Present when the collapsible is disabled.",
   "Present when the panel is open. Style children with group-data-panel-open/collapsible-trigger.",
   "Present while the panel animates in.",
   "Present while the panel animates out.",
@@ -28,16 +29,16 @@
   "Show more",
   "Target the panel in CSS.",
   "The default chevron flips when the panel opens.",
+  "The layout parent’s gap after the panel, collapsed while closed. Wrappers with display: contents are skipped.",
+  "The layout parent’s gap before the panel, collapsed while closed. Wrappers with display: contents are skipped.",
   "The panel sits above its trigger. When it closes, the gap in the parent’s flex layout collapses in the same animation, so the button below never jumps.",
   "The panel’s measured height.",
   "The panel’s measured width.",
-  "The parent’s gap after the panel, collapsed while closed.",
-  "The parent’s gap before the panel, collapsed while closed.",
   "The trigger gets `aria-expanded` and `aria-controls` automatically.",
   "Unbroken strings wrap inside the panel instead of widening the page.",
   "Unmounted when closed",
   "Usually a Button.",
   "With reduced motion the panel opens and closes without animating its height.",
   "`defaultOpen` starts the panel open without taking over its state.",
-  "`disabled` on the root keeps the panel in its current state and makes the trigger ignore clicks and keys."
+  "`disabled` on the root keeps the panel in its current state and disables the trigger, so Tab skips it."
 ]
