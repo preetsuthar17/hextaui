@@ -876,16 +876,16 @@ const docsNav: DocsNavSection[] = [
     ],
   },
   {
-    title: "Components",
-    items: docsComponents.map((component) => ({
+    title: "UI SDK",
+    badge: "Beta",
+    items: docsUiSdk.map((component) => ({
       title: component.name,
       href: `/docs/${component.slug}`,
     })),
   },
   {
-    title: "UI SDK",
-    badge: "Beta",
-    items: docsUiSdk.map((component) => ({
+    title: "Components",
+    items: docsComponents.map((component) => ({
       title: component.name,
       href: `/docs/${component.slug}`,
     })),
