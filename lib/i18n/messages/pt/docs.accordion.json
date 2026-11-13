@@ -18,7 +18,7 @@
   "Keep closed panels findable with the browser’s page search.": "Mantém os painéis fechados localizáveis pela busca da página do navegador.",
   "Leading icons": "Ícones iniciais",
   "Long titles wrap while the icon stays on the first line. Closed panels stay searchable, so Cmd/Ctrl+F for “retention” opens this one.": "Títulos longos quebram de linha enquanto o ícone permanece na primeira linha. Os painéis fechados continuam pesquisáveis, então Cmd/Ctrl+F por “retention” abre este.",
-  "Moves focus into the open panel, then on to the next trigger.": "Move o foco para dentro do painel aberto e depois para o próximo gatilho.",
+  "Moves focus into the open panel, then on to the next trigger. Disabled triggers are skipped.": "Move o foco para o painel aberto e depois para o próximo gatilho. Gatilhos desativados são ignorados.",
   "Moves focus to the first trigger.": "Move o foco para o primeiro gatilho.",
   "Moves focus to the last trigger.": "Move o foco para o último gatilho.",
   "Moves focus to the next trigger.": "Move o foco para o próximo gatilho.",
