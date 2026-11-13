@@ -26,6 +26,35 @@ const wordsPerMinute = 220
 
 const blogPosts: BlogPost[] = [
   {
+    slug: "ui-sdk-webmcp-ai-agents-react",
+    title: "Make your React app operable by AI agents with UI SDK and WebMCP",
+    seoTitle: "AI agents in your React app: UI SDK and WebMCP",
+    description:
+      "Let AI agents read and use your React UI with Vercel's UI SDK: createAgent, snapshot, act, allow, source agent, definePrimitive and WebMCP registerTools.",
+    tags: ["AI", "React", "UI SDK", "WebMCP"],
+    published: "2026-11-13",
+  },
+  {
+    slug: "ui-sdk-vs-base-ui-vs-radix",
+    title:
+      "UI SDK vs Base UI vs Radix: which headless library for shadcn-style components?",
+    seoTitle: "UI SDK vs Base UI vs Radix: which to pick",
+    description:
+      "Vercel's UI SDK, Base UI and Radix compared for shadcn-style components: model, frameworks, coverage, styling, animation, beta status, license and agents.",
+    tags: ["React", "UI SDK", "Base UI", "Radix"],
+    published: "2026-11-13",
+  },
+  {
+    slug: "style-vercel-ui-sdk-tailwind",
+    title:
+      "Styling Vercel's UI SDK with Tailwind: data-slot, state attributes and enter/exit animations",
+    seoTitle: "Style Vercel's UI SDK with Tailwind CSS",
+    description:
+      "Style Vercel's new UI SDK with Tailwind v4 and shadcn tokens: data-slot, state attributes, CSS variables and enter and exit animations on four components.",
+    tags: ["React", "UI SDK", "Tailwind CSS", "shadcn/ui"],
+    published: "2026-11-13",
+  },
+  {
     slug: "one-page-checkout-react-nextjs",
     title:
       "How to build a one-page checkout in React and Next.js that survives declines and changed prices",
