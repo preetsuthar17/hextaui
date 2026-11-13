@@ -574,6 +574,13 @@ const docsUiSdk: DocsComponent[] = [
       "A star rating on Vercel's UI SDK with whole or half stars, a hover preview, read-only averages and form support.",
     category: "forms",
   },
+  {
+    name: "Tree",
+    slug: "ui-sdk-tree",
+    description:
+      "A tree view on Vercel's UI SDK for files and nested pages, with file paths, checkboxes, links and children that load on demand.",
+    category: "data-display",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.1"
@@ -726,6 +733,14 @@ const docsKeywords: Record<string, string[]> = {
     "ui sdk",
   ],
   "ui-sdk-rating": ["stars", "review", "score", "feedback", "ui sdk"],
+  "ui-sdk-tree": [
+    "file tree",
+    "explorer",
+    "folders",
+    "hierarchy",
+    "treeview",
+    "ui sdk",
+  ],
   "video-player": ["video", "media", "player", "controls"],
   "use-autosize": ["textarea", "auto resize", "grow"],
   "use-button-feedback": ["async", "loading", "success", "error"],
@@ -787,6 +802,7 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-color-picker": "Color Picker on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-token-input": "Token Input on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-rating": "Star Rating on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-tree": "File Tree View on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",

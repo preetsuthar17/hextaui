@@ -2205,6 +2205,31 @@
       ]
     },
     {
+      "name": "ui-sdk-tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "A tree view on Vercel's UI SDK for files and nested pages, with file paths, checkboxes, links and children that load on demand.",
+      "categories": [
+        "data-display"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-tree.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "video-player",
       "type": "registry:ui",
       "title": "Video player",
@@ -13754,6 +13779,193 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-token-input/submit-shortcut.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-checkboxes",
+      "type": "registry:example",
+      "title": "Tree: Checkboxes",
+      "description": "The Checkboxes example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/checkboxes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-controller",
+      "type": "registry:example",
+      "title": "Tree: Controller",
+      "description": "The Controller example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-data",
+      "type": "registry:example",
+      "title": "Tree: Items as data",
+      "description": "The Items as data example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/data.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-demo",
+      "type": "registry:example",
+      "title": "Tree demo",
+      "description": "The main Tree demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-disabled",
+      "type": "registry:example",
+      "title": "Tree: Disabled",
+      "description": "The Disabled example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-find-in-page",
+      "type": "registry:example",
+      "title": "Tree: Find in page",
+      "description": "The Find in page example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/find-in-page.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-lazy",
+      "type": "registry:example",
+      "title": "Tree: Loading children",
+      "description": "The Loading children example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/lazy.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-lines",
+      "type": "registry:example",
+      "title": "Tree: Lines and small size",
+      "description": "The Lines and small size example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/lines.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-links",
+      "type": "registry:example",
+      "title": "Tree: Navigation",
+      "description": "The Navigation example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/links.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-multiple",
+      "type": "registry:example",
+      "title": "Tree: Multiple selection",
+      "description": "The Multiple selection example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/multiple.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-paths",
+      "type": "registry:example",
+      "title": "Tree: File paths",
+      "description": "The File paths example from the Tree docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/paths.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-tree-rtl",
+      "type": "registry:example",
+      "title": "Tree: Right to left",
+      "description": "The Right to left example from the Tree docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-tree.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-tree/rtl.tsx",
           "type": "registry:example"
         }
       ]

@@ -5,6 +5,7 @@ import { docsEntries, getDocsComponent, getDocsTitle } from "@/lib/docs"
 import {
   getAllDocsExamples,
   getExampleDescription,
+  getExampleSubject,
   getExampleTitle,
   jsxAttributes,
 } from "@/lib/docs-examples"
@@ -41,7 +42,10 @@ describe("example pages", async () => {
 
   it("gives every example a short title that no other page uses", () => {
     const titles = examples.map((example) =>
-      getExampleTitle(getDocsComponent(example.slug).name, example.title)
+      getExampleTitle(
+        getExampleSubject(getDocsComponent(example.slug)),
+        example.title
+      )
     )
     for (const title of titles)
       expect(title.length, title).toBeLessThanOrEqual(60)
