@@ -18,6 +18,7 @@ const entriesAdded: Record<string, string> = {
   "ui-sdk-rating": "2026-11-13",
   "ui-sdk-tree": "2026-11-13",
   "ui-sdk-image-cropper": "2026-11-13",
+  "ui-sdk-date-picker": "2026-11-13",
 }
 
 function newUntil(added: string | undefined, now = Date.now()) {

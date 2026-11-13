@@ -2156,6 +2156,31 @@
       ]
     },
     {
+      "name": "ui-sdk-date-picker",
+      "type": "registry:ui",
+      "title": "Date picker",
+      "description": "A date picker on Vercel's UI SDK where people type a date in their language or pick it, with ranges, presets and ISO values.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json",
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-image-cropper",
       "type": "registry:ui",
       "title": "Image cropper",
@@ -13486,6 +13511,143 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-controller",
+      "type": "registry:example",
+      "title": "Date picker: Controller",
+      "description": "The Controller example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-demo",
+      "type": "registry:example",
+      "title": "Date picker demo",
+      "description": "The main Date picker demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-disabled",
+      "type": "registry:example",
+      "title": "Date picker: Disabled and read-only",
+      "description": "The Disabled and read-only example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-form",
+      "type": "registry:example",
+      "title": "Date picker: Form",
+      "description": "The Form example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-limits",
+      "type": "registry:example",
+      "title": "Date picker: Min, max and unavailable dates",
+      "description": "The Min, max and unavailable dates example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/limits.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-locale",
+      "type": "registry:example",
+      "title": "Date picker: Language",
+      "description": "The Language example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/locale.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-presets",
+      "type": "registry:example",
+      "title": "Date picker: Presets",
+      "description": "The Presets example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/presets.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-range",
+      "type": "registry:example",
+      "title": "Date picker: Range",
+      "description": "The Range example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/range.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-picker-rtl",
+      "type": "registry:example",
+      "title": "Date picker: Right to left",
+      "description": "The Right to left example from the Date picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-date-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-picker/rtl.tsx",
           "type": "registry:example"
         }
       ]

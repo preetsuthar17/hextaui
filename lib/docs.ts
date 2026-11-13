@@ -588,6 +588,13 @@ const docsUiSdk: DocsComponent[] = [
       "An image cropper on Vercel's UI SDK with a resizable selection, aspect ratios, a round avatar frame, zoom, rotate and flip.",
     category: "media",
   },
+  {
+    name: "Date picker",
+    slug: "ui-sdk-date-picker",
+    description:
+      "A date picker on Vercel's UI SDK where people type a date in their language or pick it, with ranges, presets and ISO values.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.1"
@@ -740,6 +747,14 @@ const docsKeywords: Record<string, string[]> = {
     "ui sdk",
   ],
   "ui-sdk-rating": ["stars", "review", "score", "feedback", "ui sdk"],
+  "ui-sdk-date-picker": [
+    "calendar",
+    "date range",
+    "datepicker",
+    "date input",
+    "presets",
+    "ui sdk",
+  ],
   "ui-sdk-image-cropper": [
     "crop",
     "avatar",
@@ -820,6 +835,7 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-tree": "File Tree View on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-image-cropper":
     "Image Cropper on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-date-picker": "Date Picker on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",
