@@ -5,6 +5,7 @@ import {
   docsHooks,
   getDocsComponent,
   getDocsTitle,
+  isUiSdkEntry,
 } from "@/lib/docs"
 import { getEntryStats } from "@/lib/entry-stats"
 import { getRequestLocale } from "@/lib/i18n/request"
@@ -18,6 +19,7 @@ function count(value: number, one: string, many: string) {
 
 function getDocsKind(slug: string) {
   if (docsComponents.some((entry) => entry.slug === slug)) return "component"
+  if (isUiSdkEntry(slug)) return "component"
   if (docsHooks.some((entry) => entry.slug === slug)) return "hook"
   return "utility"
 }

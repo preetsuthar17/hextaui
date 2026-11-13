@@ -6,7 +6,13 @@ import { DocsProBlocksNote } from "@/components/docs/docs-pro-blocks-note"
 import { DocsRelated } from "@/components/docs/docs-related"
 import { JsonLd } from "@/components/site/json-ld"
 import { TrackedLink } from "@/components/site/tracked-link"
-import { docsComponents, getDocsComponent } from "@/lib/docs"
+import { Badge } from "@/components/ui/badge"
+import {
+  docsComponents,
+  getDocsComponent,
+  isUiSdkEntry,
+  uiSdkVersion,
+} from "@/lib/docs"
 import {
   getProBlocksUsing,
   getRelatedBlocks,
@@ -26,6 +32,7 @@ function DocsComponentPage({
   const component = getDocsComponent(slug)
   const path = `/docs/${component.slug}`
   const isComponent = docsComponents.some((item) => item.slug === slug)
+  const isUiSdk = isUiSdkEntry(slug)
 
   return (
     <DocsPage
@@ -34,6 +41,21 @@ function DocsComponentPage({
       description={component.description}
       markdownHref={`/docs/${component.slug}.md`}
       registryHref={`/r/${component.slug}.json`}
+      eyebrow={
+        isUiSdk ? (
+          <p
+            data-slot="docs-ui-sdk-note"
+            className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
+          >
+            <Badge variant="warning">{t("Beta")}</Badge>
+            <span>
+              {t("Built on Vercel’s UI SDK {version}. Its API may change.", {
+                version: uiSdkVersion,
+              })}
+            </span>
+          </p>
+        ) : undefined
+      }
       note={
         <>
           <DocsGlance slug={component.slug} />

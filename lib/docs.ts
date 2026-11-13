@@ -6,6 +6,7 @@ type DocsNavItem = {
 
 type DocsNavSection = {
   title: string
+  badge?: string
   items: DocsNavItem[]
 }
 
@@ -551,6 +552,18 @@ const docsHooks: DocsComponent[] = [
   },
 ]
 
+const docsUiSdk: DocsComponent[] = [
+  {
+    name: "Color picker",
+    slug: "ui-sdk-color-picker",
+    description:
+      "A color picker on Vercel's UI SDK with a saturation area, hue and alpha sliders, typed CSS colors, presets and an eyedropper.",
+    category: "forms",
+  },
+]
+
+const uiSdkVersion = "0.1.0-beta.1"
+
 const docsUtilities: DocsComponent[] = [
   {
     name: "Hairline",
@@ -682,6 +695,14 @@ const docsKeywords: Record<string, string[]> = {
   "toggle-group": ["segmented control", "radio buttons", "toolbar"],
   tooltip: ["hint", "title", "hover"],
   tree: ["file tree", "explorer", "hierarchy", "nested"],
+  "ui-sdk-color-picker": [
+    "color",
+    "colour",
+    "hex",
+    "oklch",
+    "eyedropper",
+    "ui sdk",
+  ],
   "video-player": ["video", "media", "player", "controls"],
   "use-autosize": ["textarea", "auto resize", "grow"],
   "use-button-feedback": ["async", "loading", "success", "error"],
@@ -740,6 +761,7 @@ const docsTitles: Record<string, string> = {
   questionnaire: "Multi-Step Form (Questionnaire) for React & shadcn/ui",
   toast: "Toast Notifications for React & shadcn/ui",
   tree: "Tree View component for React & shadcn/ui",
+  "ui-sdk-color-picker": "Color Picker on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",
@@ -758,7 +780,16 @@ const docsTitles: Record<string, string> = {
   shimmer: "Shimmer: loading text effect for Tailwind CSS",
 }
 
-const docsEntries = [...docsComponents, ...docsHooks, ...docsUtilities]
+const docsEntries = [
+  ...docsComponents,
+  ...docsUiSdk,
+  ...docsHooks,
+  ...docsUtilities,
+]
+
+function isUiSdkEntry(slug: string) {
+  return docsUiSdk.some((entry) => entry.slug === slug)
+}
 
 const docsNav: DocsNavSection[] = [
   {
@@ -773,6 +804,14 @@ const docsNav: DocsNavSection[] = [
   {
     title: "Components",
     items: docsComponents.map((component) => ({
+      title: component.name,
+      href: `/docs/${component.slug}`,
+    })),
+  },
+  {
+    title: "UI SDK",
+    badge: "Beta",
+    items: docsUiSdk.map((component) => ({
       title: component.name,
       href: `/docs/${component.slug}`,
     })),
@@ -852,6 +891,7 @@ export {
   docsGuides,
   docsHooks,
   docsKeywords,
+  docsUiSdk,
   docsUtilities,
   docsNav,
   docsTitles,
@@ -860,7 +900,9 @@ export {
   getDocsPager,
   getDocsSlug,
   getDocsTitle,
+  isUiSdkEntry,
   titleCase,
+  uiSdkVersion,
 }
 export type {
   DocsCategory,

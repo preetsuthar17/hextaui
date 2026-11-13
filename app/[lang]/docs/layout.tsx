@@ -17,6 +17,7 @@ export default async function Layout({
 
   const sections = withNewEntries(docsNav).map((section) => ({
     title: t(section.title),
+    badge: section.badge ? t(section.badge) : undefined,
     items: section.items.map((item) => ({ ...item, title: t(item.title) })),
   }))
 

@@ -2132,6 +2132,30 @@
       ]
     },
     {
+      "name": "ui-sdk-color-picker",
+      "type": "registry:ui",
+      "title": "Color picker",
+      "description": "A color picker on Vercel's UI SDK with a saturation area, hue and alpha sliders, typed CSS colors, presets and an eyedropper.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-color-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "video-player",
       "type": "registry:ui",
       "title": "Video player",
@@ -13195,6 +13219,173 @@
       "files": [
         {
           "path": "components/examples/tree/small.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-alpha",
+      "type": "registry:example",
+      "title": "Color picker: Alpha",
+      "description": "The Alpha example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/alpha.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-channels",
+      "type": "registry:example",
+      "title": "Color picker: Presets and channels",
+      "description": "The Presets and channels example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/channels.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-controlled",
+      "type": "registry:example",
+      "title": "Color picker: Controlled",
+      "description": "The Controlled example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-demo",
+      "type": "registry:example",
+      "title": "Color picker demo",
+      "description": "The main Color picker demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-disabled",
+      "type": "registry:example",
+      "title": "Color picker: Disabled",
+      "description": "The Disabled example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-form",
+      "type": "registry:example",
+      "title": "Color picker: Form",
+      "description": "The Form example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-inline",
+      "type": "registry:example",
+      "title": "Color picker: Inline",
+      "description": "The Inline example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/inline.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-oklch",
+      "type": "registry:example",
+      "title": "Color picker: OKLCH",
+      "description": "The OKLCH example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/oklch.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-read-only",
+      "type": "registry:example",
+      "title": "Color picker: Read-only",
+      "description": "The Read-only example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-rtl",
+      "type": "registry:example",
+      "title": "Color picker: Right to left",
+      "description": "The Right to left example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-color-picker-vertical",
+      "type": "registry:example",
+      "title": "Color picker: Vertical sliders",
+      "description": "The Vertical sliders example from the Color picker docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-color-picker.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
           "type": "registry:example"
         }
       ]

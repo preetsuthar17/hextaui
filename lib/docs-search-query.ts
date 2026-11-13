@@ -1,6 +1,7 @@
 type DocsSearchKind =
   | "guide"
   | "component"
+  | "ui-sdk"
   | "hook"
   | "utility"
   | "block"
@@ -218,6 +219,7 @@ type DocsSearchResult<Document extends DocsSearchDocument> = {
 
 const kindBoost: Record<DocsSearchKind, number> = {
   component: 0.45,
+  "ui-sdk": 0.45,
   hook: 0.45,
   utility: 0.45,
   block: 0.45,

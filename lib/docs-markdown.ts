@@ -50,8 +50,11 @@ import {
   docsEntries,
   docsGuides,
   docsHooks,
+  docsUiSdk,
   docsUtilities,
   getDocsComponent,
+  isUiSdkEntry,
+  uiSdkVersion,
 } from "@/lib/docs"
 import { getRegistryKind } from "@/lib/docs-registry"
 import { type RelatedLink } from "@/lib/docs-related"
@@ -283,6 +286,11 @@ async function element(
     const component = getDocsComponent(String(props.slug))
     return [
       ...pageHeader(component.name, component.description),
+      ...(isUiSdkEntry(component.slug)
+        ? [
+            `> **Beta.** Built on Vercel’s UI SDK ${uiSdkVersion} (\`@ui-sdk/react\`), a public beta. Its API may change.`,
+          ]
+        : []),
       ...(await blocks(children, options)),
     ]
   }
@@ -685,6 +693,8 @@ function getDocsLlms() {
     guideList(),
     heading(2, "Components"),
     list(docsComponents),
+    heading(2, "UI SDK (beta)"),
+    list(docsUiSdk),
     heading(2, "Hooks"),
     list(docsHooks),
     heading(2, "Utilities"),

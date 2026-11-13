@@ -10,6 +10,8 @@ const versions = {
   "@shadcn/react": "@shadcn/react@0.3.1",
   "@tabler/icons-react": "@tabler/icons-react",
   "@tanstack/react-table": "@tanstack/react-table@^9.2.6",
+  "@ui-sdk/core": "@ui-sdk/core@0.1.0-beta.1",
+  "@ui-sdk/react": "@ui-sdk/react@0.1.0-beta.1",
   "class-variance-authority": "class-variance-authority",
   cmdk: "cmdk@^1.1.1",
   cn: "cn",
@@ -271,6 +273,7 @@ function analyze(file) {
         throw new Error(`${file} imports ${pkg}; add it to versions`)
       }
       dependencies.add(versions[pkg])
+      if (pkg === "@ui-sdk/react") dependencies.add(versions["@ui-sdk/core"])
     }
   }
   return {
@@ -447,7 +450,10 @@ registry.items = [
     title: "All components",
     description:
       "Every HextaUI component, the theme, shared libs and hooks in one install.",
-    registryDependencies: [...uiNames, ...hookNames].map(url),
+    registryDependencies: [
+      ...uiNames.filter((name) => !name.startsWith("ui-sdk-")),
+      ...hookNames,
+    ].map(url),
   },
   ...exampleItems,
 ]
