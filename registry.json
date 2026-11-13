@@ -2156,6 +2156,32 @@
       ]
     },
     {
+      "name": "ui-sdk-image-cropper",
+      "type": "registry:ui",
+      "title": "Image cropper",
+      "description": "An image cropper on Vercel's UI SDK with a resizable selection, aspect ratios, a round avatar frame, zoom, rotate and flip.",
+      "categories": [
+        "media"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json",
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-image-cropper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-rating",
       "type": "registry:ui",
       "title": "Rating",
@@ -13460,6 +13486,111 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-avatar",
+      "type": "registry:example",
+      "title": "Image cropper: Avatar",
+      "description": "The Avatar example from the Image cropper docs.",
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/avatar.json",
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/avatar.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-controlled",
+      "type": "registry:example",
+      "title": "Image cropper: Controller",
+      "description": "The Controller example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-demo",
+      "type": "registry:example",
+      "title": "Image cropper demo",
+      "description": "The main Image cropper demo from the docs.",
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/toggle-group.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-disabled",
+      "type": "registry:example",
+      "title": "Image cropper: Disabled",
+      "description": "The Disabled example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-rotate-flip",
+      "type": "registry:example",
+      "title": "Image cropper: Rotate and flip",
+      "description": "The Rotate and flip example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/rotate-flip.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-image-cropper-upload",
+      "type": "registry:example",
+      "title": "Image cropper: Upload",
+      "description": "The Upload example from the Image cropper docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/input.json",
+        "https://hextaui.com/r/ui-sdk-image-cropper.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-image-cropper/upload.tsx",
           "type": "registry:example"
         }
       ]

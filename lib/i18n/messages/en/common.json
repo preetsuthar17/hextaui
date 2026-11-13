@@ -199,6 +199,7 @@
   "How to build a shadcn/ui registry that Claude Code and Cursor can actually use",
   "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users",
   "How to build an address form that works in every country, in React",
+  "Image cropper",
   "In both",
   "Inline",
   "Inline messages for status and feedback, with a neutral surface, a colored icon and a dismiss that collapses smoothly.",

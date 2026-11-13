@@ -199,6 +199,7 @@
   "How to build a shadcn/ui registry that Claude Code and Cursor can actually use": "So baust du eine shadcn/ui-Registry, die Claude Code und Cursor wirklich nutzen können",
   "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users": "So baust du mit shadcn/ui und dem Vercel AI SDK eine KI-Chat-UI, die echte Nutzer übersteht",
   "How to build an address form that works in every country, in React": "So baust du in React ein Adressformular, das in jedem Land funktioniert",
+  "Image cropper": "Image cropper",
   "In both": "In beiden",
   "Inline": "Inline",
   "Inline messages for status and feedback, with a neutral surface, a colored icon and a dismiss that collapses smoothly.": "Inline-Meldungen für Status und Feedback, mit neutraler Fläche, farbigem Icon und einem Schließen, das sanft zusammenklappt.",

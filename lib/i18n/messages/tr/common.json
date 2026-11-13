@@ -199,6 +199,7 @@
   "How to build a shadcn/ui registry that Claude Code and Cursor can actually use": "Claude Code ve Cursor’ın gerçekten kullanabileceği bir shadcn/ui registry’si nasıl kurulur",
   "How to build an AI chat UI with shadcn/ui and the Vercel AI SDK that survives real users": "shadcn/ui ve Vercel AI SDK ile gerçek kullanıcılara dayanan bir yapay zekâ sohbet arayüzü nasıl kurulur",
   "How to build an address form that works in every country, in React": "React’te her ülkede çalışan bir adres formu nasıl kurulur",
+  "Image cropper": "Image cropper",
   "In both": "İkisinde de",
   "Inline": "Satır içi",
   "Inline messages for status and feedback, with a neutral surface, a colored icon and a dismiss that collapses smoothly.": "Durum ve geri bildirim için satır içi mesajlar; nötr bir yüzey, renkli bir simge ve yumuşakça daralan bir kapatma düğmesi içerir.",
