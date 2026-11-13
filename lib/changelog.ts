@@ -16,11 +16,18 @@ const changelogGroups = [
 const changelog: ChangelogEntry[] = [
   {
     date: "2026-11-13",
-    title: "Three guides to Vercel's UI SDK and Base UI 1.9",
+    title: "Styled components for Vercel's UI SDK",
     body: [
-      "Vercel's UI SDK came out this week, so the blog has three hands-on guides to it, every example run against the real beta. The components now document Base UI 1.9, and Solo owners can move to Team in one click.",
+      "Vercel's UI SDK came out this week with unstyled components. HextaUI now has six of them styled and ready to copy in, as a beta set beside the Base UI components, plus three hands-on guides on the blog. The components also document Base UI 1.9, and Solo owners can move to Team in one click.",
     ],
     added: [
+      "UI SDK (beta): six components built on `@ui-sdk/react` 0.1.0-beta.1, pinned to that version and installed from the registry like any other component.",
+      "Color Picker: a color area, hue and alpha sliders, typed values, preset swatches and an eyedropper, inline or in a popover.",
+      "Token Input: a text field with inline tokens such as mentions and files, and a suggestion menu that opens on a trigger character.",
+      "Rating: half stars, keyboard input and a read-only average.",
+      "Tree: file paths, checkboxes and branches that load when opened.",
+      "Image Cropper: drag handles, an avatar frame, rotate and flip.",
+      "Date Picker: typed dates, ranges, presets, min and max dates, and any locale, including right-to-left.",
       "Blog: Styling Vercel's UI SDK with Tailwind, covering data-slot, state attributes and enter and exit animations.",
       "Blog: UI SDK vs Base UI vs Radix, which headless library to pick for shadcn-style components.",
       "Blog: Make your React app operable by AI agents with UI SDK and WebMCP.",
