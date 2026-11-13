@@ -2156,6 +2156,30 @@
       ]
     },
     {
+      "name": "ui-sdk-token-input",
+      "type": "registry:ui",
+      "title": "Token input",
+      "description": "A text field on Vercel's UI SDK that mixes typed text with tokens for people, files and commands, with @ and / suggestions.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.1",
+        "@ui-sdk/react@0.1.0-beta.1",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-token-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "video-player",
       "type": "registry:ui",
       "title": "Video player",
@@ -13386,6 +13410,170 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-color-picker/vertical.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-codec",
+      "type": "registry:example",
+      "title": "Token input: Custom codec",
+      "description": "The Custom codec example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/codec.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-controller",
+      "type": "registry:example",
+      "title": "Token input: Controller",
+      "description": "The Controller example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-deletion",
+      "type": "registry:example",
+      "title": "Token input: Deleting tokens",
+      "description": "The Deleting tokens example from the Token input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/toggle-group.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/deletion.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-demo",
+      "type": "registry:example",
+      "title": "Token input demo",
+      "description": "The main Token input demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-disabled",
+      "type": "registry:example",
+      "title": "Token input: Disabled",
+      "description": "The Disabled example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-form",
+      "type": "registry:example",
+      "title": "Token input: Form",
+      "description": "The Form example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-prompt",
+      "type": "registry:example",
+      "title": "Token input: Prompt",
+      "description": "The Prompt example from the Token input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/prompt.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-read-only",
+      "type": "registry:example",
+      "title": "Token input: Read-only",
+      "description": "The Read-only example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-rtl",
+      "type": "registry:example",
+      "title": "Token input: Right to left",
+      "description": "The Right to left example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-token-input-submit-shortcut",
+      "type": "registry:example",
+      "title": "Token input: Submit shortcut",
+      "description": "The Submit shortcut example from the Token input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/kbd.json",
+        "https://hextaui.com/r/ui-sdk-token-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-token-input/submit-shortcut.tsx",
           "type": "registry:example"
         }
       ]

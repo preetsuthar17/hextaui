@@ -560,6 +560,13 @@ const docsUiSdk: DocsComponent[] = [
       "A color picker on Vercel's UI SDK with a saturation area, hue and alpha sliders, typed CSS colors, presets and an eyedropper.",
     category: "forms",
   },
+  {
+    name: "Token input",
+    slug: "ui-sdk-token-input",
+    description:
+      "A text field on Vercel's UI SDK that mixes typed text with tokens for people, files and commands, with @ and / suggestions.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.1"
@@ -703,6 +710,14 @@ const docsKeywords: Record<string, string[]> = {
     "eyedropper",
     "ui sdk",
   ],
+  "ui-sdk-token-input": [
+    "mention",
+    "chips",
+    "tags",
+    "prompt",
+    "slash command",
+    "ui sdk",
+  ],
   "video-player": ["video", "media", "player", "controls"],
   "use-autosize": ["textarea", "auto resize", "grow"],
   "use-button-feedback": ["async", "loading", "success", "error"],
@@ -762,6 +777,7 @@ const docsTitles: Record<string, string> = {
   toast: "Toast Notifications for React & shadcn/ui",
   tree: "Tree View component for React & shadcn/ui",
   "ui-sdk-color-picker": "Color Picker on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-token-input": "Token Input on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",

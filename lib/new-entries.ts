@@ -14,6 +14,7 @@ const blocksAdded: Record<string, string> = {
 
 const entriesAdded: Record<string, string> = {
   "ui-sdk-color-picker": "2026-11-13",
+  "ui-sdk-token-input": "2026-11-13",
 }
 
 function newUntil(added: string | undefined, now = Date.now()) {
