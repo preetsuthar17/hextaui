@@ -15,6 +15,24 @@ const changelogGroups = [
 
 const changelog: ChangelogEntry[] = [
   {
+    date: "2026-11-14",
+    title: "Seven more UI SDK components",
+    body: [
+      "The UI SDK set grows from six components to thirteen, with the form inputs HextaUI didn't have before, a Segmented Control and a Timeline. All thirteen now run on `@ui-sdk/react` 0.1.0-beta.2.",
+    ],
+    added: [
+      "File Input: a drop zone and file list with type and size checks, reasons for rejected files, image previews and a compact variant for chat composers.",
+      "Password Input: show and hide, a Caps Lock hint and an optional strength meter.",
+      "Number Input: stepper buttons that repeat while held, currency, percent and unit formats in any locale, drag to scrub and the mouse wheel.",
+      "Time Input and Date Input: typed segments, 12- and 24-hour clocks, seconds, min and max, and any locale, including right-to-left.",
+      "Segmented Control: a sliding indicator, three sizes, icon-only items, full width, a vertical layout and disabled items.",
+      "Timeline: vertical and horizontal layouts, statuses, timestamps and icon markers, with examples for agent steps and activity feeds.",
+    ],
+    changed: [
+      "UI SDK components now use `@ui-sdk/react` 0.1.0-beta.2.",
+    ],
+  },
+  {
     date: "2026-11-13",
     title: "Styled components for Vercel's UI SDK",
     body: [
