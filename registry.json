@@ -2156,6 +2156,29 @@
       ]
     },
     {
+      "name": "ui-sdk-date-input",
+      "type": "registry:ui",
+      "title": "Date input",
+      "description": "A date field on Vercel's UI SDK typed one part at a time in the locale's order, with an optional time, min and max, unavailable days and an ISO value.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-date-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-date-picker",
       "type": "registry:ui",
       "title": "Date picker",
@@ -2302,6 +2325,29 @@
       "files": [
         {
           "path": "components/ui/ui-sdk-rating.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input",
+      "type": "registry:ui",
+      "title": "Time input",
+      "description": "A time field on Vercel's UI SDK typed one part at a time, on a 12 or 24-hour clock with optional seconds, min and max, and a 24-hour value for forms.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-time-input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -13591,6 +13637,175 @@
       ]
     },
     {
+      "name": "ui-sdk-date-input-controller",
+      "type": "registry:example",
+      "title": "Date input: Controller",
+      "description": "The Controller example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-date-time",
+      "type": "registry:example",
+      "title": "Date input: Date and time",
+      "description": "The Date and time example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/date-time.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-demo",
+      "type": "registry:example",
+      "title": "Date input demo",
+      "description": "The main Date input demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-disabled",
+      "type": "registry:example",
+      "title": "Date input: Disabled",
+      "description": "The Disabled example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-form",
+      "type": "registry:example",
+      "title": "Date input: Form",
+      "description": "The Form example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-locale",
+      "type": "registry:example",
+      "title": "Date input: Locale",
+      "description": "The Locale example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/locale.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-min-max",
+      "type": "registry:example",
+      "title": "Date input: Min and max",
+      "description": "The Min and max example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/min-max.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-read-only",
+      "type": "registry:example",
+      "title": "Date input: Read-only",
+      "description": "The Read-only example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-rtl",
+      "type": "registry:example",
+      "title": "Date input: Right to left",
+      "description": "The Right to left example from the Date input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-date-input-unavailable",
+      "type": "registry:example",
+      "title": "Date input: Unavailable dates",
+      "description": "The Unavailable dates example from the Date input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-date-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-date-input/unavailable.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-date-picker-controller",
       "type": "registry:example",
       "title": "Date picker: Controller",
@@ -14555,6 +14770,174 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-rating/sizes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-clock",
+      "type": "registry:example",
+      "title": "Time input: Clock and seconds",
+      "description": "The Clock and seconds example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/clock.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-controller",
+      "type": "registry:example",
+      "title": "Time input: Controller",
+      "description": "The Controller example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-demo",
+      "type": "registry:example",
+      "title": "Time input demo",
+      "description": "The main Time input demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-disabled",
+      "type": "registry:example",
+      "title": "Time input: Disabled",
+      "description": "The Disabled example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-form",
+      "type": "registry:example",
+      "title": "Time input: Form",
+      "description": "The Form example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-locale",
+      "type": "registry:example",
+      "title": "Time input: Locale",
+      "description": "The Locale example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/locale.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-min-max",
+      "type": "registry:example",
+      "title": "Time input: Min and max",
+      "description": "The Min and max example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/min-max.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-range",
+      "type": "registry:example",
+      "title": "Time input: Invalid",
+      "description": "The Invalid example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/range.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-read-only",
+      "type": "registry:example",
+      "title": "Time input: Read-only",
+      "description": "The Read-only example from the Time input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-time-input-rtl",
+      "type": "registry:example",
+      "title": "Time input: Right to left",
+      "description": "The Right to left example from the Time input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-time-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-time-input/rtl.tsx",
           "type": "registry:example"
         }
       ]

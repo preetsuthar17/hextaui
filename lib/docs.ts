@@ -616,6 +616,20 @@ const docsUiSdk: DocsComponent[] = [
       "A number field on Vercel's UI SDK with steppers that repeat while held, currency, percent and unit formats in any locale, and a drag-to-scrub handle.",
     category: "forms",
   },
+  {
+    name: "Time input",
+    slug: "ui-sdk-time-input",
+    description:
+      "A time field on Vercel's UI SDK typed one part at a time, on a 12 or 24-hour clock with optional seconds, min and max, and a 24-hour value for forms.",
+    category: "forms",
+  },
+  {
+    name: "Date input",
+    slug: "ui-sdk-date-input",
+    description:
+      "A date field on Vercel's UI SDK typed one part at a time in the locale's order, with an optional time, min and max, unavailable days and an ISO value.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.2"
@@ -784,6 +798,22 @@ const docsKeywords: Record<string, string[]> = {
     "resize",
     "ui sdk",
   ],
+  "ui-sdk-time-input": [
+    "time field",
+    "time picker",
+    "clock",
+    "hour",
+    "segmented",
+    "ui sdk",
+  ],
+  "ui-sdk-date-input": [
+    "date field",
+    "birthday",
+    "segmented",
+    "datetime",
+    "date of birth",
+    "ui sdk",
+  ],
   "ui-sdk-number-input": [
     "stepper",
     "spinbutton",
@@ -885,6 +915,8 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-password-input":
     "Password Input on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-number-input": "Number Input on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-time-input": "Time Input on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-date-input": "Date Input on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",
