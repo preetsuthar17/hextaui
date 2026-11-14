@@ -280,6 +280,7 @@
   "Parse, label, announce and match keyboard shortcuts, with ⌘ on Apple platforms and Ctrl everywhere else.": "Analiza, etiqueta, anuncia y reconoce atajos de teclado, con ⌘ en plataformas Apple y Ctrl en el resto.",
   "Part": "Parte",
   "Parts": "Partes",
+  "Password input": "Password input",
   "Payment": "Payment",
   "Piece by piece": "Pieza a pieza",
   "Placeholders that wait 150ms before showing, take the exact size of the content they wrap, and fade it in without moving anything.": "Marcadores de posición que esperan 150ms antes de mostrarse, toman el tamaño exacto del contenido que envuelven y lo hacen aparecer con un fundido sin mover nada.",

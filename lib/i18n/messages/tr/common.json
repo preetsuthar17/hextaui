@@ -280,6 +280,7 @@
   "Parse, label, announce and match keyboard shortcuts, with ⌘ on Apple platforms and Ctrl everywhere else.": "Klavye kısayollarını ayrıştırır, etiketler, duyurur ve eşleştirir; Apple platformlarında ⌘, diğer her yerde Ctrl kullanır.",
   "Part": "Parça",
   "Parts": "Parçalar",
+  "Password input": "Password input",
   "Payment": "Ödeme Adımı",
   "Piece by piece": "Parça parça",
   "Placeholders that wait 150ms before showing, take the exact size of the content they wrap, and fade it in without moving anything.": "Göstermeden önce 150ms bekleyen, sardıkları içeriğin tam boyutunu alan ve hiçbir şeyi kaydırmadan içeriği yumuşakça görünür kılan yer tutucular.",

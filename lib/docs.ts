@@ -602,6 +602,13 @@ const docsUiSdk: DocsComponent[] = [
       "A file input on Vercel's UI SDK with a drop zone, paste, type and size checks, rejected files with reasons, image previews and form support.",
     category: "forms",
   },
+  {
+    name: "Password input",
+    slug: "ui-sdk-password-input",
+    description:
+      "A password field on Vercel's UI SDK with a show and hide toggle, a Caps Lock hint, a strength meter and the right autocomplete for password managers.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.2"
@@ -770,6 +777,14 @@ const docsKeywords: Record<string, string[]> = {
     "resize",
     "ui sdk",
   ],
+  "ui-sdk-password-input": [
+    "password",
+    "show password",
+    "reveal",
+    "caps lock",
+    "strength meter",
+    "ui sdk",
+  ],
   "ui-sdk-file-input": [
     "upload",
     "dropzone",
@@ -852,6 +867,8 @@ const docsTitles: Record<string, string> = {
     "Image Cropper on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-date-picker": "Date Picker on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-file-input": "File Upload on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-password-input":
+    "Password Input on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",

@@ -280,6 +280,7 @@
   "Parse, label, announce and match keyboard shortcuts, with ⌘ on Apple platforms and Ctrl everywhere else.",
   "Part",
   "Parts",
+  "Password input",
   "Payment",
   "Piece by piece",
   "Placeholders that wait 150ms before showing, take the exact size of the content they wrap, and fade it in without moving anything.",

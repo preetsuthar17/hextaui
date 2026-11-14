@@ -2233,6 +2233,30 @@
       ]
     },
     {
+      "name": "ui-sdk-password-input",
+      "type": "registry:ui",
+      "title": "Password input",
+      "description": "A password field on Vercel's UI SDK with a show and hide toggle, a Caps Lock hint, a strength meter and the right autocomplete for password managers.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-password-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-rating",
       "type": "registry:ui",
       "title": "Rating",
@@ -13972,6 +13996,176 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-image-cropper/upload.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-controlled",
+      "type": "registry:example",
+      "title": "Password input: Controlled visibility",
+      "description": "The Controlled visibility example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-controller",
+      "type": "registry:example",
+      "title": "Password input: Suggest a password",
+      "description": "The Suggest a password example from the Password input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/controller.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-demo",
+      "type": "registry:example",
+      "title": "Password input demo",
+      "description": "The main Password input demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-disabled",
+      "type": "registry:example",
+      "title": "Password input: Disabled",
+      "description": "The Disabled example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-invalid",
+      "type": "registry:example",
+      "title": "Password input: Invalid",
+      "description": "The Invalid example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/invalid.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-new-password",
+      "type": "registry:example",
+      "title": "Password input: New password",
+      "description": "The New password example from the Password input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/new-password.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-read-only",
+      "type": "registry:example",
+      "title": "Password input: Read-only",
+      "description": "The Read-only example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-rtl",
+      "type": "registry:example",
+      "title": "Password input: Right to left",
+      "description": "The Right to left example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-sign-in",
+      "type": "registry:example",
+      "title": "Password input: Sign in",
+      "description": "The Sign in example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/input.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/sign-in.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-password-input-visible",
+      "type": "registry:example",
+      "title": "Password input: Shown at first",
+      "description": "The Shown at first example from the Password input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-password-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-password-input/visible.tsx",
           "type": "registry:example"
         }
       ]

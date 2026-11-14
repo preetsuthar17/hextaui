@@ -280,6 +280,7 @@
   "Parse, label, announce and match keyboard shortcuts, with ⌘ on Apple platforms and Ctrl everywhere else.": "Tastenkürzel parsen, beschriften, ansagen und abgleichen, mit ⌘ auf Apple-Plattformen und Strg überall sonst.",
   "Part": "Part",
   "Parts": "Teile",
+  "Password input": "Password input",
   "Payment": "Payment",
   "Piece by piece": "Baustein für Baustein",
   "Placeholders that wait 150ms before showing, take the exact size of the content they wrap, and fade it in without moving anything.": "Platzhalter, die 150 ms warten, bevor sie erscheinen, exakt die Größe des umschlossenen Inhalts annehmen und ihn einblenden, ohne etwas zu verschieben.",

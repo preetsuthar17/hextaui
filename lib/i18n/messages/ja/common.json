@@ -280,6 +280,7 @@
   "Parse, label, announce and match keyboard shortcuts, with ⌘ on Apple platforms and Ctrl everywhere else.": "キーボードショートカットの解析、ラベル付け、読み上げ、一致判定を行います。Appleプラットフォームでは⌘、それ以外ではCtrlを使います。",
   "Part": "パーツ",
   "Parts": "パーツ",
+  "Password input": "Password input",
   "Payment": "支払い",
   "Piece by piece": "部品ごとの比較",
   "Placeholders that wait 150ms before showing, take the exact size of the content they wrap, and fade it in without moving anything.": "150ms待ってから表示され、包んだコンテンツと同じサイズになり、何も動かさずにコンテンツをフェードインさせるプレースホルダーです。",
