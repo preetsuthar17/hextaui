@@ -595,6 +595,13 @@ const docsUiSdk: DocsComponent[] = [
       "A date picker on Vercel's UI SDK where people type a date in their language or pick it, with ranges, presets and ISO values.",
     category: "forms",
   },
+  {
+    name: "File input",
+    slug: "ui-sdk-file-input",
+    description:
+      "A file input on Vercel's UI SDK with a drop zone, paste, type and size checks, rejected files with reasons, image previews and form support.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.2"
@@ -763,6 +770,14 @@ const docsKeywords: Record<string, string[]> = {
     "resize",
     "ui sdk",
   ],
+  "ui-sdk-file-input": [
+    "upload",
+    "dropzone",
+    "drag and drop",
+    "attachments",
+    "file picker",
+    "ui sdk",
+  ],
   "ui-sdk-tree": [
     "file tree",
     "explorer",
@@ -836,6 +851,7 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-image-cropper":
     "Image Cropper on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-date-picker": "Date Picker on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-file-input": "File Upload on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",

@@ -2181,6 +2181,32 @@
       ]
     },
     {
+      "name": "ui-sdk-file-input",
+      "type": "registry:ui",
+      "title": "File input",
+      "description": "A file input on Vercel's UI SDK with a drop zone, paste, type and size checks, rejected files with reasons, image previews and form support.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json",
+        "https://hextaui.com/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-file-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-image-cropper",
       "type": "registry:ui",
       "title": "Image cropper",
@@ -13648,6 +13674,199 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-date-picker/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-attachments",
+      "type": "registry:example",
+      "title": "File input: Prompt attachments",
+      "description": "The Prompt attachments example from the File input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/attachments.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-button",
+      "type": "registry:example",
+      "title": "File input: Upload button",
+      "description": "The Upload button example from the File input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/button.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-controlled",
+      "type": "registry:example",
+      "title": "File input: Controlled",
+      "description": "The Controlled example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-demo",
+      "type": "registry:example",
+      "title": "File input demo",
+      "description": "The main File input demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-disabled",
+      "type": "registry:example",
+      "title": "File input: Disabled",
+      "description": "The Disabled example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-folders",
+      "type": "registry:example",
+      "title": "File input: Folders",
+      "description": "The Folders example from the File input docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/folders.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-form",
+      "type": "registry:example",
+      "title": "File input: Form",
+      "description": "The Form example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-images",
+      "type": "registry:example",
+      "title": "File input: Image previews",
+      "description": "The Image previews example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/images.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-invalid",
+      "type": "registry:example",
+      "title": "File input: Invalid",
+      "description": "The Invalid example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/invalid.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-limits",
+      "type": "registry:example",
+      "title": "File input: Accepted types and limits",
+      "description": "The Accepted types and limits example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/limits.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-page-drop",
+      "type": "registry:example",
+      "title": "File input: Page-wide drop",
+      "description": "The Page-wide drop example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/page-drop.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-file-input-rtl",
+      "type": "registry:example",
+      "title": "File input: Right to left",
+      "description": "The Right to left example from the File input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-file-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-file-input/rtl.tsx",
           "type": "registry:example"
         }
       ]
