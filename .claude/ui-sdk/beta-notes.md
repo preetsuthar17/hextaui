@@ -81,10 +81,10 @@ The first six components were built on 0.1.0-beta.1. HextaUI moved to 0.1.0-beta
 
 ## Number Input
 
-- **The step buttons have no name.** `NumberInputIncrement` and `NumberInputDecrement` render `tabindex="-1"` and `aria-controls`, but no `aria-label`, so a button holding only an icon has no accessible name. Repro: render `<NumberInputIncrement><Icon /></NumberInputIncrement>` and the button's computed name is empty. HextaUI's parts default to "Increase" and "Decrease", and an `aria-label` overrides them.
+- **The step buttons have no name.** Added to vercel-labs/ui#494, which already covers the missing spinbutton role. `NumberInputIncrement` and `NumberInputDecrement` render `tabindex="-1"` and `aria-controls`, but no `aria-label`, so a button holding only an icon has no accessible name. Repro: render `<NumberInputIncrement><Icon /></NumberInputIncrement>` and the button's computed name is empty. HextaUI's parts default to "Increase" and "Decrease", and an `aria-label` overrides them.
 - **The control isn't exposed as a spinbutton.** It's a plain `type="text"` input with no `role="spinbutton"`, `aria-valuenow`, `aria-valuemin` or `aria-valuemax`, so screen readers don't hear the bounds or that arrow keys step. The keyboard follows the spinbutton pattern. HextaUI leaves the roles as the SDK sets them.
 - **No invalid state outside UI SDK's Field.** Same as File Input and Password Input; HextaUI adds an `invalid` prop for `data-invalid` on the root and `aria-invalid` on the input.
-- **An unsupported `format.unit` throws and takes down the page.** That's `Intl.NumberFormat` (for example `unit: "pixel"` throws a `RangeError`), but nothing catches it, so the whole client tree unmounts. Use a sanctioned unit or no format.
+- **An unsupported `format.unit` throws and takes down the page.** Filed as vercel-labs/ui#502. That's `Intl.NumberFormat` (for example `unit: "pixel"` throws a `RangeError`), but nothing catches it, so the whole client tree unmounts. Use a sanctioned unit or no format.
 - **No gaps found in:** burst typing through CDP in plain, currency and grouped fields (no dropped characters), Enter and blur clamping and formatting, Home and End, Shift for `largeStep` and Alt for `smallStep`, press-and-hold repeat stopping at max, `data-at-bound` and `data-disabled` at bounds, the wheel only when focused, scrubbing with the drawn cursor and `data-scrubbing`, read-only ignoring steps and typing, disabled, `name` submitting the raw number through `FormData`, the controller (`increment({ large: true })`, `setValue`), locales including `ar-EG` digits, RTL, and 390px with no overflow. The scrub cursor isn't in the server HTML; it only portals in while scrubbing.
 
 ## Time Input and Date Input
@@ -102,7 +102,7 @@ Both share one segmented core (`date-input-parts.ts`), so HextaUI ships them tog
 
 Marked `@experimental` in 0.1.0-beta.2; the docs page says so.
 
-- **The hidden radio sits inside the item's `<button>`.** Each `SegmentedControlItem` renders `<button role="radio">…<input type="radio" aria-hidden="true" tabindex="-1"></button>`. A radio input is interactive content, which HTML doesn't allow inside a button, so validators flag every item. Browsers render it fine and it isn't focusable, so HextaUI leaves it.
+- **The hidden radio is a sibling of the item's `<button>`, not inside it.** An earlier note here said the radio input sat inside the button. Server rendering beta.2 shows `<button role="radio">A</button><input type="radio" aria-hidden="true" tabindex="-1">`, which is valid HTML. Not filed upstream.
 - **The indicator would slide in on load.** It has no box in the server HTML and gets its `--segmented-control-indicator-*` variables after mount, so a transition on it animates from the corner on first paint. HextaUI only turns the transition on after two frames (`data-ready` on the root), like its Tabs.
 - **The indicator is a part you place yourself.** Forgetting it, or adding two, is easy. HextaUI's root always renders exactly one.
 - **No size or icon-only state.** HextaUI adds `size` (`sm`, `default`, `lg`, set as `data-size`) and `data-icon-only` on items whose children are only icons, which turn square.

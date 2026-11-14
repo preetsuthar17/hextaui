@@ -1,0 +1,7 @@
+The `definePrimitive` sketch in `contributing/architecture.md` returns `role: "option"` from the item's `attrs`. The rest of core says the opposite: `RoleFields.role` in `primitive-types.ts` says "Never put `role` in `attrs`", the shipped `create-component.md` skill says each role goes on its slot, and `checkRole` in `dev.ts` warns when a slot declares a role and its `attrs` writes one too.
+
+The sketch now declares the role on the slot, with the `focus` and `press` the role needs, and `attrs` writes only ARIA. It uses `menuitem` instead of `option`: the sketch has no selection, and an `option` slot doesn't compile without `aria-selected` in its `attrs`. The item is shown while open, highlighted and pressed, so it's the menu pattern anyway.
+
+Checked by compiling the same definition against `tsconfig.test.json`: the `menuitem` slot compiles, and the `option` version fails with the missing `aria-selected`. `pnpm format` and `pnpm lint` pass.
+
+The core docs pages still put `role` in `attrs`: `core/compose-behaviors`, `core/behaviors/focus`, `core/behaviors/selection`, `web-components/installation` and `agents/connect-an-agent/your-components`. That still works, since only declaring both warns. Moving them is a bigger rewrite, because a declared `radiogroup` needs `keys` before the tutorial adds the keyboard. I left them alone, and I'm happy to follow up if you want them on slot roles too.
