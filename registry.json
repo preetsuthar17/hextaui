@@ -2233,6 +2233,31 @@
       ]
     },
     {
+      "name": "ui-sdk-number-input",
+      "type": "registry:ui",
+      "title": "Number input",
+      "description": "A number field on Vercel's UI SDK with steppers that repeat while held, currency, percent and unit formats in any locale, and a drag-to-scrub handle.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@tabler/icons-react",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-number-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-password-input",
       "type": "registry:ui",
       "title": "Password input",
@@ -13996,6 +14021,215 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-image-cropper/upload.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-controlled",
+      "type": "registry:example",
+      "title": "Number input: Controlled",
+      "description": "The Controlled example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-demo",
+      "type": "registry:example",
+      "title": "Number input demo",
+      "description": "The main Number input demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-disabled",
+      "type": "registry:example",
+      "title": "Number input: Disabled",
+      "description": "The Disabled example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-form",
+      "type": "registry:example",
+      "title": "Number input: Form",
+      "description": "The Form example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-format",
+      "type": "registry:example",
+      "title": "Number input: Currency, percent and units",
+      "description": "The Currency, percent and units example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/format.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-invalid",
+      "type": "registry:example",
+      "title": "Number input: Invalid",
+      "description": "The Invalid example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/invalid.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-locale",
+      "type": "registry:example",
+      "title": "Number input: Locale",
+      "description": "The Locale example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/locale.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-min-max",
+      "type": "registry:example",
+      "title": "Number input: Min and max",
+      "description": "The Min and max example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/min-max.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-read-only",
+      "type": "registry:example",
+      "title": "Number input: Read-only",
+      "description": "The Read-only example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-rtl",
+      "type": "registry:example",
+      "title": "Number input: Right to left",
+      "description": "The Right to left example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-scrub",
+      "type": "registry:example",
+      "title": "Number input: Scrub",
+      "description": "The Scrub example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/scrub.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-step",
+      "type": "registry:example",
+      "title": "Number input: Step",
+      "description": "The Step example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/step.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-number-input-wheel",
+      "type": "registry:example",
+      "title": "Number input: Mouse wheel",
+      "description": "The Mouse wheel example from the Number input docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/label.json",
+        "https://hextaui.com/r/ui-sdk-number-input.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-number-input/wheel.tsx",
           "type": "registry:example"
         }
       ]

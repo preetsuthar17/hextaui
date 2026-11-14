@@ -609,6 +609,13 @@ const docsUiSdk: DocsComponent[] = [
       "A password field on Vercel's UI SDK with a show and hide toggle, a Caps Lock hint, a strength meter and the right autocomplete for password managers.",
     category: "forms",
   },
+  {
+    name: "Number input",
+    slug: "ui-sdk-number-input",
+    description:
+      "A number field on Vercel's UI SDK with steppers that repeat while held, currency, percent and unit formats in any locale, and a drag-to-scrub handle.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.2"
@@ -777,6 +784,14 @@ const docsKeywords: Record<string, string[]> = {
     "resize",
     "ui sdk",
   ],
+  "ui-sdk-number-input": [
+    "stepper",
+    "spinbutton",
+    "quantity",
+    "currency",
+    "scrub",
+    "ui sdk",
+  ],
   "ui-sdk-password-input": [
     "password",
     "show password",
@@ -869,6 +884,7 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-file-input": "File Upload on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-password-input":
     "Password Input on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-number-input": "Number Input on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",
