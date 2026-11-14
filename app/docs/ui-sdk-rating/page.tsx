@@ -50,8 +50,8 @@ export default function Page() {
 
       <DocsInstall
         dependencies={[
-          "@ui-sdk/react@0.1.0-beta.1",
-          "@ui-sdk/core@0.1.0-beta.1",
+          "@ui-sdk/react@0.1.0-beta.2",
+          "@ui-sdk/core@0.1.0-beta.2",
           "@tabler/icons-react",
           "class-variance-authority",
           "cn",

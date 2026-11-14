@@ -1,0 +1,59 @@
+# UI SDK beta: bugs and gaps found while building HextaUI components
+
+The first six components were built on 0.1.0-beta.1. HextaUI moved to 0.1.0-beta.2 on 2026-11-14, before the second batch.
+
+## 0.1.0-beta.2 (published 2026-11-13)
+
+- **What changed.** `@ui-sdk/core`: a modal opened over another modal is no longer made inert by the one underneath (d699609), and the preferences script reads the first of two same-named cookies, like the server (c53df2f). `@ui-sdk/react`: a disabled or pending `Button` rendered as a router link no longer navigates (04754a0), and a `SelectTrigger` connected through `controller` outside its `Select` takes its `Field`'s id and label in the server HTML (3aa0973). The source diff from beta.1 touches only `core/foundation/popups/popup.ts`, `core/foundation/storage/storage.ts`, `react/button.tsx` and `react/select.tsx`.
+- **Earlier bugs it fixed: none.** None of the beta.1 bugs below sits in those four files, so every one of them still applies. The six beta.1 components and their 39 tests pass unchanged on beta.2.
+
+## Global
+
+- **`data-slot` can't be overridden.** Managed attributes win over props. A wrapper that passes `data-slot="color-picker-trigger"` to `Popover.Trigger` still renders `data-slot="popover-trigger"`. Base UI lets the caller's prop win. As a result, a styled kit can't give composed parts their own slot names, and CSS or tests have to target the primitive's slot.
+- **The cascade layer is required.** Global CSS must declare `@layer ui-sdk;` above `@import "tailwindcss"`. Without it, UI SDK's own CSS lands outside any layer and beats Tailwind utilities. This is easy to miss in a copy-in registry, so every docs page has to say it.
+- **No DirectionProvider.** Direction is read from the DOM (`dir` on an ancestor). That works, but React-only direction (a Base UI-style `DirectionProvider`) has no equivalent.
+- **Version pinning.** pnpm's `minimumReleaseAgeExclude` needed both packages, because 0.1.0-beta.1 is newer than the repo's release-age gate.
+
+## Color Picker
+
+- **RTL mirrors everything.** The area gradient flips (`linear-gradient(to left, …)`), the slider gradients flip, and ArrowRight lowers saturation in RTL. That's consistent, but unlike most design tools, which keep the color axis fixed. This is worth documenting upstream.
+- **Hex inputs in RTL.** A hex value such as `#ec4899` renders as `ec4899#` in an RTL input. The parts don't set `dir` on their inputs, so HextaUI sets `dir="auto"`.
+- **Vertical thumbs at the ends.** A thumb at 0% or 100% is centered on the track's end, so half of it overflows the track. This matches horizontal, but in a tight popover it can clip unless there is padding.
+- **No gaps found in:** keyboard (arrows, Shift+arrows, PageUp/PageDown, Home/End), touch drag (no page scroll during a drag), the eyedropper's `data-unsupported` flag, form reset, and SSR (`--color-picker-color` is in the server HTML).
+
+## Token Input and Trigger Menu
+
+- **The empty state can't show on first use.** `TriggerMenuEmpty` marks itself present (`hasEmpty`) only when it binds, and it lives inside `TriggerMenuContent`, which only mounts while there are matches. If the first query on a page matches nothing (type `@q`), the menu stays closed and "No matches" never appears. Once the menu has opened once, the empty state works. Reproduced in Chromium with the docs' own composition.
+- **`keepMounted` breaks caret anchoring.** With `keepMounted` on `TriggerMenuContent`, the popup anchors to the editor's start instead of the caret. That also rules it out as a workaround for the empty-state bug.
+- **`TokenInputTokenRemove` is a `span`** hidden from assistive technology. That's intentional (Backspace is the keyboard path), but it means there is no focusable remove control for switch or voice users.
+- **Token hosts carry an sr-only kind label.** The host's `innerText` includes the token type (for example "routes.ts\nfile"), which can surprise tests that read text.
+
+## Rating
+
+- **Read-only keeps its radios in the DOM.** A read-only rating is `role="img"` with an `aria-label` from `getValueLabel`, but the five radio inputs still render inside it. They're presentational under `img`, so screen readers skip them, but it's extra DOM for lists of read-only averages.
+- **No gaps found in:** arrow keys at whole and half steps, `deselectable`, `required` blocking a form submit with the native message, the controller, SSR (`--rating-fill` is in the server HTML), RTL fill direction, touch taps at 390px.
+
+## Tree
+
+- **`data-selected` is an empty attribute, and shadcn's `data-selected:` variant doesn't match it.** `shadcn/tailwind.css` defines `@custom-variant data-selected` as `[data-selected="true"]`. Its `data-open`, `data-checked` and `data-disabled` variants also match a bare attribute, but `data-selected` doesn't. UI SDK writes `data-selected=""`, so `data-selected:bg-muted` silently does nothing in any shadcn project. HextaUI uses `data-[selected]:`. Either side could fix this: shadcn could widen the variant, or UI SDK could document it.
+- **jsdom needs `Element.prototype.getAnimations`.** Rendering a `TreeGroup` in Vitest throws `el.getAnimations is not a function` until it's stubbed. The tests stub it, and anyone testing a styled Tree will hit this.
+- **Rendering from `items` gives unstyled parts.** `<Tree items>` without children renders the primitive's bare `TreeItems`. HextaUI's `Tree` renders its own styled rows from `items` or `paths` instead, so the shortest usage looks finished.
+- **Focus sits on the item, not the row.** The focused element is the `treeitem`, which wraps its whole subtree, so a focus ring has to target `[role=treeitem]:focus-visible > [data-slot=tree-label]`. `group-focus-visible` would light up every descendant row.
+- **No gaps found in:** arrow keys, Home/End, typeahead, `*`, multiple selection with Space, cascading checkboxes with the mixed state, `paths` with folders first, `onAction` pending state, `loadChildren` failure and retry, controller `expandAll`/`collapseAll`/`reveal`, `hiddenUntilFound`, RTL chevrons and arrow swap, touch taps at 390px.
+
+## Image Cropper
+
+- **The grid and handles come unstyled and unplaced.** `ImageCropperGrid` is an empty box, and handles get no position, so a styled kit has to draw the third lines and place all eight handles itself. HextaUI's grid renders four lines by default, and `ImageCropperHandles` renders all eight.
+- **Preflight's `img { max-width: 100% }` fights the image's inline size.** In frame mode the zoomed image is larger than the viewport, so the image needs `max-width: none` or it shrinks back. The docs don't mention this, and every Tailwind project hits it.
+- **The viewport has no size before load.** `--image-cropper-aspect-ratio` only exists once the image loads, so `aspect-ratio: var(--image-cropper-aspect-ratio)` collapses to zero height until then. HextaUI falls back to 3/2 to avoid a layout jump.
+- **English names by default.** The selection says "Crop" and the handles say "Top left corner" and so on. Each part needs an `aria-label` for other languages, and there is no single `labels` option.
+- **No gaps found in:** handle and selection drags with mouse and touch at 390px, aspect ratio changes refitting the crop, arrow and Shift+arrow keys, zoom input, rotate and flip, frame mode panning, `cropImage` with a cross-origin URL (CORS) and a round 128px avatar, a controller `setCrop`, `onCropCommit`, disabled, and object URLs from a file input.
+
+## Date Picker
+
+- **`controller.setValue()` doesn't move the calendar when `value` is controlled.** `setValue` calls `onValueChange`, then checks the store's value to decide whether to reveal the new date's month. With a controlled `value`, the store hasn't taken the new value yet, so the check fails and the calendar opens on the old month (set December 25 from November, and it opens on November). Uncontrolled with `onValueChange` works, so the docs example uses that.
+- **Escape returns focus to the trigger even when the calendar was opened from the input** with Alt+Down. Typing people land on the button instead of where they were typing.
+- **The trigger's name includes the value** ("Choose date, Friday, November 20, 2026"). That's good for screen readers, but tests that look the trigger up by its plain label break once a date is set.
+- **The popup is a `popover` element,** so jsdom reports it as hidden and Testing Library queries need `hidden: true`. In jsdom, `renderToString` also throws on the portal, because the portal target only checks that `document` exists. Real server rendering is fine.
+- **The calendar parts come unstyled, and two months don't fit a phone.** Nothing stacks `months={2}` on narrow screens. Side by side at 390px, the day cells shrink to 24px. HextaUI stacks the months below `sm`, which keeps cells at 40px on touch.
+- **No gaps found in:** typing in en-US, de and ar formats with Enter and blur, invalid text marking the root and input invalid, range picking with the hover preview, presets with `aria-pressed`, min/max and `unavailable` dates, `name` and `required` in a native form with reset, read-only opening a calendar that can't change anything, disabled, RTL arrow keys, and touch taps at 390px.

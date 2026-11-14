@@ -2141,8 +2141,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "cn"
       ],
       "registryDependencies": [
@@ -2165,8 +2165,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "cn"
       ],
       "registryDependencies": [
@@ -2190,8 +2190,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "class-variance-authority",
         "cn"
       ],
@@ -2216,8 +2216,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "class-variance-authority",
         "cn"
       ],
@@ -2241,8 +2241,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "cn"
       ],
       "registryDependencies": [
@@ -2265,8 +2265,8 @@
       ],
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1",
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
         "class-variance-authority",
         "cn"
       ],
@@ -13659,8 +13659,8 @@
       "description": "The Avatar example from the Image cropper docs.",
       "dependencies": [
         "@tabler/icons-react",
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1"
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2"
       ],
       "registryDependencies": [
         "https://hextaui.com/r/avatar.json",
@@ -13696,8 +13696,8 @@
       "title": "Image cropper demo",
       "description": "The main Image cropper demo from the docs.",
       "dependencies": [
-        "@ui-sdk/core@0.1.0-beta.1",
-        "@ui-sdk/react@0.1.0-beta.1"
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2"
       ],
       "registryDependencies": [
         "https://hextaui.com/r/button.json",

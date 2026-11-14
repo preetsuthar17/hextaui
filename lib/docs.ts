@@ -597,7 +597,7 @@ const docsUiSdk: DocsComponent[] = [
   },
 ]
 
-const uiSdkVersion = "0.1.0-beta.1"
+const uiSdkVersion = "0.1.0-beta.2"
 
 const docsUtilities: DocsComponent[] = [
   {
