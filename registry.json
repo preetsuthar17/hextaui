@@ -2330,6 +2330,29 @@
       ]
     },
     {
+      "name": "ui-sdk-segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented control",
+      "description": "A segmented control on Vercel's UI SDK with a sliding indicator, three sizes, icon-only items, full width, vertical layout and radio-group keyboard.",
+      "categories": [
+        "forms"
+      ],
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-time-input",
       "type": "registry:ui",
       "title": "Time input",
@@ -14770,6 +14793,167 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-rating/sizes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-controlled",
+      "type": "registry:example",
+      "title": "Segmented control: Controlled",
+      "description": "The Controlled example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/controlled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-demo",
+      "type": "registry:example",
+      "title": "Segmented control demo",
+      "description": "The main Segmented control demo from the docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-disabled",
+      "type": "registry:example",
+      "title": "Segmented control: Disabled",
+      "description": "The Disabled example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/disabled.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-form",
+      "type": "registry:example",
+      "title": "Segmented control: Form",
+      "description": "The Form example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/form.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-full-width",
+      "type": "registry:example",
+      "title": "Segmented control: Full width",
+      "description": "The Full width example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/full-width.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-icons",
+      "type": "registry:example",
+      "title": "Segmented control: Icons",
+      "description": "The Icons example from the Segmented control docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/icons.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-read-only",
+      "type": "registry:example",
+      "title": "Segmented control: Read-only",
+      "description": "The Read-only example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/read-only.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-rtl",
+      "type": "registry:example",
+      "title": "Segmented control: Right to left",
+      "description": "The Right to left example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-sizes",
+      "type": "registry:example",
+      "title": "Segmented control: Sizes",
+      "description": "The Sizes example from the Segmented control docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/sizes.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-segmented-control-vertical",
+      "type": "registry:example",
+      "title": "Segmented control: Vertical",
+      "description": "The Vertical example from the Segmented control docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-segmented-control.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-segmented-control/vertical.tsx",
           "type": "registry:example"
         }
       ]

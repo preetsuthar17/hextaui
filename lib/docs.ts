@@ -630,6 +630,13 @@ const docsUiSdk: DocsComponent[] = [
       "A date field on Vercel's UI SDK typed one part at a time in the locale's order, with an optional time, min and max, unavailable days and an ISO value.",
     category: "forms",
   },
+  {
+    name: "Segmented control",
+    slug: "ui-sdk-segmented-control",
+    description:
+      "A segmented control on Vercel's UI SDK with a sliding indicator, three sizes, icon-only items, full width, vertical layout and radio-group keyboard.",
+    category: "forms",
+  },
 ]
 
 const uiSdkVersion = "0.1.0-beta.2"
@@ -798,6 +805,14 @@ const docsKeywords: Record<string, string[]> = {
     "resize",
     "ui sdk",
   ],
+  "ui-sdk-segmented-control": [
+    "segmented",
+    "toggle",
+    "switcher",
+    "radio group",
+    "view switcher",
+    "ui sdk",
+  ],
   "ui-sdk-time-input": [
     "time field",
     "time picker",
@@ -917,6 +932,8 @@ const docsTitles: Record<string, string> = {
   "ui-sdk-number-input": "Number Input on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-time-input": "Time Input on Vercel UI SDK for React & shadcn/ui",
   "ui-sdk-date-input": "Date Input on Vercel UI SDK for React & shadcn/ui",
+  "ui-sdk-segmented-control":
+    "Segmented Control on Vercel UI SDK for React & shadcn/ui",
   "use-autosize": "useAutosize: auto-resizing textarea hook for React",
   "use-button-feedback":
     "useButtonFeedback: async button states hook for React",
