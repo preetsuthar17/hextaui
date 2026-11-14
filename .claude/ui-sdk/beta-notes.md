@@ -118,3 +118,13 @@ Marked `@experimental` in 0.1.0-beta.2; the docs page says so.
 - **No marker tone.** HextaUI adds `variant` (`success`, `warning`, `destructive`, `info`) on `TimelineMarker`, which works for an empty dot or an icon.
 - **A horizontal timeline overflows.** Nothing scrolls a row wider than its container. HextaUI's horizontal root scrolls on x with padding, so the focus ring isn't clipped and End brings the last event into view.
 - **No gaps found in:** list and feed roles, names from titles after hydration, descriptions from time and description, `aria-current="step"` with the tab stop on the current event, ArrowUp and ArrowDown with wrap, Home and End, Left and Right in a horizontal row with `loop={false}`, arrows staying on a button inside an event, Tab into nested buttons, the controller's `focus(value)`, feed `aria-posinset`/`aria-setsize`, Page Down between articles, `busy`, markers and connectors hidden from assistive technology, RTL, dark mode and 390px.
+
+## Upstream bugs found by hunting, not by building
+
+Found on upstream main 220c1a0d with scratch playground fixtures in Chromium. None of them showed up while building HextaUI's components.
+
+- **Nested dialogs that show in one commit stack in the wrong order.** Filed as vercel-labs/ui#536. This covers mount-open, `<Activity>` and Suspense. The child dialog renders under its parent, and one Escape closes both. HextaUI's dialogs inherit this.
+- **IME digits are lost.** Filed as vercel-labs/ui#537. Date Input and Time Input never adopt text committed through an IME. Number Input and the Date Picker input reject full-width digits. This matters for the ja docs audience.
+- **Form reset skips a disabled Select, Combobox or Listbox.** Filed as vercel-labs/ui#538.
+- **Controlled reset without `defaultValue` is inconsistent.** Filed as vercel-labs/ui#539. Select-like controls clear, and toggle-like controls return to their mount value. React 19 `<form action>` therefore wipes a controlled Select.
+- **Checked and found clean:** unmounting open popups (scroll lock, `inert` and `aria-hidden` restored), listener and DOM leaks over repeated opens, RTL arrow keys, time zone and DST date maths, submitted values, `required` and disabled fieldsets across 20 controls.
