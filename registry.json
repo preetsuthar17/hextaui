@@ -2376,6 +2376,30 @@
       ]
     },
     {
+      "name": "ui-sdk-timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A timeline on Vercel's UI SDK for activity, order progress and agent steps, vertical or horizontal, with statuses, timestamps, icon markers and a feed mode.",
+      "categories": [
+        "data-display"
+      ],
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.2",
+        "@ui-sdk/react@0.1.0-beta.2",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/ui-sdk-timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "ui-sdk-token-input",
       "type": "registry:ui",
       "title": "Token input",
@@ -15122,6 +15146,143 @@
       "files": [
         {
           "path": "components/examples/ui-sdk-time-input/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-agent",
+      "type": "registry:example",
+      "title": "Timeline: Agent steps",
+      "description": "The Agent steps example from the Timeline docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/spinner.json",
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/agent.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-demo",
+      "type": "registry:example",
+      "title": "Timeline demo",
+      "description": "The main Timeline demo from the docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-details",
+      "type": "registry:example",
+      "title": "Timeline: Details",
+      "description": "The Details example from the Timeline docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/collapsible.json",
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/details.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-feed",
+      "type": "registry:example",
+      "title": "Timeline: Feed",
+      "description": "The Feed example from the Timeline docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/feed.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-horizontal",
+      "type": "registry:example",
+      "title": "Timeline: Horizontal",
+      "description": "The Horizontal example from the Timeline docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/horizontal.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-markers",
+      "type": "registry:example",
+      "title": "Timeline: Custom markers",
+      "description": "The Custom markers example from the Timeline docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/markers.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-rtl",
+      "type": "registry:example",
+      "title": "Timeline: Right to left",
+      "description": "The Right to left example from the Timeline docs.",
+      "registryDependencies": [
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/rtl.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "ui-sdk-timeline-status",
+      "type": "registry:example",
+      "title": "Timeline: Status",
+      "description": "The Status example from the Timeline docs.",
+      "dependencies": [
+        "@tabler/icons-react"
+      ],
+      "registryDependencies": [
+        "https://hextaui.com/r/button.json",
+        "https://hextaui.com/r/ui-sdk-timeline.json"
+      ],
+      "files": [
+        {
+          "path": "components/examples/ui-sdk-timeline/status.tsx",
           "type": "registry:example"
         }
       ]

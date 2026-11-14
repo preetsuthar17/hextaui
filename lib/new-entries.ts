@@ -25,6 +25,7 @@ const entriesAdded: Record<string, string> = {
   "ui-sdk-time-input": "2026-11-14",
   "ui-sdk-date-input": "2026-11-14",
   "ui-sdk-segmented-control": "2026-11-14",
+  "ui-sdk-timeline": "2026-11-14",
 }
 
 function newUntil(added: string | undefined, now = Date.now()) {
