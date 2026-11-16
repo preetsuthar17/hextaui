@@ -128,3 +128,22 @@ Found on upstream main 220c1a0d with scratch playground fixtures in Chromium. No
 - **Form reset skips a disabled Select, Combobox or Listbox.** Filed as vercel-labs/ui#538.
 - **Controlled reset without `defaultValue` is inconsistent.** Filed as vercel-labs/ui#539. Select-like controls clear, and toggle-like controls return to their mount value. React 19 `<form action>` therefore wipes a controlled Select.
 - **Checked and found clean:** unmounting open popups (scroll lock, `inert` and `aria-hidden` restored), listener and DOM leaks over repeated opens, RTL arrow keys, time zone and DST date maths, submitted values, `required` and disabled fieldsets across 20 controls.
+
+## Status on Nov 16 and the second hunt
+
+Upstream is at 0.1.0-beta.6 (282f4472); HextaUI is still on beta.2.
+
+- **Fixed upstream:** #457, #459, #504, #537, #538.
+- **Closed as documented:** #458. `ok: true` means every step ran; read `changes` and `values` to see what took effect.
+- **Still open:** #494 (HKTITAN has a fork fix), #502, #505, #506, #536, #539.
+- **Filed from the second hunt:**
+  - #690: text typed before hydration is erased in Combobox, Autocomplete, Command, Number Input and others.
+  - #691: Tabs drops `defaultValue` with a lazy or Suspense tab.
+  - #692: Svelte item text is frozen, so the wrong value gets selected.
+  - #693: Solid unkeyed `For` breaks arrow keys.
+  - #694: TriggerMenu ignores IME text.
+  - #695: Navigation Menu with a viewport traps Tab.
+  - #696: Control-click on a context menu on macOS.
+  - #697: Drawer on touch wipes inline `overflow-y`.
+  - #698: Resizable's touch hit area scrolls the page.
+- **Checked and found clean:** Menu and Menubar keyboard and typeahead, Combobox, Command and Autocomplete IME, positioning in transformed, zoomed and RTL layouts, plain `renderToString` hydration of every component, Vue parity, ghost clicks, toast and carousel swipes, and drawer scroll on touch.
