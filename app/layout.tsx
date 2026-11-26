@@ -12,6 +12,7 @@ import { InlineScript } from "@/components/site/inline-script"
 import { JsonLd } from "@/components/site/json-ld"
 import { LazyToaster } from "@/components/site/lazy-toaster"
 import { SiteChrome, SiteFrame } from "@/components/site/site-chrome"
+import { SaleBanner } from "@/components/site/sale-banner"
 import { SiteHeader } from "@/components/site/site-header"
 import { WebMcp } from "@/components/site/web-mcp"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -108,6 +109,7 @@ export default async function RootLayout({
           <DocsSearchProvider>
             <SiteFrame>
               <SiteChrome>
+                <SaleBanner />
                 <SiteHeader
                   stars={stars}
                   componentSlugs={componentSlugs}

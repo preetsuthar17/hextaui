@@ -42,7 +42,8 @@ import { comparisons } from "@/lib/compare"
 import { formatStars } from "@/lib/github"
 import { useChrome } from "@/lib/i18n/chrome"
 import { useSitePathname } from "@/lib/i18n/client"
-import { proPlans } from "@/lib/pro/pricing"
+import { formatPrice } from "@/lib/pro/pricing"
+import { usePlanPrice } from "@/lib/pro/use-sale"
 import { siteName, siteRepository } from "@/lib/site"
 
 const resourcePaths = [
@@ -288,7 +289,7 @@ function StaticNav({
 }: {
   menus: Menu[]
   active: SiteSection | null
-  soloPrice: number
+  soloPrice: string
 }) {
   const c = useChrome()
 
@@ -345,7 +346,7 @@ function StaticNav({
             className={staticLinkClassName}
           >
             {c(plainLinks[1].label)}
-            <span className="site-nav-price">${soloPrice}</span>
+            <span className="site-nav-price">{soloPrice}</span>
           </Link>
         </li>
       </ul>
@@ -466,7 +467,7 @@ function SiteHeader({
   const home = active === "home"
   const headerRef = React.useRef<HTMLElement>(null)
   const stars = useGithubStars(initialStars)
-  const soloPrice = proPlans.solo.price
+  const soloPrice = formatPrice(usePlanPrice("solo"))
   const siteNav = useSiteNav()
 
   React.useEffect(() => {

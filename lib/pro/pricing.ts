@@ -42,6 +42,25 @@ const refundDays = 30
 
 const earlySoloPrice = 49
 
+const sale = {
+  name: "Black Friday",
+  prices: { solo: 49, team: 149 },
+  endsAt: "2026-12-01T08:00:00Z",
+  endsLabel: "Cyber Monday",
+} as const
+
+function isSaleActive(now = Date.now()) {
+  return now < Date.parse(sale.endsAt)
+}
+
+function planPrice(plan: SalePlanId, now = Date.now()) {
+  return isSaleActive(now) ? sale.prices[plan] : proPlans[plan].price
+}
+
+function formatPrice(value: number) {
+  return Number.isInteger(value) ? `$${value}` : `$${value.toFixed(2)}`
+}
+
 function isProPlanId(value: unknown): value is ProPlanId {
   return typeof value === "string" && Object.hasOwn(allProPlans, value)
 }
@@ -57,12 +76,16 @@ function isTeamPlan(plan: ProPlanId): plan is TeamPlanId {
 export {
   allProPlans,
   earlySoloPrice,
+  formatPrice,
   isProPlanId,
+  isSaleActive,
   isSalePlanId,
   isTeamPlan,
+  planPrice,
   planRank,
   proPlans,
   refundDays,
+  sale,
   salePlanIds,
   teamPlanIds,
   type ProPlanId,

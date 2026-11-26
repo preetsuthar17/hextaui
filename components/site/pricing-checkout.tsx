@@ -5,7 +5,13 @@ import { cn } from "cn"
 import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { startCheckout } from "@/lib/auth-client"
-import { proPlans, refundDays, type SalePlanId } from "@/lib/pro/pricing"
+import {
+  formatPrice,
+  proPlans,
+  refundDays,
+  type SalePlanId,
+} from "@/lib/pro/pricing"
+import { usePlanPrice } from "@/lib/pro/use-sale"
 
 function CheckoutButton({
   plan,
@@ -15,7 +21,7 @@ function CheckoutButton({
   className?: string
 }) {
   const { guard, dialog } = useInAppBrowserGate()
-  const price = proPlans[plan].price
+  const price = formatPrice(usePlanPrice(plan))
   const primary = plan === "solo"
 
   return (
@@ -30,7 +36,7 @@ function CheckoutButton({
         onClick={() => guard("checkout", () => startCheckout(plan))}
       >
         {primary
-          ? `Get ${proPlans[plan].name} for $${price}`
+          ? `Get ${proPlans[plan].name} for ${price}`
           : `Get ${proPlans[plan].name}`}
       </Button>
       {dialog}

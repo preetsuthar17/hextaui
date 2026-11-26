@@ -123,7 +123,7 @@ function SiteNavMenu({
   menus: Menu[]
   plainLinks: PlainLink[]
   active: SiteSection | null
-  soloPrice: number
+  soloPrice: string
 }) {
   const c = useChrome()
 
@@ -160,7 +160,7 @@ function SiteNavMenu({
             aria-current={active === "pricing" ? "page" : undefined}
           >
             {c(plainLinks[1].label)}
-            <span className="site-nav-price">${soloPrice}</span>
+            <span className="site-nav-price">{soloPrice}</span>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

@@ -23,7 +23,8 @@ import { BlockBuyButton, BlockPriceNote } from "@/components/blocks/block-buy"
 import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { signIn, startCheckout, useSession } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
-import { proPlans } from "@/lib/pro/pricing"
+import { formatPrice } from "@/lib/pro/pricing"
+import { usePlanPrice } from "@/lib/pro/use-sale"
 import { track } from "@/lib/track"
 
 type ProFile = { path: string; code: string; html: string }
@@ -78,7 +79,7 @@ function LockedCode({
   reason: "signed-out" | "free"
 }) {
   const c = useChrome()
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
   const { guard, dialog } = useInAppBrowserGate()
 
   return (
@@ -143,7 +144,7 @@ function LockedCode({
             >
               {c("Get the full block")}
               <span aria-hidden="true">—</span>
-              <span className="tabular-nums">${price}</span>
+              <span className="tabular-nums">{price}</span>
             </Button>
             <Link
               href="/pricing"

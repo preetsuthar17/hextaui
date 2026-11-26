@@ -15,7 +15,7 @@ import {
 } from "@/lib/agent-manifests"
 import { getDocsLlms } from "@/lib/docs-markdown"
 import { getProProductJsonLd, getPricingMarkdown } from "@/lib/pricing-info"
-import { proPlans } from "@/lib/pro/pricing"
+import { planPrice } from "@/lib/pro/pricing"
 import { accessError } from "@/lib/pro/access"
 
 const frontmatterPattern = /^---\n(?:[\w-]+: "(?:[^"\\]|\\.)*"\n)+---\n/
@@ -78,8 +78,8 @@ describe("Markdown for agents", () => {
   })
 
   it("takes prices from the pricing module", () => {
-    const solo = proPlans.solo.price
-    const team = proPlans.team.price
+    const solo = planPrice("solo")
+    const team = planPrice("team")
     expect(getPricingMarkdown()).toContain(`Solo: $${solo} once`)
     expect(getProProductJsonLd().offers.map((offer) => offer.price)).toEqual([
       solo,

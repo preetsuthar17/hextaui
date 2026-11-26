@@ -43,13 +43,16 @@ import {
 } from "@/lib/auth-client"
 import {
   allProPlans,
+  formatPrice,
   isTeamPlan,
   proPlans,
   refundDays,
+  sale,
   salePlanIds,
   type ProPlanId,
   type SalePlanId,
 } from "@/lib/pro/pricing"
+import { usePlanPrice, useSaleActive } from "@/lib/pro/use-sale"
 import { trackPurchaseCompleted } from "@/lib/purchase-tracking"
 import { siteContactEmail } from "@/lib/site"
 import {
@@ -229,6 +232,7 @@ function usePlan(
 
 function PlanCard({ plan }: { plan: ProPlan }) {
   const { guard, dialog } = useInAppBrowserGate()
+  const price = usePlanPrice(plan.id)
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border p-5">
@@ -240,8 +244,13 @@ function PlanCard({ plan }: { plan: ProPlan }) {
       </div>
       <p className="mt-auto flex items-baseline gap-2 tabular-nums">
         <span className="text-2xl font-semibold tracking-tight">
-          ${plan.price}
+          {formatPrice(price)}
         </span>
+        {price < plan.price ? (
+          <s className="text-sm text-muted-foreground">
+            <span className="sr-only">Was </span>${plan.price}
+          </s>
+        ) : null}
         <span className="text-sm text-muted-foreground">once</span>
       </p>
       <Button
@@ -301,7 +310,11 @@ function ProUpgrade() {
 
 function TeamUpgrade({ credit }: { credit: number }) {
   const { guard, dialog } = useInAppBrowserGate()
-  const upgradePrice = proPlans.team.price - credit
+  const onSale = useSaleActive()
+  const teamPrice = usePlanPrice("team")
+  const upgradePrice = formatPrice(
+    onSale ? teamPrice : proPlans.team.price - credit
+  )
 
   return (
     <section className="flex flex-col items-start gap-3">
@@ -309,8 +322,10 @@ function TeamUpgrade({ credit }: { credit: number }) {
         <h2 className="font-medium">Need seats for your team?</h2>
         <p className="text-sm text-pretty text-muted-foreground">
           Move to Team for up to {proPlans.team.seats} developers, with one
-          shared token allowed in CI. Your Solo purchase counts for ${credit},
-          so it’s ${upgradePrice} once.
+          shared token allowed in CI.{" "}
+          {onSale
+            ? `For ${sale.name}, Team is ${upgradePrice} once instead of $${proPlans.team.price}.`
+            : `Your Solo purchase counts for $${credit}, so it’s ${upgradePrice} once.`}
         </p>
       </div>
       <Button
@@ -320,7 +335,7 @@ function TeamUpgrade({ credit }: { credit: number }) {
         errorLabel="Try again"
         onClick={() => guard("checkout", () => startCheckout("team"))}
       >
-        Upgrade to Team for ${upgradePrice}
+        Upgrade to Team for {upgradePrice}
       </Button>
       {dialog}
     </section>

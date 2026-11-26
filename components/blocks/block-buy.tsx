@@ -6,7 +6,8 @@ import { useInAppBrowserGate } from "@/components/site/open-in-browser"
 import { Button } from "@/components/ui/button"
 import { startCheckout } from "@/lib/auth-client"
 import { useChrome } from "@/lib/i18n/chrome"
-import { proPlans, refundDays } from "@/lib/pro/pricing"
+import { formatPrice, refundDays } from "@/lib/pro/pricing"
+import { usePlanPrice } from "@/lib/pro/use-sale"
 import { track } from "@/lib/track"
 
 function fill(text: string, values: Record<string, string | number>) {
@@ -29,7 +30,7 @@ function BlockBuyButton({
   pro?: boolean
 }) {
   const c = useChrome()
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
 
   return (
     <Button
@@ -58,14 +59,14 @@ function BlockBuyButton({
         c("Get the full block")
       )}
       <span aria-hidden="true">—</span>
-      <span className="tabular-nums">${price}</span>
+      <span className="tabular-nums">{price}</span>
     </Button>
   )
 }
 
 function BlockPriceNote({ count }: { count: number }) {
   const c = useChrome()
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
 
   return (
     <>
@@ -73,7 +74,7 @@ function BlockPriceNote({ count }: { count: number }) {
         c(
           "One payment of {price} unlocks the source of this block and all {count} others, plus every block added later."
         ),
-        { price: `$${price}`, count: count - 1 }
+        { price, count: count - 1 }
       )}{" "}
       {fill(c("Refundable within {days} days."), { days: refundDays })}
     </>
@@ -113,7 +114,7 @@ function BlockBuyBar({
   free?: boolean
 }) {
   const c = useChrome()
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
 
   return (
     <UnlessPro
@@ -142,7 +143,7 @@ function BlockBuyBar({
           <span aria-hidden="true"> · </span>
           <span className="sr-only">, </span>
           <span className="tabular-nums">
-            {fill(c("{price} one-time"), { price: `$${price}` })}
+            {fill(c("{price} one-time"), { price })}
           </span>
           <span aria-hidden="true"> · </span>
           <span className="sr-only">, </span>

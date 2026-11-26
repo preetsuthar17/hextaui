@@ -5,11 +5,12 @@ import { cn } from "cn"
 
 import { TrackedLink } from "@/components/site/tracked-link"
 import { useChrome } from "@/lib/i18n/chrome"
-import { proPlans } from "@/lib/pro/pricing"
+import { formatPrice } from "@/lib/pro/pricing"
+import { usePlanPrice } from "@/lib/pro/use-sale"
 
 function ProPriceLink({ from, className }: { from: string; className: string }) {
   const c = useChrome()
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
 
   return (
     <TrackedLink
@@ -19,7 +20,7 @@ function ProPriceLink({ from, className }: { from: string; className: string }) 
       className={className}
     >
       {c("Get Pro")}
-      <span className="hero-cta-price">${price}</span>
+      <span className="hero-cta-price">{price}</span>
     </TrackedLink>
   )
 }
@@ -33,7 +34,7 @@ function HeroActions({
   payment: string
   refund: string
 }) {
-  const price = proPlans.solo.price
+  const price = formatPrice(usePlanPrice("solo"))
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -46,7 +47,7 @@ function HeroActions({
         {label}
       </TrackedLink>
       <p className="text-sm text-white/75">
-        {payment} · <span className="tabular-nums">${price}</span> · {refund}
+        {payment} · <span className="tabular-nums">{price}</span> · {refund}
       </p>
     </div>
   )

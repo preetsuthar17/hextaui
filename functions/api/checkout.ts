@@ -10,7 +10,7 @@ import {
   type PaymentsEnv,
 } from "@/lib/payments"
 import { checkoutReturnUrl, createClaim } from "@/lib/purchase-claim"
-import { isSalePlanId, planRank } from "@/lib/pro/pricing"
+import { isSaleActive, isSalePlanId, planRank } from "@/lib/pro/pricing"
 import { apiError, sameOriginError } from "@/lib/api-error"
 
 type Context = {
@@ -43,8 +43,14 @@ export async function onRequestPost({ request, env }: Context) {
     return Response.json({ url: "/account" })
   }
 
-  const upgradeCode =
-    plan === "team" ? upgradeOffer(env, access)?.code : undefined
+  const saleCode = isSaleActive()
+    ? plan === "solo"
+      ? env.DODO_SALE_SOLO_DISCOUNT_CODE
+      : env.DODO_SALE_TEAM_DISCOUNT_CODE
+    : undefined
+  const discountCode =
+    saleCode ||
+    (plan === "team" ? upgradeOffer(env, access)?.code : undefined)
 
   const productId = checkoutProduct(env, plan)
   if (!productId) {
@@ -58,7 +64,7 @@ export async function onRequestPost({ request, env }: Context) {
   const claim = await createClaim(env.BETTER_AUTH_SECRET)
   const checkout = await getPayments(env).checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
-    ...(upgradeCode ? { discount_codes: [upgradeCode] } : {}),
+    ...(discountCode ? { discount_codes: [discountCode] } : {}),
     ...(user ? { customer: { email: user.email, name: user.name } } : {}),
     metadata: {
       ...(user

@@ -8,7 +8,13 @@ import { cn } from "cn"
 import { CheckoutButton } from "@/components/site/pricing-checkout"
 import { buttonVariants } from "@/components/ui/button"
 import { NumberFlow } from "@/components/ui/number-flow"
-import { proPlans, type SalePlanId } from "@/lib/pro/pricing"
+import {
+  formatPrice,
+  sale as saleConfig,
+  proPlans,
+  type SalePlanId,
+} from "@/lib/pro/pricing"
+import { useSaleActive } from "@/lib/pro/use-sale"
 
 type PricingPlanId = "free" | SalePlanId
 
@@ -23,9 +29,19 @@ type PricingPlan = {
 const rulerMax = 300
 const rulerTicks = [0, 100, 200, 300]
 
-function planPrice(id: PricingPlanId) {
+function planPrice(id: PricingPlanId, onSale: boolean) {
+  if (id === "free") return 0
+  return onSale ? saleConfig.prices[id] : proPlans[id].price
+}
+
+function listPrice(id: PricingPlanId) {
   return id === "free" ? 0 : proPlans[id].price
 }
+
+const priceFormat = {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+} satisfies Intl.NumberFormatOptions
 
 function cssVars(vars: Record<string, string>) {
   return (node: HTMLElement | null) => {
@@ -73,10 +89,11 @@ function FreePlanLink() {
 function PricingRuler({ plans }: { plans: PricingPlan[] }) {
   const [ref, seen] = useInView<HTMLDivElement>()
   const [active, setActive] = React.useState<PricingPlanId | null>(null)
+  const onSale = useSaleActive()
   const rows = plans.map((plan, index) => ({
     plan,
     index,
-    now: planPrice(plan.id),
+    now: planPrice(plan.id, onSale),
   }))
   const state = (id: PricingPlanId) => ({
     "data-active": active === id || undefined,
@@ -118,6 +135,7 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
               <NumberFlow
                 value={now}
                 prefix="$"
+                format={priceFormat}
                 duration={1100}
                 className="font-semibold tabular-nums"
               />
@@ -172,10 +190,22 @@ function PricingRuler({ plans }: { plans: PricingPlan[] }) {
             </div>
             <div className="flex flex-col gap-1.5 lg:items-center">
               <p className="flex items-baseline gap-2 tabular-nums">
-                <span className="marketing-number font-semibold">${now}</span>
+                <span className="marketing-number font-semibold">
+                  {formatPrice(now)}
+                </span>
+                {now < listPrice(plan.id) ? (
+                  <s className="text-muted-foreground">
+                    <span className="sr-only">Was </span>
+                    {formatPrice(listPrice(plan.id))}
+                  </s>
+                ) : null}
               </p>
               <p className="text-xs font-medium text-muted-foreground">
-                {plan.id === "free" ? "Free forever" : "Paid once"}
+                {plan.id === "free"
+                  ? "Free forever"
+                  : now < listPrice(plan.id)
+                    ? `Paid once · ${saleConfig.name} price`
+                    : "Paid once"}
               </p>
             </div>
             <ul className="flex flex-col gap-2 border-t pt-5 text-sm">

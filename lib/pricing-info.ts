@@ -2,8 +2,11 @@ import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { frontmatter } from "@/lib/frontmatter"
 import { blockSections, proBlocks } from "@/lib/pro/catalog"
 import {
+  formatPrice,
+  planPrice,
   proPlans,
   refundDays,
+  sale,
   salePlanIds,
   type SalePlanId,
 } from "@/lib/pro/pricing"
@@ -49,7 +52,8 @@ function planInfo(id: SalePlanId) {
     id,
     name: `${siteName} Pro ${plan.name}`,
     shortName: plan.name,
-    price: plan.price,
+    price: planPrice(id),
+    listPrice: plan.price,
     seats: plan.seats,
     summary: plan.summary,
   }
@@ -58,7 +62,9 @@ function planInfo(id: SalePlanId) {
 const proPlanInfo = salePlanIds.map(planInfo)
 
 function priceLabel(plan: ReturnType<typeof planInfo>) {
-  return `$${plan.price} once`
+  return plan.price < plan.listPrice
+    ? `${formatPrice(plan.price)} once (${sale.name} price, usually $${plan.listPrice})`
+    : `$${plan.price} once`
 }
 
 const pricingQuestions = [
@@ -234,6 +240,9 @@ function getProProductJsonLd() {
       name: plan.name,
       price: plan.price,
       priceCurrency: pricingCurrency,
+      ...(plan.price < plan.listPrice
+        ? { priceValidUntil: sale.endsAt.slice(0, 10) }
+        : {}),
       availability: "https://schema.org/InStock",
       url: absoluteUrl("/pricing"),
       seller: { "@id": absoluteUrl("/#organization") },
