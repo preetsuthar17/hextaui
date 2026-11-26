@@ -13,7 +13,12 @@ import { HomeBlocks, HomeDemos } from "@/components/site/home-preview"
 import { JsonLd } from "@/components/site/json-ld"
 import { docsComponents, docsHooks, docsUtilities } from "@/lib/docs"
 import { getProBlock, proBlocks } from "@/lib/pro/catalog"
-import { proPlans, refundDays } from "@/lib/pro/pricing"
+import {
+  formatPrice,
+  planPrice,
+  proPlans,
+  refundDays,
+} from "@/lib/pro/pricing"
 import { T, t } from "@/lib/i18n/rich"
 import { siteRepository } from "@/lib/site"
 import { faqPageJsonLd } from "@/lib/structured-data"
@@ -52,8 +57,11 @@ const stats = [
   },
 ]
 
-const { solo, team } = proPlans
-const proPriceText = `$${solo.price} once for one developer, or $${team.price} for a team of ${team.seats}`
+const proPrices = {
+  solo: formatPrice(planPrice("solo")),
+  team: formatPrice(planPrice("team")),
+  seats: proPlans.team.seats,
+}
 
 const questions = [
   {
@@ -82,7 +90,7 @@ const questions = [
   },
   {
     question: "What is HextaUI Pro?",
-    answer: `Drop-in blocks that get your AI app’s chat UI shipped in days instead of weeks: complete screens such as a chat thread, tool calls, agent todos and voice mode, with streaming, retries and approvals already worked out, and account, settings and dashboard blocks next. It costs ${proPriceText}. It covers unlimited personal and commercial projects, includes every future block category and comes with a ${refundDays}-day refund. Prompt Input is free to try.`,
+    answer: `Drop-in blocks that get your AI app’s chat UI shipped in days instead of weeks: complete screens such as a chat thread, tool calls, agent todos and voice mode, with streaming, retries and approvals already worked out, and account, settings and dashboard blocks next. It costs {solo} once for one developer, or {team} for a team of {seats}. It covers unlimited personal and commercial projects, includes every future block category and comes with a ${refundDays}-day refund. Prompt Input is free to try.`,
   },
   {
     question: "Can my AI assistant use it?",
@@ -222,8 +230,13 @@ function HomeSections() {
           <p>
             <T>
               Every block has a live preview anyone can open, and installs
-              through the same shadcn CLI from a private registry. Pro is{" "}
-              {proPriceText}, for unlimited personal and commercial projects.{" "}
+              through the same shadcn CLI from a private registry.
+            </T>{" "}
+            {t(
+              "Pro is {solo} once for one developer, or {team} for a team of {seats}, for unlimited personal and commercial projects.",
+              proPrices
+            )}{" "}
+            <T>
               <Link href="/pricing" className={linkClassName}>
                 Compare plans
               </Link>{" "}
@@ -236,7 +249,7 @@ function HomeSections() {
           </p>
           <p>
             <T>
-              Solo covers one developer. Team covers up to {team.seats}, managed
+              Solo covers one developer. Team covers up to {proPrices.seats}, managed
               by email from your account, with one shared token allowed in CI.
               Clients and colleagues who only use the finished product
               don&apos;t need a seat. If it isn&apos;t right for you, you get a
@@ -357,7 +370,7 @@ function HomeSections() {
               {questions.map((item) => (
                 <AccordionItem key={item.question} value={item.question}>
                   <AccordionTrigger>{t(item.question)}</AccordionTrigger>
-                  <AccordionContent>{t(item.answer)}</AccordionContent>
+                  <AccordionContent>{t(item.answer, proPrices)}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -371,7 +384,7 @@ function HomeSections() {
                 "/",
                 questions.map((item) => ({
                   question: t(item.question),
-                  answer: t(item.answer),
+                  answer: t(item.answer, proPrices),
                 }))
               ),
             ],

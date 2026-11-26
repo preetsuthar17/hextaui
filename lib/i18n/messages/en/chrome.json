@@ -4,6 +4,7 @@
   "All",
   "All blocks",
   "Allow",
+  "Black Friday",
   "Blocks",
   "Blog",
   "Browse blocks",
@@ -46,6 +47,7 @@
   "Get Pro",
   "Get an email when new components and blocks ship.",
   "Get started",
+  "Get the deal",
   "Get the full block",
   "Google blocks sign-in here, and GitHub makes you type your password again. Open this page in your browser to sign in.",
   "Google sign-in doesn’t work here, so getting Pro is easier in your browser.",
@@ -115,6 +117,7 @@
   "Tools",
   "Try Prompt Input free",
   "Try again",
+  "Up to {percent}% off Pro until Cyber Monday",
   "Use the app’s ••• or share menu and choose Open in Safari, or copy the link and paste it into Safari.",
   "View as Markdown",
   "View code",
@@ -128,5 +131,6 @@
   "all {count} blocks",
   "llms.txt",
   "shadcn AI chat templates",
+  "was",
   "{price} one-time"
 ]

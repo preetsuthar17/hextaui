@@ -39,12 +39,17 @@ import {
   proSummary,
   refundTerms,
 } from "@/lib/pricing-info"
-import { proPlans, refundDays } from "@/lib/pro/pricing"
+import {
+  formatPrice,
+  planPrice,
+  proPlans,
+  refundDays,
+} from "@/lib/pro/pricing"
 import { faqPageJsonLd, pageJsonLd } from "@/lib/structured-data"
 
 export const metadata: Metadata = pageMetadata({
   title: "Pricing",
-  description: `HextaUI components are free under MIT. Pro blocks for AI products are one payment: Solo for $${proPlans.solo.price}, or a team of ${proPlans.team.seats} for $${proPlans.team.price}.`,
+  description: `HextaUI components are free under MIT. Pro blocks for AI products are one payment: Solo for ${formatPrice(planPrice("solo"))}, or a team of ${proPlans.team.seats} for ${formatPrice(planPrice("team"))}.`,
   path: "/pricing",
   markdown: "/pricing.md",
 })

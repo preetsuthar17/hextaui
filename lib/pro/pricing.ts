@@ -46,7 +46,6 @@ const sale = {
   name: "Black Friday",
   prices: { solo: 49, team: 149 },
   endsAt: "2026-12-01T08:00:00Z",
-  endsLabel: "Cyber Monday",
 } as const
 
 function isSaleActive(now = Date.now()) {

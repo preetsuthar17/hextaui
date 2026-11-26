@@ -4,6 +4,7 @@
   "All": "Tous",
   "All blocks": "Tous les blocks",
   "Allow": "Autoriser",
+  "Black Friday": "Black Friday",
   "Blocks": "Blocks",
   "Blog": "Blog",
   "Browse blocks": "Parcourir les blocks",
@@ -46,6 +47,7 @@
   "Get Pro": "Passer à Pro",
   "Get an email when new components and blocks ship.": "Recevez un e-mail à la sortie de nouveaux composants et blocks.",
   "Get started": "Commencer",
+  "Get the deal": "Profiter de l’offre",
   "Get the full block": "Obtenir le bloc complet",
   "Google blocks sign-in here, and GitHub makes you type your password again. Open this page in your browser to sign in.": "Google bloque la connexion ici, et GitHub vous redemande votre mot de passe. Ouvrez cette page dans votre navigateur pour vous connecter.",
   "Google sign-in doesn’t work here, so getting Pro is easier in your browser.": "La connexion avec Google ne fonctionne pas ici, alors passer à Pro est plus simple dans votre navigateur.",
@@ -115,6 +117,7 @@
   "Tools": "Outils",
   "Try Prompt Input free": "Essayer Prompt Input gratuitement",
   "Try again": "Réessayer",
+  "Up to {percent}% off Pro until Cyber Monday": "Jusqu’à {percent} % de réduction sur Pro jusqu’au Cyber Monday",
   "Use the app’s ••• or share menu and choose Open in Safari, or copy the link and paste it into Safari.": "Utilisez le menu ••• ou Partager de l’app et choisissez Ouvrir dans Safari, ou copiez le lien et collez-le dans Safari.",
   "View as Markdown": "Voir en Markdown",
   "View code": "Voir le code",
@@ -128,5 +131,6 @@
   "all {count} blocks": "les {count} blocs",
   "llms.txt": "llms.txt",
   "shadcn AI chat templates": "Templates de chat IA shadcn",
+  "was": "avant",
   "{price} one-time": "{price} en une fois"
 }

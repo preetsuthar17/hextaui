@@ -42,7 +42,7 @@ export default function Page() {
       <InlineScript html={heroRevealScript} />
       <section
         aria-labelledby="home-title"
-        className="relative isolate -mt-12 overflow-hidden pt-12"
+        className="relative isolate -mt-12.25 overflow-hidden pt-12.25"
       >
         <span aria-hidden="true" className="hero-gradient" />
         <span aria-hidden="true" className="hero-lines" />
