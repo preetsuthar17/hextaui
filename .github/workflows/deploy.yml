@@ -1,0 +1,75 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - ".claude/**"
+      - "AGENTS.md"
+      - "CLAUDE.md"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: actions/checkout@v4
+        with:
+          repository: preetsuthar17/hextaui-pro
+          path: pro
+          ssh-key: ${{ secrets.HEXTAUI_PRO_DEPLOY_KEY }}
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.23.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Restore the Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            next-${{ runner.os }}-
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - name: Deploy to Cloudflare Pages
+        run: >-
+          pnpm exec wrangler pages deploy out
+          --project-name hextaui
+          --branch main
+          --commit-hash "$GITHUB_SHA"
+          --commit-message "$(git log -1 --format=%s)"
+          --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Cache rule and preview purge
+        run: node --experimental-strip-types --no-warnings scripts/edge-cache.ts
+        env:
+          CF_CACHE_TOKEN: ${{ secrets.CF_CACHE_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          COMMIT_SHA: ${{ github.sha }}
