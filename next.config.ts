@@ -2,15 +2,17 @@ import type { NextConfig } from "next"
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants"
 
 const env = { NEXT_PUBLIC_BUILT_AT: new Date().toISOString() }
+const experimental: NextConfig["experimental"] = { agentUpgrade: "security" }
 
 export default function nextConfig(phase: string): NextConfig {
   if (phase !== PHASE_DEVELOPMENT_SERVER) {
-    return { output: "export", env }
+    return { output: "export", env, experimental }
   }
 
   return {
     output: "export",
     env,
+    experimental,
     rewrites: async () => [
       {
         source: "/:page((?!md/).+)\\.md",
